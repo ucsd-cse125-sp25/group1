@@ -67,27 +67,97 @@ void World::step(float dt) {
     }
 }
 
+World world;
+
+Object object{
+    glm::vec3(0, 1000, 0),
+    glm::vec3(0, 0, 0),
+    glm::vec3(0, 0, 0),
+    10.0f
+};
+
+void keyCallback(
+    GLFWwindow *window, int key, int scancode, int action, int mods);
+
 /**
  * Main function to debug physics
  */
 int main() {
-    World world;
+    cout << "STARTING" << endl;
 
-    Object object{
-        glm::vec3(0, 10000, 0),
-        glm::vec3(0, 0, 0),
-        glm::vec3(10, 0, 0),
-        10.0f
-    };
-    
     world.addObject(&object);
 
-    int time = 0;
-    while (1) {
-        time++;
+    GLFWwindow *window;
+
+    // initialize library
+    if (!glfwInit()) {
+        cout << "Failed to initialize library" << endl;
+        return -1;
+    }
+
+    window = glfwCreateWindow(200, 200, "Test", nullptr, nullptr);
+
+    glfwSetKeyCallback(window, keyCallback);
+
+    int screenWidth, screenHeight;
+    glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
+
+    if (!window) {
+        cout << "Failed to open window" << endl;
+        glfwTerminate();
+        return -1;
+    }
+
+    // int time = 0;
+    while (!glfwWindowShouldClose(window)) {
+
+        glfwSwapBuffers(window);
+
+        glfwPollEvents();
+
+        // time++;
         world.step(0.001f);
         cout << object.position.x << " " << object.position.y << " " << object.position.z << endl;
-        int sign = signbit(object.velocity.x) ? -1 : 1;
-        if (time % 100000 == 0) object.force.x = -10 * sign;
+        // int sign = signbit(object.velocity.x) ? -1 : 1;
+        // if (time % 100000 == 0) object.force.x = -10 * sign;
+    }
+
+    glfwTerminate();
+}
+
+void keyCallback(
+    GLFWwindow *window, int key, int scancode, int action, int mods) {
+
+    if (action == GLFW_PRESS) {
+        switch (key)
+        {
+        case GLFW_KEY_W:
+            object.velocity.z = 10;
+            break;
+        
+        case GLFW_KEY_A:
+            object.velocity.x = -10;
+            break;
+
+        case GLFW_KEY_S:
+            object.velocity.x = -10;
+            break;
+
+        case GLFW_KEY_D:
+            object.velocity.z = 10;
+            break;
+
+        case GLFW_KEY_SPACE:
+            if (object.position.y == 0) {
+                object.velocity.y = 10;
+            }
+            break;
+
+        default:
+            break;
+        }
+    } else {
+        object.velocity.z = 0;
+        object.velocity.x = 0;
     }
 }

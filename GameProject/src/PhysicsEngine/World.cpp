@@ -53,7 +53,7 @@ void World::step(float dt) {
         // stop at floor
         } else {
             obj->position.y = 0.0f;
-            obj->velocity.y = 0.0f;
+            obj->velocity.y = obj->velocity.y < 0 ? 0.0f : obj->velocity.y;
         }
 
         // apply kinematics
@@ -70,7 +70,7 @@ void World::step(float dt) {
 World world;
 
 Object object{
-    glm::vec3(0, 1000, 0),
+    glm::vec3(0, 25, 0),
     glm::vec3(0, 0, 0),
     glm::vec3(0, 0, 0),
     10.0f
@@ -108,18 +108,15 @@ int main() {
         return -1;
     }
 
-    // int time = 0;
     while (!glfwWindowShouldClose(window)) {
 
         glfwSwapBuffers(window);
 
         glfwPollEvents();
 
-        // time++;
-        world.step(0.001f);
-        cout << object.position.x << " " << object.position.y << " " << object.position.z << endl;
-        // int sign = signbit(object.velocity.x) ? -1 : 1;
-        // if (time % 100000 == 0) object.force.x = -10 * sign;
+        world.step(0.05f);
+        cout << object.position.x << " " << object.position.y << " " << object.position.z << " " << object.velocity.y << endl;
+        this_thread::sleep_for(chrono::milliseconds(50));
     }
 
     glfwTerminate();
@@ -128,7 +125,7 @@ int main() {
 void keyCallback(
     GLFWwindow *window, int key, int scancode, int action, int mods) {
 
-    if (action == GLFW_PRESS) {
+    if (action == GLFW_PRESS || action == GLFW_REPEAT) {
         switch (key)
         {
         case GLFW_KEY_W:

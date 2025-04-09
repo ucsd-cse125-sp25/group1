@@ -15,6 +15,8 @@
 #include <glm/glm.hpp>      // vec3
 #include <algorithm>        // find
 #include <GLFW/glfw3.h>     // keyCallback
+#include <thread>           // sleep_for
+#include <chrono>           // chrono
 using namespace std;
 
 #define ACCELERATION_GRAVITY -9.81f

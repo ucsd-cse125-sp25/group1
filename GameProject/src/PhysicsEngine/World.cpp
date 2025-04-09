@@ -140,11 +140,11 @@ void keyCallback(
             break;
 
         case GLFW_KEY_S:
-            object.velocity.x = -10;
+            object.velocity.z = -10;
             break;
 
         case GLFW_KEY_D:
-            object.velocity.z = 10;
+            object.velocity.x = 10;
             break;
 
         case GLFW_KEY_SPACE:

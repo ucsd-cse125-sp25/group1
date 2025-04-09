@@ -16,7 +16,9 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y cmake build-essential
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake build-essential libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libxcursor-dev libxinerama-dev
     
     - name: Create Build Repository
       run: mkdir build

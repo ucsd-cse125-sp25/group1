@@ -11,6 +11,8 @@ if(APPLE)
   add_definitions(-DGL_SILENCE_DEPRECATION)
 endif()
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
 include_directories(${CMAKE_SOURCE_DIR}/GameProject/include)
 
 file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/GameProject/src/*.cpp)

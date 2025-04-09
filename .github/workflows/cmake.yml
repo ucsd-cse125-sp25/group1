@@ -1,0 +1,27 @@
+name: CMake Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: checkout code
+    - uses: actions/checkout@v4
+    
+    - name: Create Build Repository
+      run: mkdir build
+
+    - name: Run CMake
+      working-directory: ./build
+      run: cmake ..
+
+    - name: Build with Make
+      working-directory: ./build
+      run: cmake --build . 

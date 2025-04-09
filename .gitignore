@@ -71,3 +71,11 @@ bld/
 *.scc
 
 .history/
+
+# Windows specific
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+# macOS specific
+.DS_Store

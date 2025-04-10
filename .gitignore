@@ -79,3 +79,9 @@ bld/
 
 # macOS specific
 .DS_Store
+
+# CMake
+**/CMakeFiles/
+**/CMakeCache.txt
+**/Makefile
+**/cmake_install.cmake

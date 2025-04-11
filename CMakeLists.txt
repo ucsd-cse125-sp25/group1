@@ -33,6 +33,9 @@ add_executable(GameProject ${SRC_FILES})
 add_subdirectory(dependencies/glfw)
 target_link_libraries(GameProject PRIVATE glfw)
 
+add_subdirectory(dependencies/glad)
+target_link_libraries(GameProject PRIVATE glad)
+
 if(WIN32)
     target_link_libraries(GameProject PRIVATE opengl32)
 elseif(APPLE)

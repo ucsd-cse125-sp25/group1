@@ -28,10 +28,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/GameProject/src/*.cpp)
 add_executable(GameProject ${SRC_FILES})
 
-add_subdirectory(dependencies/glfw)
 add_subdirectory(dependencies/glad)
+add_subdirectory(dependencies/glfw)
 
-target_link_libraries(GameProject PRIVATE glfw glad)
+target_link_libraries(GameProject PRIVATE glad glfw)
 
 target_include_directories(GameProject PRIVATE
     ${CMAKE_SOURCE_DIR}/GameProject/include

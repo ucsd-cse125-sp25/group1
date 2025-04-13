@@ -1,22 +1,21 @@
-#include <iostream>
-#include <GLFW/glfw3.h>
+#include <GraphicsEngine/GameWindow.h>
 #include <Game.h>
+#include <iostream>
+
 int main() {
-    /* Initialize the library, must be initialized before declaring Game */
+    /* Initialize the library */
     if (!glfwInit())
         return -1;
 
     Game* game = new Game();
 
-    /* Starting Game Loop */
     std::cout << "Game loop ongoing..." << std::endl;
+    /* Loop until the user closes the window */
     while (game->isGameRunning())
     {
         game->run();
     }
     delete game;
-    /* Terminate library */
-    glfwTerminate();
-    std::cout << "Game loop ended" << std::endl;
+    std::cout << "Game loop ended." << std::endl;
     return 0;
 }

@@ -10,6 +10,7 @@ int main() {
     Game* game = new Game();
 
     std::cout << "Game loop ongoing..." << std::endl;
+    game->onCreate();
     /* Loop until the user closes the window */
     while (game->isGameRunning())
     {

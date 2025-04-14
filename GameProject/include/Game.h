@@ -15,5 +15,6 @@ public:
 private:
 	GEngine* graphicsEngine;
 	GameWindow* gameWindow;
+	std::shared_ptr<OVertexArrayObject> triangleVAO;
 };
 

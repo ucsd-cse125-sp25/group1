@@ -3,8 +3,6 @@
 
 /**
 * TODO: Before you add this to the graphics engine, make sure you clear these questions
-* 1. What are the flags and parameters of glVertexAttribPointer?
-* 2. What does glBufferData do?
 * 3. What's this line for glBindVertexArray(0)?
 */
 
@@ -25,18 +23,36 @@ OVertexArrayObject::OVertexArrayObject(const OVertexBufferData& data) {
 	*/
 	glBindVertexArray(vertexArrayObjectId);
 	
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId)
+	/**
+	* Similarly, binding a buffer means we're telling OpenGL to allocate 
+	* memory for our buffer in the GPU and copy data in that address.
+	*/
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBufferId); // GL_ARRAY_BUFFER is a target that tells OpenGL we're gonna use this buffer to store vertex attribute data
+												  // In other words, it tells us that we're binding vertexBufferId as an array buffer
+	
+	/**
+	* glBufferData is the function we use to upload our list of vertices into the GPU for rendering.
+	* GL_STATIC_DRAW is a hint that tells OpenGL we're uploading all this business once and will 
+	* draw it many times.
+	*/
 	glBufferData(GL_ARRAY_BUFFER, data.vertexSize * data.listSize, data.verticesList, GL_STATIC_DRAW);
 
 	/**
-	* Creating our first attribute, which will be position. W
+	* Defining our first attribute, which will be position.
 	* Index 0 means this is the first attribute
 	* 3 means there will be 3 data points
 	* GL_FLOAT means our attribute is of type float
+	* GL_FALSE means that this attribute won't be normalized
 	* Last 0 argument is the offset from the first attribute. Since this is the first attribute, there's no offset
 	*/ 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, data.vertexSize, 0);
 	glEnableVertexAttribArray(0); // Lets us use this attribute for data array. Our first attribute's index is 0, so we pass 0.
+	
+	/**
+	* This tells OpenGL to unbind the current array because we're done configuring it.
+	* This prevents possible mess ups (accidentally configuring the VAO in some other
+	* part of the code).
+	*/
 	glBindVertexArray(0);
 
 }
@@ -44,4 +60,8 @@ OVertexArrayObject::OVertexArrayObject(const OVertexBufferData& data) {
 OVertexArrayObject::~OVertexArrayObject() {
 	glDeleteBuffers(1, &vertexBufferId);
 	glDeleteVertexArrays(1, &vertexArrayObjectId);
+}
+
+unsigned int OVertexArrayObject::getId() {
+	return vertexArrayObjectId;
 }

@@ -11,6 +11,7 @@ class OVertexArrayObject {
 public:
 	OVertexArrayObject(const OVertexBufferData& data);
 	~OVertexArrayObject();
+	unsigned int getId();
 private:
 	unsigned int vertexBufferId = 0;
 	unsigned int vertexArrayObjectId = 0;

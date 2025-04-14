@@ -12,6 +12,10 @@ public:
     Player(const std:: string& name);
     ~Player();
     // Todo: add player functions and attributes
+
+    Coord getPosition() const;
+    void move(float x, float y);
+
 private:
     // Todo: add member variables
     std::string name;

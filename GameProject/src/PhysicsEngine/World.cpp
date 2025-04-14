@@ -8,23 +8,22 @@
  */
 
 #include "World.hpp"
-#include "Object.hpp"
 
 using namespace std;
+using namespace glm;
 
 /**
  * Constructor function for the World class, using the provided gravity macro.
  */
 World::World() {
     objects;
-    gravity = glm::vec3(0, ACCELERATION_GRAVITY, 0);
 }
 
 /**
  * Add an object to the environment.
  * @param object pointer to the object to add.
  */
-void World::addObject(Object* object) {
+void World::addObject(RigidBody* object) {
     objects.push_back(object);
 }
 
@@ -32,7 +31,7 @@ void World::addObject(Object* object) {
  * Removes the specified object if it exists.
  * @param object pointer to the object to remove.
  */
-void World::removeObject(Object* object) {
+void World::removeObject(RigidBody* object) {
     auto it = find(objects.begin(), objects.end(), object);
     if (it != objects.end()) {
         objects.erase(it);
@@ -45,36 +44,70 @@ void World::removeObject(Object* object) {
  * @param dt change in time since last step
  */
 void World::step(float dt) {
-    for (Object* obj : objects) {
-        // apply gravity, F = m*a
-        if (obj->position.y > 0) {
-            obj->force += obj->mass * gravity;
-
-        // stop at floor
-        } else {
-            obj->position.y = 0.0f;
-            obj->velocity.y = obj->velocity.y < 0 ? 0.0f : obj->velocity.y;
-        }
-
+    for (RigidBody* obj : objects) {
         // apply kinematics
-        // v = v_0 + (F/m) * dt
-        obj->velocity += obj->force / obj->mass * dt;
-        // x = x_0 + v*dt
-        obj->position += obj->velocity * dt;
-
-        // reset net force at the end
-        obj->force = glm::vec3(0, 0, 0);
+        obj->applyGravity();
+        obj->updateVelocity(dt);
+        obj->updatePosition(dt);
     }
 }
 
+void World::resolveCollisions(float dt) {
+    // vector<Collision> collisions;
+
+    // for (RigidBody* a : m_objects)
+    // for (RigidBody* b : m_objects) 
+    // {
+    //     if (a == b)
+    //         break;
+
+    //     if (!a->Collider || !b->Collider)
+    //         continue;
+
+    //     CollisionPoints points = TestCollision(
+    //         a->Collider, a->Transform,
+    //         b->Collider, b->Transform
+    //     );
+
+    //     if (points.HasCollision)
+    //         collisions.emplace_back(a, b, points);
+    // }
+
+    // cout << "COLLISION" << endl;
+}
+
+
+
+/* TESTING */
+
 World world;
 
-Object object{
-    glm::vec3(0, 25, 0),
-    glm::vec3(0, 0, 0),
-    glm::vec3(0, 0, 0),
-    10.0f
+Collider capsule{CAPSULE};
+Transform transform1{
+    vec3(0.0f, 25.0f, 0.0f),
+    vec3(1.0f, 1.0f, 1.0f),
+    quat(1.0f, 0.0f, 0.0f, 0.0f)
 };
+RigidBody object1{
+    vec3(0.0f, 0.0f, 0.0f),
+    vec3(0.0f, 0.0f, 0.0f),
+    10.0f,
+    &capsule,
+    &transform1
+};
+
+// Transform transform2{
+//     vec3(0, 25, 0),
+//     vec3(1, 1, 1),
+//     quat(1.0f, 0.0f, 0.0f, 0.0f)
+// };
+// RigidBody object2{
+//     vec3(10, 25, 0),
+//     vec3(0, 0, 0),
+//     10.0f,
+//     &capsule,
+//     &transform2
+// };
 
 void keyCallback(
     GLFWwindow *window, int key, int scancode, int action, int mods);
@@ -85,7 +118,8 @@ void keyCallback(
 int main() {
     cout << "STARTING" << endl;
 
-    world.addObject(&object);
+    world.addObject(&object1);
+    // world.addObject(&object2);
 
     GLFWwindow *window;
 
@@ -115,7 +149,7 @@ int main() {
         glfwPollEvents();
 
         world.step(0.05f);
-        cout << object.position.x << " " << object.position.y << " " << object.position.z << " " << object.velocity.y << endl;
+        cout << object1.getPosition().x << " " << object1.getPosition().y << " " << object1.getPosition().z << " " << object1.getVelocity().y << endl;
         this_thread::sleep_for(chrono::milliseconds(50));
     }
 
@@ -125,28 +159,31 @@ int main() {
 void keyCallback(
     GLFWwindow *window, int key, int scancode, int action, int mods) {
 
+    vec3 position = object1.getPosition();
+    vec3 velocity = object1.getVelocity();
+
     if (action == GLFW_PRESS || action == GLFW_REPEAT) {
         switch (key)
         {
         case GLFW_KEY_W:
-            object.velocity.z = 10;
+            object1.setVelocity(vec3(velocity.x, velocity.y, 10));
             break;
         
         case GLFW_KEY_A:
-            object.velocity.x = -10;
+            object1.setVelocity(vec3(-10, velocity.y, velocity.z));
             break;
 
         case GLFW_KEY_S:
-            object.velocity.z = -10;
+            object1.setVelocity(vec3(velocity.x, velocity.y, -10));
             break;
 
         case GLFW_KEY_D:
-            object.velocity.x = 10;
+            object1.setVelocity(vec3(10, velocity.y, velocity.z));
             break;
 
         case GLFW_KEY_SPACE:
-            if (object.position.y == 0) {
-                object.velocity.y = 10;
+            if (object1.getPosition().y == 0) {
+                object1.setVelocity(vec3(velocity.x, 10, velocity.z));
             }
             break;
 
@@ -154,7 +191,6 @@ void keyCallback(
             break;
         }
     } else {
-        object.velocity.z = 0;
-        object.velocity.x = 0;
+        object1.setVelocity(vec3(0, velocity.y, 0));
     }
 }

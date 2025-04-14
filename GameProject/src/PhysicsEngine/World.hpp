@@ -17,22 +17,23 @@
 #include <GLFW/glfw3.h>     // keyCallback
 #include <thread>           // sleep_for
 #include <chrono>           // chrono
+#include "RigidBody.hpp"
+#include "Collider.hpp"
+#include "Transform.hpp"
 using namespace std;
 
-#define ACCELERATION_GRAVITY -9.81f
-
-class Object;
+class RigidBody;
 
 class World {
     private:
-        vector<Object*> objects;
-        glm::vec3 gravity;
+        vector<RigidBody*> objects;
      
     public:
         World();
-        void addObject(Object* object);
-        void removeObject(Object* object);  
+        void addObject(RigidBody* object);
+        void removeObject(RigidBody* object);  
         void step(float dt);
+        void resolveCollisions(float dt);
     };
 
 #endif

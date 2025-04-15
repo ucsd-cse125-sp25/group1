@@ -1,11 +1,6 @@
 #include <GraphicsEngine/OVertexArrayObject.h>
 #include <glad/glad.h>
 
-/**
-* TODO: Before you add this to the graphics engine, make sure you clear these questions
-* 3. What's this line for glBindVertexArray(0)?
-*/
-
 OVertexArrayObject::OVertexArrayObject(const OVertexBufferData& data) {
 	/**
 	* Lets us generate n buffers and place their object names

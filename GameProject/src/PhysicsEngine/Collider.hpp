@@ -12,12 +12,22 @@
 using namespace glm;
 
 enum ColliderType {
-	CAPSULE,
-	PLANE
+	BOX,
+	SPHERE
 };
 
 struct Collider {
 	ColliderType type;
+};
+
+struct BoxCollider : Collider {
+	vec3 minCorner;		// least x, y, z corner
+	vec3 maxCorner;		// greatest x, y, z corner
+};
+
+struct SphereCollider : Collider {
+	vec3 center;
+	float radius;
 };
 
 #endif

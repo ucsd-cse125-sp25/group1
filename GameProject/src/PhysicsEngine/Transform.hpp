@@ -12,20 +12,10 @@
 #include <glm/gtc/quaternion.hpp>
 using namespace glm;
 
-// describes a potential collision between two objects
-struct CollisionPoints {
-	vec3 a; 				// furthest point of A into B
-	vec3 b; 				// furthest point of B into A
-	vec3 normal; 			// B – A normalized
-	float depth;    		// Length of B – A
-	bool isColliding;
-};
- 
 // describes an objects location
 struct Transform {
 	vec3 position;
-	vec3 scale;
-	quat rotation;
+	vec3 direction;
 };
 
 #endif

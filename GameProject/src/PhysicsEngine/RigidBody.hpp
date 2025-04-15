@@ -41,7 +41,9 @@ class RigidBody {
 				collider(collider),
 				transform(transform),
 				gravity(gravity)
-			{}
+			{
+
+			}
 
 		void applyGravity() {
 			// apply gravity, F = m*a
@@ -82,6 +84,10 @@ class RigidBody {
 
 		void setVelocity(vec3 newVelocity) {
 			velocity = newVelocity;
+		}
+
+		ColliderType getCollider() {
+			return collider;
 		}
 };
 

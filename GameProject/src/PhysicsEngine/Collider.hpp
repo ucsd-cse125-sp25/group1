@@ -21,8 +21,8 @@ struct Collider {
 };
 
 struct BoxCollider : Collider {
-	vec3 minCorner;		// least x, y, z corner
-	vec3 maxCorner;		// greatest x, y, z corner
+	vec3 minCorner;		// least x, y, z corner relative to center
+	vec3 maxCorner;		// greatest x, y, z corner relative to center
 };
 
 struct SphereCollider : Collider {

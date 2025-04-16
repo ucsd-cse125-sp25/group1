@@ -70,7 +70,7 @@ class RigidBody {
 			transform->position += velocity * dt;
 		}
 
-		vec3 getPosition() {
+		const vec3 getPosition() const {
 			return transform->position;
 		}
 
@@ -78,7 +78,7 @@ class RigidBody {
 			transform->position = newPosition;
 		}
 
-		vec3 getVelocity() {
+		const vec3 getVelocity() const {
 			return velocity;
 		}
 
@@ -86,7 +86,7 @@ class RigidBody {
 			velocity = newVelocity;
 		}
 
-		ColliderType getCollider() {
+		const Collider* getCollider() const {
 			return collider;
 		}
 };

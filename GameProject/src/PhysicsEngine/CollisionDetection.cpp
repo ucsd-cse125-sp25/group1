@@ -13,61 +13,53 @@ using namespace glm;
 bool Test_Box_Box(
 	const RigidBody* boxA, const RigidBody* boxB) {
 
-    BoxCollider* colliderA = static_cast<BoxCollider*>(boxA->getCollider());
-    BoxCollider* colliderB = static_cast<BoxCollider*>(boxB->getCollider());
+    const BoxCollider* colliderA =
+        static_cast<const BoxCollider*>(boxA->getCollider());
+    const BoxCollider* colliderB =
+        static_cast<const BoxCollider*>(boxB->getCollider());
+    const vec3 posA = boxA->getPosition();
+    const vec3 posB = boxB->getPosition();
     return (
-        colliderA->maxCorner.x > colliderB->minCorner.x &&
-        colliderA->minCorner.x < colliderB->maxCorner.x &&
-        colliderA->maxCorner.y > colliderB->minCorner.y &&
-        colliderA->minCorner.y < colliderB->maxCorner.y &&
-        colliderA->maxCorner.z > colliderB->minCorner.z &&
-        colliderA->minCorner.z < colliderB->maxCorner.z
+        colliderA->maxCorner.x + posA.x > colliderB->minCorner.x + posB.x &&
+        colliderA->minCorner.x + posA.x < colliderB->maxCorner.x + posB.x &&
+        colliderA->maxCorner.y + posA.y > colliderB->minCorner.y + posB.y &&
+        colliderA->minCorner.y + posA.y < colliderB->maxCorner.y + posB.y &&
+        colliderA->maxCorner.z + posA.z > colliderB->minCorner.z + posB.z &&
+        colliderA->minCorner.z + posA.z < colliderB->maxCorner.z + posB.z
     );
 }
 
 bool Test_Sphere_Sphere(
 	const RigidBody* sphereA, const RigidBody* sphereB) {
 
-    SphereCollider* colliderA =
-        static_cast<SphereCollider*>(sphereA->getCollider());
-    SphereCollider* colliderB =
-        static_cast<SphereCollider*>(sphereB->getCollider());
+    const SphereCollider* colliderA =
+        static_cast<const SphereCollider*>(sphereA->getCollider());
+    const SphereCollider* colliderB =
+        static_cast<const SphereCollider*>(sphereB->getCollider());
     return distance(colliderA->center, colliderB->center) < 
         (colliderA->radius + colliderB->radius);
-}
-
-float clampToAABB(float point, BoxCollider* aabb, int axis) {
-    if (point[axis] > aabb.maxCorner[axis])
-        return aabb.maxCorner[axis];
-    else if (point[axis] < aabb.minCorner[axis])
-        return aabb.minCorner[axis];
-    else
-        return point[axis];
 }
 
 bool Test_Box_Sphere(
 	const RigidBody* box, const RigidBody* sphere) {
 
-    BoxCollider* colliderA =
-        static_cast<BoxCollider*>(box->getCollider());
-    SphereCollider* colliderB =
-        static_cast<SphereCollider*>(sphere->getCollider());
+    const BoxCollider* colliderA =
+        static_cast<const BoxCollider*>(box->getCollider());
+    const SphereCollider* colliderB =
+        static_cast<const SphereCollider*>(sphere->getCollider());
 
-    vec3 closestPoint = vec3(
-        clampToAABB(colliderB->center, colliderA, 0),
-        clampToAABB(colliderB->center, colliderA, 1),
-        clampToAABB(colliderB->center, colliderA, 2),
-    );
+    vec3 pA = box->getPosition();
+    vec3 minA = colliderA->minCorner + pA;
+    vec3 maxA = colliderA->maxCorner + pA;
 
-    float distance = distance(closestPoint, colliderB->center);
+    vec3 closestPoint = clamp(colliderB->center, minA, maxA);
 
-    return distance < colliderB->radius;
+    return distance(closestPoint, colliderB->center) < colliderB->radius;
 }
 
 using collisionGrid = bool(*)(const RigidBody*, const RigidBody*);
 
-bool TestCollision(const RigidBody* objA, const RigidBody* objB)
-{
+bool TestCollision(const RigidBody* objA, const RigidBody* objB) {
 	static const collisionGrid tests[2][2] = 
 	{
 		// Box             	Sphere
@@ -79,12 +71,12 @@ bool TestCollision(const RigidBody* objA, const RigidBody* objB)
 		swap(objA, objB);
 	}
 
-	collisionGrid testFunc =
-		tests[objA->getCollider()->type][objB->getCollider()->type](objA, objB);
+    collisionGrid testFunc =
+        tests[objA->getCollider()->type][objB->getCollider()->type];
 
-	if (testFunc != nullptr) {
-        return testFunc(objA, objB);
+    if (!testFunc) {
+        return false;
     }
-    
-    return false;
+
+    return testFunc(objA, objB);
 }

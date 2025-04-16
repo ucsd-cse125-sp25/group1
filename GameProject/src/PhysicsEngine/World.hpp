@@ -20,6 +20,7 @@
 #include "RigidBody.hpp"
 #include "Collider.hpp"
 #include "Transform.hpp"
+#include "CollisionDetection.hpp"
 using namespace std;
 
 class RigidBody;

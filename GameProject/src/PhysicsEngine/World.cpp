@@ -53,27 +53,21 @@ void World::step(float dt) {
 }
 
 void World::resolveCollisions(float dt) {
-    // vector<Collision> collisions;
+    for (RigidBody* a : objects)
+    for (RigidBody* b : objects) 
+    {
+        if (a == b)
+            break;
 
-    // for (RigidBody* a : m_objects)
-    // for (RigidBody* b : m_objects) 
-    // {
-    //     if (a == b)
-    //         break;
+        if (!a->getCollider() || !b->getCollider())
+            continue;
 
-    //     if (!a->Collider || !b->Collider)
-    //         continue;
+        bool isColliding = TestCollision(a, b);
 
-    //     CollisionPoints points = TestCollision(
-    //         a->Collider, a->Transform,
-    //         b->Collider, b->Transform
-    //     );
-
-    //     if (points.HasCollision)
-    //         collisions.emplace_back(a, b, points);
-    // }
-
-    // cout << "COLLISION" << endl;
+        if (isColliding) {
+            cout << "COLLISION" << endl;
+        }
+    }
 }
 
 
@@ -82,32 +76,31 @@ void World::resolveCollisions(float dt) {
 
 World world;
 
-Collider capsule{CAPSULE};
+BoxCollider aabb1 = {BOX, vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 1.0f, 1.0f)};
 Transform transform1{
     vec3(0.0f, 25.0f, 0.0f),
-    vec3(1.0f, 1.0f, 1.0f),
-    quat(1.0f, 0.0f, 0.0f, 0.0f)
+    vec3(1.0f, 0.0f, 0.0f),
 };
 RigidBody object1{
     vec3(0.0f, 0.0f, 0.0f),
     vec3(0.0f, 0.0f, 0.0f),
     10.0f,
-    &capsule,
+    &aabb1,
     &transform1
 };
 
-// Transform transform2{
-//     vec3(0, 25, 0),
-//     vec3(1, 1, 1),
-//     quat(1.0f, 0.0f, 0.0f, 0.0f)
-// };
-// RigidBody object2{
-//     vec3(10, 25, 0),
-//     vec3(0, 0, 0),
-//     10.0f,
-//     &capsule,
-//     &transform2
-// };
+BoxCollider aabb2 = {BOX, vec3(0.0f, 0.0f, 0.0f), vec3(5.0f, 1.0f, 5.0f)};
+Transform transform2{
+    vec3(10.0f, 25.0f, 0.0f),
+    vec3(1.0f, 0.0f, 0.0f),
+};
+RigidBody object2{
+    vec3(0, 0, 0),
+    vec3(0, 0, 0),
+    10.0f,
+    &aabb2,
+    &transform2
+};
 
 void keyCallback(
     GLFWwindow *window, int key, int scancode, int action, int mods);
@@ -119,7 +112,7 @@ int main() {
     cout << "STARTING" << endl;
 
     world.addObject(&object1);
-    // world.addObject(&object2);
+    world.addObject(&object2);
 
     GLFWwindow *window;
 
@@ -149,7 +142,10 @@ int main() {
         glfwPollEvents();
 
         world.step(0.05f);
+        world.resolveCollisions(0.05f);
         cout << object1.getPosition().x << " " << object1.getPosition().y << " " << object1.getPosition().z << " " << object1.getVelocity().y << endl;
+        cout << object2.getPosition().x << " " << object2.getPosition().y << " " << object2.getPosition().z << " " << object2.getVelocity().y << endl;
+        cout << endl;
         this_thread::sleep_for(chrono::milliseconds(50));
     }
 

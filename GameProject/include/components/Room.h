@@ -7,7 +7,7 @@ class Room
 {
 public:
     // Todo: add constructor and destructor
-    Room(int roomID, const std::string& name = "Room");
+    Room(int id, const std::string& name = "Room");
 
     // Todo: add room functions and attributes
     void addInteractable(Interactable* object);
@@ -23,6 +23,7 @@ private:
     // Todo: add member variables
     int roomID;
     std::string roomName;
+    // Todo: change these interactable pointers to unique_ptr rather than normal pointers to prevent mem leaks and make ownership clear
     std::vector<Interactable*> interactables;
 
 };

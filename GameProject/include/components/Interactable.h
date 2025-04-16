@@ -3,13 +3,14 @@
 class Interactable
 {
 public:
-    Interactable(/* Todo: add parameters */bool canUnlock = false, bool canOpen = false, bool canClose = false, bool canMove = false);
-    // Todo: update constructor and add destructor
+    Interactable(bool unlocks = false, bool opens = false, bool closes = false, bool moves = false);
+    // Todo: implement destructor
     virtual ~Interactable() = default;
-    // Todo: add attributes and functions
+    // Todo: add more functions
     virtual void interact() = 0; //Pure virtual function, 
 protected:
-	bool canUnLock;
+    // Todo: add any other attributes, then update constructor
+	bool canUnlock;
     bool canOpen;
     bool canClose;
     bool canMove;

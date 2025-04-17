@@ -10,16 +10,24 @@
 #include "RigidBody.hpp"
 #include "Transform.hpp"
 #include "Collider.hpp"
+#include <algorithm>
 
-bool Test_Box_Box(
+struct Collision {
+	vec3 normal; 		// contact normal
+	float depth;    	// depth of penetration
+	bool isColliding;	// is there a collision
+	bool isSwapped;		// did the points swap
+};
+
+Collision Test_Box_Box(
 	const RigidBody* boxA, const RigidBody* boxB);
 
-bool Test_Sphere_Sphere(
+Collision Test_Sphere_Sphere(
 	const RigidBody* sphereA, const RigidBody* sphereB);
 
-bool Test_Box_Sphere(
+Collision Test_Box_Sphere(
 	const RigidBody* box, const RigidBody* sphere);
 
-bool TestCollision(const RigidBody* objA, const RigidBody* objB);
+Collision TestCollision(const RigidBody* objA, const RigidBody* objB);
 
 #endif

@@ -10,37 +10,77 @@
 using namespace std;
 using namespace glm;
 
-bool Test_Box_Box(
+Collision Test_Box_Box(
 	const RigidBody* boxA, const RigidBody* boxB) {
 
     const BoxCollider* colliderA =
         static_cast<const BoxCollider*>(boxA->getCollider());
     const BoxCollider* colliderB =
         static_cast<const BoxCollider*>(boxB->getCollider());
-    const vec3 posA = boxA->getPosition();
-    const vec3 posB = boxB->getPosition();
-    return (
-        colliderA->maxCorner.x + posA.x > colliderB->minCorner.x + posB.x &&
-        colliderA->minCorner.x + posA.x < colliderB->maxCorner.x + posB.x &&
-        colliderA->maxCorner.y + posA.y > colliderB->minCorner.y + posB.y &&
-        colliderA->minCorner.y + posA.y < colliderB->maxCorner.y + posB.y &&
-        colliderA->maxCorner.z + posA.z > colliderB->minCorner.z + posB.z &&
-        colliderA->minCorner.z + posA.z < colliderB->maxCorner.z + posB.z
-    );
+    const vec3 minA = colliderA->minCorner + boxA->getPosition();
+    const vec3 maxA = colliderA->maxCorner + boxA->getPosition();
+    const vec3 minB = colliderB->minCorner + boxB->getPosition();
+    const vec3 maxB = colliderB->maxCorner + boxB->getPosition();
+
+    bool isColliding = 
+        (maxA.x > minB.x && minA.x < maxB.x) &&
+        (maxA.y > minB.y && minA.y < maxB.y) &&
+        (maxA.z > minB.z && minA.z < maxB.z);
+    
+    float overlapX = std::min(maxA.x, maxB.x) - std::max(minA.x, minB.x);
+    float overlapY = std::min(maxA.y, maxB.y) - std::max(minA.y, minB.y);
+    float overlapZ = std::min(maxA.z, maxB.z) - std::max(minA.z, minB.z);
+
+    // assume x has least overlap
+    float depth = overlapX;
+    vec3 normal = (boxA->getPosition().x < boxB->getPosition().x ?
+        vec3(-1, 0, 0) : vec3(1, 0, 0));
+
+    // otherwise y has least overlap
+    if (overlapY < depth) {
+        depth = overlapY;
+        normal = (boxA->getPosition().y < boxB->getPosition().y ?
+            vec3(0, -1, 0) : vec3(0, 1, 0));
+    }
+
+    // otherwise z has least overlap
+    if (overlapZ < depth) {
+        depth = overlapZ;
+        normal = (boxA->getPosition().z < boxB->getPosition().z ?
+            vec3(0, 0, -1) : vec3(0, 0, 1));
+    }
+
+    Collision collision{
+        normal,
+        depth,
+        isColliding,
+        false
+    };
+
+    return collision;
 }
 
-bool Test_Sphere_Sphere(
+Collision Test_Sphere_Sphere(
 	const RigidBody* sphereA, const RigidBody* sphereB) {
 
     const SphereCollider* colliderA =
         static_cast<const SphereCollider*>(sphereA->getCollider());
     const SphereCollider* colliderB =
         static_cast<const SphereCollider*>(sphereB->getCollider());
-    return distance(colliderA->center, colliderB->center) < 
-        (colliderA->radius + colliderB->radius);
+    
+
+    Collision collision{
+        vec3(0, 0, 0),
+        0,
+        false,
+        false
+    };
+    return collision;
+    // return distance(colliderA->center, colliderB->center) < 
+    //     (colliderA->radius + colliderB->radius);
 }
 
-bool Test_Box_Sphere(
+Collision Test_Box_Sphere(
 	const RigidBody* box, const RigidBody* sphere) {
 
     const BoxCollider* colliderA =
@@ -53,13 +93,20 @@ bool Test_Box_Sphere(
     vec3 maxA = colliderA->maxCorner + pA;
 
     vec3 closestPoint = clamp(colliderB->center, minA, maxA);
-
-    return distance(closestPoint, colliderB->center) < colliderB->radius;
+    
+    Collision collision{
+        vec3(0, 0, 0),
+        0,
+        false,
+        false
+    };
+    return collision;
+    // return distance(closestPoint, colliderB->center) < colliderB->radius;
 }
 
-using collisionGrid = bool(*)(const RigidBody*, const RigidBody*);
+using collisionGrid = Collision(*)(const RigidBody*, const RigidBody*);
 
-bool TestCollision(const RigidBody* objA, const RigidBody* objB) {
+Collision TestCollision(const RigidBody* objA, const RigidBody* objB) {
 	static const collisionGrid tests[2][2] = 
 	{
 		// Box             	Sphere
@@ -74,9 +121,18 @@ bool TestCollision(const RigidBody* objA, const RigidBody* objB) {
     collisionGrid testFunc =
         tests[objA->getCollider()->type][objB->getCollider()->type];
 
+    Collision collision{
+        vec3(0, 0, 0),
+        0,
+        false,
+        false
+    };
     if (!testFunc) {
-        return false;
+        return collision;
     }
 
-    return testFunc(objA, objB);
+    collision = testFunc(objA, objB);
+    collision.isSwapped = objA->getCollider()->type > objB->getCollider()->type;
+
+    return collision;
 }

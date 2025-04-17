@@ -62,10 +62,26 @@ void World::resolveCollisions(float dt) {
         if (!a->getCollider() || !b->getCollider())
             continue;
 
-        bool isColliding = TestCollision(a, b);
+        Collision collision = TestCollision(a, b);
 
-        if (isColliding) {
-            cout << "COLLISION" << endl;
+        if (collision.isColliding) {
+            RigidBody* obj = collision.isSwapped ? b : a;
+            vec3 newPosition = 
+                obj->getPosition() + collision.normal * collision.depth;
+            obj->setPosition(newPosition);
+
+            // Modify player velocity to slide on contact surface:
+            float velocityMagnitude = length(obj->getVelocity());
+            if (velocityMagnitude < 1e-6f) {
+                obj->setVelocity(vec3(0.0f));
+                continue;
+            }
+            vec3 velocityNormal = obj->getVelocity() / velocityMagnitude;
+            vec3 undesiredMotion =
+                collision.normal * dot(velocityNormal, collision.normal);
+            vec3 desiredMotion = velocityNormal - undesiredMotion;
+            vec3 newVelocity = desiredMotion * velocityMagnitude;
+            obj->setVelocity(newVelocity);
         }
     }
 }

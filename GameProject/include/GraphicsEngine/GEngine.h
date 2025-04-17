@@ -3,7 +3,9 @@
 #include <Math/ORect.h>
 #include <memory>
 #include <GraphicsEngine/OVertexArrayObject.h>
-#include <GraphicsEngine/OVertexBufferData.h>
+#include <GraphicsEngine/OVertexBufferDesc.h>
+#include <GraphicsEngine/OShaderProgram.h>
+#include <GraphicsEngine/OShaderProgramDesc.h>
 #include<glad/glad.h>
 /**
 * TODO: Make sure you understand how shaders work and what the steps in setShaderProgram are actually doing.
@@ -11,13 +13,14 @@
 class GEngine {
 public:
 	GLuint shaderProgram;
-	std::shared_ptr<OVertexArrayObject> createVertexArrayObject(const OVertexBufferData& data);
-
+	std::shared_ptr<OVertexArrayObject> createVertexArrayObject(const OVertexBufferDesc& data);
+	std::shared_ptr<OShaderProgram> createShaderProgram(const OShaderProgramDesc& desc);
 	GEngine();
 	~GEngine();
 	void clear();
 	void setViewport(const ORect& size);
 	void setVertexArrayObject(const std::shared_ptr<OVertexArrayObject>& vao);
+	void setShaderProgram(const std::shared_ptr<OShaderProgram>& program);
 	void drawTriangles(unsigned int vertexCount, unsigned int offset);
 	void setShaderProgram();
 private:

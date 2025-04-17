@@ -32,14 +32,22 @@ void GEngine::setShaderProgram() {
     this->shaderProgram = shaderProgram;
 }
 
-std::shared_ptr<OVertexArrayObject> GEngine::createVertexArrayObject(const OVertexBufferData& data) {
+std::shared_ptr<OVertexArrayObject> GEngine::createVertexArrayObject(const OVertexBufferDesc& data) {
 	return std::make_shared<OVertexArrayObject>(data);
+}
+
+std::shared_ptr<OShaderProgram> GEngine::createShaderProgram(const OShaderProgramDesc& desc) {
+    return std::make_shared<OShaderProgram>(desc);
 }
 
 void GEngine::setVertexArrayObject(const std::shared_ptr<OVertexArrayObject>& vao){
 	glBindVertexArray(vao->getId());
 }
 
+
+void GEngine::setShaderProgram(const std::shared_ptr<OShaderProgram>& program) {
+    glUseProgram(program->getId());
+}
 void GEngine::drawTriangles(unsigned int vertexCount, unsigned int offset) {
 	glDrawArrays(GL_TRIANGLES, offset, vertexCount);
 }

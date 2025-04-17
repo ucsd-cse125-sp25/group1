@@ -1,5 +1,5 @@
 #pragma once
-#include <GraphicsEngine/OVertexBufferData.h>
+#include <GraphicsEngine/OVertexBufferDesc.h>
 /**
 * A vertex array object (VAO) encapsulates all the data associated 
 * with the vertices (by extention, the vertex processor). It doesn't store
@@ -9,7 +9,7 @@
 */
 class OVertexArrayObject {
 public:
-	OVertexArrayObject(const OVertexBufferData& data);
+	OVertexArrayObject(const OVertexBufferDesc& data);
 	~OVertexArrayObject();
 	unsigned int getId();
 private:

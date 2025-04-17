@@ -1,7 +1,11 @@
 #include <GraphicsEngine/OVertexArrayObject.h>
+#include <GraphicsEngine/OShaderErrorHandling.h>
 #include <glad/glad.h>
 
-OVertexArrayObject::OVertexArrayObject(const OVertexBufferData& data) {
+OVertexArrayObject::OVertexArrayObject(const OVertexBufferDesc& data) {
+	if (!data.listSize) OGL3D_ERROR("OVertexArrayObject | list size is null");
+	if (!data.vertexSize) OGL3D_ERROR("OVertexArrayObject | vertex size is null");
+	if (!data.verticesList) OGL3D_ERROR("OVertexArrayObject | vertices list is null");
 	/**
 	* Lets us generate n buffers and place their object names
 	* in an array. A vertex array object will only handle 1 buffer,
@@ -40,9 +44,18 @@ OVertexArrayObject::OVertexArrayObject(const OVertexBufferData& data) {
 	* GL_FALSE means that this attribute won't be normalized
 	* Last 0 argument is the offset from the first attribute. Since this is the first attribute, there's no offset
 	*/ 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, data.vertexSize, 0);
-	glEnableVertexAttribArray(0); // Lets us use this attribute for data array. Our first attribute's index is 0, so we pass 0.
-	
+	for (unsigned int i = 0; i < data.attributeListSize; i++) {
+		glVertexAttribPointer(
+			i, 
+			data.attributesList[i].numElements, 
+			GL_FLOAT, 
+			GL_FALSE, 
+			data.vertexSize, 
+			(void*)((i==0)?0:data.attributesList[i-1].numElements*sizeof(float)) // If the index is 0, there are no previous attributes, so we pass in 0. Otherwise, we pass the number of elements * size of float
+		);
+		glEnableVertexAttribArray(i); // Lets us use this attribute for data array. Our first attribute's index is 0, so we pass 0.
+	}
+
 	/**
 	* This tells OpenGL to unbind the current array because we're done configuring it.
 	* This prevents possible mess ups (accidentally configuring the VAO in some other

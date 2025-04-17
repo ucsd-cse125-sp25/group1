@@ -3,6 +3,9 @@
 #include <GLFW/glfw3.h>
 #include <GraphicsEngine/GameWindow.h>
 #include <GraphicsEngine/GEngine.h>
+#include <GraphicsEngine/OVertexArrayObject.h>
+#include <GraphicsEngine/OShaderProgram.h>
+#include <iostream>
 class Game
 {
 public:
@@ -16,5 +19,6 @@ private:
 	GEngine* graphicsEngine;
 	GameWindow* gameWindow;
 	std::shared_ptr<OVertexArrayObject> triangleVAO;
+	std::shared_ptr<OShaderProgram> shader;
 };
 

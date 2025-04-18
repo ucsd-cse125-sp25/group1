@@ -85,3 +85,6 @@ bld/
 **/CMakeCache.txt
 **/Makefile
 **/cmake_install.cmake
+
+# VS code settings folder
+.vscode

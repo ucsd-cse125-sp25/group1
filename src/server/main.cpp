@@ -1,6 +1,15 @@
 #include <iostream>
+#include "server.hpp"
 
 int main() {
-    std::cout << "Server started!" << std::endl;
+    Server server;
+
+    if (!server.init()) {
+        std::cerr << "Failed to initialize server.\n";
+        return 1;
+    }
+
+    server.run();
+    
     return 0;
 }

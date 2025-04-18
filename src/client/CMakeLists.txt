@@ -3,9 +3,10 @@ file(GLOB_RECURSE CLIENT_SRC *.cpp)
 add_executable(client ${CLIENT_SRC})
 
 target_include_directories(client PRIVATE
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/dependencies/json
+    ${CMAKE_SOURCE_DIR}/include/client
+    ${CMAKE_SOURCE_DIR}/include/shared
     ${CMAKE_SOURCE_DIR}/dependencies/glm
+    ${CMAKE_SOURCE_DIR}/dependencies/json
 )
 
 target_link_libraries(client PRIVATE

@@ -1,6 +1,15 @@
+#include "client.hpp"
 #include <iostream>
 
 int main() {
-    std::cout << "Client started!" << std::endl;
+    Client client;
+
+    if (!client.init()) {
+        std::cerr << "Failed to initialize client.\n";
+        return 1;
+    }
+
+    client.run();
+
     return 0;
 }

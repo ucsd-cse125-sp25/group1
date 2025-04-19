@@ -87,6 +87,11 @@ void Client::run() {
         return;
     }
 
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    glFrontFace(GL_CCW);
+
     shader = std::make_unique<Shader>(
         "../src/client/shaders/basic.vert",
         "../src/client/shaders/basic.frag"

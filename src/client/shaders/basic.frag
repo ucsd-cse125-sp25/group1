@@ -1,7 +1,9 @@
 #version 330 core
 
-out vec4 outColor;
+in vec3 normal;
+out vec4 fragColor;
 
 void main() {
-    outColor = vec4(1.0, 0.8, 0.86, 1.0);
+    vec3 N = normalize(normal);
+    fragColor = vec4(0.5f * N + 0.5f , 1.0f);
 }

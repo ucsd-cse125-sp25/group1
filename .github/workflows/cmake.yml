@@ -1,10 +1,6 @@
 name: CMake Build
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -12,16 +8,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: checkout code
+    - name: Checkout code
       uses: actions/checkout@v4
+
+    - name: Cache CMake build
+      uses: actions/cache@v3
+      with:
+        path: build
+        key: ${{ runner.os }}-build-${{ hashFiles('**/CMakeLists.txt') }}
+        restore-keys: ${{ runner.os }}-build-
 
     - name: Install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y cmake build-essential libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libxcursor-dev libxinerama-dev
-    
-    - name: Create Build Repository
-      run: mkdir build
+
+    - name: Create Build Directory
+      run: mkdir -p build
 
     - name: Run CMake
       working-directory: ./build
@@ -29,4 +32,4 @@ jobs:
 
     - name: Build with Make
       working-directory: ./build
-      run: cmake --build . 
+      run: cmake --build . --parallel $(nproc)

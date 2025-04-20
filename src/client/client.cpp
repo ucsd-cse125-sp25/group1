@@ -21,10 +21,10 @@ bool Client::connectToServer() {
         boost::asio::streambuf buf;
         boost::asio::read_until(*socket, buf, '\n');
         std::istream is(&buf);
-        std::string line;
-        std::getline(is, line);
+        std::string message;
+        std::getline(is, message);
 
-        clientId = std::stoi(line);
+        clientId = std::stoi(message);
 
         std::cout << "Received ID: " << clientId << "\n";
 
@@ -38,21 +38,44 @@ bool Client::connectToServer() {
 bool Client::init() {
     if (!connectToServer()) return false;
 
-    glm::vec3 cameraPos = config::PLAYER_SPAWNS[clientId] + config::CAMERA_OFFSET;
-    camera.emplace(cameraPos);
-
     return true;
 }
 
-void Client::render() {
-    shader->use();
+void Client::receiveServerMessage() {
+    if (!socket || !socket->is_open()) return;
 
-    shader->setMat4("view", camera->getViewMatrix());
-    shader->setMat4("projection", camera->getProjectionMatrix());
+    try {
+        if (socket->available() > 0) {
+            boost::asio::streambuf buf;
+            boost::asio::read_until(*socket, buf, '\n');
+            std::istream is(&buf);
+            std::string message;
+            std::getline(is, message);
 
-    glm::mat4 model = glm::mat4(1.0f);
-    shader->setMat4("model", model);
-    cube->draw();
+            if (!message.empty()) {
+                handleServerMessage(message);
+            }
+        }
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << "\n";
+    }
+}
+
+void Client::handleServerMessage(std::string message) {
+    json serverMsg = json::parse(message);
+    std::string type = serverMsg.value("type", "");
+
+    if (type == "player_positions") {
+        const auto& players = serverMsg["players"];
+
+        for (const auto& player : players) {
+            int id = player["id"];
+            json posArr = player["position"];
+            glm::vec3 position = glm::vec3(posArr[0], posArr[1], posArr[2]);
+
+            playerPositions[id] = position;
+        }
+    }
 }
 
 void Client::run() {
@@ -92,18 +115,20 @@ void Client::run() {
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
 
-    shader = std::make_unique<Shader>(
-        "../src/client/shaders/basic.vert",
-        "../src/client/shaders/basic.frag"
-    );
-    
-    cube = std::make_unique<Cube>();
+    scene = std::make_unique<Scene>();
+    scene->init(clientId);
 
     while (!glfwWindowShouldClose(window)) {
-        glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+        glClearColor(0.75f, 0.9f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        render();
+        receiveServerMessage();
+
+        for (const auto& [id, position] : playerPositions) {
+            scene->updatePlayerPosition(id, position);
+        }
+
+        scene->render();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

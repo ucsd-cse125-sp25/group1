@@ -35,7 +35,11 @@ void Server::acceptConnections() {
             if (clientId != -1) {
                 clients[clientId] = socket;
                 std::cout << "Client #" << clientId << " connected.\n";
+                
                 handleClient(socket, clientId);
+                
+                playerPositions[clientId] = config::PLAYER_SPAWNS[clientId];
+                broadcastPlayerPositions();
             } else {
                 std::cout << "Server is full. Connection rejected.\n";
             }
@@ -47,6 +51,25 @@ void Server::acceptConnections() {
 
 void Server::handleClient(std::shared_ptr<tcp::socket> socket, int clientId) {
     boost::asio::write(*socket, boost::asio::buffer(std::to_string(clientId) + "\n"));
+}
+
+void Server::broadcastPlayerPositions() {
+    for (const auto& [clientId, socket] : clients) {
+        json playerPositionsMsg;
+
+        playerPositionsMsg["type"] = "player_positions";
+
+        for (const auto& [id, position] : playerPositions) {
+            json entry;
+            entry["id"] = id;
+            entry["position"] = { position.x, position.y, position.z };
+
+            playerPositionsMsg["players"].push_back(entry);
+        }
+
+        std::string message = playerPositionsMsg.dump() + "\n";
+        boost::asio::write(*socket, boost::asio::buffer(message));
+    }
 }
 
 void Server::handleClientDisconnect(int clientId) {

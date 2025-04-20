@@ -1,6 +1,6 @@
 #include "cube.hpp"
 
-static const float vertices[] = {
+static const GLfloat vertices[] = {
     // Front
     -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
     -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
@@ -38,7 +38,7 @@ static const float vertices[] = {
      0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
 };
 
-static const unsigned int indices[] = {
+static const GLuint indices[] = {
     0,  2,  1,  0,  3,  2, // Front
     4,  5,  6,  4,  6,  7, // Back
     8,  9, 10,  8, 10, 11, // Left

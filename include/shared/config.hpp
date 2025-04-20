@@ -15,12 +15,20 @@ namespace config {
     inline constexpr float NEAR = 0.1f;
     inline constexpr float FAR  = 100.0f;
 
-    inline constexpr glm::vec3 CAMERA_OFFSET = glm::vec3(0.0f, 1.8f, 0.0f);
+    inline constexpr glm::vec3 CAMERA_OFFSET = {0.0f, 5.0f, 0.0f};
 
     inline constexpr glm::vec3 PLAYER_SPAWNS[4] = {
-        { -2.0f, 0.0f,  2.0f },
-        {  2.0f, 0.0f,  2.0f },
-        { -2.0f, 0.0f, -2.0f },
-        {  2.0f, 0.0f, -2.0f } 
+        { -3.0f, 0.5f,  3.0f },
+        {  3.0f, 0.5f,  3.0f },
+        { -3.0f, 0.5f, -3.0f },
+        {  3.0f, 0.5f, -3.0f } 
+    };
+
+    // Remove this when we stop using cubes for characters
+    inline constexpr glm::vec3 PLAYER_COLORS[4] = {
+        glm::vec3(1.0f, 0.8f, 0.9f),
+        glm::vec3(1.0, 0.78, 0.62),
+        glm::vec3(0.8, 0.7, 1.0),
+        glm::vec3(0.75, 0.9, 1.0)
     };
 }

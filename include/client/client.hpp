@@ -7,6 +7,7 @@
 #include "json.hpp"
 #include "camera.hpp"
 #include "cube.hpp"
+#include "scene.hpp"
 #include "shader.hpp"
 
 class Client {
@@ -20,28 +21,17 @@ public:
 private:
     bool connectToServer();
 
-    void render();
+    void receiveServerMessage();
+    void handleServerMessage(std::string message);
 
-    void handleServerMessage();
     void sendMessageToServer(const nlohmann::json& message);
-
-    void processInput();
-    void updateOtherPlayers();
-
-    void spawnPlayer(int id, const glm::vec3& pos);
 
     boost::asio::io_context ioContext;
     std::unique_ptr<boost::asio::ip::tcp::socket> socket;
 
     int clientId;
 
-    glm::vec3 position;
-    glm::vec3 velocity;
+    std::unordered_map<int, glm::vec3> playerPositions;
 
-    std::unordered_map<int, glm::vec3> otherPlayers;
-
-    std::unique_ptr<Cube> cube;
-
-    std::optional<Camera> camera;
-    std::unique_ptr<Shader> shader;
+    std::unique_ptr<Scene> scene;
 };

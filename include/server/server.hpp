@@ -26,6 +26,8 @@ private:
     void handleClient(std::shared_ptr<boost::asio::ip::tcp::socket> socket, int clientId);
     void handleClientDisconnect(int clientId);
 
+    void broadcastPlayerPositions();
+
     boost::asio::io_context ioContext;
     boost::asio::ip::tcp::acceptor acceptor;
 

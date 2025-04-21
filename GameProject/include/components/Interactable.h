@@ -3,15 +3,11 @@
 class Interactable
 {
 public:
-    Interactable(bool unlocks = false, bool opens = false, bool closes = false, bool moves = false);
+    Interactable();
     // Todo: implement destructor
     virtual ~Interactable() = default;
     // Todo: add more functions
-    virtual void interact() = 0; //Pure virtual function, 
-protected:
-    // Todo: add any other attributes, then update constructor
-	bool canUnlock;
-    bool canOpen;
-    bool canClose;
-    bool canMove;
+    void interact() = 0; //handles the input that riggers the handle event. 
+
+    virtual void handleInteract() = 0; //Pure virtual function, must be implemented by derived classes
 };

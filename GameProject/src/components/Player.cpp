@@ -24,6 +24,14 @@ void Player::setPosition(float x, float y, float z){
     // Todo: update facingDirection Variable
 }
 
+int Player::getCurRoomID() const {
+    return curRoomID;
+}
+
+void Player::setCurRoomID(int roomID){
+	curRoomID = roomID;
+}
+
 void Player::move(float x, float y){
     // Todo: smoothly move to x, y (w/ physics?) -- needs to call Server API to actually move there.
 }

@@ -6,6 +6,7 @@ struct Coord {
     float y;
     float z;
 };
+
 class Player
 {
 public:
@@ -24,6 +25,10 @@ public:
     void turn();
     void jump();
 
+    //get the player's current room ID. 
+    int getCurRoomID() const;
+    void setCurRoomID(int id);
+
 private:
     // Todo: add private attributes and functions
     std::string name;
@@ -32,4 +37,6 @@ private:
     // Todo: add `facingDirection` variable that keeps track of where the player is facing.
     /* called internally by the public facing move functions */
     void move(float x, float y);
+
+    int curRoomID; // ID of the room the player is currently in
 };

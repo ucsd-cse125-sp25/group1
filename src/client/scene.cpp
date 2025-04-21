@@ -7,32 +7,32 @@ Scene::Scene() {}
 Scene::~Scene() {}
 
 void Scene::init(int clientId) {
-    glm::vec3 cameraPos = config::PLAYER_SPAWNS[clientId] * 2.0f + config::CAMERA_OFFSET; // will change this later
-    camera.emplace(cameraPos);
-
     shader = std::make_unique<Shader>(
         "../src/client/shaders/basic.vert",
         "../src/client/shaders/basic.frag"
     );
     
     floor = std::make_unique<Cube>();
-
-    updatePlayerPosition(clientId, config::PLAYER_SPAWNS[clientId]);
 }
 
-void Scene::updatePlayerPosition(int id, const glm::vec3& position) {
-    if (players.contains(id)) {
-        players.at(id).position = position;
+void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
+    if (!players.contains(id)) {
+        players.emplace(id, Player(id, position, direction));
     } else {
-        players.emplace(id, Player(id, position));
+        players.at(id).position = position;
+        players.at(id).direction = direction;
     }
 }
 
-void Scene::render() {
+void Scene::removePlayer(int id) {
+    players.erase(id);
+}
+
+void Scene::render(const Camera& camera) {
     shader->use();
 
-    shader->setMat4("view", camera->getViewMatrix());
-    shader->setMat4("projection", camera->getProjectionMatrix());
+    shader->setMat4("view", camera.getViewMatrix());
+    shader->setMat4("projection", camera.getProjectionMatrix());
     shader->setVec3("color", glm::vec3(0.75f, 0.9f, 0.75f));
 
     glm::mat4 floorModel = glm::mat4(1.0f);

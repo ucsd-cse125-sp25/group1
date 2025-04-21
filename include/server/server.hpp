@@ -1,16 +1,11 @@
 #pragma once
 
 #include <boost/asio.hpp>
+#include <deque>
 #include <glm/glm.hpp>
 #include <memory>
+#include <mutex>
 #include <unordered_map>
-
-enum class PlayerState {
-    Connected,
-    Ready,
-    Playing,
-    Disconnected
-};
 
 class Server {
 public:
@@ -23,15 +18,24 @@ public:
 private:
     int findAvailableId();
     void acceptConnections();
-    void handleClient(std::shared_ptr<boost::asio::ip::tcp::socket> socket, int clientId);
+    void handleClientJoin(int clientId);
     void handleClientDisconnect(int clientId);
 
-    void broadcastPlayerPositions();
+    void listenToClient(int clientId);
+    void handleClientMessages();
+
+    void broadcastPlayerStates();
 
     boost::asio::io_context ioContext;
     boost::asio::ip::tcp::acceptor acceptor;
 
+    std::mutex mutex;
+
     std::unordered_map<int, std::shared_ptr<boost::asio::ip::tcp::socket>> clients;
-    std::unordered_map<int, PlayerState> playerStates;
+    std::unordered_map<int, boost::asio::streambuf> buffers;
+
     std::unordered_map<int, glm::vec3> playerPositions;
+    std::unordered_map<int, glm::vec3> playerDirections;
+
+    std::unordered_map<int, std::deque<std::string>> clientMessages;
 };

@@ -4,7 +4,7 @@
 
 class Camera {
 public:
-    Camera(const glm::vec3& position);
+    Camera();
 
     void setPosition(const glm::vec3& position);
     void setDirection(const glm::vec3& direction);

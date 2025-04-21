@@ -3,9 +3,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
 
-Camera::Camera(const glm::vec3& position)
-    : position(position),
-      direction(glm::normalize(-position)),
+Camera::Camera()
+    : position(0.0f),
+      direction(0.0f, 0.0f, 1.0f),
       up(0.0f, 1.0f, 0.0f),
       fovy(config::FOVY),
       aspect(static_cast<float>(config::WORLD_WIDTH) / config::WORLD_HEIGHT),

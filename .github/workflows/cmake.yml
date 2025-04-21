@@ -23,13 +23,13 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y cmake build-essential libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libxcursor-dev libxinerama-dev
 
-    - name: Create Build Directory
+    - name: Create Build directory
       run: mkdir -p build
 
     - name: Run CMake
       working-directory: ./build
       run: cmake ..
 
-    - name: Build with Make
+    - name: Build with CMake
       working-directory: ./build
       run: cmake --build . --parallel $(nproc)

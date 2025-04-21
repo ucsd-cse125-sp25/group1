@@ -7,7 +7,8 @@ public:
     // Todo: implement destructor
     virtual ~Interactable() = default;
     // Todo: add more functions
-    void interact() = 0; //handles the input that riggers the handle event. 
+    void interact(); //handles the input that riggers the handle event. 
 
+protected:
     virtual void handleInteract() = 0; //Pure virtual function, must be implemented by derived classes
 };

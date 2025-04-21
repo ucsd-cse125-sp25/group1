@@ -1,8 +1,20 @@
 cmake_minimum_required(VERSION 3.14)
 
+if("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_BINARY_DIR}")
+    message(FATAL_ERROR "
+    Please don't run CMake in the source folder.
+
+    Delete 'CMakeCache.txt' if it was created,
+    then run CMake in a separate 'build' folder.
+
+    If you're in the build folder and still see this,
+    delete any 'CMakeCache.txt' files outside the build folder.
+    ")
+endif()
+
 project(GameProject CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_BUILD_TYPE "RelWithDebInfo")
@@ -13,33 +25,10 @@ endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-include_directories(${CMAKE_SOURCE_DIR}/GameProject/include)
+add_subdirectory(dependencies/assimp)
+add_subdirectory(dependencies/boost)
+add_subdirectory(dependencies/glad)
+add_subdirectory(dependencies/glfw)
 
-file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/GameProject/src/*.cpp)
-add_executable(GameProject ${SRC_FILES})
-
-find_package(glfw3 QUIET)
-
-if(NOT glfw3_FOUND)
-    message(STATUS "Downloading GLFW...")
-
-    include(FetchContent)
-
-    FetchContent_Declare(glfw
-        GIT_REPOSITORY https://github.com/glfw/glfw.git
-        GIT_TAG        3.3.10
-    )
-
-    FetchContent_MakeAvailable(glfw)
-endif()
-
-target_link_libraries(GameProject PRIVATE glfw)
-
-if(WIN32)
-    target_link_libraries(GameProject PRIVATE opengl32)
-elseif(APPLE)
-    target_link_libraries(GameProject PRIVATE "-framework OpenGL")
-else()
-    find_package(OpenGL REQUIRED)
-    target_link_libraries(GameProject PRIVATE OpenGL::GL)
-endif()
+add_subdirectory(src/client)
+add_subdirectory(src/server)

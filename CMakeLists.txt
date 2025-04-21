@@ -14,7 +14,7 @@ endif()
 
 project(GameProject CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_BUILD_TYPE "RelWithDebInfo")
@@ -25,24 +25,10 @@ endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
-file(GLOB_RECURSE SRC_FILES ${CMAKE_SOURCE_DIR}/GameProject/src/*.cpp)
-add_executable(GameProject ${SRC_FILES})
-
+add_subdirectory(dependencies/assimp)
+add_subdirectory(dependencies/boost)
 add_subdirectory(dependencies/glad)
 add_subdirectory(dependencies/glfw)
 
-target_link_libraries(GameProject PRIVATE glad glfw)
-
-target_include_directories(GameProject PRIVATE
-    ${CMAKE_SOURCE_DIR}/GameProject/include
-    ${CMAKE_SOURCE_DIR}/dependencies/glm
-)
-
-if(WIN32)
-    target_link_libraries(GameProject PRIVATE opengl32)
-elseif(APPLE)
-    target_link_libraries(GameProject PRIVATE "-framework OpenGL")
-else()
-    find_package(OpenGL REQUIRED)
-    target_link_libraries(GameProject PRIVATE OpenGL::GL)
-endif()
+add_subdirectory(src/client)
+add_subdirectory(src/server)

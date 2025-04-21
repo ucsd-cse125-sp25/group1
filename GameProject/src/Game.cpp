@@ -6,6 +6,8 @@
 Game::Game() {
     gameWindow = new GameWindow(1600, 900);
     graphicsEngine = new GEngine();
+    gameDurationSeconds = 600.0f;  // game lasts 10 minutes
+    timeRemaining = gameDurationSeconds;
 }
 
 Game::~Game() {
@@ -49,6 +51,15 @@ void Game::onCreate() {
 }
 
 void Game::run(){
+    /* Update timer value */
+    float timeElapsed = static_cast<float>(glfwGetTime()); // Get time since last frame
+    glfwSetTime(0.0); // Reset the time so next `timeElapsed` calculation is accurate
+    timeRemaining -= timeElapsed;
+    if (timeRemaining <= 0.0f){
+        timeRemaining = 0.0f
+        // TODO: add logic to end the game
+    }
+
     /* Render here */
     glClear(GL_COLOR_BUFFER_BIT);
 
@@ -56,6 +67,7 @@ void Game::run(){
     graphicsEngine->setVertexArrayObject(triangleVAO); //Bind VAO
     graphicsEngine->setShaderProgram(shader); // 
     graphicsEngine->drawTriangles(3, 0);
+    // TODO: render timer showing timeRemaining seconds
 
     gameWindow->update();
 

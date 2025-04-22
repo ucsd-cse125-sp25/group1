@@ -28,6 +28,6 @@ private:
 
     float fovy;
     float aspect;
-    float near;
-    float far;
+    float nearClip;
+    float farClip;
 };

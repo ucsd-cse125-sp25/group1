@@ -9,8 +9,8 @@ Camera::Camera()
       up(0.0f, 1.0f, 0.0f),
       fovy(config::FOVY),
       aspect(static_cast<float>(config::WORLD_WIDTH) / config::WORLD_HEIGHT),
-      near(config::NEAR),
-      far(config::FAR) {}
+      near(config::NEAR_CLIP),
+      far(config::FAR_CLIP) {}
 
 void Camera::setPosition(const glm::vec3& position) {
     this->position = position;

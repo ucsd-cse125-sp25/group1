@@ -9,8 +9,8 @@ Camera::Camera()
       up(0.0f, 1.0f, 0.0f),
       fovy(config::FOVY),
       aspect(static_cast<float>(config::WORLD_WIDTH) / config::WORLD_HEIGHT),
-      near(config::NEAR),
-      far(config::FAR) {}
+      nearClip(config::NEAR_CLIP),
+      farClip(config::FAR_CLIP) {}
 
 void Camera::setPosition(const glm::vec3& position) {
     this->position = position;
@@ -55,5 +55,5 @@ glm::mat4 Camera::getViewMatrix() const {
 }
 
 glm::mat4 Camera::getProjectionMatrix() const {
-    return glm::perspective(glm::radians(fovy), aspect, near, far);
+    return glm::perspective(glm::radians(fovy), aspect, nearClip, farClip);
 }

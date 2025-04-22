@@ -13,8 +13,8 @@ namespace config {
     inline constexpr float WORLD_HEIGHT = 900.0f;
 
     inline constexpr float FOVY = 45.0f;
-    inline constexpr float NEAR = 0.1f;
-    inline constexpr float FAR  = 100.0f;
+    inline constexpr float NEAR_CLIP = 0.1f;
+    inline constexpr float FAR_CLIP  = 100.0f;
 
     inline constexpr glm::vec3 CAMERA_OFFSET = {0.0f, 1.5f, 0.0f};
 

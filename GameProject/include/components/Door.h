@@ -1,22 +1,18 @@
+// Door.h
 #pragma once
-#include "Interactable.h"
+#include "Coord.h"
+#include <vector>
 
-class Door: public Interactable
-{
+
+class Door {
 public:
-	
-    // Todo: add constructor and destructor
-    Door(bool isLocked, bool isOpen, int destinationRoomId);
-    ~Door() override;
-    void interact() override;
-    // Todo: add a mapper to which room the door leads to
-
-    int getDestinationRoomID() const; // Accessor for the room it leads to
-    bool isLocked() const;
-    bool isOpen() const;
-
+    Door(Coord pos);
+    void draw(std::vector<std::vector<char>>& grid) const;
+    bool isAt(int x, int y) const;
+    bool open();   // returns true if it was closed and now opened
+    bool closed() const;
 private:
-	bool locked;
-    bool open;
-    int destinationRoomId;
+    Coord position;
+    bool locked = false;
+    bool opened = false;
 };

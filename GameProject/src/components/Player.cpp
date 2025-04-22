@@ -1,4 +1,4 @@
-#include "components/Player.h"
+#include "../../include/components/Player.h"
 
 Player::Player(const std:: string& playerName, Coord coordinates)
     : name(playerName), position(coordinates)  // initialize member variables with parameters
@@ -14,7 +14,8 @@ Player::~Player(){
 
 Coord Player::getPosition() const{
     // return shallow copy of position
-    return Coord {position.x, position.y, position.z};
+    //return Coord {position.x, position.y, position.z};
+    return position;
 }
 
 void Player::setPosition(float x, float y, float z){
@@ -24,8 +25,25 @@ void Player::setPosition(float x, float y, float z){
     // Todo: update facingDirection Variable
 }
 
-void Player::move(float x, float y){
-    // Todo: smoothly move to x, y (w/ physics?) -- needs to call Server API to actually move there.
+int Player::getCurRoomID() const {
+    return curRoomID;
+}
+
+void Player::setCurRoomID(int roomID){
+	curRoomID = roomID;
+}
+
+bool Player::move(int dx, int dy, int w, int h) {
+    int nx = position.x + dx;
+    int ny = position.y + dy;
+    if (nx < 0 || nx >= w || ny < 0 || ny >= h) return false;
+    position.x = nx; 
+    position.y = ny;
+    return true;
+}
+
+void Player::draw(std::vector<std::vector<char>>& grid) const {
+    grid[position.y][position.x] = '@';
 }
 
 void Player::moveForward(){

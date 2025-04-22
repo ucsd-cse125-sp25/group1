@@ -1,9 +1,13 @@
 #include "components/Interactable.h"
 
-Interactable::Interactable(bool unlocks, bool opens, bool closes, bool moves)
-    : canUnlock(unlocks), canOpen(opens), canClose(closes), canMove(moves)
+Interactable::Interactable()
 {
     // Todo: any other setup if necessary
 }
 
 // Todo: add other function definitions
+void Interactable::interact() {
+    //TODO: handle the user interaction input and then call handleInteraction implemented by the derived class
+
+    Interactable::handleInteract();
+}

@@ -1,32 +1,24 @@
-#include "components/Door.h"
+// Door.cpp
+#include "../../include/components/Door.h"
 
-// Todo: add other function definitions
+Door::Door(Coord pos) : position(pos) {}
 
-Door::Door(bool isLocked, bool isOpen, int destRoomId)
-    // Init interactions: Doors are always unlockable and openable, but not closeable or movable
-    : Interactable(true, true, false, false),
-      // init member variables for Door
-      locked(isLocked),
-      open(isOpen),
-      destinationRoomId(destRoomId)
-{
-    // Todo: any additional setup if necessary
+void Door::draw(std::vector<std::vector<char>>& grid) const {
+    char c = opened ? '/' : '+';
+    grid[position.y][position.x] = c;
 }
 
-Door::~Door(){
-    // Nothing todo yet; free any dynamically allocated in the future if added.
+bool Door::isAt(int x, int y) const {
+    return position.x == x && position.y == y;
 }
 
-int Door::getDestinationRoomID() const{
-    return destinationRoomId;
+// Try to open: succeeds if not already opened and not locked
+bool Door::open() {
+    if (!opened && !locked) {
+        opened = true;
+        return true;
+    }
+    return false;
 }
 
-bool Door::isLocked() const{
-    return locked;
-}
-
-bool Door::isOpen() const{
-    return open;
-}
-
-// Todo: override interact() function
+bool Door::closed() const { return !opened; }

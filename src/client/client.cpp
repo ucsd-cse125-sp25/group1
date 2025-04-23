@@ -184,11 +184,6 @@ bool Client::initWindow(GLFWwindow*& window) {
 
     glfwMakeContextCurrent(window);
 
-    int width, height;
-
-    glfwGetFramebufferSize(window, &width, &height);
-    glViewport(0, 0, width, height);
-
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize GLAD.\n";
         return false;

@@ -20,5 +20,7 @@ private:
 	GameWindow* gameWindow;
 	std::shared_ptr<OVertexArrayObject> triangleVAO;
 	std::shared_ptr<OShaderProgram> shader;
+	const float gameDurationSeconds; // How long a game lasts at most
+	float timeRemaining; // How long the players have left to escape
 };
 

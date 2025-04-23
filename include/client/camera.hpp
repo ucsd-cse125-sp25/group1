@@ -9,6 +9,7 @@ public:
     void setPosition(const glm::vec3& position);
     void setDirection(const glm::vec3& direction);
     void setUp(const glm::vec3& up);
+    void setAspect(float aspect);
 
     void move(const glm::vec3& delta);
     void moveForward(float distance);

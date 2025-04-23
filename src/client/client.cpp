@@ -5,6 +5,17 @@
 using tcp = boost::asio::ip::tcp;
 using json = nlohmann::json;
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+
+    Client* client = static_cast<Client*>(glfwGetWindowUserPointer(window));
+
+    if (client) {
+        float aspect = static_cast<float>(width) / height;
+        client->camera.setAspect(aspect);
+    }
+}
+
 Client::Client() : socket(std::make_unique<tcp::socket>(ioContext)) {}
 
 Client::~Client() {}
@@ -184,10 +195,22 @@ bool Client::initWindow(GLFWwindow*& window) {
 
     glfwMakeContextCurrent(window);
 
+    glfwSetWindowUserPointer(window, this);
+
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
         std::cerr << "Failed to initialize GLAD.\n";
         return false;
     }
+
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+    int width, height;
+    
+    glfwGetFramebufferSize(window, &width, &height);
+    glViewport(0, 0, width, height);
+
+    float aspect = static_cast<float>(width) / height;
+    camera.setAspect(aspect);
 
     return true;
 }

@@ -24,6 +24,10 @@ void Camera::setUp(const glm::vec3& up) {
     this->up = glm::normalize(up);
 }
 
+void Camera::setAspect(float aspect) {
+    this->aspect = aspect;
+}
+
 void Camera::move(const glm::vec3& delta) {
     position += delta;
 }

@@ -21,6 +21,8 @@ public:
     bool init();
     void run();
 
+    Camera camera;
+
 private:
     bool connectToServer();
 
@@ -49,5 +51,4 @@ private:
     std::unordered_set<int> disconnectedIds;
 
     std::unique_ptr<Scene> scene;
-    Camera camera;
 };

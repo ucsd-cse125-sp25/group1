@@ -119,6 +119,10 @@ private:
      *  @brief Main game rendering and update loop for 
      */
     void gameLoop(GLFWwindow* window);
+
+    /**
+     *  @brief Cleanup GLFW resoruces
+     */
     void cleanup(GLFWwindow* window);
 
     boost::asio::io_context ioContext;

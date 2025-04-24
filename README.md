@@ -2,7 +2,7 @@
 
 ## Setup Instructions
 
-Cmake of version 3.x is required to build the project. Cmake build will fail with cmake version 4.x.
+⚠️ Make sure you're using CMake 3.x (version 4.x won't work)
 
 ### 1. Initial Setup (First-Time Only)
 

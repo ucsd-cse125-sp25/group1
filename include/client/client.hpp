@@ -16,112 +16,109 @@
 class Client {
 public:
     /**
-     *  @brief Constructs the Client object and initialize TCP  
+     * @brief Constructs the Client object and initializes the TCP socket.
      */
     Client();
 
     /**
-     *  @brief Destructor for the Client object
+     * @brief Destructor for the Client object.
      */
     ~Client();
 
     /**
-     *  @brief Verifies initializations are setup
+     * @brief Initializes the client by connecting to the server.
      * 
-     * Verifies connection to server 
+     * Internally calls connectToServer().
      * 
-     * @return true if initialized correctly, false otherwise
+     * @return true if the connection is successful, false otherwise.
      */
     bool init();
 
     /**
-     *  @brief Main Execution method for Client 
+     * @brief Main execution method for the client.
      * 
-     * initializes window, GL, Scence
+     * Initializes the window, OpenGL context, and scene,
+     * then enters the main game loop and performs cleanup.
      */
     void run();
 
     /**
-     *  @brief Camera object representing player's cur position
+     * @brief First-person camera representing the player's view.
      */
     Camera camera;
 
 private:
     /**
-     *  @brief Sets up the connection with server
+     * @brief Establishes connection to the server and receives client ID.
      * 
-     * Connects to server, sets ClientId to Id received from server
-     * 
-     * @return true, if successfully connected to server, false otherwise
+     * @return true if successful, false otherwise.
      */
     bool connectToServer();
 
     /**
-     *  @brief Receive and extracts message from server and pass to handleServerMessage
-     * 
-     * Ensures valid Socket and attempts to read message from server and extract message
-     * 
+     * @brief Reads a complete message from the server and forwards it to handleServerMessage().
      */
     void receiveServerMessage();
 
     /**
-     *  @brief Handles the Message received from the Server
+     * @brief Handles server messages containing player state updates.
      * 
-     * Based on the "type" value of the messaged received from the server, 
-     *  resolve the server message accordingly
-     *
-     * @param message A JSON string containing updates from the server
+     * Parses a JSON message of type "player_states" containing the positions and directions
+     * of all currently connected players. Updates each player's state in the local data structures,
+     * and sets the current client's camera position.
+     * Also detects players who have disconnected, removes their data from local data structures,
+     * and marks them for removal from the scene.
+     * 
+     * @param message A newline-terminated JSON string received from the server.
      */
     void handleServerMessage(std::string message);
 
     /**
-     *  @brief Watch for Player inputs, and if sends input to   
+     * @brief Handles real-time player input and sends actions to the server.
      * 
-     *  Keys checked:
-     * - W / Up Arrow --> move_forward
-     * - S / Down Arrow  --> move_backward
-     * - A / Left Arrow  --> strafe_left
-     * - D / Right Arrow --> strafe_right
+     * Checks for specific key presses (WASD and arrow keys), maps them to movement actions,
+     * and constructs a JSON message containing the active actions. If any actions are detected,
+     * the message is sent to the server for processing.
      * 
-     * sends JSON string packet of { type: "input", actions : [array of acctions] } to server
-     * 
-     *  @param window Pointer to the active GLFW window used to query key states.
+     * @param window Pointer to the GLFW window used to poll key input.
      */
     void handlePlayerInput(GLFWwindow* window);
 
     /**
-     *  @brief Creates the Packed to send the provided message to the server
-     *
-     *  @param message A JSON string containing updates to send to server
+     * @brief Sends a message to the server over the TCP socket.
+     * 
+     * @param message A JSON message to send to the server.
      */
     void sendMessageToServer(const nlohmann::json& message);
 
     /**
-     *  @brief Initializes GLFW Window
+     * @brief Initializes the GLFW window and OpenGL.
      * 
-     *  @return true, if GLFW window successfully initialized, false otherwise
+     * @return true if successful, false otherwise.
      */
     bool initWindow(GLFWwindow*& window);
 
+    
     /**
-     *  @brief Initializes GL
+     * @brief Sets basic OpenGL settings.
      */
     void initGL();
 
     /**
-     *  @brief Initializes the Scene
+     * @brief Initializes the scene and sets up the player camera.
      * 
-     * Initialize the scence with camera at client's position
+     * Creates the scene instance and positions the camera for a first-person view,
+     * based on the client's spawn location and an initial viewing direction.
      */
     void initScene();
 
     /**
-     *  @brief Main game rendering and update loop for 
+     * @brief Main game loop for updates and rendering.
      */
     void gameLoop(GLFWwindow* window);
 
     /**
-     *  @brief Cleanup GLFW resoruces
+     * @brief Cleans up GLFW resources.
      */
     void cleanup(GLFWwindow* window);
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 
 struct Coord {
     float x;
@@ -25,6 +26,9 @@ public:
     void turn();
     void jump();
 
+    std::vector<int> getKeys() const;
+    void addKey(int keyID);
+    bool removeKey(int keyID);
     //get the player's current room ID. 
     int getCurRoomID() const;
     void setCurRoomID(int id);
@@ -39,4 +43,5 @@ private:
     void move(float x, float y);
 
     int curRoomID; // ID of the room the player is currently in
+    std::vector<int> keys;
 };

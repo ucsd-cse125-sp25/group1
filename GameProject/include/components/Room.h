@@ -8,7 +8,7 @@ class Room
 public:
     // Todo: add constructor and destructor
     Room(int id, const std::string& name = "Room");
-
+    ~Room();
     // Todo: add room functions and attributes
     void addInteractable(Interactable* object);
     void removeInteractable(Interactable* object);

@@ -2,6 +2,8 @@
 
 ## Setup Instructions
 
+Cmake of version 3.x is required to build the project. Cmake build will fail with cmake version 4.x.
+
 ### 1. Initial Setup (First-Time Only)
 
 Run these commands from the **project root directory**:

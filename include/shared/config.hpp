@@ -19,10 +19,10 @@ namespace config {
     inline constexpr glm::vec3 CAMERA_OFFSET = {0.0f, 1.5f, 0.0f};
 
     inline constexpr glm::vec3 PLAYER_SPAWNS[4] = {
-        { -3.0f, 0.5f,  3.0f },
-        {  3.0f, 0.5f,  3.0f },
-        { -3.0f, 0.5f, -3.0f },
-        {  3.0f, 0.5f, -3.0f } 
+        { -3.0f, 1.0f,  3.0f },
+        {  3.0f, 1.0f,  3.0f },
+        { -3.0f, 1.0f, -3.0f },
+        {  3.0f, 1.0f, -3.0f } 
     };
 
     // Remove this when we stop using cubes for characters
@@ -33,5 +33,8 @@ namespace config {
         glm::vec3(0.75, 0.9, 1.0)
     };
 
-    inline constexpr float PLAYER_SPEED = 0.2f;
+    inline constexpr float PLAYER_SPEED = 10.0f;
+    inline constexpr float PLAYER_WEIGHT = 10.0f;
+    inline constexpr float PLAYER_WIDTH = 1.0f;
+    inline constexpr float PLAYER_HEIGHT = 1.0f;
 }

@@ -165,7 +165,7 @@ void Server::handleClientMessages() {
 
 void Server::handlePhysics() {
     world.step(config::TICK_RATE * 0.001);
-    world.resolveCollisions(config::TICK_RATE * 0.001);
+    world.resolveCollisions();
 }
 
 void Server::broadcastPlayerStates() {

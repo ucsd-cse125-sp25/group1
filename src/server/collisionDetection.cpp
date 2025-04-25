@@ -1,4 +1,4 @@
-#include "CollisionDetection.hpp"
+#include "collisionDetection.hpp"
 
 using namespace std;
 using namespace glm;

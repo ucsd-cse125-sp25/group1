@@ -8,8 +8,8 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "Collider.hpp"
-#include "Transform.hpp"
+#include "collider.hpp"
+#include "transform.hpp"
 using namespace glm;
 
 #define ACCELERATION_GRAVITY -9.81f

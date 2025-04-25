@@ -1,4 +1,4 @@
-#include "World.hpp"
+#include "world.hpp"
 
 using namespace std;
 using namespace glm;

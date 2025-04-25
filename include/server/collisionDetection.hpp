@@ -7,9 +7,9 @@
  */
 #pragma once
 
-#include "RigidBody.hpp"
-#include "Transform.hpp"
-#include "Collider.hpp"
+#include "rigidBody.hpp"
+#include "transform.hpp"
+#include "collider.hpp"
 #include <algorithm>
 
 struct Collision {

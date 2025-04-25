@@ -130,6 +130,8 @@ static std::string mapKeyToAction(int key) {
         case GLFW_KEY_D:
         case GLFW_KEY_RIGHT:
             return "strafe_right";
+        case GLFW_KEY_SPACE:
+            return "jump";
         default:
             return "";
     }
@@ -140,7 +142,8 @@ void Client::handlePlayerInput(GLFWwindow* window) {
         GLFW_KEY_W, GLFW_KEY_UP,
         GLFW_KEY_S, GLFW_KEY_DOWN,
         GLFW_KEY_A, GLFW_KEY_LEFT,
-        GLFW_KEY_D, GLFW_KEY_RIGHT
+        GLFW_KEY_D, GLFW_KEY_RIGHT,
+        GLFW_KEY_SPACE
     };
 
     json message;

@@ -6,6 +6,8 @@
 #include <memory>
 #include <mutex>
 #include <unordered_map>
+#include "world.hpp"
+#include "player.hpp"
 
 class Server {
 public:
@@ -23,7 +25,7 @@ private:
 
     void listenToClient(int clientId);
     void handleClientMessages();
-
+    void handlePhysics();
     void broadcastPlayerStates();
 
     boost::asio::io_context ioContext;
@@ -34,8 +36,8 @@ private:
     std::unordered_map<int, std::shared_ptr<boost::asio::ip::tcp::socket>> clients;
     std::unordered_map<int, boost::asio::streambuf> buffers;
 
-    std::unordered_map<int, glm::vec3> playerPositions;
-    std::unordered_map<int, glm::vec3> playerDirections;
+    World world;
+    std::unordered_map<int, Player *> players;
 
     std::unordered_map<int, std::deque<std::string>> clientMessages;
 };

@@ -16,6 +16,22 @@ Server::~Server() {}
 
 bool Server::init() {
     std::cout << "IP Address: " << config::SERVER_IP << "\nPort: " << config::SERVER_PORT << "\n";
+
+    // add floor to world
+    RigidBody* floor = new RigidBody(
+        vec3(0.0f),
+        vec3(0.0f),
+        0.0f,
+        new Transform{ vec3(0.0f), vec3(0.0f) },
+        new BoxCollider{
+            AABB,
+            vec3(-10.0f, -1.0f, -10.0f),
+            vec3(10.0f, 0.0f, 10.0f)
+        },
+        true
+    );
+    world.addObject(floor);
+
     return true;
 }
 
@@ -63,10 +79,12 @@ void Server::handleClientJoin(int clientId) {
     boost::asio::write(*socket, boost::asio::buffer(packet));
 
     glm::vec3 position = config::PLAYER_SPAWNS[clientId];
-    playerPositions[clientId] = position;
-
     glm::vec3 direction = glm::normalize(glm::vec3(-position.x, 0.0f, -position.z)); // will change this later
-    playerDirections[clientId] = direction;
+    Player * player = new Player(to_string(clientId), 0, position, direction);
+    players[clientId] = player;
+
+    // add player to physics world
+    world.addObject(&(player->getBody()));
 }
 
 void Server::handleClientDisconnect(int clientId) {
@@ -78,8 +96,7 @@ void Server::handleClientDisconnect(int clientId) {
         it->second->close();
         clients.erase(it);
         
-        playerPositions.erase(clientId);
-        playerDirections.erase(clientId);
+        players.erase(clientId);
         
         buffers.erase(clientId);
         clientMessages.erase(clientId);
@@ -134,24 +151,21 @@ void Server::handleClientMessages() {
             if (type == "input") {
                 const auto& actions = parsed["actions"];
 
-                glm::vec3 direction = playerDirections[clientId];
+                glm::vec3 direction = players[clientId]->getBody().getDirection();
                 glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
                 glm::vec3 right = glm::normalize(glm::cross(direction, up));
 
                 for (const std::string& action : actions) {
-                    if (action == "move_forward") {
-                        playerPositions[clientId] += direction * config::PLAYER_SPEED;
-                    } else if (action == "move_backward") {
-                        playerPositions[clientId] -= direction * config::PLAYER_SPEED;
-                    } else if (action == "strafe_left") {
-                        playerPositions[clientId] -= right * config::PLAYER_SPEED;
-                    } else if (action == "strafe_right") {
-                        playerPositions[clientId] += right * config::PLAYER_SPEED;
-                    }
+                    players[clientId]->handleInput(action);
                 }
             }
         }
     }
+}
+
+void Server::handlePhysics() {
+    world.step(config::TICK_RATE * 0.001);
+    world.resolveCollisions();
 }
 
 void Server::broadcastPlayerStates() {
@@ -161,8 +175,11 @@ void Server::broadcastPlayerStates() {
         json message;
         message["type"] = "player_states";
 
-        for (const auto& [id, position] : playerPositions) {
-            const auto& direction = playerDirections.at(id);
+        for (const auto& [id, player] : players) {
+            vec3 position = player->getBody().getPosition();
+            vec3 direction = player->getBody().getDirection();
+            // WARNING: Completely deletes all horizontal motion
+            player->getBody().setVelocity(vec3(0.0f, player->getBody().getVelocity().y, 0.0f));
 
             json entry;
             entry["id"] = id;
@@ -192,6 +209,7 @@ void Server::run() {
             auto start = Clock::now();
 
             handleClientMessages();
+            handlePhysics();
             broadcastPlayerStates();
 
             auto end = Clock::now();

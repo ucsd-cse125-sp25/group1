@@ -7,6 +7,7 @@
 #include "camera.hpp"
 #include "config.hpp"
 #include "cube.hpp"
+#include "model.hpp"
 #include "shader.hpp"
 
 struct Player {
@@ -57,8 +58,10 @@ public:
 
 private:
     std::unique_ptr<Shader> shader;
-    
-    std::unique_ptr<Cube> floor;
+    std::unique_ptr<Shader> modelShader;
+
+    std::unique_ptr<Model> room;
+    std::unique_ptr<Model> table;
 
     std::unordered_map<int, Player> players;
 };

@@ -75,6 +75,7 @@ void Client::receiveServerMessage() {
         }
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";
+        exit(1);
     }
 }
 

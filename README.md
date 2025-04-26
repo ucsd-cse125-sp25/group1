@@ -2,6 +2,8 @@
 
 ## Setup Instructions
 
+⚠️ Make sure you're using CMake 3.x (version 4.x won't work)
+
 ### 1. Initial Setup (First-Time Only)
 
 Run these commands from the **project root directory**:

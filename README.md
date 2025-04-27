@@ -81,6 +81,6 @@ cmake --build .
   - Press **Space** to jump.
 
 - **Esc Key**
-  - The game starts with the mouse locked and the cursor hidden (you can change direction with the mouse).
-  - Press **Esc** to unlock the mouse and show the cursor (you cannot change direction when unlocked).
-  - Press **Esc** again to lock the mouse and re-enable mouse input for camera control.
+  - The game starts with the mouse locked and the cursor hidden (you can control where you look and face).
+  - Press **Esc** to unlock the mouse and show the cursor (mouse input is disabled).
+  - Press **Esc** again to lock the mouse and re-enable mouse input.

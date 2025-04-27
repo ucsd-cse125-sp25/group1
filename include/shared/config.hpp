@@ -16,7 +16,10 @@ namespace config {
     inline constexpr float NEAR_CLIP = 0.1f;
     inline constexpr float FAR_CLIP  = 100.0f;
 
-    inline constexpr glm::vec3 CAMERA_OFFSET = {0.0f, 1.5f, 0.0f};
+    inline constexpr float MAX_PITCH = 89.0f;
+    inline constexpr float MIN_PITCH = -89.0f;
+
+    inline constexpr glm::vec3 CAMERA_OFFSET = {0.0f, 3.0f, 0.0f};
 
     inline constexpr glm::vec3 PLAYER_SPAWNS[4] = {
         { -3.0f, 1.0f,  3.0f },
@@ -37,4 +40,6 @@ namespace config {
     inline constexpr float PLAYER_WEIGHT = 10.0f;
     inline constexpr float PLAYER_WIDTH = 1.0f;
     inline constexpr float PLAYER_HEIGHT = 1.0f;
+
+    inline constexpr float MOUSE_SENSITIVITY = 0.1f;
 }

@@ -7,6 +7,7 @@ target_include_directories(client PRIVATE
     ${CMAKE_SOURCE_DIR}/include/shared
     ${CMAKE_SOURCE_DIR}/dependencies/glm
     ${CMAKE_SOURCE_DIR}/dependencies/json
+    ${CMAKE_SOURCE_DIR}/dependencies/stb
 )
 
 target_link_libraries(client PRIVATE

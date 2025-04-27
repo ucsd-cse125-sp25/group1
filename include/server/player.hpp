@@ -59,7 +59,7 @@ public:
     RigidBody& getBody();
 
     /**
-     * @brief Handles player input actions by adjusting the player's velocity accordingly.
+     * @brief Handles player keyboard input actions by adjusting the player's velocity accordingly.
      *
      * Processes movement commands ("move_forward", "move_backward", "strafe_left", "strafe_right")
      * by projecting the player's movement direction onto the appropriate axis and applying
@@ -72,7 +72,9 @@ public:
      *
      * @param action String representing the player action to handle.
      */
-    void handleInput(string input);
+    void handleKeyboardInput(string action);
+
+    void handleMouseInput(glm::vec3 direction);
 
 private:
     string name;

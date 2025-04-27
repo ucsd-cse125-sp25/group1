@@ -2,7 +2,7 @@
 
 ## Setup Instructions
 
-⚠️ Make sure you're using CMake 3.x (version 4.x won't work)
+⚠️ Make sure you're using CMake 3.x (version 4.x won't work).
 
 ### 1. Initial Setup (First-Time Only)
 
@@ -66,3 +66,21 @@ cmake --build .
 ./Debug/server.exe
 ./Debug/client.exe
 ```
+
+## Controls
+
+- **Mouse Movement**
+  - Move the mouse up or down to look up and down.
+  - Move the mouse left or right to look around and rotate the player's facing direction.
+
+- **Keyboard Movement**
+  - Use **W** / **Up Arrow** to move forward.
+  - Use **S** / **Down Arrow** to move backward.
+  - Use **A** / **Left Arrow** to strafe left.
+  - Use **D** / **Right Arrow** to strafe right.
+  - Press **Space** to jump.
+
+- **Esc Key**
+  - The game starts with the mouse locked and the cursor hidden (you can control where you look and face).
+  - Press **Esc** to unlock the mouse and show the cursor (mouse input is disabled).
+  - Press **Esc** again to lock the mouse and re-enable mouse input.

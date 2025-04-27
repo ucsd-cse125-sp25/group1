@@ -82,6 +82,17 @@ private:
      */
     void handleServerMessage(std::string message);
 
+    /**
+     * @brief Toggles the mouse lock state when the Esc key is pressed.
+     * 
+     * Checks if the Esc key was newly pressed. If so:
+     * - If the mouse is currently locked (cursor hidden), it unlocks the mouse, shows the cursor, and disables mouse input.
+     * - If the mouse is currently unlocked (cursor visible), it locks the mouse, hides the cursor, and re-enables mouse input.
+     * 
+     * This only triggers once per key press to prevent repeated toggling while holding down Esc.
+     * 
+     * @param window A pointer to the GLFW window.
+     */
     void handleEscInput(GLFWwindow* window);
 
     /**
@@ -95,6 +106,16 @@ private:
      */
     void handleKeyboardInput(GLFWwindow* window);
 
+    /**
+     * @brief Sends the player's facing direction to the server based on the current yaw.
+     * 
+     * If the mouse is locked, this function:
+     * - Converts the current yaw value into a normalized direction vector.
+     * - Creates a "mouse_input" JSON message containing the direction.
+     * - Sends the message to the server to update the player's facing direction.
+     * 
+     * Does nothing if the mouse is currently unlocked.
+     */
     void handleMouseInput();
 
     /**
@@ -111,7 +132,6 @@ private:
      */
     bool initWindow(GLFWwindow*& window);
 
-    
     /**
      * @brief Sets basic OpenGL settings.
      */

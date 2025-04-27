@@ -6,7 +6,7 @@
 Scene::Scene() {}
 Scene::~Scene() {}
 
-void Scene::init(int clientId) {
+void Scene::init() {
     shader = std::make_unique<Shader>(
         "../src/client/shaders/basic.vert",
         "../src/client/shaders/basic.frag"

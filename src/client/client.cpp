@@ -37,7 +37,7 @@ void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos) {
     client->lastMouseY = ypos;
 
     client->yaw += xoffset;
-    client->pitch += yoffset;
+    client->pitch -= yoffset;
 
     if (client->pitch > config::MAX_PITCH) {
         client->pitch = config::MAX_PITCH;

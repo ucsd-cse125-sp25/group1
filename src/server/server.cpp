@@ -137,29 +137,31 @@ void Server::listenToClient(int clientId) {
     );
 }
 
+static glm::vec3 toVec3(json arr) {
+    return glm::vec3(arr[0], arr[1], arr[2]);
+}
+
 void Server::handleClientMessages() {
     std::lock_guard<std::mutex> lock(mutex);
 
     for (auto& [clientId, messages] : clientMessages) {
-        if (!messages.empty()) {
-            std::string message = messages.front();
-            messages.pop_front();
-
+        for (const auto& message : messages) { // process all the messages
             json parsed = json::parse(message);
             std::string type = parsed.value("type", "");
 
-            if (type == "input") {
+            if (type == "keyboard_input") {
                 const auto& actions = parsed["actions"];
 
-                glm::vec3 direction = players[clientId]->getBody().getDirection();
-                glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-                glm::vec3 right = glm::normalize(glm::cross(direction, up));
-
                 for (const std::string& action : actions) {
-                    players[clientId]->handleInput(action);
+                    players[clientId]->handleKeyboardInput(action);
                 }
+            } else if (type == "mouse_input") {
+                glm::vec3 direction = toVec3(parsed["direction"]);
+                players[clientId]->handleMouseInput(direction);
             }
         }
+
+        messages.clear();
     }
 }
 

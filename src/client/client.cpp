@@ -10,13 +10,65 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 
     Client* client = static_cast<Client*>(glfwGetWindowUserPointer(window));
 
-    if (client) {
-        float aspect = static_cast<float>(width) / height;
-        client->camera.setAspect(aspect);
-    }
+    if (!client) return;
+
+    float aspect = static_cast<float>(width) / height;
+    client->camera.setAspect(aspect);
 }
 
-Client::Client() : socket(std::make_unique<tcp::socket>(ioContext)) {}
+void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos) {
+    Client* client = static_cast<Client*>(glfwGetWindowUserPointer(window));
+
+    if (!client) return;
+
+    if (!client->isMouseLocked) return;
+
+    if (client->isFirstMouse) {
+        client->lastMouseX = xpos;
+        client->lastMouseY = ypos;
+        client->isFirstMouse = false;
+        return;
+    }
+
+    float xoffset = static_cast<float>(xpos - client->lastMouseX) * config::MOUSE_SENSITIVITY;
+    float yoffset = static_cast<float>(ypos - client->lastMouseY) * config::MOUSE_SENSITIVITY;
+
+    client->lastMouseX = xpos;
+    client->lastMouseY = ypos;
+
+    client->yaw += xoffset;
+    client->pitch += yoffset;
+
+    if (client->pitch > config::MAX_PITCH) {
+        client->pitch = config::MAX_PITCH;
+    } else if (client->pitch < config::MIN_PITCH) {
+        client->pitch = config::MIN_PITCH;
+    }
+
+    glm::vec3 cameraDir;
+    cameraDir.x = cos(glm::radians(client->yaw)) * cos(glm::radians(client->pitch));
+    cameraDir.y = sin(glm::radians(client->pitch));
+    cameraDir.z = sin(glm::radians(client->yaw)) * cos(glm::radians(client->pitch));
+    client->camera.setDirection(glm::normalize(cameraDir));
+}
+
+static float directionToYaw(const glm::vec3& direction) {
+    return glm::degrees(atan2(direction.z, direction.x));
+}
+
+static glm::vec3 yawToDirection(float yaw) {
+    float rad = glm::radians(yaw);
+    return glm::normalize(glm::vec3(cos(rad), 0.0f, sin(rad)));
+}
+
+Client::Client()
+    : socket(std::make_unique<tcp::socket>(ioContext)),
+      isMouseLocked(true),
+      lastMouseX(0.0),
+      lastMouseY(0.0),
+      isFirstMouse(true),
+      yaw(0.0f),
+      pitch(0.0f) {}
 
 Client::~Client() {}
 
@@ -103,7 +155,6 @@ void Client::handleServerMessage(std::string message) {
 
             if (id == clientId) {
                 camera.setPosition(position + config::CAMERA_OFFSET);
-                // will update direction in the future
             }
         }
 
@@ -138,7 +189,27 @@ static std::string mapKeyToAction(int key) {
     }
 }
 
-void Client::handlePlayerInput(GLFWwindow* window) {
+void Client::handleEscInput(GLFWwindow* window) {
+    static bool wasEscPressed = false;
+
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+        if (!wasEscPressed) {
+            isMouseLocked = !isMouseLocked;
+
+            if (isMouseLocked) {
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                isFirstMouse = true;
+            } else {
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            }
+        }
+        wasEscPressed = true;
+    } else {
+        wasEscPressed = false;
+    } 
+}
+
+void Client::handleKeyboardInput(GLFWwindow* window) {
     static const std::vector<int> keysToCheck = {
         GLFW_KEY_W, GLFW_KEY_UP,
         GLFW_KEY_S, GLFW_KEY_DOWN,
@@ -149,7 +220,7 @@ void Client::handlePlayerInput(GLFWwindow* window) {
 
     json message;
     
-    message["type"] = "input";
+    message["type"] = "keyboard_input";
     message["actions"] = json::array();
 
     for (const int& key : keysToCheck) {
@@ -165,6 +236,19 @@ void Client::handlePlayerInput(GLFWwindow* window) {
     if (!message["actions"].empty()) {
         sendMessageToServer(message);
     }
+}
+
+void Client::handleMouseInput() {
+    if (!isMouseLocked) return;
+
+    glm::vec3 direction = yawToDirection(yaw);
+    
+    json message;
+
+    message["type"] = "mouse_input";
+    message["direction"] = { direction.x, direction.y, direction.z };
+
+    sendMessageToServer(message);
 }
 
 void Client::sendMessageToServer(const json& message) {
@@ -207,9 +291,11 @@ bool Client::initWindow(GLFWwindow*& window) {
     }
 
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(window, cursor_pos_callback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // lock & hide the cursor
 
     int width, height;
-    
+
     glfwGetFramebufferSize(window, &width, &height);
     glViewport(0, 0, width, height);
 
@@ -235,6 +321,7 @@ void Client::initScene() {
 
     camera.setPosition(position + config::CAMERA_OFFSET);
     camera.setDirection(direction);
+    yaw = directionToYaw(direction);
 }
 
 void Client::gameLoop(GLFWwindow* window) {
@@ -242,7 +329,10 @@ void Client::gameLoop(GLFWwindow* window) {
         glClearColor(0.75f, 0.9f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        handlePlayerInput(window);
+        handleEscInput(window);
+        handleKeyboardInput(window);
+        handleMouseInput();
+
         receiveServerMessage();
 
         for (const auto& [id, position] : playerPositions) {

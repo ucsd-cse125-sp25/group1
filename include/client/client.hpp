@@ -23,13 +23,25 @@ public:
 
     Camera camera;
 
+    bool isMouseLocked;
+
+    double lastMouseX;
+    double lastMouseY;
+    bool isFirstMouse;
+
+    float yaw;
+    float pitch;
+
 private:
     bool connectToServer();
 
     void receiveServerMessage();
     void handleServerMessage(std::string message);
 
-    void handlePlayerInput(GLFWwindow* window);
+    void handleEscInput(GLFWwindow* window);
+    void handleKeyboardInput(GLFWwindow* window);
+    void handleMouseInput();
+    
     void sendMessageToServer(const nlohmann::json& message);
 
     bool initWindow(GLFWwindow*& window);

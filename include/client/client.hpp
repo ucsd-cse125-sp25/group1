@@ -13,15 +13,21 @@
 #include "scene.hpp"
 #include "shader.hpp"
 
+/**
+ * @brief Handles client-side networking, input, and rendering.
+ * 
+ * Connects to the server, processes player input and server updates,
+ * manages the local scene, and renders the game view.
+ */
 class Client {
 public:
     /**
-     * @brief Constructs the Client object and initializes the TCP socket.
+     * @brief Constructs a Client instance and initializes the TCP socket.
      */
     Client();
 
     /**
-     * @brief Destructor for the Client object.
+     * @brief Destroys the Client instance.
      */
     ~Client();
 
@@ -47,14 +53,14 @@ public:
      */
     Camera camera;
 
-    bool isMouseLocked;
+    bool isMouseLocked;     // True if the mouse is locked inside the window.
 
-    double lastMouseX;
-    double lastMouseY;
-    bool isFirstMouse;
+    double lastMouseX;      // Last mouse X position.
+    double lastMouseY;      // Last mouse Y position.
+    bool isFirstMouse;      // True if this is the first mouse movement. (Helps avoid a big jump when starting.)
 
-    float yaw;
-    float pitch;
+    float yaw;              // Left-right rotation of the camera.
+    float pitch;            // Up-down rotation of the camera.
 
 private:
     /**

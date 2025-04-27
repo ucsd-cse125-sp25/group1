@@ -314,7 +314,7 @@ void Client::initGL() {
 
 void Client::initScene() {
     scene = std::make_unique<Scene>();
-    scene->init(clientId);
+    scene->init();
 
     glm::vec3 position = config::PLAYER_SPAWNS[clientId];
     glm::vec3 direction = glm::normalize(glm::vec3(-position.x, 0.0f, -position.z)); // will change this later

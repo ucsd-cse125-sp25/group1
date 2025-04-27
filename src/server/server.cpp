@@ -10,7 +10,9 @@ using tcp = boost::asio::ip::tcp;
 using json = nlohmann::json;
 using Clock = std::chrono::steady_clock;
 
-Server::Server() : acceptor(ioContext, tcp::endpoint(tcp::v4(), config::SERVER_PORT)) {}
+Server::Server()
+    : acceptor(ioContext, tcp::endpoint(tcp::v4(), config::SERVER_PORT)),
+      tickTimer(ioContext) {}
 
 Server::~Server() {}
 
@@ -49,8 +51,6 @@ void Server::acceptConnections() {
         acceptConnections();
 
         if (!ec) {
-            std::lock_guard<std::mutex> lock(mutex);
-
             int clientId = findAvailableId();
 
             if (clientId != -1) {
@@ -88,8 +88,6 @@ void Server::handleClientJoin(int clientId) {
 }
 
 void Server::handleClientDisconnect(int clientId) {
-    std::lock_guard<std::mutex> lock(mutex);
-    
     auto it = clients.find(clientId);
 
     if (it != clients.end()) {
@@ -116,17 +114,13 @@ void Server::listenToClient(int clientId) {
             if (!ec) {
                 std::string message;
 
-                {
-                    std::lock_guard<std::mutex> lock(mutex);
+                if (!clients.contains(clientId)) return;
 
-                    if (!clients.contains(clientId)) return;
+                std::istream is(&buffers[clientId]);
+                std::getline(is, message);
 
-                    std::istream is(&buffers[clientId]);
-                    std::getline(is, message);
-
-                    if (!message.empty()) {
-                        clientMessages[clientId].push_back(message);
-                    }
+                if (!message.empty()) {
+                    clientMessages[clientId].push_back(message);
                 }
 
                 listenToClient(clientId);
@@ -137,13 +131,24 @@ void Server::listenToClient(int clientId) {
     );
 }
 
+void Server::startTick() {
+    tickTimer.expires_after(std::chrono::milliseconds(config::TICK_RATE));
+    tickTimer.async_wait([this](const boost::system::error_code& ec) {
+        if (!ec) {
+            handleClientMessages();
+            handlePhysics();
+            broadcastPlayerStates();
+
+            startTick();
+        }
+    });
+}
+
 static glm::vec3 toVec3(json arr) {
     return glm::vec3(arr[0], arr[1], arr[2]);
 }
 
 void Server::handleClientMessages() {
-    std::lock_guard<std::mutex> lock(mutex);
-
     for (auto& [clientId, messages] : clientMessages) {
         for (const auto& message : messages) { // process all the messages
             json parsed = json::parse(message);
@@ -171,8 +176,6 @@ void Server::handlePhysics() {
 }
 
 void Server::broadcastPlayerStates() {
-    std::lock_guard<std::mutex> lock(mutex);
-
     for (const auto& [clientId, socket] : clients) {
         json message;
         message["type"] = "player_states";
@@ -205,24 +208,7 @@ void Server::run() {
     std::cout << "Server is running...\n";
 
     acceptConnections();
-
-    std::thread([this]() {
-        while (true) {
-            auto start = Clock::now();
-
-            handleClientMessages();
-            handlePhysics();
-            broadcastPlayerStates();
-
-            auto end = Clock::now();
-            auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-            int waitTime = config::TICK_RATE - elapsed;
-
-            if (waitTime > 0) {
-                std::this_thread::sleep_for(std::chrono::milliseconds(waitTime));
-            }
-        }
-    }).detach();
+    startTick();
 
     try {
         ioContext.run();

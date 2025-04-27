@@ -33,17 +33,36 @@ void Player::setCurRoomID(int roomID){
 	curRoomID = roomID;
 }
 
-bool Player::move(int dx, int dy, int w, int h) {
+bool Player::move(int dx, int dy, std::vector<std::vector<char>>& map) {
     int nx = position.x + dx;
     int ny = position.y + dy;
-    if (nx < 0 || nx >= w || ny < 0 || ny >= h) return false;
+    if (map[ny][nx] == '#') {
+        return false;
+    }
     position.x = nx; 
     position.y = ny;
     return true;
 }
 
-void Player::draw(std::vector<std::vector<char>>& grid) const {
-    grid[position.y][position.x] = '@';
+std::vector<int> Player::getKeys() const{
+    return keys;
+}
+
+void Player::draw(std::vector<std::vector<char>>& map) const {
+    map[position.y][position.x] = '@';
+}
+
+void Player::addKey(int keyID){
+    keys.push_back(keyID);
+}
+
+bool Player::removeKey(int keyID){
+    auto iterator = std::find(keys.begin(), keys.end(), keyID);
+    if (iterator != keys.end()) {
+        keys.erase(iterator);
+        return true;  // removed
+    }
+    return false; // not found
 }
 
 void Player::moveForward(){

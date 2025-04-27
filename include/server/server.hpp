@@ -24,14 +24,16 @@ private:
     void handleClientDisconnect(int clientId);
 
     void listenToClient(int clientId);
+
+    void startTick();
+
     void handleClientMessages();
     void handlePhysics();
     void broadcastPlayerStates();
 
     boost::asio::io_context ioContext;
     boost::asio::ip::tcp::acceptor acceptor;
-
-    std::mutex mutex;
+    boost::asio::steady_timer tickTimer;
 
     std::unordered_map<int, std::shared_ptr<boost::asio::ip::tcp::socket>> clients;
     std::unordered_map<int, boost::asio::streambuf> buffers;

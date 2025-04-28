@@ -41,7 +41,6 @@ void Scene::render(const Camera& camera) {
     modelShader->setMat4("projection", camera.getProjectionMatrix());
 
     glm::mat4 roomModel = glm::mat4(1.0f);
-    roomModel = glm::translate(roomModel, glm::vec3(0.0f, -0.1f, 0.0f)); // remove this later
     modelShader->setMat4("model", roomModel);
     room->draw(*modelShader);
 

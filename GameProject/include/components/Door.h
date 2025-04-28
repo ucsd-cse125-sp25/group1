@@ -4,19 +4,17 @@
 class Door: public Interactable
 {
 public:
-	
     // Todo: add constructor and destructor
-    Door(bool isLocked, bool isOpen, int destinationRoomId);
-    ~Door() override;
-    void interact() override;
-    // Todo: add a mapper to which room the door leads to
-
-    int getDestinationRoomID() const; // Accessor for the room it leads to
+    Door(int doorID, int room1, int room2 /*TODO: add rigidBody for server*/); // doors without locks
+    Door(int doorID, int room1, int room2, int keyID /*TODO: add rigidBody for server*/); // locked doors
+    ~Door();
+    void interact();
+    int getDestinationRoomID(int currRoomID) const; // Accessor for the room it leads to
     bool isLocked() const;
     bool isOpen() const;
-
 private:
+    int doorID;
 	bool locked;
     bool open;
-    int destinationRoomId;
+    int rooms[2];
 };

@@ -32,6 +32,22 @@ void Player::setCurRoomID(int roomID){
 	curRoomID = roomID;
 }
 
+std::vector<int> Player::getKeys() const{
+    return keys;
+}
+
+void Player::addKey(int keyID){
+    keys.push_back(keyID);
+}
+bool Player::removeKey(int keyID){
+    auto iterator = std::find(keys.begin(), keys.end(), keyID);
+    if (iterator != keys.end()) {
+        keys.erase(iterator);
+        return true;  // removed
+    }
+    return false; // not found
+}
+
 void Player::move(float x, float y){
     // Todo: smoothly move to x, y (w/ physics?) -- needs to call Server API to actually move there.
 }

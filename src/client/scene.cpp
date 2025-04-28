@@ -6,13 +6,19 @@
 Scene::Scene() {}
 Scene::~Scene() {}
 
-void Scene::init(int clientId) {
+void Scene::init() {
     shader = std::make_unique<Shader>(
         "../src/client/shaders/basic.vert",
         "../src/client/shaders/basic.frag"
     );
     
-    floor = std::make_unique<Cube>();
+    modelShader = std::make_unique<Shader>(
+        "../src/client/shaders/model.vert",
+        "../src/client/shaders/model.frag"
+    );
+
+    room = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
+    table = std::make_unique<Model>("../src/client/models/table.obj");
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
@@ -29,17 +35,23 @@ void Scene::removePlayer(int id) {
 }
 
 void Scene::render(const Camera& camera) {
+    modelShader->use();
+
+    modelShader->setMat4("view", camera.getViewMatrix());
+    modelShader->setMat4("projection", camera.getProjectionMatrix());
+
+    glm::mat4 roomModel = glm::mat4(1.0f);
+    modelShader->setMat4("model", roomModel);
+    room->draw(*modelShader);
+
+    glm::mat4 tableModel = glm::mat4(1.0f);
+    modelShader->setMat4("model", tableModel);
+    table->draw(*modelShader);
+
     shader->use();
 
     shader->setMat4("view", camera.getViewMatrix());
     shader->setMat4("projection", camera.getProjectionMatrix());
-    shader->setVec3("color", glm::vec3(0.75f, 0.9f, 0.75f));
-
-    glm::mat4 floorModel = glm::mat4(1.0f);
-    floorModel = glm::translate(floorModel, glm::vec3(0.0f, -0.5f, 0.0f));
-    floorModel = glm::scale(floorModel, glm::vec3(20.0f, 1.0f, 20.0f));
-    shader->setMat4("model", floorModel);
-    floor->draw();
 
     for (auto& [id, player] : players) {
         player.draw(*shader);

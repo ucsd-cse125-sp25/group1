@@ -13,29 +13,152 @@
 #include "scene.hpp"
 #include "shader.hpp"
 
+/**
+ * @brief Handles client-side networking, input, and rendering.
+ * 
+ * Connects to the server, processes player input and server updates,
+ * manages the local scene, and renders the game view.
+ */
 class Client {
 public:
+    /**
+     * @brief Constructs a Client instance and initializes the TCP socket.
+     */
     Client();
+
+    /**
+     * @brief Destroys the Client instance.
+     */
     ~Client();
 
+    /**
+     * @brief Initializes the client by connecting to the server.
+     * 
+     * Internally calls connectToServer().
+     * 
+     * @return true if the connection is successful, false otherwise.
+     */
     bool init();
+
+    /**
+     * @brief Main execution method for the client.
+     * 
+     * Initializes the window, OpenGL context, and scene,
+     * then enters the main game loop and performs cleanup.
+     */
     void run();
 
+    /**
+     * @brief First-person camera representing the player's view.
+     */
     Camera camera;
 
+    bool isMouseLocked;     // True if the mouse is locked inside the window.
+
+    double lastMouseX;      // Last mouse X position.
+    double lastMouseY;      // Last mouse Y position.
+    bool isFirstMouse;      // True if this is the first mouse movement. (Helps avoid a big jump when starting.)
+
+    float yaw;              // Left-right rotation of the camera.
+    float pitch;            // Up-down rotation of the camera.
+
 private:
+    /**
+     * @brief Establishes connection to the server and receives client ID.
+     * 
+     * @return true if successful, false otherwise.
+     */
     bool connectToServer();
 
+    /**
+     * @brief Reads a complete message from the server and forwards it to handleServerMessage().
+     */
     void receiveServerMessage();
+
+    /**
+     * @brief Handles server messages containing player state updates.
+     * 
+     * Parses a JSON message of type "player_states" containing the positions and directions
+     * of all currently connected players. Updates each player's state in the local data structures,
+     * and sets the current client's camera position.
+     * Also detects players who have disconnected, removes their data from local data structures,
+     * and marks them for removal from the scene.
+     * 
+     * @param message A newline-terminated JSON string received from the server.
+     */
     void handleServerMessage(std::string message);
 
-    void handlePlayerInput(GLFWwindow* window);
+    /**
+     * @brief Toggles the mouse lock state when the Esc key is pressed.
+     * 
+     * Checks if the Esc key was newly pressed. If so:
+     * - If the mouse is currently locked (cursor hidden), it unlocks the mouse, shows the cursor, and disables mouse input.
+     * - If the mouse is currently unlocked (cursor visible), it locks the mouse, hides the cursor, and re-enables mouse input.
+     * 
+     * This only triggers once per key press to prevent repeated toggling while holding down Esc.
+     * 
+     * @param window A pointer to the GLFW window.
+     */
+    void handleEscInput(GLFWwindow* window);
+
+    /**
+     * @brief Handles real-time player input and sends actions to the server.
+     * 
+     * Checks for specific key presses (WASD and arrow keys), maps them to movement actions,
+     * and constructs a JSON message containing the active actions. If any actions are detected,
+     * the message is sent to the server for processing.
+     * 
+     * @param window Pointer to the GLFW window used to poll key input.
+     */
+    void handleKeyboardInput(GLFWwindow* window);
+
+    /**
+     * @brief Sends the player's facing direction to the server based on the current yaw.
+     * 
+     * If the mouse is locked, this function:
+     * - Converts the current yaw value into a normalized direction vector.
+     * - Creates a "mouse_input" JSON message containing the direction.
+     * - Sends the message to the server to update the player's facing direction.
+     * 
+     * Does nothing if the mouse is currently unlocked.
+     */
+    void handleMouseInput();
+
+    /**
+     * @brief Sends a message to the server over the TCP socket.
+     * 
+     * @param message A JSON message to send to the server.
+     */
     void sendMessageToServer(const nlohmann::json& message);
 
+    /**
+     * @brief Initializes the GLFW window and OpenGL.
+     * 
+     * @return true if successful, false otherwise.
+     */
     bool initWindow(GLFWwindow*& window);
+
+    /**
+     * @brief Sets basic OpenGL settings.
+     */
     void initGL();
+
+    /**
+     * @brief Initializes the scene and sets up the player camera.
+     * 
+     * Creates the scene instance and positions the camera for a first-person view,
+     * based on the client's spawn location and an initial viewing direction.
+     */
     void initScene();
+
+    /**
+     * @brief Main game loop for updates and rendering.
+     */
     void gameLoop(GLFWwindow* window);
+
+    /**
+     * @brief Cleans up GLFW resources.
+     */
     void cleanup(GLFWwindow* window);
 
     boost::asio::io_context ioContext;

@@ -93,11 +93,13 @@ void Server::handleClientDisconnect(int clientId) {
     if (it != clients.end()) {
         it->second->close();
         clients.erase(it);
-        
-        players.erase(clientId);
-        
+
         buffers.erase(clientId);
         clientMessages.erase(clientId);
+
+        world.removeObject(&players[clientId]->getBody());
+        delete players[clientId];
+        players.erase(clientId);
 
         std::cout << "Client #" << clientId << " disconnected.\n";
     }

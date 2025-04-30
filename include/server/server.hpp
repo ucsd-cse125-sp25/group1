@@ -118,9 +118,31 @@ private:
      */
     void broadcastPlayerStates();
 
+    /**
+     * @brief Starts the game timer.
+     * 
+     * Begins ticking the server-side game timer, broadcasting the remaining time
+     * to all connected clients every second. This function is called once 4 clients
+     * are connected and continues running until all clients disconnect.
+     */
+    void startGameTimer();
+
+    /**
+     * @brief Broadcasts the current time left to all clients.
+     * 
+     * Sends a JSON message containing the remaining game time (in minutes and seconds)
+     * to every connected client. Called once per second by the game timer loop.
+     */
+    void broadcastTimeLeft();
+
     boost::asio::io_context ioContext;
     boost::asio::ip::tcp::acceptor acceptor;
+
     boost::asio::steady_timer tickTimer;
+    boost::asio::steady_timer gameTimer;
+
+    bool hasTimerStarted;
+    int timeLeft;
 
     std::unordered_map<int, std::shared_ptr<boost::asio::ip::tcp::socket>> clients;
     std::unordered_map<int, boost::asio::streambuf> buffers;

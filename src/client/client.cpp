@@ -135,37 +135,49 @@ static glm::vec3 toVec3(json arr) {
     return glm::vec3(arr[0], arr[1], arr[2]);
 }
 
-void Client::handleServerMessage(std::string message) {
+void Client::handleServerMessage(const std::string& message) {
     json parsed = json::parse(message);
     std::string type = parsed.value("type", "");
 
     if (type == "player_states") {
-        const auto& players = parsed["players"];
-        std::unordered_set<int> connectedIds;
+        updatePlayerStates(parsed);
+    } else if (type == "time_left") {
+        updateGameTimer(parsed);
+    }
+}
 
-        for (const auto& player : players) {
-            int id = player["id"];
-            connectedIds.insert(id);
+void Client::updatePlayerStates(const json& parsed) {
+    const auto& players = parsed["players"];
+    std::unordered_set<int> connectedIds;
 
-            glm::vec3 position = toVec3(player["position"]);
-            glm::vec3 direction = toVec3(player["direction"]);
+    for (const auto& player : players) {
+        int id = player["id"];
+        connectedIds.insert(id);
 
-            playerPositions[id] = position;
-            playerDirections[id] = direction;
+        glm::vec3 position = toVec3(player["position"]);
+        glm::vec3 direction = toVec3(player["direction"]);
 
-            if (id == clientId) {
-                camera.setPosition(position + config::CAMERA_OFFSET);
-            }
-        }
+        playerPositions[id] = position;
+        playerDirections[id] = direction;
 
-        for (int i = 0; i < config::MAX_PLAYERS; ++i) {
-            if (playerPositions.contains(i) && !connectedIds.contains(i)) {
-                playerPositions.erase(i);
-                playerDirections.erase(i);
-                disconnectedIds.insert(i);
-            }
+        if (id == clientId) {
+            camera.setPosition(position + config::CAMERA_OFFSET);
         }
     }
+
+    for (int i = 0; i < config::MAX_PLAYERS; ++i) {
+        if (playerPositions.contains(i) && !connectedIds.contains(i)) {
+            playerPositions.erase(i);
+            playerDirections.erase(i);
+            disconnectedIds.insert(i);
+        }
+    }
+}
+
+void Client::updateGameTimer(const json& parsed) {
+    std::cout << "Time Left: " << parsed["minutes"] << ":" << parsed["seconds"] << "\n"; // remove this later
+    
+    // Your code goes here...
 }
 
 static std::string mapKeyToAction(int key) {

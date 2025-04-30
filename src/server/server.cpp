@@ -12,7 +12,10 @@ using Clock = std::chrono::steady_clock;
 
 Server::Server()
     : acceptor(ioContext, tcp::endpoint(tcp::v4(), config::SERVER_PORT)),
-      tickTimer(ioContext) {}
+      tickTimer(ioContext),
+      gameTimer(ioContext),
+      hasTimerStarted(false),
+      timeLeft(config::TOTAL_GAME_TIME) {}
 
 Server::~Server() {}
 
@@ -85,6 +88,11 @@ void Server::handleClientJoin(int clientId) {
 
     // add player to physics world
     world.addObject(&(player->getBody()));
+
+    if (!hasTimerStarted && clients.size() == 4) {
+        hasTimerStarted = true;
+        startGameTimer();
+    }
 }
 
 void Server::handleClientDisconnect(int clientId) {
@@ -93,13 +101,21 @@ void Server::handleClientDisconnect(int clientId) {
     if (it != clients.end()) {
         it->second->close();
         clients.erase(it);
-        
-        players.erase(clientId);
-        
+
         buffers.erase(clientId);
         clientMessages.erase(clientId);
 
+        world.removeObject(&players[clientId]->getBody());
+        delete players[clientId];
+        players.erase(clientId);
+
         std::cout << "Client #" << clientId << " disconnected.\n";
+    }
+
+    if (hasTimerStarted && clients.size() == 0) {
+        hasTimerStarted = false;
+        gameTimer.cancel();
+        timeLeft = config::TOTAL_GAME_TIME;
     }
 }
 
@@ -138,7 +154,6 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
-
             startTick();
         }
     });
@@ -201,6 +216,38 @@ void Server::broadcastPlayerStates() {
         } catch (const std::exception& e) {
             handleClientDisconnect(clientId);
         }
+    }
+}
+
+void Server::startGameTimer() {
+    gameTimer.expires_after(std::chrono::seconds(1));
+    gameTimer.async_wait([this](const boost::system::error_code& ec) {
+        if (!ec) {
+            broadcastTimeLeft();
+            startGameTimer();
+        } else if (ec == boost::asio::error::operation_aborted) {
+            return;
+        }
+    });
+}
+
+void Server::broadcastTimeLeft() {
+    json message;
+    message["type"] = "time_left";
+    message["minutes"] = timeLeft / 60;
+    message["seconds"] = timeLeft % 60;
+    std::string packet = message.dump() + "\n";
+
+    for (const auto& [clientId, socket] : clients) {
+        try {
+            boost::asio::write(*socket, boost::asio::buffer(packet));
+        } catch (const std::exception& e) {
+            handleClientDisconnect(clientId);
+        }
+    }
+
+    if (timeLeft > 0) {
+        --timeLeft;
     }
 }
 

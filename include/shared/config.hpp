@@ -9,6 +9,8 @@ namespace config {
     inline constexpr int MAX_PLAYERS = 4;
     inline constexpr int TICK_RATE = 30;
 
+    inline constexpr int TOTAL_GAME_TIME = 600; // 10 mins
+
     inline constexpr float WORLD_WIDTH = 1600.0f;
     inline constexpr float WORLD_HEIGHT = 900.0f;
 

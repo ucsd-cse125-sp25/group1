@@ -17,8 +17,14 @@ void Scene::init() {
         "../src/client/shaders/model.frag"
     );
 
+    uiShader = std::make_unique<Shader>(
+        "../src/client/shaders/ui.vert",
+        "../src/client/shaders/ui.frag"
+    );
+
     room = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
     table = std::make_unique<Model>("../src/client/models/table.obj");
+    timer = std::make_unique<UIElement>();
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
@@ -35,6 +41,7 @@ void Scene::removePlayer(int id) {
 }
 
 void Scene::render(const Camera& camera) {
+
     modelShader->use();
 
     modelShader->setMat4("view", camera.getViewMatrix());
@@ -56,4 +63,7 @@ void Scene::render(const Camera& camera) {
     for (auto& [id, player] : players) {
         player.draw(*shader);
     }
+
+    uiShader->use();
+    timer->draw();
 }

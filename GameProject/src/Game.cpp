@@ -40,7 +40,6 @@ void Game::onCreate() {
         (void*)triangleVertices, 
         sizeof(float)*(3+3),    // 3 position values + 3 color values
         3,
-
         attributeList,
         2
      });

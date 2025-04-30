@@ -9,6 +9,7 @@
 #include "cube.hpp"
 #include "model.hpp"
 #include "shader.hpp"
+#include "uielement.hpp"
 
 /**
  * @brief Represents a player in the scene.
@@ -122,9 +123,11 @@ public:
 private:
     std::unique_ptr<Shader> shader;
     std::unique_ptr<Shader> modelShader;
+    std::unique_ptr<Shader> uiShader;
 
     std::unique_ptr<Model> room;
     std::unique_ptr<Model> table;
+    std::unique_ptr<UIElement> timer;
 
     std::unordered_map<int, Player> players;    // Active players in the scene.
 };

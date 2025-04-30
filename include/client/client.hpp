@@ -76,17 +76,30 @@ private:
     void receiveServerMessage();
 
     /**
-     * @brief Handles server messages containing player state updates.
+     * @brief Handles server messages from the server.
      * 
-     * Parses a JSON message of type "player_states" containing the positions and directions
-     * of all currently connected players. Updates each player's state in the local data structures,
+     * Parses a JSON message and dispatches it based on its "type" field.
+     * Supported message types:
+     * - "player_states": Updates player positions, directions, and handles disconnected players.
+     * - "time_left": Updates the game timer displayed on the client.
+     * 
+     * @param message A newline-terminated JSON string received from the server.
+     */
+    void handleServerMessage(const std::string& message);
+
+    /**
+     * @brief Updates the local player states based on server data.
+     * 
+     * Updates each player's state in the local data structures,
      * and sets the current client's camera position.
      * Also detects players who have disconnected, removes their data from local data structures,
      * and marks them for removal from the scene.
      * 
-     * @param message A newline-terminated JSON string received from the server.
+     * @param parsed A parsed JSON object containing player state information.
      */
-    void handleServerMessage(std::string message);
+    void updatePlayerStates(const nlohmann::json& parsed);
+
+    void updateGameTimer(const nlohmann::json& parsed);
 
     /**
      * @brief Toggles the mouse lock state when the Esc key is pressed.

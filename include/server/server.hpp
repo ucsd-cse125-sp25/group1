@@ -118,9 +118,18 @@ private:
      */
     void broadcastPlayerStates();
 
+    void startGameTimer();
+
+    void broadcastTimeLeft();
+
     boost::asio::io_context ioContext;
     boost::asio::ip::tcp::acceptor acceptor;
+
     boost::asio::steady_timer tickTimer;
+    boost::asio::steady_timer gameTimer;
+
+    bool hasTimerStarted;
+    int timeLeft;
 
     std::unordered_map<int, std::shared_ptr<boost::asio::ip::tcp::socket>> clients;
     std::unordered_map<int, boost::asio::streambuf> buffers;

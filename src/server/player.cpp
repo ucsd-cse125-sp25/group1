@@ -56,6 +56,7 @@ void Player::handleKeyboardInput(string action) {
     } else if (action == "jump" && abs(body.getVelocity().y) < 1e-6f) {
         // if grounded, jump
         body.setVelocity(vec3(body.getVelocity().x, config::PLAYER_SPEED*0.5, body.getVelocity().z));
+        return;
     } else {
         return;
     }

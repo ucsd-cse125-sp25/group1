@@ -185,6 +185,8 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
+            broadcastGameStates();
+            
             startTick();
         }
     });
@@ -280,6 +282,19 @@ void Server::broadcastTimeLeft() {
     if (timeLeft > 0) {
         --timeLeft;
     }
+}
+
+void Server::broadcastGameStates() {
+    for (const auto& [clientId, socket] : clients) {
+		std::string swampPacket = swamp->getUpdatePacket();
+
+        try {
+			boost::asio::write(*socket, boost::asio::buffer(swampPacket));
+        }
+        catch (const std::exception& e) {
+			handleClientDisconnect(clientId);
+		}
+	}
 }
 
 void Server::run() {

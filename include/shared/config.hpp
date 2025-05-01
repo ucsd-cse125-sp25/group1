@@ -44,4 +44,6 @@ namespace config {
     inline constexpr float PLAYER_HEIGHT = 1.0f;
 
     inline constexpr float MOUSE_SENSITIVITY = 0.1f;
+
+    inline constexpr glm::vec3 SWAMP_RESPAWN = { 0.0f, 1.0f, 0.0f };
 }

@@ -148,16 +148,17 @@ void Client::handleServerMessage(const std::string& message) {
 	else if (type == "time_left") {
 		updateGameTimer(parsed);
 	}
-	else if (type == "swampInit") {
-		std::cout << "swamInit received\n";
-		std::cout << parsed["gameState"] << "\n";
-
-		int roomID = parsed["roomID"];
-		auto gameState = parsed["gameState"];
-		int numPads = parsed["numPads"];
-		std::string audioFile = parsed["audioFile"];
+	else if (type == "swamp_init") {
+		int roomID = parsed["room_ID"];
+		auto gameState = parsed["game_state"];
+		int numPads = parsed["num_pads"];
+		std::string audioFile = parsed["audio_file"];
 
 		swamp = new Swamp(roomID, gameState, numPads, audioFile);
+	} 
+	else if (type == "swamp_update") {
+		auto gameState = parsed["game_state"];
+		swamp->setGameState(gameState);
 	}
 }
 

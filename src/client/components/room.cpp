@@ -1,13 +1,13 @@
 #include "components/room.hpp"
 
 Room::Room(int id) : roomID(id) {
-	// Constructor implementation
+    // Constructor implementation
 }
 
 Room::~Room() {
-	// Destructor implementation
+    // Destructor implementation
 }
 
 int Room::getID() const {
-	return roomID;
+    return roomID;
 }

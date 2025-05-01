@@ -18,34 +18,34 @@
  */
 class Server {
 public:
-	/**
-	 * @brief Constructs a Server instance.
-	 *
-	 * Initializes the networking components and prepares the server for client connections.
-	 */
-	Server();
+    /**
+     * @brief Constructs a Server instance.
+     *
+     * Initializes the networking components and prepares the server for client connections.
+     */
+    Server();
 
-	/**
-	 * @brief Destroys the Server instance.
-	 */
-	~Server();
+    /**
+     * @brief Destroys the Server instance.
+     */
+    ~Server();
 
-	/**
-	 * @brief Initializes the server.
-	 *
-	 * Prints IP and port information, and adds a floor to the world.
-	 *
-	 * @return true.
-	 */
-	bool init();
+    /**
+     * @brief Initializes the server.
+     *
+     * Prints IP and port information, and adds a floor to the world.
+     *
+     * @return true.
+     */
+    bool init();
 
-	/**
-	 * @brief Runs the server's main event loop.
-	 *
-	 * Starts accepting client connections, ticking the server at a fixed rate,
-	 * and processing networking events.
-	 */
-	void run();
+    /**
+     * @brief Runs the server's main event loop.
+     *
+     * Starts accepting client connections, ticking the server at a fixed rate,
+     * and processing networking events.
+     */
+    void run();
 
 private:
     /**
@@ -69,60 +69,60 @@ private:
 	 */
 	void acceptConnections();
 
-	/**
-	 * @brief Handles client joining logic.
-	 *
-	 * Sends the assigned client ID to the client and spawns a new player in the world.
-	 *
-	 * @param clientId The ID assigned to the newly connected client.
-	 */
-	void handleClientJoin(int clientId);
+    /**
+     * @brief Handles client joining logic.
+     *
+     * Sends the assigned client ID to the client and spawns a new player in the world.
+     *
+     * @param clientId The ID assigned to the newly connected client.
+     */
+    void handleClientJoin(int clientId);
 
-	/**
-	 * @brief Handles client disconnection logic.
-	 *
-	 * Cleans up resources associated with a client when they disconnect.
-	 *
-	 * @param clientId The ID of the disconnecting client.
-	 */
-	void handleClientDisconnect(int clientId);
+    /**
+     * @brief Handles client disconnection logic.
+     *
+     * Cleans up resources associated with a client when they disconnect.
+     *
+     * @param clientId The ID of the disconnecting client.
+     */
+    void handleClientDisconnect(int clientId);
 
-	/**
-	 * @brief Listens for incoming messages from a client.
-	 *
-	 * Reads data asynchronously and queues messages for later processing.
-	 *
-	 * @param clientId The ID of the client to listen to.
-	 */
-	void listenToClient(int clientId);
+    /**
+     * @brief Listens for incoming messages from a client.
+     *
+     * Reads data asynchronously and queues messages for later processing.
+     *
+     * @param clientId The ID of the client to listen to.
+     */
+    void listenToClient(int clientId);
 
-	/**
-	 * @brief Starts the server ticking loop.
-	 *
-	 * At a fixed interval, processes client messages, physics updates, and broadcasts states.
-	 */
-	void startTick();
+    /**
+     * @brief Starts the server ticking loop.
+     *
+     * At a fixed interval, processes client messages, physics updates, and broadcasts states.
+     */
+    void startTick();
 
-	/**
-	 * @brief Handles all queued messages from clients.
-	 *
-	 * Processes keyboard and mouse input for each player.
-	 */
-	void handleClientMessages();
+    /**
+     * @brief Handles all queued messages from clients.
+     *
+     * Processes keyboard and mouse input for each player.
+     */
+    void handleClientMessages();
 
-	/**
-	 * @brief Advances the physics simulation.
-	 *
-	 * Steps the physics world and resolves collisions.
-	 */
-	void handlePhysics();
+    /**
+     * @brief Advances the physics simulation.
+     *
+     * Steps the physics world and resolves collisions.
+     */
+    void handlePhysics();
 
-	/**
-	 * @brief Sends updated player states to all connected clients.
-	 *
-	 * Includes player positions and directions.
-	 */
-	void broadcastPlayerStates();
+    /**
+     * @brief Sends updated player states to all connected clients.
+     *
+     * Includes player positions and directions.
+     */
+    void broadcastPlayerStates();
 
     /**
      * @brief Starts the game timer.
@@ -132,6 +132,13 @@ private:
      * are connected and continues running until all clients disconnect.
      */
     void startGameTimer();
+    
+    /**
+     * @brief Sends game state updates to connected clients.
+     *
+     * Includes swamp game state and other relevant information.
+     */
+    void broadcastGameStates();
 
     /**
      * @brief Broadcasts the current time left to all clients.
@@ -156,10 +163,7 @@ private:
 	World world;
 	std::unordered_map<int, Player*> players;
 
-	std::unordered_map<int, std::deque<std::string>> clientMessages;
+    std::unordered_map<int, std::deque<std::string>> clientMessages;
 
-
-	// or do we want it as Swamp? or Swamp *?
-	//how are we deciding on room ID?
-	Swamp* swamp;
+    Swamp* swamp;
 };

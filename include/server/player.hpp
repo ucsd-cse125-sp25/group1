@@ -22,12 +22,12 @@ public:
      * Initializes the player's rigid body at the specified position and orientation,
      * assigning it a box collider based on player configuration settings.
      *
-     * @param playerName Name of the player.
+     * @param id ID of the player
      * @param roomID ID of the room the player initially belongs to.
      * @param position Initial position of the player.
      * @param direction Initial facing direction of the player.
      */
-    Player(const string& playerName, int roomID, vec3 position, vec3 direction);
+    Player(int id, int roomID, vec3 position, vec3 direction);
     ~Player();
     
     /**
@@ -36,6 +36,13 @@ public:
      * @return The player's name as a string.
      */
     string getName() const;
+
+    /**
+     * @brief Sets the player's name.
+     *
+     * @param playerName The new name for the player.
+     */
+    void setName(const std::string& playerName);
 
     /**
      * @brief Returns the ID of the room the player is currently in.
@@ -77,6 +84,7 @@ public:
     void handleMouseInput(glm::vec3 direction);
 
 private:
+    int id;
     string name;
     int curRoomID;
     RigidBody body;

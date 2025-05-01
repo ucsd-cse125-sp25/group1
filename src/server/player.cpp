@@ -2,9 +2,9 @@
 
 using namespace std;
 
-Player::Player(const std::string& playerName, int roomID, vec3 position, vec3 direction)
+Player::Player(int id, int roomID, vec3 position, vec3 direction)
     : 
-    name(playerName),
+    id(id),
     curRoomID(roomID), 
     body(
         vec3(0.0f),
@@ -22,6 +22,10 @@ Player::~Player() {}
 
 string Player::getName() const {
     return name;
+}
+
+void Player::setName(const string& playerName){
+    name = playerName;
 }
 
 int Player::getCurRoomID() const {

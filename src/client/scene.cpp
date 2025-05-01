@@ -25,8 +25,8 @@ void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3
     if (!players.contains(id)) {
         players.emplace(id, Player(id, position, direction));
     } else {
-        players.at(id).position = position;
-        players.at(id).direction = direction;
+        players.at(id).setPosition(position);
+        players.at(id).setDirection(direction);
     }
 }
 

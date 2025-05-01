@@ -65,7 +65,10 @@ void Scene::render(const Camera& camera) {
     }
 
     //UI
-    uiShader->use();
-    uiShader->setVec3("color",glm::vec3(1.0f, 0.84f, 0.95f));
-    timer->draw();
+    //uiShader->use();
+    //glActiveTexture(GL_TEXTURE0);
+    //glBindTexture(GL_TEXTURE_2D, mesh.textureId);
+    //uiShader->setBool("hasTexture", true);
+    //ui->setInt("elementTexture", 0);
+    timer->draw(*uiShader);
 }

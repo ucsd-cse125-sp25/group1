@@ -1,10 +1,11 @@
-#version 410 core
+#version 330 core
 
-layout(location=0) in vec3 inColor;
-layout(location=0) out vec4 outColor;
+
+out vec4 outColor;
+
+uniform vec3 color;
 
 void main()
 {
-    outColor = vec4(1.0, 0.85, 0.94, 1.0);  // Green
-    outColor.rgb = inColor;
+    outColor = vec4(color, 1.0);
 }

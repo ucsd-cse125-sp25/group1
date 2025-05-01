@@ -64,6 +64,8 @@ void Scene::render(const Camera& camera) {
         player.draw(*shader);
     }
 
+    //UI
     uiShader->use();
+    uiShader->setVec3("color",glm::vec3(1.0f, 0.84f, 0.95f));
     timer->draw();
 }

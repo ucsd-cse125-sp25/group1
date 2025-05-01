@@ -33,4 +33,5 @@ private:
 	bool locked;
     bool open;
     int rooms[2];
+    RigidBody body;
 };

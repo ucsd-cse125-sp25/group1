@@ -6,9 +6,19 @@ Door::Door(int doorID, int room1, int room2, int keyID, glm::vec3 position, glm:
     doorID(doorID),
     keyID(keyID),
     locked(keyID != -1),
-    open(false)
-    // Todo: initialize body (may need to use 3 positions and directions?)
-    // Todo: we probably want to write a function that takes in one position/direction and constructs a door of 3 rigidbody's from that.
+    open(false),
+    body(
+        vec3(0.0f),
+        vec3(0.0f),
+        0.0f, // mass of 0 - kinematics doesn't matter because it's static (imovable)
+        new Transform { position, direction },
+        new BoxCollider{
+            AABB,
+            vec3(-config::PLAYER_WIDTH / 2, -config::PLAYER_HEIGHT / 2, -config::PLAYER_WIDTH / 2),
+            vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT / 2, config::PLAYER_WIDTH / 2)
+        },
+        true
+    )
 {
     rooms[0] = room1;
     rooms[1] = room2;

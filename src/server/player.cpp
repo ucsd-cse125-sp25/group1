@@ -1,8 +1,6 @@
 #include "player.hpp"
 
-using namespace std;
-
-Player::Player(int playerID, int roomID, vec3 position, vec3 direction)
+Player::Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction)
     : 
     id(playerID),
     curRoomID(roomID), 
@@ -20,11 +18,11 @@ Player::Player(int playerID, int roomID, vec3 position, vec3 direction)
 
 Player::~Player() {}
 
-string Player::getName() const {
+const std::string& Player::getName() const {
     return name;
 }
 
-void Player::setName(const string& playerName){
+void Player::setName(const std::string& playerName){
     name = playerName;
 }
 
@@ -40,7 +38,7 @@ RigidBody& Player::getBody() {
     return body;
 }
 
-void Player::handleKeyboardInput(string action) {
+void Player::handleKeyboardInput(std::string action) {
     // variable for projection
     vec3 moveDirection = body.getDirection();
     mat4 transform = mat4(1.0f);
@@ -64,7 +62,7 @@ void Player::handleKeyboardInput(string action) {
         return;
     }
     
-    moveDirection = normalize(vec3(moveDirection.x, 0.0f, moveDirection.z));
+    moveDirection = normalize(glm::vec3(moveDirection.x, 0.0f, moveDirection.z));
     body.setVelocity(body.getVelocity() + moveDirection * config::PLAYER_SPEED);
 }
 

@@ -7,12 +7,10 @@
  */
 #pragma once
 #include <string>
+#include <set>
 #include <glm/glm.hpp>
 #include "config.hpp"
 #include "rigidBody.hpp"
-
-using namespace std;
-using namespace glm;
 
 class Player {
 public:
@@ -28,7 +26,7 @@ public:
      * @param position Initial position of the player.
      * @param direction Initial facing direction of the player.
      */
-    Player(int playerID, int roomID, vec3 position, vec3 direction);
+    Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction);
     ~Player();
     
     /**
@@ -36,7 +34,7 @@ public:
      *
      * @return The player's name as a string.
      */
-    string getName() const;
+    const std::string& getName() const;
 
     /**
      * @brief Sets the player's name.
@@ -60,6 +58,37 @@ public:
     void setCurRoomID(int id);
 
     /**
+     * @brief Returns the set of key IDs the player possesses.
+     *
+     * @return std::set<int> A copy of the player's key ID list.
+     */
+    const std::set<int>& getKeyIDs() const {
+        return keyIDs;
+    }
+
+    /**
+     * @brief Adds a key to the player's inventory.
+     *
+     * @param keyID ID of the key to add.
+     */
+    void addKey(int keyID) {
+        keyIDs.insert(keyID);
+    }
+
+    /**
+     * @brief Removes a key from the player's inventory.
+     *
+     * Searches for the given key ID and removes it if found.
+     *
+     * @param keyID ID of the key to remove.
+     * @return true if the key was found and removed; false otherwise.
+     */
+    bool removeKey(int keyID){
+        bool found = keyIDs.erase(keyID) > 0;
+        return found;
+    }
+
+    /**
      * @brief Returns a reference to the player's rigid body.
      *
      * @return Reference to the player's associated RigidBody instance.
@@ -80,13 +109,14 @@ public:
      *
      * @param action String representing the player action to handle.
      */
-    void handleKeyboardInput(string action);
+    void handleKeyboardInput(std::string action);
 
     void handleMouseInput(glm::vec3 direction);
 
 private:
     int id;
-    string name;
+    std::string name;
     int curRoomID;
     RigidBody body;
+    std::set<int> keyIDs; // Keys (by ID) the player has collected
 };

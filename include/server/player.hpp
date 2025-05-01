@@ -17,17 +17,18 @@ using namespace glm;
 class Player {
 public:
     /**
-     * @brief Constructs a Player object with a given name, room ID, position, and direction.
+     * @brief Constructs a Player object with a given player id, room ID, position, and direction.
      *
      * Initializes the player's rigid body at the specified position and orientation,
      * assigning it a box collider based on player configuration settings.
-     *
-     * @param id ID of the player
+     * Sets the player ID and the ID of the room they're currently in.
+     * 
+     * @param playerID ID of the player
      * @param roomID ID of the room the player initially belongs to.
      * @param position Initial position of the player.
      * @param direction Initial facing direction of the player.
      */
-    Player(int id, int roomID, vec3 position, vec3 direction);
+    Player(int playerID, int roomID, vec3 position, vec3 direction);
     ~Player();
     
     /**

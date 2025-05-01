@@ -2,9 +2,9 @@
 
 using namespace std;
 
-Player::Player(int id, int roomID, vec3 position, vec3 direction)
+Player::Player(int playerID, int roomID, vec3 position, vec3 direction)
     : 
-    id(id),
+    id(playerID),
     curRoomID(roomID), 
     body(
         vec3(0.0f),

@@ -1,16 +1,11 @@
 #pragma once
 
-struct Coord {
-    float x;
-    float y;
-    float z;
-};
-
 class Object
 {
 public:
-    Object(Coord position /*TODO: add graphics*/);
-    ~Object();
+    Object(int id /*TODO: add position (vec3) and graphics*/);
+    ~Object() = default;
 private:
     // TODO: add graphics
+    int objectID;
 };

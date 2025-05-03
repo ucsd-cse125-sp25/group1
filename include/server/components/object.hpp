@@ -6,7 +6,7 @@ class Object
 {
 public:
     /**
-     * @brief Constructs an object with a given id, room ID, position, and direction.
+     * @brief Constructs an object with a given id position, and direction.
      *
      * Initializes an object at the specified position and orientation,
      * assigning it a box collider based on the given width and height.
@@ -14,16 +14,16 @@ public:
      * It only has a rigidbody that can be collided with.
      *
      * @param id ID of the object
-     * @param position Initial position of the player.
-     * @param direction Initial facing direction of the player.
+     * @param position position of the object.
+     * @param direction facing direction of the object.
      * @param width width of the object.
      * @param height height of the object.
      */
-    Object(int id, glm::vec3 position, glm::vec3 direction, float width, float height);
+    Object(int id, const glm::vec3& position, const glm::vec3& direction, float width, float height);
 
     ~Object() = default;
     
 private:
-    int id;
+    int objectID;
     RigidBody body;
 };

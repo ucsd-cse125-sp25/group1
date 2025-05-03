@@ -1,4 +1,4 @@
-#include "room.hpp"
+#include "components/room.hpp"
 
 Room::Room(int id, const std::string& name)
     : roomID(id), roomName(name)

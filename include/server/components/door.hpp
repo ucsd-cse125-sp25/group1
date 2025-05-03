@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include "rigidBody.hpp"
 #include "player.hpp"
-#include "interactable.hpp"
+#include "components/interactable.hpp"
 
 class Door: public Interactable
 {

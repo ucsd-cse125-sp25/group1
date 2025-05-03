@@ -1,5 +1,5 @@
 #pragma once
-#include "interactable.hpp"
+#include "components/interactable.hpp"
 
 class Door: public Interactable
 {

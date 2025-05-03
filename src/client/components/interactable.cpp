@@ -1,4 +1,4 @@
-#include "interactable.hpp"
+#include "components/interactable.hpp"
 
 Interactable::Interactable() = default;
 

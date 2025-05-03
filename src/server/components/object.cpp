@@ -1,4 +1,4 @@
-#include "object.hpp"
+#include "components/object.hpp"
 
 Object::Object(int id, const glm::vec3& position, const glm::vec3& direction, float width, float height)
     : 

@@ -1,4 +1,4 @@
-#include "server/components/door.hpp"
+#include "door.hpp"
 
 Door::Door(int doorID, int room1, int room2, int keyID, glm::vec3 position, glm::vec3 direction)
     : Interactable(),

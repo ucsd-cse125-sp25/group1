@@ -1,4 +1,4 @@
-#include "client/components/interactable.hpp"
+#include "interactable.hpp"
 
 Interactable::Interactable() = default;
 

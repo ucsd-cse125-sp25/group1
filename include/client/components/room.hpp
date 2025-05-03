@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <memory> 
-#include "client/components/interactable.hpp"
+#include "interactable.hpp"
 
 class Room
 {

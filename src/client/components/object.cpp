@@ -1,4 +1,4 @@
-#include "client/components/object.hpp"
+#include "object.hpp"
 
 Object::Object(int id /*TODO: add position (vec3) and graphics*/)
     : objectID(id)

@@ -1,7 +1,7 @@
 #include "uielement.hpp"
 #include <iostream>
 #include <stb_image.h>
-
+#include <string>
 static const GLfloat vertices[] = {
     // positions          // colors           // texture coords
      0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
@@ -34,38 +34,27 @@ UIElement::UIElement() {
         * (3+3) = 3 position values, 3 color values
         * Last 0 argument is the offset from the first attribute.Since this is the first attribute, there's no offset
     */
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3+3+2) * sizeof(float), (void*)0); // position
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0); // position
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, (3+3+2) * sizeof(float), (void*)(3 * sizeof(float)));   // color
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));   // color
     glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(float), (void*)(6 * sizeof(float)));   // texture pos
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));   // texture pos
     glEnableVertexAttribArray(2);
 
-    glBindVertexArray(0);
-}
-
-UIElement::~UIElement() {
-    glDeleteVertexArrays(1, &vao);
-    glDeleteBuffers(1, &vbo);
-    glDeleteBuffers(1, &ebo);
-}
-
-void UIElement::draw(Shader& shader) const{
-    shader.use();
-    shader.setInt("ourTexture", 0);
-    unsigned int texture;
     glGenTextures(1, &texture); // glGenTextures takes the number of textures we want to generate (1 in our case) and stores it in an unsigned int array
     glBindTexture(GL_TEXTURE_2D, texture);   // just like other objects (vao, vbo, etc.) we gotta bind our texture so opengl knows what to reference
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    // set the texture wrapping parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);	// set texture wrapping to GL_REPEAT (default wrapping method)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // set texture filtering parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
     int width, height, nrChannels;	//nrChannels = number of color channels
-    unsigned char* data = stbi_load("../src/client/ui/banana.jpg", &width, &height, &nrChannels, 0);
+    std::string filePath = "../src/client/ui/coconut.png";
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0);
     if (data) {
         /**
         * glTexImage is what's gonna generate the texture for us
@@ -78,12 +67,33 @@ void UIElement::draw(Shader& shader) const{
         * 7th/8th arg: format and datatype of the source image. In our case, the image was loaded w/ RGB values and stored as a series of unsigned chars.
         * 9th: the actual image data
         */
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        if(nrChannels == 3)
+        {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        }
+        else if(nrChannels == 4)
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);  // ??? What happens if you construct a UI element, and then on some other class disable gl blend before rendering a transparent texture? Would the background still be transparent? 
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        }
     }
     else {
         std::cout << "Failed to load texture" << std::endl;
     }
     stbi_image_free(data);  //good practice to free up the image memory after we generate our texture
+}
+
+UIElement::~UIElement() {
+    glDeleteVertexArrays(1, &vao);
+    glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(1, &ebo);
+}
+
+void UIElement::draw(Shader& shader){
+    shader.use();
+    shader.setInt("ourTexture", 0);
+
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);   // just like other objects (vao, vbo, etc.) we gotta bind our texture so opengl knows what to reference
 

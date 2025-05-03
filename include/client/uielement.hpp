@@ -8,8 +8,8 @@ public:
 	UIElement();
 	~UIElement();
 
-	void draw(Shader& shader) const;
+	void draw(Shader& shader);
 private:
 	GLuint vao, vbo, ebo;
-	GLuint texture;
+	GLuint texture = 0;
 };

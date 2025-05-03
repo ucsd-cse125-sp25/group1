@@ -24,7 +24,7 @@ void Scene::init() {
 
     room = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
     table = std::make_unique<Model>("../src/client/models/table.obj");
-    timer = std::make_unique<UIElement>();
+    timer = std::make_unique<UIElement>(glm::vec3(0.0f,0.0f,0.0f), "../src/client/ui/banana.jpg");
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {

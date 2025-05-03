@@ -7,8 +7,30 @@ layout(location = 2) in vec2 aTexCoord;
 out vec3 ourColor;
 out vec2 TexCoord;
 
+uniform vec3 origin;
+uniform float width;
+uniform float height;
+
 void main() {
-	gl_Position = vec4(aPosition,1.0);
+	vec3 position = aPosition;
+	if(position.x == -1 && position.y == 1){
+		position.x = origin.x;
+		position.y = origin.y;
+	}
+	if(position.x == 1 && position.y == 1){
+		position.x = origin.x + width;
+		position.y = origin.y;
+	}
+	if(position.x == 1 && position.y == -1){
+		position.x = origin.x + width;
+		position.y = origin.y - height;
+	}
+	if(position.x == -1 && position.y == -1){
+		position.x = origin.x;
+		position.y = origin.y - height;
+	}
+
+	gl_Position = vec4(position,1.0);
 	ourColor = aColor;
 	TexCoord = aTexCoord;
 }

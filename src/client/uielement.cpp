@@ -4,16 +4,20 @@
 #include <string>
 static const GLfloat vertices[] = {
     // positions          // colors           // texture coords
-     0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-     0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-    -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-    -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+     1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+     1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+    -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+    -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
 };
 static const GLuint indices[] = {
     0,  2,  1,  0,  3,  2 // Front
 };
 
-UIElement::UIElement() {
+UIElement::UIElement(glm::vec3 position, GLfloat rectWidth, GLfloat rectHeight, const std::string filePath) {
+    this->position = position;
+    this->width = rectWidth;
+    this->height = rectHeight;
+
     glGenVertexArrays(1, &vao);
     glGenBuffers(1, &vbo);
     glGenBuffers(1, &ebo);
@@ -52,7 +56,6 @@ UIElement::UIElement() {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
     int width, height, nrChannels;	//nrChannels = number of color channels
-    std::string filePath = "../src/client/ui/coconut.png";
     stbi_set_flip_vertically_on_load(true);
     unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0);
     if (data) {
@@ -84,6 +87,61 @@ UIElement::UIElement() {
     stbi_image_free(data);  //good practice to free up the image memory after we generate our texture
 }
 
+UIElement::UIElement(glm::vec3 position, const std::string filePath) {
+    this->position = position;
+    this->width = 1.0f;
+    this->height = 1.0f;
+
+    glGenVertexArrays(1, &vao);
+    glGenBuffers(1, &vbo);
+    glGenBuffers(1, &ebo);
+
+    glBindVertexArray(vao);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0); // position
+    glEnableVertexAttribArray(0);
+
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));   // color
+    glEnableVertexAttribArray(1);
+
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));   // texture pos
+    glEnableVertexAttribArray(2);
+
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    int width, height, nrChannels;
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char* data = stbi_load(filePath.c_str(), &width, &height, &nrChannels, 0);
+    if (data) {
+        if (nrChannels == 3)
+        {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+        }
+        else if (nrChannels == 4)
+        {
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        }
+    }
+    else {
+        std::cout << "Failed to load texture" << std::endl;
+    }
+    stbi_image_free(data);
+}
+
 UIElement::~UIElement() {
     glDeleteVertexArrays(1, &vao);
     glDeleteBuffers(1, &vbo);
@@ -93,6 +151,9 @@ UIElement::~UIElement() {
 void UIElement::draw(Shader& shader){
     shader.use();
     shader.setInt("ourTexture", 0);
+    shader.setVec3("origin", this->position);
+    shader.setFloat("width", this->width);
+    shader.setFloat("height", this->height);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);   // just like other objects (vao, vbo, etc.) we gotta bind our texture so opengl knows what to reference

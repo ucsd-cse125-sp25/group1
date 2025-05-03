@@ -1,18 +1,18 @@
-#include "player.hpp"
+#include "server/player.hpp"
 
 Player::Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction)
     : 
     id(playerID),
     curRoomID(roomID), 
     body(
-        vec3(0.0f),
-        vec3(0.0f),
+        glm::vec3(0.0f),
+        glm::vec3(0.0f),
         config::PLAYER_WEIGHT,
         new Transform { position, direction },
         new BoxCollider{
             AABB,
-            vec3(-config::PLAYER_WIDTH / 2, -config::PLAYER_HEIGHT / 2, -config::PLAYER_WIDTH / 2),
-            vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT / 2, config::PLAYER_WIDTH / 2)
+            glm::vec3(-config::PLAYER_WIDTH / 2, -config::PLAYER_HEIGHT / 2, -config::PLAYER_WIDTH / 2),
+            glm::vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT / 2, config::PLAYER_WIDTH / 2)
         }
     ) {}
 

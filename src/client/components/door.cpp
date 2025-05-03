@@ -1,32 +1,24 @@
 #include "client/components/door.hpp"
-#include <algorithm>
-#include <cassert>
+#include <stdexcept>
 
-// Todo: add other function definitions
-Door::Door(int doorID, int room1, int room2, int keyID)
+Door::Door(int doorID, int room1, int room2, bool isLocked)
     : Interactable(),
-    locked(keyID != -1),
+    doorID(doorID),
+    locked(isLocked),
     open(false)
 {
     rooms[0] = room1;
     rooms[1] = room2;
 }
 
-Door::Door(int doorID, int room1, int room2)
-    : Door(doorID, room1, room2, -1){}
-
-Door::~Door(){
-    // Nothing todo yet; free any dynamically allocated in the future if added.
-}
-
-int Door::getDestinationRoomID(int currRoomID) const{
+int Door::getDestinationRoomID(int currRoomID) const {
     if (currRoomID == rooms[0]){
         return rooms[1];
     }
     if (currRoomID == rooms[1]){
         return rooms[0];
     }
-    assert(false && "currRoomID must be one of the rooms the door connects!");
+    throw std::invalid_argument("Door::getDestinationRoomID: bad currRoomID");
 }
 
 bool Door::isLocked() const{
@@ -37,21 +29,36 @@ bool Door::isOpen() const{
     return open;
 }
 
-void Door::open() {
-    // TODO: send message to server requesting door to be opened
+void Door::sendInteractRequest(int playerID) {
+    // TODO: send message to server that the given player (ID) is attempting to open the door.
 }
 
-// Todo: override interact() function
-void Door::interact(Player* player) {
-    if (!locked){
-        open();
-        return;
+void Door::processInteractResult(bool state) {
+    tryOpen(state);
+}
+
+void Door::unlockDoor() {
+    locked = false;
+    // TODO: play door unlocking animation
+}
+
+void Door::openDoor() {
+    open = true;
+    // TODO: play door opening animation and move position of door
+}
+
+void Door::tryOpen(bool success){
+    // attempt to unlock door (if it has a lock)
+    if (locked){
+        if (success){
+            unlockDoor();
+        }
+        else {
+            // TODO: play animation of door shuddering (not opening because it's locked)
+        }
     }
-    // first unlock, then open
-    keys = player.getKeys();
-    auto it = find(vec.begin(), vec.end(), target);
-    if (it!=vec.end())
-        cout << "Found";
-    else
-        cout << "Not found";
+    // attempt to open door
+    if (success){
+        openDoor();
+    }
 }

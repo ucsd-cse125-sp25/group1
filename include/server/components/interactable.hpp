@@ -6,7 +6,7 @@ class Interactable
 public:
     Interactable();
     virtual ~Interactable() = default;
-    void interact(const Player &player); //handles the input that triggers the handle event. 
+    void interact(const Player &player); //calls the overriden handleInteract function.
 
 protected:
     virtual void handleInteract(const Player &player) = 0; //Pure virtual function, must be implemented by derived classes

@@ -1,4 +1,4 @@
-#include "server/player.hpp"
+#include "player.hpp"
 
 Player::Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction)
     : 

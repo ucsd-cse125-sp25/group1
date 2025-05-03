@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "components/room.hpp"
 
 Room::Room(int id, const std::string& name)

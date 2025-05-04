@@ -5,6 +5,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <fstream>
 
 using tcp = boost::asio::ip::tcp;
 using json = nlohmann::json;
@@ -19,23 +20,44 @@ Server::Server()
 
 Server::~Server() {}
 
+static vec3 toVec3(const json& arr) {
+    return vec3(arr[0], arr[1], arr[2]);
+}
+
+void Server::initRigidBodies() {
+    std::ifstream in("../src/shared/layout.json");
+    json layout;
+    in >> layout;
+
+    for (const auto& room : layout) {
+        vec3 roomPosition = toVec3(room["position"]);
+
+        for (const auto& obj : room["objects"]) {
+            vec3 position = toVec3(obj["position"]);
+            vec3 minCorner = toVec3(obj["aabb"]["min"]);
+            vec3 maxCorner = toVec3(obj["aabb"]["max"]);
+
+            RigidBody* object = new RigidBody(
+                vec3(0.0f),
+                vec3(0.0f),
+                0.0f,
+                new Transform{ roomPosition + position, vec3(0.0f) },
+                new BoxCollider{
+                    AABB,
+                    minCorner,
+                    maxCorner
+                },
+                true
+            );
+            world.addObject(object);
+        }
+    }
+}
+
 bool Server::init() {
     std::cout << "IP Address: " << config::SERVER_IP << "\nPort: " << config::SERVER_PORT << "\n";
 
-    // add floor to world
-    RigidBody* floor = new RigidBody(
-        vec3(0.0f),
-        vec3(0.0f),
-        0.0f,
-        new Transform{ vec3(0.0f), vec3(0.0f) },
-        new BoxCollider{
-            AABB,
-            vec3(-10.0f, -1.0f, -10.0f),
-            vec3(10.0f, 0.0f, 10.0f)
-        },
-        true
-    );
-    world.addObject(floor);
+    initRigidBodies();
 
     return true;
 }
@@ -159,7 +181,7 @@ void Server::startTick() {
     });
 }
 
-static glm::vec3 toVec3(json arr) {
+static glm::vec3 toGlmVec3(const json& arr) {
     return glm::vec3(arr[0], arr[1], arr[2]);
 }
 
@@ -176,7 +198,7 @@ void Server::handleClientMessages() {
                     players[clientId]->handleKeyboardInput(action);
                 }
             } else if (type == "mouse_input") {
-                glm::vec3 direction = toVec3(parsed["direction"]);
+                glm::vec3 direction = toGlmVec3(parsed["direction"]);
                 players[clientId]->handleMouseInput(direction);
             }
         }

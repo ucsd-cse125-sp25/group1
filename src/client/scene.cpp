@@ -1,4 +1,5 @@
 #include "scene.hpp"
+#include <array>
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
@@ -19,6 +20,27 @@ void Scene::init() {
 
     room = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
     table = std::make_unique<Model>("../src/client/models/table.obj");
+    door = std::make_unique<Model>("../src/client/models/door.obj");
+
+    initRooms();
+}
+
+void Scene::initRooms() {
+    const glm::mat4 I4{1.0f};   // 4 x 4 identity matrix 
+
+    ModelInstance room1(room.get(), I4);
+    modelInstances.emplace_back(std::move(room1));      // Move room into the model instance list
+    ModelInstance& room1Ref = modelInstances.back();    // Reference the stored instance
+
+    room1Ref.children.emplace_back(table.get(), I4, &room1Ref);
+
+    std::array<float, 4> degrees = { 0.0f, 90.0f, 180.0f, 270.0f };
+
+    for (int i = 0; i < 4; ++i) {
+        glm::mat4 doorModel = glm::rotate(I4, glm::radians(degrees[i]), glm::vec3(0.0f, 1.0f, 0.0f));
+        doorModel = glm::translate(doorModel, glm::vec3(10.0f, 0.0f, 0.0f));
+        room1Ref.children.emplace_back(door.get(), doorModel, &room1Ref);
+    }
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
@@ -40,13 +62,10 @@ void Scene::render(const Camera& camera) {
     modelShader->setMat4("view", camera.getViewMatrix());
     modelShader->setMat4("projection", camera.getProjectionMatrix());
 
-    glm::mat4 roomModel = glm::mat4(1.0f);
-    modelShader->setMat4("model", roomModel);
-    room->draw(*modelShader);
-
-    glm::mat4 tableModel = glm::mat4(1.0f);
-    modelShader->setMat4("model", tableModel);
-    table->draw(*modelShader);
+    // Draw all model instances in the scene
+    for (const auto& instance : modelInstances) {
+        instance.drawRecursive(*modelShader);
+    }
 
     shader->use();
 

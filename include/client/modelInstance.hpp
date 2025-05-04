@@ -18,7 +18,7 @@ struct ModelInstance {
     Model* model;
     glm::mat4 localTransform;
     ModelInstance* parent;
-    std::vector<ModelInstance> children;
+    std::vector<std::unique_ptr<ModelInstance>> children;
 
     /**
      * @brief Constructs a ModelInstance.
@@ -53,7 +53,7 @@ struct ModelInstance {
         model->draw(shader);
 
         for (const auto& child : children) {
-            child.drawRecursive (shader);
+            child->drawRecursive(shader);
         }
     }
 };

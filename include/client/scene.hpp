@@ -82,7 +82,7 @@ private:
     std::unique_ptr<Model> table;
     std::unique_ptr<Model> door;
 
-    std::vector<ModelInstance> modelInstances;  // List of all top-level model instances, each with its children.
+    std::vector<std::unique_ptr<ModelInstance>> modelInstances;  // Top-level model instances with their child models.
 
     std::unordered_map<int, Player> players;    // Active players in the scene.
 };

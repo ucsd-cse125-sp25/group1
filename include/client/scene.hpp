@@ -5,10 +5,12 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <memory>
 #include <unordered_map>
+#include <vector>
 #include "camera.hpp"
 #include "config.hpp"
 #include "cube.hpp"
 #include "model.hpp"
+#include "modelInstance.hpp"
 #include "shader.hpp"
 
 /**
@@ -64,11 +66,23 @@ public:
     void render(const Camera& camera);
 
 private:
+    /**
+     * @brief Sets up rooms and the objects they contain.
+     * 
+     * Adds models to the scene in a hierarchy–
+     * for example, a room as the parent and its objects as children.
+     * Called when the scene is initialized.
+     */
+    void initRooms();
+
     std::unique_ptr<Shader> shader;
     std::unique_ptr<Shader> modelShader;
 
     std::unique_ptr<Model> room;
     std::unique_ptr<Model> table;
+    std::unique_ptr<Model> door;
+
+    std::vector<std::unique_ptr<ModelInstance>> modelInstances;  // Top-level model instances with their child models.
 
     std::unordered_map<int, Player> players;    // Active players in the scene.
 };

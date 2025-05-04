@@ -48,6 +48,11 @@ public:
 
 private:
     /**
+     * @brief Initializes static rigid bodies based on the layout defined in a JSON file.
+     */
+    void initRigidBodies();
+
+    /**
      * @brief Finds an available client ID.
      * 
      * Searches for a free slot in the clients map.

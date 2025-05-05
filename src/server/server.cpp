@@ -46,15 +46,21 @@ void Server::initRigidBodies() {
                 maxCorner = vec3(maxCorner.z, maxCorner.y, maxCorner.x);
             }
 
+            vec3 relativePosition = (toVec3(dimensions[modelName]["max"]) +
+                toVec3(dimensions[modelName]["min"])) * 0.5f;
+
+            vec3 relativeMinCorner = minCorner - relativePosition;
+            vec3 relativeMaxCorner = maxCorner - relativePosition;
+
             RigidBody* object = new RigidBody(
                 vec3(0.0f),
                 vec3(0.0f),
                 0.0f,
-                new Transform{ roomPosition + position, vec3(0.0f) },
+                new Transform{ roomPosition + position + relativePosition, vec3(0.0f) },
                 new BoxCollider{
                     AABB,
-                    minCorner,
-                    maxCorner
+                    relativeMinCorner,
+                    relativeMaxCorner
                 },
                 true
             );

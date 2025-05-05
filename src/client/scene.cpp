@@ -20,7 +20,7 @@ void Scene::init() {
 
     room = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
     table = std::make_unique<Model>("../src/client/models/table.obj");
-    door = std::make_unique<Model>("../src/client/models/door.obj");
+    door = std::make_unique<Model>("../src/client/models/hotel_door.obj");
 
     initRooms();
 }

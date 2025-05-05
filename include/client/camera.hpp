@@ -24,6 +24,13 @@ public:
     void setPosition(const glm::vec3& position);
 
     /**
+     * @brief Returns the current position of the camera.
+     *
+     * @return The camera's world-space position as a glm::vec3.
+     */
+    glm::vec3 getPosition() const;
+
+    /**
      * @brief Sets the camera's viewing direction.
      * 
      * @param direction New direction vector.

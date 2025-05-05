@@ -16,6 +16,8 @@ struct SubMesh {
     GLuint vao, vbo, ebo;
     GLuint indexCount;          // Number of indices to draw.
     glm::vec3 color;            // Base color of the sub-mesh
+    glm::vec3 specular;         // Specular reflectivity of the sub-mesh
+    float shininess;            // Shininess of the sub-mesh
 
     GLuint textureId = 0;       // Texture ID if a texture is loaded.
     bool hasTexture = false;    // True if this sub-mesh uses a texture.

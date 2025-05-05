@@ -4,6 +4,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <iostream>
 
+struct PointLight {
+    glm::vec3 position;
+    glm::vec3 color;
+};
+
 Scene::Scene() {}
 Scene::~Scene() {}
 
@@ -63,6 +68,19 @@ void Scene::render(const Camera& camera) {
 
     modelShader->setMat4("view", camera.getViewMatrix());
     modelShader->setMat4("projection", camera.getProjectionMatrix());
+    modelShader->setVec3("viewPos", camera.getPosition());
+
+    // This is for testing, will change this later
+    std::vector<PointLight> testLights = {
+        { glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f) },
+    };
+
+    // This is for testing, will change this later
+    modelShader->setInt("numLights", testLights.size());
+    for (int i = 0; i < testLights.size(); ++i) {
+        modelShader->setVec3("pointLights[" + std::to_string(i) + "].position", testLights[i].position);
+        modelShader->setVec3("pointLights[" + std::to_string(i) + "].color", testLights[i].color);
+    }
 
     // Draw all model instances in the scene
     for (const auto& instance : modelInstances) {

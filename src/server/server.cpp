@@ -105,7 +105,7 @@ void Server::handleClientJoin(int clientId) {
 
     glm::vec3 position = config::PLAYER_SPAWNS[clientId];
     glm::vec3 direction = glm::normalize(glm::vec3(-position.x, 0.0f, -position.z)); // will change this later
-    Player * player = new Player(to_string(clientId), 0, position, direction);
+    Player * player = new Player(clientId, 0, position, direction);
     players[clientId] = player;
 
     // add player to physics world

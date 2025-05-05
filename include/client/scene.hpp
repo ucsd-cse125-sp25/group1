@@ -10,6 +10,7 @@
 #include "model.hpp"
 #include "shader.hpp"
 #include "uielement.hpp"
+#include "json.hpp"
 
 /**
  * @brief Represents a player in the scene.
@@ -119,6 +120,8 @@ public:
      * @param camera The active camera providing view and projection matrices.
      */
     void render(const Camera& camera);
+
+    void updateTimer();
 
 private:
     std::unique_ptr<Shader> shader;

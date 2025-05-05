@@ -8,11 +8,12 @@ public:
 	UIElement(glm::vec3 position, const std::string filePath);
 	UIElement(glm::vec3 position, GLfloat rectWidth, GLfloat rectHeight, const std::string filePath);
 	~UIElement();
-
 	void draw(Shader& shader);
+	void changeSprite(glm::vec2 coords);
 private:
 	GLfloat width, height;
 	glm::vec3 position;
-	GLuint vao, vbo, ebo;
+	GLuint vao, ebo;
+	GLuint vbo[2];
 	GLuint texture = 0;
 };

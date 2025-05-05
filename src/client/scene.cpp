@@ -24,7 +24,7 @@ void Scene::init() {
 
     room = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
     table = std::make_unique<Model>("../src/client/models/table.obj");
-    timer = std::make_unique<UIElement>(glm::vec3(0.0f,0.0f,0.0f), "../src/client/ui/banana.jpg");
+    timer = std::make_unique<UIElement>(glm::vec3(0.0f,0.0f,0.0f), "../src/client/ui/timer-atlas.png");
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
@@ -34,6 +34,10 @@ void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3
         players.at(id).position = position;
         players.at(id).direction = direction;
     }
+}
+
+void Scene::updateTimer() {
+    timer->changeSprite(glm::vec2(128.0f, 0.0f));
 }
 
 void Scene::removePlayer(int id) {
@@ -65,10 +69,5 @@ void Scene::render(const Camera& camera) {
     }
 
     //UI
-    //uiShader->use();
-    //glActiveTexture(GL_TEXTURE0);
-    //glBindTexture(GL_TEXTURE_2D, mesh.textureId);
-    //uiShader->setBool("hasTexture", true);
-    //ui->setInt("elementTexture", 0);
     timer->draw(*uiShader);
 }

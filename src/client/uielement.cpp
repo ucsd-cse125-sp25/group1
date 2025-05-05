@@ -2,13 +2,43 @@
 #include <iostream>
 #include <stb_image.h>
 #include <string>
+
+float atlasWidth = 384.0f;
+float atlasHeight = 512.0f;
+
+float spriteX = 256.0f;
+float spriteY = 384.0f;
+float spriteWidth = 128.0f;
+float spriteHeight = 128.0f;
+
+float uMin = spriteX / atlasWidth;
+float vMin = spriteY / atlasHeight;
+float uMax = (spriteX + spriteWidth) / atlasWidth;
+float vMax = (spriteY + spriteHeight) / atlasHeight;
+
 static const GLfloat vertices[] = {
     // positions          // colors           // texture coords
-     1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-     1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-    -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-    -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+     1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,   uMax, vMax,   // top right
+     1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,   uMax, vMin,   // bottom right
+    -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,   uMin, vMin,   // bottom left
+    -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f,   uMin, vMax    // top left 
 };
+
+static const GLfloat posCols[] = {
+    // positions          // colors           
+    1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
+    1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
+    -1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,
+    -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f
+};
+
+static const GLfloat texCoords[] = {
+    uMax, vMax,   // top right
+    uMax, vMin,   // bottom right
+    uMin, vMin,   // bottom left
+    uMin, vMax    // top left 
+};
+
 static const GLuint indices[] = {
     0,  2,  1,  0,  3,  2 // Front
 };
@@ -17,15 +47,15 @@ UIElement::UIElement(glm::vec3 position, GLfloat rectWidth, GLfloat rectHeight, 
     this->position = position;
     this->width = rectWidth;
     this->height = rectHeight;
-
+    
     glGenVertexArrays(1, &vao);
-    glGenBuffers(1, &vbo);
+    glGenBuffers(2, vbo);
     glGenBuffers(1, &ebo);
 
     glBindVertexArray(vao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(posCols), posCols, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
@@ -38,13 +68,16 @@ UIElement::UIElement(glm::vec3 position, GLfloat rectWidth, GLfloat rectHeight, 
         * (3+3) = 3 position values, 3 color values
         * Last 0 argument is the offset from the first attribute.Since this is the first attribute, there's no offset
     */
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0); // position
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0); // position
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));   // color
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));   // color
     glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));   // texture pos
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_DYNAMIC_DRAW);
+
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);   // texture pos
     glEnableVertexAttribArray(2);
 
     glGenTextures(1, &texture); // glGenTextures takes the number of textures we want to generate (1 in our case) and stores it in an unsigned int array
@@ -93,24 +126,27 @@ UIElement::UIElement(glm::vec3 position, const std::string filePath) {
     this->height = 1.0f;
 
     glGenVertexArrays(1, &vao);
-    glGenBuffers(1, &vbo);
+    glGenBuffers(2, vbo);
     glGenBuffers(1, &ebo);
 
     glBindVertexArray(vao);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(posCols), posCols, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0); // position
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0); // position
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));   // color
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));   // color
     glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));   // texture pos
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
+    
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);   // texture pos
     glEnableVertexAttribArray(2);
 
     glGenTextures(1, &texture);
@@ -144,11 +180,32 @@ UIElement::UIElement(glm::vec3 position, const std::string filePath) {
 
 UIElement::~UIElement() {
     glDeleteVertexArrays(1, &vao);
-    glDeleteBuffers(1, &vbo);
+    glDeleteBuffers(2, vbo);
     glDeleteBuffers(1, &ebo);
 }
 
+void UIElement::changeSprite(glm::vec2 coords) {
+    
+    float uMin = coords.x / atlasWidth;
+    float vMin = coords.y / atlasHeight;
+    float uMax = (coords.x + spriteWidth) / atlasWidth;
+    float vMax = (coords.y + spriteHeight) / atlasHeight;
+
+    float spriteCoords[] = {
+        uMax, vMax,   // top right
+        uMax, vMin,   // bottom right
+        uMin, vMin,   // bottom left
+        uMin, vMax    // top left 
+    };
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(spriteCoords), spriteCoords);
+}
+
+
 void UIElement::draw(Shader& shader){
+    
+    //changeSprite(glm::vec2(128.0f, 0.0f));
     shader.use();
     shader.setInt("ourTexture", 0);
     shader.setVec3("origin", this->position);
@@ -157,7 +214,7 @@ void UIElement::draw(Shader& shader){
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);   // just like other objects (vao, vbo, etc.) we gotta bind our texture so opengl knows what to reference
-
+    
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);    //6 indices
     glBindVertexArray(0);

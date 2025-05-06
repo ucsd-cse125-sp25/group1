@@ -41,8 +41,7 @@ void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos) {
 
     if (client->pitch > config::MAX_PITCH) {
         client->pitch = config::MAX_PITCH;
-    }
-    else if (client->pitch < config::MIN_PITCH) {
+    } else if (client->pitch < config::MIN_PITCH) {
         client->pitch = config::MIN_PITCH;
     }
 
@@ -64,12 +63,12 @@ static glm::vec3 yawToDirection(float yaw) {
 
 Client::Client()
     : socket(std::make_unique<tcp::socket>(ioContext)),
-    isMouseLocked(true),
-    lastMouseX(0.0),
-    lastMouseY(0.0),
-    isFirstMouse(true),
-    yaw(0.0f),
-    pitch(0.0f) {}
+      isMouseLocked(true),
+      lastMouseX(0.0),
+      lastMouseY(0.0),
+      isFirstMouse(true),
+      yaw(0.0f),
+      pitch(0.0f) {}
 
 Client::~Client() {}
 
@@ -108,8 +107,7 @@ bool Client::connectToServer() {
 
         return true;
 
-    }
-    catch (const std::exception& e) {
+    } catch (const std::exception &e) {
         std::cerr << "Error: " << e.what() << "\n";
         return false;
     }
@@ -127,8 +125,7 @@ void Client::receiveServerMessage() {
         if (!message.empty()) {
             handleServerMessage(message);
         }
-    }
-    catch (const std::exception& e) {
+    } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";
         exit(1);
     }
@@ -144,19 +141,16 @@ void Client::handleServerMessage(const std::string& message) {
 
     if (type == "player_states") {
         updatePlayerStates(parsed);
-    }
-    else if (type == "time_left") {
+    } else if (type == "time_left") {
         updateGameTimer(parsed);
-    }
-    else if (type == "swamp_init") {
+    } else if (type == "swamp_init") {
         int roomID = parsed["room_ID"];
         auto gameState = parsed["game_state"];
         int numPads = parsed["num_pads"];
         std::string audioFile = parsed["audio_file"];
 
         swamp = new Swamp(roomID, gameState, numPads, audioFile);
-    } 
-    else if (type == "swamp_update") {
+    } else if (type == "swamp_update") {
         auto gameState = parsed["game_state"];
         swamp->setGameState(gameState);
     }
@@ -227,16 +221,14 @@ void Client::handleEscInput(GLFWwindow* window) {
             if (isMouseLocked) {
                 glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
                 isFirstMouse = true;
-            }
-            else {
+            } else {
                 glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
             }
         }
         wasEscPressed = true;
-    }
-    else {
+    } else {
         wasEscPressed = false;
-    }
+    } 
 }
 
 void Client::handleKeyboardInput(GLFWwindow* window) {

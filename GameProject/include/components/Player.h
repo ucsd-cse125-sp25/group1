@@ -22,7 +22,11 @@ public:
     void jump();
 
     void draw(std::vector<std::vector<char>>& grid) const;
-    bool move(int dx, int dy, int width, int height);
+    bool move(int dx, int dy, std::vector<std::vector<char>>& map);
+    //get the player's current room ID. 
+    std::vector<int> getKeys() const;
+    void addKey(int keyID);
+    bool removeKey(int keyID);
     //get the player's current room ID. 
     int getCurRoomID() const;
     void setCurRoomID(int id);
@@ -34,7 +38,7 @@ private:
     //Include world coordinates for all objects and such as well?
     // Todo: add `facingDirection` variable that keeps track of where the player is facing.
     /* called internally by the public facing move functions */
-    void move(float x, float y);
-    bool hasKey = false;  
+    //void move(float x, float y);
     int curRoomID; // ID of the room the player is currently in
+    std::vector<int> keys;
 };

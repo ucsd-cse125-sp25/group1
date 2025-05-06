@@ -4,6 +4,8 @@
 #include <array>
 #include "components/room.hpp"
 #include "components/interactable.hpp"
+#include "components/object.hpp"
+#include "world.hpp"
 #include <glm/glm.hpp>
 
 
@@ -14,22 +16,12 @@ public:
     *
     * Initializes the swamp
     */
-    Swamp(int roomID);
+    Swamp(int roomID, World& worldRef);
 
     /**
      * @brief Destructor for Swamp.
      */
     ~Swamp();
-
-    /**
-      * @brief Initializes the swamp game on the server side
-      *
-      * Sets up the game state, including the number of pads and their initial states.
-      *
-      * @return true if the game was initialized successfully, false otherwise.
-      */
-    bool init();
-
 
     /**
      * @brief Returns the game initialization information client side needs in a packet
@@ -85,10 +77,14 @@ private:
      */
     std::vector<std::array<int, 2>> gameState;
 
-    //add in objects.
-    //std::vector<std::array<OBjects*, 2>> pads;
+    
+    /**
+    * @brief List of lily pads in the swamp game
+    *
+    * A vector of pairs, each element is a pair of pointers to the two lilypads that are part of the same step.
+    */
+    std::vector<std::array<Object*, 2>> pads;
 
-    std::vector<Interactable*>  frogs;
 
     /**
       *  @brief Solution Key to the Swamp Game
@@ -110,4 +106,10 @@ private:
      *
      */
     glm::vec3 respawnPoint;
+
+    /**
+     * @brief Reference to the world object
+     * 
+     */
+    World& world;
 };

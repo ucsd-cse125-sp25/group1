@@ -16,3 +16,7 @@ Object::Object(int id, const glm::vec3& position, const glm::vec3& direction, fl
         },
         true
     ) {}
+
+RigidBody& Object::getBody() {
+    return body;
+}

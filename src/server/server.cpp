@@ -61,8 +61,7 @@ bool Server::init() {
 
     initRigidBodies();
 
-    swamp = new Swamp(1);
-    swamp->init();
+    swamp = new Swamp(1, world);
 
     return true;
 }

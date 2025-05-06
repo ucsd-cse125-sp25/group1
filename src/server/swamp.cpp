@@ -7,34 +7,42 @@
 
 using json = nlohmann::json;
 
-Swamp::Swamp(int roomID) : Room(roomID, "Swamp") {
+Swamp::Swamp(int roomID, World& worldRef) : Room(roomID, "Swamp"), world(worldRef) {
 
-    numPads = 10; //number of pads in the swamp game
+    numPads = config::SWAMP_NUM_PADS; //number of pads in the swamp game
 
     gameState = std::vector<std::array<int, 2>>(numPads, { 1, 1 });
 
     //TODO: Pull this from config?
-    soluiton = { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 };
-    audioFile = "solution_audio.mp3";
+    soluiton = config::SWAMP_SOLUTION;
+    audioFile = config::SWAMP_AUDIO_FILE;
 
     respawnPoint = config::SWAMP_RESPAWN;
+
+    // Initialize the lily pads
+    for (int i = 0; i < numPads; i++) {
+        for (int j = 0; j < 2; j++) {
+            pads[i][j] = new Object(
+                i * 2 + j, // ID
+                config::SWAMP_LILYPAD_POS[i][j], //Position
+                config::SWAMP_LILYPAD_DIR[i][j], //Direction
+                config::SWAMP_LILYPAD_WIDTH, //Width
+                config::SWAMP_LILYPAD_HEIGHT //Height
+            );
+
+            world.addObject(&(pads[i][j]->getBody()));
+            
+        }
+    }
 }
 
 Swamp::~Swamp() {
     // Destructor
-}
-
-bool Swamp::init() {
-    // Initialize the swamp game
-
-
-    //Create instances of the pads
-
-    //send soluton audio file to frog? (or on client side)
-    // frog interact is audio only if audio only played on interacting client do we need frog on our side?  audio solution present in game init. 
-
-    std::cout << "Swamp Initialized \n" << std::endl;
-    return true;
+    for (int i = 0; i < numPads; i++) {
+        for (int j = 0; j < 2; j++) {
+            delete pads[i][j];
+        }
+    }
 }
 
 std::string Swamp::getInitInfo() {

@@ -1,6 +1,9 @@
 #pragma once
 
 #include <glm/vec3.hpp>
+#include <vector>
+#include <string>
+#include <array>
 
 namespace config {
     inline constexpr const char* SERVER_IP = "127.0.0.1";
@@ -45,5 +48,42 @@ namespace config {
 
     inline constexpr float MOUSE_SENSITIVITY = 0.1f;
 
+    // Swamp Related Configs
     inline constexpr glm::vec3 SWAMP_RESPAWN = { 0.0f, 1.0f, 0.0f };
+    inline constexpr int SWAMP_NUM_PADS = 10;
+
+    inline const std::vector<int> SWAMP_SOLUTION = { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 };
+    inline constexpr const char* SWAMP_AUDIO_FILE = "solution_audio.mp3";
+
+    //TODO: Adjust once rendered relative to the room? or absolute in the world? would rendering need a different set?
+    inline const std::array<std::array<glm::vec3, 2>, SWAMP_NUM_PADS> SWAMP_LILYPAD_POS = { {
+        { glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.5f, 0.0f) },
+        { glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.5f) },
+        { glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.5f, 0.0f, 1.0f) },
+        { glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 0.5f) },
+        { glm::vec3(1.0f, 0.5f, 1.0f), glm::vec3(1.5f, 0.5f, 1.0f) },
+        { glm::vec3(1.5f, 1.5f, 0.5f), glm::vec3(2.5f, 1.5f, 0.5f) },
+        { glm::vec3(2.5f, 2.5f, 1.5f), glm::vec3(2.5f, 2.5f, 2.5f) },
+        { glm::vec3(2.5f, 2.5f, -1.5f), glm::vec3(2.5f, 2.5f, -2.5f) },
+        { glm::vec3(-1.5f, -1.5f, -2.5f), glm::vec3(-2.5f, -1.5f, -2.5f) },
+        { glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.5f, 0.0f, 1.0f) }
+    } };
+
+    //TODO: Adjust once rendered
+    inline const std::array<std::array<glm::vec3, 2>, SWAMP_NUM_PADS> SWAMP_LILYPAD_DIR = { {
+    { glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(1.0f, 0.5f, 0.0f) },
+    { glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.5f) },
+    { glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.5f, 0.0f, 1.0f) },
+    { glm::vec3(1.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 0.5f) },
+    { glm::vec3(1.0f, 0.5f, 1.0f), glm::vec3(1.5f, 0.5f, 1.0f) },
+    { glm::vec3(1.5f, 1.5f, 0.5f), glm::vec3(2.5f, 1.5f, 0.5f) },
+    { glm::vec3(2.5f, 2.5f, 1.5f), glm::vec3(2.5f, 2.5f, 2.5f) },
+    { glm::vec3(2.5f, 2.5f, -1.5f), glm::vec3(2.5f, 2.5f, -2.5f) },
+    { glm::vec3(-1.5f, -1.5f, -2.5f), glm::vec3(-2.5f, -1.5f, -2.5f) },
+    { glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.5f, 0.0f, 1.0f) }
+} };
+
+    //TODO: Adjust once rendered
+    inline constexpr float SWAMP_LILYPAD_WIDTH = 1.0f;
+    inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;
 }

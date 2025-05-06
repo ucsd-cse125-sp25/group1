@@ -12,6 +12,10 @@ void printGameState(const std::vector<std::array<int, 2>>& gameState) {
 Swamp::Swamp(int roomID, std::vector<std::array<int, 2>> gameState, int numPads, std::string audioFile)
     : Room(roomID), gameState(gameState), numPads(numPads), audioFile(audioFile) {
     std::cout << "Swamp constructor \n" << std::endl;
+
+    //TODO: For the lilypad positions , should it be the same or different from the server? and the one in config
+
+    // Set up the frogs. 
     printGameState(gameState);
 }
 

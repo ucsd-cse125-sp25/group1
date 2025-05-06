@@ -20,6 +20,7 @@ Swamp::Swamp(int roomID, World& worldRef) : Room(roomID, "Swamp"), world(worldRe
     respawnPoint = config::SWAMP_RESPAWN;
 
     // Initialize the lily pads
+    pads.resize(numPads);
     for (int i = 0; i < numPads; i++) {
         for (int j = 0; j < 2; j++) {
             pads[i][j] = new Object(

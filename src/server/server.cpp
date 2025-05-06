@@ -285,15 +285,15 @@ void Server::broadcastTimeLeft() {
 
 void Server::broadcastGameStates() {
     for (const auto& [clientId, socket] : clients) {
-		std::string swampPacket = swamp->getUpdatePacket();
+        std::string swampPacket = swamp->getUpdatePacket();
 
         try {
-			boost::asio::write(*socket, boost::asio::buffer(swampPacket));
+            boost::asio::write(*socket, boost::asio::buffer(swampPacket));
         }
         catch (const std::exception& e) {
-			handleClientDisconnect(clientId);
-		}
-	}
+            handleClientDisconnect(clientId);
+        }
+    }
 }
 
 void Server::run() {

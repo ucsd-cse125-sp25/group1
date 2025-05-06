@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include "world.hpp"
 #include "player.hpp"
+#include "swamp.hpp"
 
 /**
  * @brief Handles server-side networking and world updates for a multiplayer game.
@@ -131,6 +132,13 @@ private:
      * are connected and continues running until all clients disconnect.
      */
     void startGameTimer();
+    
+    /**
+     * @brief Sends game state updates to connected clients.
+     *
+     * Includes swamp game state and other relevant information.
+     */
+    void broadcastGameStates();
 
     /**
      * @brief Broadcasts the current time left to all clients.
@@ -156,4 +164,6 @@ private:
     std::unordered_map<int, Player *> players;
 
     std::unordered_map<int, std::deque<std::string>> clientMessages;
+
+    Swamp* swamp;
 };

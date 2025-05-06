@@ -198,22 +198,22 @@ void Client::updateGameTimer(const json& parsed) {
 
 static std::string mapKeyToAction(int key) {
     switch (key) {
-    case GLFW_KEY_W:
-    case GLFW_KEY_UP:
-        return "move_forward";
-    case GLFW_KEY_S:
-    case GLFW_KEY_DOWN:
-        return "move_backward";
-    case GLFW_KEY_A:
-    case GLFW_KEY_LEFT:
-        return "strafe_left";
-    case GLFW_KEY_D:
-    case GLFW_KEY_RIGHT:
-        return "strafe_right";
-    case GLFW_KEY_SPACE:
-        return "jump";
-    default:
-        return "";
+        case GLFW_KEY_W:
+        case GLFW_KEY_UP:
+            return "move_forward";
+        case GLFW_KEY_S:
+        case GLFW_KEY_DOWN:
+            return "move_backward";
+        case GLFW_KEY_A:
+        case GLFW_KEY_LEFT:
+            return "strafe_left";
+        case GLFW_KEY_D:
+        case GLFW_KEY_RIGHT:
+            return "strafe_right";
+        case GLFW_KEY_SPACE:
+            return "jump";
+        default:
+            return "";
     }
 }
 

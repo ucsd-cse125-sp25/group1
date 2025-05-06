@@ -62,12 +62,12 @@ private:
      */
     int findAvailableId();
 
-	/**
-	 * @brief Starts accepting new client connections asynchronously.
-	 *
-	 * Upon connection, assigns client IDs and sets up listening.
-	 */
-	void acceptConnections();
+    /**
+     * @brief Starts accepting new client connections asynchronously.
+     *
+     * Upon connection, assigns client IDs and sets up listening.
+     */
+    void acceptConnections();
 
     /**
      * @brief Handles client joining logic.
@@ -160,8 +160,8 @@ private:
     std::unordered_map<int, std::shared_ptr<boost::asio::ip::tcp::socket>> clients;
     std::unordered_map<int, boost::asio::streambuf> buffers;
 
-	World world;
-	std::unordered_map<int, Player*> players;
+    World world;
+    std::unordered_map<int, Player*> players;
 
     std::unordered_map<int, std::deque<std::string>> clientMessages;
 

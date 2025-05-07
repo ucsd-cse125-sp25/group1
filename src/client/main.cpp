@@ -9,6 +9,12 @@ int main() {
         return 1;
     }
 
+    AudioManager audioManager;
+    if (!audioManager.initialize()) {
+        return 1; // Exit if FMOD fails
+    }
+
+
     client.run();
 
     return 0;

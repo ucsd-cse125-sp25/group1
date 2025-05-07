@@ -7,9 +7,11 @@ target_include_directories(server PRIVATE
     ${CMAKE_SOURCE_DIR}/include/shared
     ${CMAKE_SOURCE_DIR}/dependencies/glm
     ${CMAKE_SOURCE_DIR}/dependencies/json
+    ${CMAKE_SOURCE_DIR}/dependencies/fmod
 )
 
 target_link_libraries(server PRIVATE
     Boost::asio
     Boost::system
+    fmod
 )

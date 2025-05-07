@@ -8,6 +8,7 @@ target_include_directories(client PRIVATE
     ${CMAKE_SOURCE_DIR}/dependencies/glm
     ${CMAKE_SOURCE_DIR}/dependencies/json
     ${CMAKE_SOURCE_DIR}/dependencies/stb
+    ${CMAKE_SOURCE_DIR}/dependencies/fmod
 )
 
 target_link_libraries(client PRIVATE
@@ -16,6 +17,7 @@ target_link_libraries(client PRIVATE
     Boost::system
     glad
     glfw
+    fmod
 )
 
 if(WIN32)

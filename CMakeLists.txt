@@ -29,6 +29,8 @@ add_subdirectory(dependencies/assimp)
 add_subdirectory(dependencies/boost)
 add_subdirectory(dependencies/glad)
 add_subdirectory(dependencies/glfw)
+add_subdirectory(dependencies/fmod)
+
 
 add_subdirectory(src/client)
 add_subdirectory(src/server)

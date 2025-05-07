@@ -24,7 +24,7 @@ void Scene::init() {
 
     room = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
     table = std::make_unique<Model>("../src/client/models/table.obj");
-    timer = std::make_unique<UIElement>(glm::vec3(0.0f,0.0f,0.0f), "../src/client/ui/timer-atlas.png");
+    timer = std::make_unique<TimerDisplay>();
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
@@ -36,8 +36,14 @@ void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3
     }
 }
 
-void Scene::updateTimer() {
-    timer->changeSprite(glm::vec2(128.0f, 0.0f));
+void Scene::updateTimer(int minutes, int seconds) {
+    timer->updateTimer(minutes,seconds);
+    //int lMinutes = minutes / 10;
+    //int rMinutes = minutes % 10;
+
+    //int lSeconds = seconds / 10;
+    //int rSeconds = seconds % 10;
+    //std::cout << lMinutes << rMinutes << ":" << lSeconds << rSeconds << std::endl;
 }
 
 void Scene::removePlayer(int id) {

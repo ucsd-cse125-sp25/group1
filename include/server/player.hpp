@@ -7,27 +7,26 @@
  */
 #pragma once
 #include <string>
+#include <set>
 #include <glm/glm.hpp>
 #include "config.hpp"
 #include "rigidBody.hpp"
 
-using namespace std;
-using namespace glm;
-
 class Player {
 public:
     /**
-     * @brief Constructs a Player object with a given name, room ID, position, and direction.
+     * @brief Constructs a Player object with a given player id, room ID, position, and direction.
      *
      * Initializes the player's rigid body at the specified position and orientation,
      * assigning it a box collider based on player configuration settings.
-     *
-     * @param playerName Name of the player.
+     * Sets the player ID and the ID of the room they're currently in.
+     * 
+     * @param playerID ID of the player
      * @param roomID ID of the room the player initially belongs to.
      * @param position Initial position of the player.
      * @param direction Initial facing direction of the player.
      */
-    Player(const string& playerName, int roomID, vec3 position, vec3 direction);
+    Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction);
     ~Player();
     
     /**
@@ -35,7 +34,14 @@ public:
      *
      * @return The player's name as a string.
      */
-    string getName() const;
+    const std::string& getName() const;
+
+    /**
+     * @brief Sets the player's name.
+     *
+     * @param playerName The new name for the player.
+     */
+    void setName(const std::string& playerName);
 
     /**
      * @brief Returns the ID of the room the player is currently in.
@@ -50,6 +56,37 @@ public:
      * @param roomID The new room ID to assign to the player.
      */
     void setCurRoomID(int id);
+
+    /**
+     * @brief Returns the set of key IDs the player possesses.
+     *
+     * @return std::set<int> A copy of the player's key ID list.
+     */
+    const std::set<int>& getKeyIDs() const {
+        return keyIDs;
+    }
+
+    /**
+     * @brief Adds a key to the player's inventory.
+     *
+     * @param keyID ID of the key to add.
+     */
+    void addKey(int keyID) {
+        keyIDs.insert(keyID);
+    }
+
+    /**
+     * @brief Removes a key from the player's inventory.
+     *
+     * Searches for the given key ID and removes it if found.
+     *
+     * @param keyID ID of the key to remove.
+     * @return true if the key was found and removed; false otherwise.
+     */
+    bool removeKey(int keyID){
+        bool found = keyIDs.erase(keyID) > 0;
+        return found;
+    }
 
     /**
      * @brief Returns a reference to the player's rigid body.
@@ -72,12 +109,14 @@ public:
      *
      * @param action String representing the player action to handle.
      */
-    void handleKeyboardInput(string action);
+    void handleKeyboardInput(std::string action);
 
     void handleMouseInput(glm::vec3 direction);
 
 private:
-    string name;
+    int id;
+    std::string name;
     int curRoomID;
     RigidBody body;
+    std::set<int> keyIDs; // Keys (by ID) the player has collected
 };

@@ -19,6 +19,8 @@ Model::~Model() {
 
 void Model::draw(Shader& shader) {
     for (const auto& mesh : subMeshes) {
+        if (mesh.isBoundingBox) continue;
+
         if (mesh.hasTexture) {
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, mesh.textureId);
@@ -82,6 +84,7 @@ void Model::loadModel(const std::string& path) {
         glm::vec3 color = glm::vec3(0.0f);
         aiColor3D kd(0.0f);
 
+        // Get diffuse color if available
         if (material->Get(AI_MATKEY_COLOR_DIFFUSE, kd) == AI_SUCCESS) {
             color = glm::vec3(kd.r, kd.g, kd.b);
         }
@@ -91,6 +94,7 @@ void Model::loadModel(const std::string& path) {
         std::string directory = path.substr(0, path.find_last_of('/'));
         aiString textureImage;
 
+        // Load texture if available
         if (material->GetTexture(aiTextureType_DIFFUSE, 0, &textureImage) == AI_SUCCESS) {
             std::string texturePath = directory + "/" + std::string(textureImage.C_Str());
 
@@ -116,6 +120,11 @@ void Model::loadModel(const std::string& path) {
         } else {
             subMesh.hasTexture = false;
         }
+
+        // Check if the mesh name starts with "UCX_" (used for collision boxes)
+        std::string meshName = mesh->mName.C_Str();
+        bool isBoundingBox = meshName.rfind("UCX_", 0) == 0;
+        subMesh.isBoundingBox = isBoundingBox;
 
         setupSubMesh(subMesh, vertices, indices);
         subMeshes.push_back(subMesh);

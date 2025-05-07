@@ -10,6 +10,7 @@
 #include "model.hpp"
 #include "shader.hpp"
 #include "uielement.hpp"
+#include "timerdisplay.hpp"
 #include "json.hpp"
 
 /**
@@ -121,7 +122,7 @@ public:
      */
     void render(const Camera& camera);
 
-    void updateTimer();
+    void updateTimer(int minutes, int seconds);
 
 private:
     std::unique_ptr<Shader> shader;
@@ -130,7 +131,7 @@ private:
 
     std::unique_ptr<Model> room;
     std::unique_ptr<Model> table;
-    std::unique_ptr<UIElement> timer;
+    std::unique_ptr<TimerDisplay> timer;
 
     std::unordered_map<int, Player> players;    // Active players in the scene.
 };

@@ -186,8 +186,7 @@ void Client::updatePlayerStates(const json& parsed) {
 
 void Client::updateGameTimer(const json& parsed) {
     std::cout << "Time Left: " << parsed["minutes"] << ":" << parsed["seconds"] << "\n"; // remove this later
-    
-    // Your code goes here...
+    scene->updateTimer(parsed["minutes"], parsed["seconds"]);
 }
 
 static std::string mapKeyToAction(int key) {

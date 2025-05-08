@@ -1,0 +1,67 @@
+import subprocess
+import platform
+import sys
+import os
+from pathlib import Path
+
+
+if platform.system() == "Windows":
+    print("Please use WSL")
+    sys.exit(1)
+
+# Paths
+source_include_path = Path("../build/_deps/assimp-src/include").resolve()
+build_include_path = Path("../build/_deps/assimp-build/include").resolve()
+lib_path = Path("..build/_deps/assimp-build/lib/Debug").resolve()
+glm_include_path = Path("../dependencies/glm").resolve()
+json_include_path = Path("../dependencies/json").resolve()
+
+# Command-line arguments
+source = sys.argv[1]
+arguments = sys.argv[2:]
+
+# Check if source file exists
+if not os.path.isfile(source):
+    print(f"No such source file: {source}")
+    sys.exit(1)
+
+# Construct compile command
+compileCommand = [
+    "g++",
+    "-std=c++17",
+    f"-I{source_include_path}",
+    f"-I{build_include_path}",
+    f"-I{glm_include_path}",
+    f"-I{json_include_path}",
+    source,
+    "-o", "script",
+    f"-L{lib_path}",
+    "-lassimp"
+]
+
+executeCommand = "./script"
+
+# Download libraries
+print(f"Compiling: {' '.join(compileCommand)}")
+subprocess.run(["sudo", "apt", "update"])
+result = subprocess.run(["sudo", "apt", "install", "libassimp-dev", "libglm-dev", "nlohmann-json3-dev"])
+if result.returncode != 0:
+    print("Library download failed.")
+    sys.exit(1)
+
+# Run compile
+print(f"Compiling: {' '.join(compileCommand)}")
+result = subprocess.run(compileCommand)
+if result.returncode != 0:
+    print("Compilation failed.")
+    sys.exit(1)
+
+# Run executable
+print(f"Running: {executeCommand} {' '.join(arguments)}")
+result = subprocess.run([executeCommand] + arguments)
+if result.returncode != 0:
+    print("Program execution failed.")
+    sys.exit(1)
+
+# Cleanup
+Path("script").unlink(missing_ok=True)

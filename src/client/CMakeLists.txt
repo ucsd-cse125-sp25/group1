@@ -8,7 +8,7 @@ target_include_directories(client PRIVATE
     ${CMAKE_SOURCE_DIR}/dependencies/glm
     ${CMAKE_SOURCE_DIR}/dependencies/json
     ${CMAKE_SOURCE_DIR}/dependencies/stb
-    ${CMAKE_SOURCE_DIR}/dependencies/fmod
+    ${CMAKE_SOURCE_DIR}/dependencies/fmod-cmake-main
 )
 
 target_link_libraries(client PRIVATE
@@ -18,7 +18,11 @@ target_link_libraries(client PRIVATE
     glad
     glfw
     fmod
+    fmodstudio
+    fsbank
 )
+
+fmod_copy_libs(client)
 
 if(WIN32)
     target_link_libraries(client PRIVATE opengl32)

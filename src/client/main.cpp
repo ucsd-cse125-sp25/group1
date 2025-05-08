@@ -1,5 +1,6 @@
 #include "client.hpp"
 #include <iostream>
+#include "AudioManager.cpp"
 
 int main() {
     Client client;

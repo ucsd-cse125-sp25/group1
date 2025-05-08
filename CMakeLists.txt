@@ -25,11 +25,16 @@ endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+set(FMOD_VERSION 2.03.07 CACHE STRING "" FORCE)
+
+
+
+
 add_subdirectory(dependencies/assimp)
 add_subdirectory(dependencies/boost)
 add_subdirectory(dependencies/glad)
 add_subdirectory(dependencies/glfw)
-add_subdirectory(dependencies/fmod)
+add_subdirectory(dependencies/fmod-cmake-main)
 
 
 add_subdirectory(src/client)

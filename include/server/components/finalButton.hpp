@@ -9,6 +9,16 @@ public:
     // Check if the button is pressed
     bool isPressed() const;
 
+    /**
+     * Buttonpressed()
+     * 
+     * updateButtonStates
+     * Check if unlockable 
+     * And unlock()
+     * open()
+     * When the final button is pressed door will be unlocked
+     */
+
     // Let finalDoor know that the button was pressed
     void updateDoorState();
 

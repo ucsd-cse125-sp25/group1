@@ -18,6 +18,7 @@ public:
      * @param direction facing direction of the object.
      * @param width width of the object.
      * @param height height of the object.
+     * Can construct with a pointer to rigidBody?
      */
     Object(int id, const glm::vec3& position, const glm::vec3& direction, float width, float height);
 

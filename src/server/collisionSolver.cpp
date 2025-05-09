@@ -60,4 +60,7 @@ void solveCollision(RigidBody* a, RigidBody* b, Collision collision) {
         vec3 newVelocity = desiredMotion * velocityMagnitude;
         a->setVelocity(newVelocity);
     }
+    
+    if (a->getCustomPhysics() != nullptr) a->getCustomPhysics()->customCollision();
+    if (b->getCustomPhysics() != nullptr) b->getCustomPhysics()->customCollision();
 }

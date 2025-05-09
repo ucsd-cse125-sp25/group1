@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include "rigidBody.hpp"
 
-class Object
+class Object : public ICustomPhysics
 {
 public:
     /**
@@ -29,6 +29,8 @@ public:
     * @return RigidBody& reference to the object's rigid body.
     */
     RigidBody& getBody();
+
+    void customCollision() const override;
     
 private:
     int objectID;

@@ -6,6 +6,7 @@ RigidBody::RigidBody(
 	float mass,
 	Transform* transform,
 	Collider* collider,
+	ICustomPhysics* customPhysics,
 	bool isStatic,
 	const vec3& gravity
 ) :
@@ -14,6 +15,7 @@ RigidBody::RigidBody(
 	mass(mass),
 	transform(transform),
 	collider(collider),
+	customPhysics(customPhysics),
 	isStatic(isStatic),
 	gravity(isStatic ? glm::vec3(0.0f) : gravity)
 {}
@@ -21,6 +23,7 @@ RigidBody::RigidBody(
 RigidBody::~RigidBody() {
 	delete transform;
 	delete collider;
+	delete customPhysics;
 }
 
 void RigidBody::updateVelocity(float dt) {
@@ -77,6 +80,11 @@ void RigidBody::setDirection(vec3 newDirection) {
 
 const Collider* RigidBody::getCollider() const {
 	return collider;
+}
+
+const ICustomPhysics* RigidBody::getCustomPhysics() const
+{
+	return customPhysics;
 }
 
 const bool RigidBody::getStatic() const {

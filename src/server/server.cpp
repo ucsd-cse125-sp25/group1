@@ -49,6 +49,7 @@ void Server::initRigidBodies() {
                     minCorner,
                     maxCorner
                 },
+                nullptr,
                 true
             );
             world.addObject(object);

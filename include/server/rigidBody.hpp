@@ -14,6 +14,19 @@ using namespace glm;
 
 #define ACCELERATION_GRAVITY -9.81f
 
+/**
+ * Interface for implementing custom collision handling for rigid bodies
+ */
+class ICustomPhysics {
+public:
+	virtual ~ICustomPhysics() = default;
+
+	/**
+	 * Overridable custom collision handling, default does nothing
+	 */
+	virtual void customCollision() const {}
+};
+
 class RigidBody {
 public:
 	/**
@@ -36,6 +49,7 @@ public:
 		float mass = 0.0f,
 		Transform* transform = nullptr,
 		Collider* collider = nullptr,
+		ICustomPhysics* customPhysics = nullptr,
 		bool isStatic = false,
 		const vec3& gravity = vec3(0, ACCELERATION_GRAVITY, 0));
 	~RigidBody();
@@ -122,6 +136,8 @@ public:
 	 */
 	const Collider* getCollider() const;
 
+	const ICustomPhysics* getCustomPhysics() const;
+
 	/**
 	 * @brief Returns whether the rigid body is static (immovable).
 	 *
@@ -139,5 +155,6 @@ private:
 	// body
 	Collider* collider;
 	Transform* transform;
+	ICustomPhysics* customPhysics;
 	bool isStatic;
 };

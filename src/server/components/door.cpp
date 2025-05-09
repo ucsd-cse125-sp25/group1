@@ -16,6 +16,7 @@ Door::Door(int doorID, int room1, int room2, int keyID, glm::vec3 position, glm:
             glm::vec3(-config::PLAYER_WIDTH / 2, -config::PLAYER_HEIGHT / 2, -config::PLAYER_WIDTH / 2),
             glm::vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT / 2, config::PLAYER_WIDTH / 2)
         },
+        nullptr,
         true
     )
 {

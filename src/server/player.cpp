@@ -70,3 +70,5 @@ void Player::handleKeyboardInput(std::string action) {
 void Player::handleMouseInput(glm::vec3 direction) {
     body.setDirection(direction);
 }
+
+void Player::customCollision() const {}

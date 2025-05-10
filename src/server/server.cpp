@@ -25,8 +25,8 @@ static vec3 toVec3(const json& arr) {
 }
 
 void Server::initRigidBodies() {
-    std::ifstream inLayout("../src/shared/layout.json");
-    std::ifstream inDimensions("../src/shared/dimensions.json");
+    std::ifstream inLayout("../src/server/data/layout.json");
+    std::ifstream inDimensions("../src/server/data/dimensions.json");
     json layout, dimensions;
     inLayout >> layout;
     inDimensions >> dimensions;

@@ -60,7 +60,7 @@ int main() {
             }
 
             // Output to JSON file
-            std::ofstream outFile("../src/shared/dimensions.json");
+            std::ofstream outFile("../src/server/data/dimensions.json");
             outFile << j.dump(4);
             outFile.close();
         }

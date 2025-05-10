@@ -63,7 +63,7 @@ public:
      * 
      * @param camera The active camera providing view and projection matrices.
      */
-    void render(const Camera& camera);
+    void render(const Camera& camera, bool boundingBoxMode);
 
 private:
     /**

@@ -60,8 +60,9 @@ public:
      * and issues the draw call.
      * 
      * @param shader The shader program to use when drawing.
+     * @param boundingBoxMode If true, renders only bounding boxes.
      */
-    void draw(Shader& shader);
+    void draw(Shader& shader, bool boundingBoxMode);
 
 private:
     std::vector<SubMesh> subMeshes;      // List of all sub-meshes that make up the model.   

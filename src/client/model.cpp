@@ -17,9 +17,10 @@ Model::~Model() {
     }
 }
 
-void Model::draw(Shader& shader) {
+void Model::draw(Shader& shader, bool boundingBoxMode) {
     for (const auto& mesh : subMeshes) {
-        if (mesh.isBoundingBox) continue;
+        if (mesh.isBoundingBox && !boundingBoxMode) continue;
+        if (!mesh.isBoundingBox && boundingBoxMode) continue;
 
         if (mesh.hasTexture) {
             glActiveTexture(GL_TEXTURE0);

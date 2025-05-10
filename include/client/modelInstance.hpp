@@ -48,12 +48,12 @@ struct ModelInstance {
      * Sets the model matrix uniform, draws this model,
      * then recursively draws all children in the hierarchy.
      */
-    void drawRecursive(Shader& shader) const {
+    void drawRecursive(Shader& shader, bool boundingBoxMode) const {
         shader.setMat4("model", getWorldTransform());
-        model->draw(shader);
+        model->draw(shader, boundingBoxMode);
 
         for (const auto& child : children) {
-            child->drawRecursive(shader);
+            child->drawRecursive(shader, boundingBoxMode);
         }
     }
 };

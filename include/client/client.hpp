@@ -54,6 +54,7 @@ public:
     Camera camera;
 
     bool isMouseLocked;     // True if the mouse is locked inside the window.
+    bool boundingBoxMode;   // True if only bouding boxes should be rendered (debug mode).
 
     double lastMouseX;      // Last mouse X position.
     double lastMouseY;      // Last mouse Y position.

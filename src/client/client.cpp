@@ -52,11 +52,11 @@ void cursorPosCallback(GLFWwindow* window, double xpos, double ypos) {
     client->camera.setDirection(glm::normalize(cameraDir));
 }
 
-void keyCallback(GLFWwindow* window, int key, int, int action, int) {
+void keyCallback(GLFWwindow* window, int key, int, int action, int mods) {
     if (action == GLFW_PRESS) {
         Client* client = static_cast<Client*>(glfwGetWindowUserPointer(window));
 
-        // Toggles the mouse lock state when the Esc key is pressed.
+        // Toggle mouse lock with Esc
         if (key == GLFW_KEY_ESCAPE) {
             client->isMouseLocked = !client->isMouseLocked;
 
@@ -66,6 +66,11 @@ void keyCallback(GLFWwindow* window, int key, int, int action, int) {
             } else {
                 glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
             }
+        }
+
+        // Toggle bounding box mode with Shift + B
+        if (key == GLFW_KEY_B && (mods & GLFW_MOD_SHIFT)) {
+            client->boundingBoxMode = !client->boundingBoxMode;
         }
     }
 }
@@ -354,7 +359,7 @@ void Client::gameLoop(GLFWwindow* window) {
         }
         disconnectedIds.clear();
 
-        scene->render(camera);
+        scene->render(camera, boundingBoxMode);
 
         glfwSwapBuffers(window);
         glfwPollEvents();

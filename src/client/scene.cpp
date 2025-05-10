@@ -63,7 +63,7 @@ void Scene::removePlayer(int id) {
     players.erase(id);
 }
 
-void Scene::render(const Camera& camera) {
+void Scene::render(const Camera& camera, bool boundingBoxMode) {
     modelShader->use();
 
     modelShader->setMat4("view", camera.getViewMatrix());
@@ -84,7 +84,7 @@ void Scene::render(const Camera& camera) {
 
     // Draw all model instances in the scene
     for (const auto& instance : modelInstances) {
-        instance->drawRecursive(*modelShader);
+        instance->drawRecursive(*modelShader, boundingBoxMode);
     }
 
     shader->use();

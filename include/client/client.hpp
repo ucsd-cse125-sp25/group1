@@ -102,19 +102,6 @@ private:
     void updateGameTimer(const nlohmann::json& parsed);
 
     /**
-     * @brief Toggles the mouse lock state when the Esc key is pressed.
-     * 
-     * Checks if the Esc key was newly pressed. If so:
-     * - If the mouse is currently locked (cursor hidden), it unlocks the mouse, shows the cursor, and disables mouse input.
-     * - If the mouse is currently unlocked (cursor visible), it locks the mouse, hides the cursor, and re-enables mouse input.
-     * 
-     * This only triggers once per key press to prevent repeated toggling while holding down Esc.
-     * 
-     * @param window A pointer to the GLFW window.
-     */
-    void handleEscInput(GLFWwindow* window);
-
-    /**
      * @brief Handles real-time player input and sends actions to the server.
      * 
      * Checks for specific key presses (WASD and arrow keys), maps them to movement actions,

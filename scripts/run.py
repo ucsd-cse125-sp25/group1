@@ -9,13 +9,6 @@ if platform.system() == "Windows":
     print("Please use WSL")
     sys.exit(1)
 
-# Paths
-source_include_path = Path("../build/_deps/assimp-src/include").resolve()
-build_include_path = Path("../build/_deps/assimp-build/include").resolve()
-lib_path = Path("..build/_deps/assimp-build/lib/Debug").resolve()
-glm_include_path = Path("../dependencies/glm").resolve()
-json_include_path = Path("../dependencies/json").resolve()
-
 # Command-line arguments
 source = sys.argv[1]
 arguments = sys.argv[2:]
@@ -28,14 +21,8 @@ if not os.path.isfile(source):
 # Construct compile command
 compileCommand = [
     "g++",
-    "-std=c++17",
-    f"-I{source_include_path}",
-    f"-I{build_include_path}",
-    f"-I{glm_include_path}",
-    f"-I{json_include_path}",
     source,
     "-o", "script",
-    f"-L{lib_path}",
     "-lassimp"
 ]
 

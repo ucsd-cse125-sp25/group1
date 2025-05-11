@@ -248,7 +248,7 @@ int main(int argc, char* argv[]) {
     vector<vector<int>> map = generateMap(height, width);
 
     // create/overwrite map.txt file
-    ofstream outfile("../src/shared/map.txt");
+    ofstream outfile("map.txt");
     if (!outfile) {
         cerr << "Error opening file for writing." << endl;
         return 1;

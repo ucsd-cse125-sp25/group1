@@ -42,12 +42,18 @@ compileCommand = [
 executeCommand = "./script"
 
 # Download libraries
-print(f"Compiling: {' '.join(compileCommand)}")
-subprocess.run(["sudo", "apt", "update"])
-result = subprocess.run(["sudo", "apt", "install", "libassimp-dev", "libglm-dev", "nlohmann-json3-dev"])
-if result.returncode != 0:
-    print("Library download failed.")
-    sys.exit(1)
+if input("Type (Y) to install dependencies: ") == "Y":
+    if platform.system() == "Darwin":
+        packageManager = ["brew"]
+    else:
+        packageManager = ["sudo", "apt"]
+
+    print(f"Compiling: {' '.join(compileCommand)}")
+    subprocess.run(["sudo", "apt", "update"])
+    result = subprocess.run(packageManager + ["install", "libassimp-dev", "libglm-dev", "nlohmann-json3-dev"])
+    if result.returncode != 0:
+        print("Library download failed.")
+        sys.exit(1)
 
 # Run compile
 print(f"Compiling: {' '.join(compileCommand)}")

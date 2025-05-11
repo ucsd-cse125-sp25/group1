@@ -43,14 +43,19 @@ executeCommand = "./script"
 
 # Download libraries
 if input("Type (Y) to install dependencies: ") == "Y":
+    # macOS
     if platform.system() == "Darwin":
         packageManager = ["brew"]
+        packages = ["assimp", "glm", "nlohmann-json"]
+
+    # linux
     else:
         packageManager = ["sudo", "apt"]
+        packages = ["libassimp-dev", "libglm-dev", "nlohmann-json3-dev"]
 
     print(f"Compiling: {' '.join(compileCommand)}")
     subprocess.run(["sudo", "apt", "update"])
-    result = subprocess.run(packageManager + ["install", "libassimp-dev", "libglm-dev", "nlohmann-json3-dev"])
+    result = subprocess.run(packageManager + ["install"] + packages)
     if result.returncode != 0:
         print("Library download failed.")
         sys.exit(1)

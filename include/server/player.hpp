@@ -12,7 +12,7 @@
 #include "config.hpp"
 #include "rigidBody.hpp"
 
-class Player {
+class Player : public ICustomPhysics {
 public:
     /**
      * @brief Constructs a Player object with a given player id, room ID, position, and direction.
@@ -112,6 +112,8 @@ public:
     void handleKeyboardInput(std::string action);
 
     void handleMouseInput(glm::vec3 direction);
+
+    void customCollision(const ICustomPhysics* otherObject) const override;
 
 private:
     int id;

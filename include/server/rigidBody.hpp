@@ -24,7 +24,7 @@ public:
 	/**
 	 * Overridable custom collision handling, default does nothing
 	 */
-	virtual void customCollision() const {}
+	virtual void customCollision(const ICustomPhysics* otherObject) const {}
 };
 
 class RigidBody {

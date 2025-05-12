@@ -113,7 +113,7 @@ public:
 
     void handleMouseInput(glm::vec3 direction);
 
-    void customCollision() const override;
+    void customCollision(const ICustomPhysics* otherObject) const override;
 
 private:
     int id;

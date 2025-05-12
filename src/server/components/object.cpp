@@ -22,4 +22,4 @@ RigidBody& Object::getBody() {
     return body;
 }
 
-void Object::customCollision() const {}
+void Object::customCollision(const ICustomPhysics* otherObject) const {}

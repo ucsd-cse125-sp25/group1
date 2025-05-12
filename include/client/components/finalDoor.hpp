@@ -11,7 +11,8 @@
  * The server should be the one to determine if the door is locked or not
  * Client side mainly needs code for graphics and animation
  */
-class FinalDoor {
+class FinalDoor : public Interactable
+{
 public:
     /**
      * Door should have constructor for how many keys is needed
@@ -41,6 +42,8 @@ public:
     int getKeyCount() const;
 
     // add a key to the door
+    // This is an interaction with the door
+    // Should call server to add key
     void addKey(); 
 
     /**
@@ -48,7 +51,7 @@ public:
      * Buttons will check for this when they are pressed
      * @return true if all keys are present, false otherwise
      */
-    bool keysPresent();
+    bool canUnlock();
 
 private:
     int numKeys; // Number of keys required to unlock the door

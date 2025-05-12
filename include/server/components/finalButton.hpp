@@ -1,14 +1,15 @@
 #pragma once
 #include "finalDoor.hpp"
 
-class finalButton {
+class FinalButton {
 public:
-    finalButton(int buttonID, int playerID, finalDoor* door);
-    ~finalButton();
+    FinalButton(int buttonID, int playerID, FinalDoor* door);
+    ~FinalButton();
 
     // Check if the button is pressed
     bool isPressed() const;
 
+    void pressButton();
     /**
      * Buttonpressed()
      * 
@@ -25,6 +26,6 @@ public:
 private:
     int buttonID; // ID of the button
     int playerID; // ID of the player who pressed the button
-    finalDoor* door; // Pointer to the associated door
+    FinalDoor* door; // Pointer to the associated door
     bool pressed; // State of the button (pressed or not)
 };

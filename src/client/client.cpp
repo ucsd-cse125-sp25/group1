@@ -91,7 +91,8 @@ Client::Client()
       lastMouseY(0.0),
       isFirstMouse(true),
       yaw(0.0f),
-      pitch(0.0f) {}
+      pitch(0.0f),
+      boundingBoxMode(false) {}
 
 Client::~Client() {}
 

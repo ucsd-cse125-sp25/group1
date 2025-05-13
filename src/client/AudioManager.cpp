@@ -1,7 +1,7 @@
 #include <iostream>
 #include "fmod_studio.hpp"
 
-class AudioManager {
+class audioManager {
 public:
     FMOD::Studio::System* system = nullptr;
 

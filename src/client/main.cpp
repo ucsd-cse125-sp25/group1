@@ -1,6 +1,7 @@
 #include "client.hpp"
 #include <iostream>
-#include "AudioManager.cpp"
+#include "audioEngine.hpp"
+
 
 int main() {
     Client client;
@@ -10,10 +11,7 @@ int main() {
         return 1;
     }
 
-    AudioManager audioManager;
-    if (!audioManager.initialize()) {
-        return 1; // Exit if FMOD fails
-    }
+
 
 
     client.run();

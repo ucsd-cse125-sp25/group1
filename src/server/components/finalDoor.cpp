@@ -1,10 +1,8 @@
 #include "components/finalDoor.hpp"
 
 // Constructor
-FinalDoor::FinalDoor(int numKeys) {
+FinalDoor::FinalDoor(int numKeys) : Interactable(), numKeys(numKeys), keyStates(numKeys, false){
     // Initialize any member variables if needed
-    this->numKeys = numKeys;
-    this->keyStates = new bool[numKeys];
 }
 
 // Destructor

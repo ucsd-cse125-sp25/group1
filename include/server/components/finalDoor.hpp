@@ -3,6 +3,7 @@
 #include <string>
 #include <functional>
 #include <vector>
+#include "components/interactable.hpp"
 
 /**
  * Server Side FinalDoor Class
@@ -10,7 +11,8 @@
  * Should handle the buttons being pressed as well 
  * Should be also an interactable object
  */
-class FinalDoor {
+class FinalDoor : public Interactable
+{
 public:
     /**
      * Door should have constructor for how many keys is needed
@@ -67,7 +69,7 @@ private:
     //int buttonPressed; // Number of buttons pressed 
     //std::unordered_map<int, bool> buttonStates; // Maps button IDs to their pressed state (true/false)
     bool buttonStates[4] = {false}; // Button states (pressed or not pressed) - 4 buttons
-    bool keyStates[]; //This will be initiated with the number of keys
+    std::vector<bool> keyStates;//This will be initiated with the number of keys
     //int array
 
 };

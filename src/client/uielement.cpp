@@ -8,6 +8,7 @@ UIElement::UIElement(glm::vec3 position, glm::vec2 scale, glm::vec2 initSpriteCo
     this->width = scale.x;
     this->height = scale.y;
     this->uiTexture = uiTexture;
+    this->angle = 0.0f;
 
     glGenVertexArrays(1, &vao);
     glGenBuffers(2, vbo);
@@ -36,8 +37,8 @@ UIElement::UIElement(glm::vec3 position, glm::vec2 scale, glm::vec2 initSpriteCo
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
@@ -69,6 +70,7 @@ UIElement::UIElement(glm::vec3 position, glm::vec2 initSpriteCoords, UITexture &
     this->width = 1.0f;
     this->height = 1.0f;
     this->uiTexture = uiTexture;
+    this->angle = 0.0f;
 
     glGenVertexArrays(1, &vao);
     glGenBuffers(2, vbo);
@@ -97,8 +99,8 @@ UIElement::UIElement(glm::vec3 position, glm::vec2 initSpriteCoords, UITexture &
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
@@ -154,19 +156,26 @@ void UIElement::changeSprite(glm::vec2 coords) {
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(spriteCoords), spriteCoords);
 }
 
+void UIElement::rotate(float deg) {
+    this->angle = deg;
+}
 
 void UIElement::draw(Shader& shader){
     
-    shader.use();
     shader.setInt("ourTexture", 0);
     shader.setVec3("origin", this->position);
     shader.setFloat("width", this->width);
     shader.setFloat("height", this->height);
+    shader.setFloat("angle", glm::radians(this->angle));
+    
+    glDepthMask(GL_FALSE); // Disable writing to the depth buffer
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);   // just like other objects (vao, vbo, etc.) we gotta bind our texture so opengl knows what to reference
     
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);    //6 indices
+    glDepthMask(GL_TRUE); // Disable writing to the depth buffer
+
     glBindVertexArray(0);
 }

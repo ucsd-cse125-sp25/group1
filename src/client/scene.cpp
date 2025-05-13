@@ -2,8 +2,10 @@
 #include <array>
 #include <glad/glad.h>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include <iostream>
-
+#include "timerdisplay.hpp"
+#include "compass.hpp"
 Scene::Scene() {}
 Scene::~Scene() {}
 
@@ -26,7 +28,7 @@ void Scene::init() {
     room = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
     table = std::make_unique<Model>("../src/client/models/table.obj");
   
-    timer = std::make_unique<TimerDisplay>();
+    canvas = std::make_unique<Canvas>();
 
     door = std::make_unique<Model>("../src/client/models/door.obj");
 
@@ -64,13 +66,17 @@ void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3
 }
 
 void Scene::updateTimer(int minutes, int seconds) {
+    //for (auto& [id, player] : players) {
+    //    glm::vec3 dir = player.getDirection();
+    //    std::cout << id << ": " << glm::to_string(dir) << std::endl;
+    //}
+    TimerDisplay* timer = static_cast<TimerDisplay*>(canvas->findElement("timerdisplay"));
     timer->updateTimer(minutes,seconds);
-    //int lMinutes = minutes / 10;
-    //int rMinutes = minutes % 10;
+}
 
-    //int lSeconds = seconds / 10;
-    //int rSeconds = seconds % 10;
-    //std::cout << lMinutes << rMinutes << ":" << lSeconds << rSeconds << std::endl;
+void Scene::updateCompass(glm::vec3 direction) {
+    Compass* compass = static_cast<Compass*>(canvas->findElement("compass"));
+    compass->rotate(direction);
 }
 
 void Scene::removePlayer(int id) {
@@ -99,5 +105,5 @@ void Scene::render(const Camera& camera) {
     }
 
     //UI
-    timer->draw(*uiShader);
+    canvas->draw(*uiShader);
 }

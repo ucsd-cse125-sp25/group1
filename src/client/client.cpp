@@ -263,9 +263,10 @@ void Client::handleMouseInput() {
     if (!isMouseLocked) return;
 
     glm::vec3 direction = yawToDirection(yaw);
-
+    if (scene)
+        scene->updateCompass(direction);
     json message;
-
+    
     message["type"] = "mouse_input";
     message["direction"] = { direction.x, direction.y, direction.z };
 

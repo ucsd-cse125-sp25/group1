@@ -12,8 +12,7 @@
 #include "model.hpp"
 #include "modelInstance.hpp"
 #include "shader.hpp"
-#include "uielement.hpp"
-#include "timerdisplay.hpp"
+#include "canvas.hpp"
 #include "json.hpp"
 
 /**
@@ -70,6 +69,8 @@ public:
 
     void updateTimer(int minutes, int seconds);
 
+    void updateCompass(glm::vec3 direction);
+
 private:
     /**
      * @brief Sets up rooms and the objects they contain.
@@ -86,8 +87,8 @@ private:
 
     std::unique_ptr<Model> room;
     std::unique_ptr<Model> table;
-    
-    std::unique_ptr<TimerDisplay> timer;
+
+    std::unique_ptr<Canvas> canvas;
 
     std::unique_ptr<Model> door;
 

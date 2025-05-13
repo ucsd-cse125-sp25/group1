@@ -12,9 +12,9 @@ public:
 	~UIElement();
 	void draw(Shader& shader);
 	void changeSprite(glm::vec2 coords);
-
+	void rotate(float deg);
 private:
-	GLfloat width, height;
+	GLfloat width, height, angle;
 	glm::vec3 position;
 	GLuint vao, ebo;
 	GLuint vbo[2];

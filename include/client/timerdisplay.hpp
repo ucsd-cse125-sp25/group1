@@ -1,22 +1,29 @@
 #pragma once
 #include <glm/glm.hpp>
-#include <unordered_map>
+#include <string>
+#include "canvaselement.hpp"
 #include "uielement.hpp"
 #include "uitexture.hpp"
-#include "shader.hpp"
 
 
-class TimerDisplay {
+class TimerDisplay : public CanvasElement {
 public:
-	TimerDisplay();
-	TimerDisplay(int lMin, int rMin, int lSec, int rSec);
+	TimerDisplay(glm::vec2 position);
+	TimerDisplay(glm::vec2 position, int lMin, int rMin, int lSec, int rSec);
 	~TimerDisplay();
-	void draw(Shader& shader);
+	void draw(Shader& shader) override;
+	void setHidden(bool val) override;
+	std::string getName() override;
 	void updateTimer(int minutes, int seconds);
 private:
+
+	bool hidden = false;
+	
+	std::string name = "timerdisplay";
+
 	glm::vec2 pos;
-	const float digitGap = .32f;
-	const glm::vec2 scale = glm::vec2(.4f, .5f);
+	const float digitGap = .12f;
+	const glm::vec2 scale = glm::vec2(.1f, .2f);
 	
 	int lMinute_val;
 	int rMinute_val;

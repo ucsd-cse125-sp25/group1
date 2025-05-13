@@ -1,27 +1,29 @@
 #include "timerdisplay.hpp"
 
-TimerDisplay::TimerDisplay() {
+TimerDisplay::TimerDisplay(glm::vec2 position) {
 
 	lMinute_val = 1;
 	rMinute_val = 0;
 	lSecond_val = 0;
 	rSecond_val = 0;
 
-	pos = glm::vec2(-1.0f, 1.0f);
+	//pos = glm::vec2(-1.0f, 1.0f);
+	pos = position;
 	lMinute = new UIElement(glm::vec3(pos.x, pos.y, 0.0f), scale, spriteMap[lMinute_val], uiTexture);
 	rMinute = new UIElement(glm::vec3(pos.x + digitGap, pos.y, 0.0f), scale, spriteMap[rMinute_val], uiTexture);
 	lSecond = new UIElement(glm::vec3(pos.x + (digitGap * 2.5f), pos.y, 0.0f), scale, spriteMap[lSecond_val], uiTexture);
 	rSecond = new UIElement(glm::vec3(pos.x + (digitGap * 2.5f) + digitGap, pos.y, 0.0f), scale, spriteMap[rSecond_val], uiTexture);
 }
 
-TimerDisplay::TimerDisplay(int lMin, int rMin, int lSec, int rSec) {
+TimerDisplay::TimerDisplay(glm::vec2 position, int lMin, int rMin, int lSec, int rSec) {
 
 	lMinute_val = lMin;
 	rMinute_val = rMin;
 	lSecond_val = lSec;
 	rSecond_val = rSec;
 
-	pos = glm::vec2(-1.0f, 1.0f);
+	//pos = glm::vec2(-1.0f, 1.0f);
+	pos = position;
 	lMinute = new UIElement(glm::vec3(pos.x, pos.y, 0.0f), scale, spriteMap[lMinute_val], uiTexture);
 	rMinute = new UIElement(glm::vec3(pos.x + digitGap, pos.y, 0.0f), scale, spriteMap[rMinute_val], uiTexture);
 	lSecond = new UIElement(glm::vec3(pos.x + (digitGap * 2.5f), pos.y, 0.0f), scale, spriteMap[lSecond_val], uiTexture);
@@ -67,4 +69,12 @@ void TimerDisplay::draw(Shader& shader) {
 	rMinute->draw(shader);
 	lSecond->draw(shader);
 	rSecond->draw(shader);
+}
+
+void TimerDisplay::setHidden(bool val) {
+	hidden = val;
+}
+
+std::string TimerDisplay::getName() {
+	return name;
 }

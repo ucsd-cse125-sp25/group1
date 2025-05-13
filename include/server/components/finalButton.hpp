@@ -1,5 +1,7 @@
 #pragma once
 #include "finalDoor.hpp"
+#include "components/interactable.hpp"
+
 
 class FinalButton {
 public:

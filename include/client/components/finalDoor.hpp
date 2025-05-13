@@ -1,4 +1,5 @@
 #pragma once
+#include "components/interactable.hpp"
 
 #include <string>
 #include <functional>
@@ -44,7 +45,7 @@ public:
     // add a key to the door
     // This is an interaction with the door
     // Should call server to add key
-    void addKey(); 
+    void addKey(int keyID); 
 
     /**
      * Checks if all keys are present
@@ -56,8 +57,8 @@ public:
 private:
     int numKeys; // Number of keys required to unlock the door
     bool locked;
-    bool canUnlock; //If all keys are present
+    bool unlockable; //If all keys are present
     //std::vector<std::string> keys; // Stores keys with their indices corresponding to their positions
     int keyCount; // Number of keys currently held
-    int keyStates[]; //This will be initiated with the number of keys
+    std::vector<bool> keyStates;//This will be initiated with the number of keys
 };

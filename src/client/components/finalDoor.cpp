@@ -1,10 +1,8 @@
 #include "components/finalDoor.hpp"
 
 // Constructor
-FinalDoor::FinalDoor(int numKeys) : Interactable() {
+FinalDoor::FinalDoor(int numKeys) : Interactable(), numKeys(numKeys), keyStates(numKeys, false) {
     // Initialize any member variables if needed
-    this->numKeys = numKeys;
-    this->keyStates = new bool[numKeys];
 }
 
 // Destructor
@@ -13,7 +11,7 @@ FinalDoor::~FinalDoor() {
 }
 
 // Open the door
-void FinalDoor::open() {
+void FinalDoor::unlockAndOpen() {
     //Open handled by final buttons
     //Broadcast message to all clients
 }
@@ -35,7 +33,7 @@ void FinalDoor::addKey(int keyID) {
  */
 bool FinalDoor::canUnlock() {
     if (keyCount == numKeys) {
-        canUnlock = true;
+        unlockable = true;
     }
-    return canUnlock;
+    return unlockable;
 }

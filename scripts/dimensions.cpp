@@ -5,10 +5,9 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 #include <cfloat>   // For FLT_MAX
 
-namespace fs = std::filesystem;
 using json = nlohmann::json;
 
 int main() {
@@ -16,7 +15,7 @@ int main() {
     Assimp::Importer importer;
 
     // Iterate over the Blender models
-    for (const auto& entry : fs::directory_iterator("../src/client/models")) {
+    for (const auto& entry : std::filesystem::directory_iterator("../src/client/models")) {
 
         if (entry.path().extension() == ".obj") {
 

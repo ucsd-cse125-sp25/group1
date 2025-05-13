@@ -21,9 +21,9 @@ if not os.path.isfile(source):
 # Construct compile command
 compileCommand = [
     "g++",
+    "-std=c++20",
     source,
-    "-o", "script",
-    "-lassimp"
+    "-o", "script"
 ]
 
 executeCommand = "./script"
@@ -48,6 +48,13 @@ if input("Type (Y) to install dependencies: ") == "Y":
         sys.exit(1)
 
 # Run compile
+if platform.system() == "Darwin":
+    compileCommand += [
+        "-I/opt/homebrew/opt/nlohmann-json/include",
+        "-I/opt/homebrew/opt/glm/include",
+        "-I/opt/homebrew/opt/assimp/include",
+        "-L/opt/homebrew/opt/assimp/lib"]
+compileCommand += ["-lassimp"]
 print(f"Compiling: {' '.join(compileCommand)}")
 result = subprocess.run(compileCommand)
 if result.returncode != 0:

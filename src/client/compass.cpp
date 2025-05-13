@@ -26,7 +26,7 @@ void Compass::rotate(glm::vec3 dir) {
 	float degrees = angle * (180.0f / 3.141592653589793238463f);
 	if (degrees < 0.0f)
 		degrees += 360.0f;
-	std::cout << glm::to_string(orientation) << ", " << degrees << std::endl;
+	//std::cout << glm::to_string(orientation) << ", " << degrees << std::endl;
 
 	uiELement->rotate(degrees);
 }

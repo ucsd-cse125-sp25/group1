@@ -14,5 +14,12 @@ Object::Object(int id, const glm::vec3& position, const glm::vec3& direction, fl
             glm::vec3(-width / 2, -height / 2, -width / 2),
             glm::vec3(width / 2, height / 2, width / 2)
         },
+        this, // refernce to interface
         true
     ) {}
+
+RigidBody& Object::getBody() {
+    return body;
+}
+
+void Object::customCollision(const ICustomPhysics* otherObject) const {}

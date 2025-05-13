@@ -12,6 +12,7 @@
 #include "cube.hpp"
 #include "scene.hpp"
 #include "shader.hpp"
+#include "swamp.hpp"
 
 /**
  * @brief Handles client-side networking, input, and rendering.
@@ -187,4 +188,9 @@ private:
     std::unordered_set<int> disconnectedIds;
 
     std::unique_ptr<Scene> scene;
+
+    /**
+     * @brief Reference to instance for client-side swamp minigame
+     */
+    Swamp* swamp;
 };

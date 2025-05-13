@@ -143,6 +143,16 @@ void Client::handleServerMessage(const std::string& message) {
         updatePlayerStates(parsed);
     } else if (type == "time_left") {
         updateGameTimer(parsed);
+    } else if (type == "swamp_init") {
+        int roomID = parsed["room_ID"];
+        auto gameState = parsed["game_state"];
+        int numPads = parsed["num_pads"];
+        std::string audioFile = parsed["audio_file"];
+
+        swamp = new Swamp(roomID, gameState, numPads, audioFile);
+    } else if (type == "swamp_update") {
+        auto gameState = parsed["game_state"];
+        swamp->setGameState(gameState);
     }
 }
 
@@ -176,8 +186,7 @@ void Client::updatePlayerStates(const json& parsed) {
 
 void Client::updateGameTimer(const json& parsed) {
     std::cout << "Time Left: " << parsed["minutes"] << ":" << parsed["seconds"] << "\n"; // remove this later
-    
-    // Your code goes here...
+    scene->updateTimer(parsed["minutes"], parsed["seconds"]);
 }
 
 static std::string mapKeyToAction(int key) {
@@ -231,7 +240,7 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
     };
 
     json message;
-    
+
     message["type"] = "keyboard_input";
     message["actions"] = json::array();
 
@@ -254,7 +263,7 @@ void Client::handleMouseInput() {
     if (!isMouseLocked) return;
 
     glm::vec3 direction = yawToDirection(yaw);
-    
+
     json message;
 
     message["type"] = "mouse_input";

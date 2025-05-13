@@ -1,11 +1,8 @@
-#include "components/finalDoor.hpp"
+#include "components/finalButton.hpp"
 
 // Constructor
-FinalButton::FinalButton(int buttonID, int playerID, FinalDoor* door) {
+FinalButton::FinalButton(int buttonID, int playerID, FinalDoor* door) : buttonID(buttonID), playerID(playerID), door(door) {
     // Initialize any member variables if needed
-    this->buttonID = buttonID;
-    this->playerID = playerID;
-    this->door = door;
 }
 
 // Destructor

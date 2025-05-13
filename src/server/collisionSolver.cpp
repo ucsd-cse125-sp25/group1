@@ -60,8 +60,8 @@ void solveCollision(RigidBody* a, RigidBody* b, Collision collision) {
         vec3 newVelocity = desiredMotion * velocityMagnitude;
         a->setVelocity(newVelocity);
     }
-    const ICustomPhysics* aCustomPhysics = a->getCustomPhysics();
-    const ICustomPhysics* bCustomPhysics = b->getCustomPhysics();
+    ICustomPhysics* aCustomPhysics = a->getCustomPhysics();
+    ICustomPhysics* bCustomPhysics = b->getCustomPhysics();
     if (aCustomPhysics != nullptr) aCustomPhysics->customCollision(bCustomPhysics);
     if (bCustomPhysics != nullptr) bCustomPhysics->customCollision(aCustomPhysics);
 }

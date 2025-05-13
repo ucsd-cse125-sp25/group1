@@ -82,7 +82,7 @@ const Collider* RigidBody::getCollider() const {
 	return collider;
 }
 
-const ICustomPhysics* RigidBody::getCustomPhysics() const
+ICustomPhysics* RigidBody::getCustomPhysics() const
 {
 	return customPhysics;
 }

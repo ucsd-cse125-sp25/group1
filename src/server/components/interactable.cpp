@@ -2,6 +2,6 @@
 
 Interactable::Interactable() = default;
 
-void Interactable::interact(const Player &player){
+void Interactable::interact(const Player& player) {
     handleInteract(player);
 }

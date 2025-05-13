@@ -10,6 +10,8 @@
 #include <glm/glm.hpp>
 #include "collider.hpp"
 #include "transform.hpp"
+#include <cmath>
+
 using namespace glm;
 
 #define ACCELERATION_GRAVITY -9.81f
@@ -121,6 +123,19 @@ public:
 	 * @return Current direction vector.
 	 */
 	const vec3 getDirection() const;
+
+	/*
+	 * @brief Transforms a 3D axis-aligned box via a 3x3 matrix and a translation
+	 * vector and returns an axis-aligned box enclosing the result
+	 *
+	 * @param rotation Tranformation matrix describing the rotation
+	 *
+	 * Reference:
+	 * Transforming Axis-Aligned Bounding Boxes
+	 * by Jim Arvo
+	 * from "Graphics Gems", Academic Press, 1990
+	 */
+	void transformBox(mat3 rotation);
 
 	/**
 	 * @brief Sets the rigid body's facing direction to a new value.

@@ -23,8 +23,16 @@ void Scene::init() {
         "../src/client/shaders/model.frag"
     );
 
+    uiShader = std::make_unique<Shader>(
+        "../src/client/shaders/ui.vert",
+        "../src/client/shaders/ui.frag"
+    );
+
     room = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
     table = std::make_unique<Model>("../src/client/models/table.obj");
+  
+    timer = std::make_unique<TimerDisplay>();
+
     door = std::make_unique<Model>("../src/client/models/door.obj");
 
     initRooms();
@@ -48,6 +56,7 @@ void Scene::initRooms() {
     }
 
     modelInstances.emplace_back(std::move(room1));
+
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
@@ -57,6 +66,16 @@ void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3
         players.at(id).setPosition(position);
         players.at(id).setDirection(direction);
     }
+}
+
+void Scene::updateTimer(int minutes, int seconds) {
+    timer->updateTimer(minutes,seconds);
+    //int lMinutes = minutes / 10;
+    //int rMinutes = minutes % 10;
+
+    //int lSeconds = seconds / 10;
+    //int rSeconds = seconds % 10;
+    //std::cout << lMinutes << rMinutes << ":" << lSeconds << rSeconds << std::endl;
 }
 
 void Scene::removePlayer(int id) {
@@ -95,4 +114,7 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
     for (auto& [id, player] : players) {
         player.draw(*shader, boundingBoxMode);
     }
+
+    //UI
+    timer->draw(*uiShader);
 }

@@ -18,7 +18,9 @@ Server::Server()
       hasTimerStarted(false),
       timeLeft(config::TOTAL_GAME_TIME) {}
 
-Server::~Server() {}
+Server::~Server() {
+    delete swamp;
+}
 
 static vec3 toVec3(const json& arr) {
     return vec3(arr[0], arr[1], arr[2]);
@@ -62,6 +64,7 @@ void Server::initRigidBodies() {
                     relativeMinCorner,
                     relativeMaxCorner
                 },
+                nullptr,
                 true
             );
             world.addObject(object);
@@ -73,6 +76,8 @@ bool Server::init() {
     std::cout << "IP Address: " << config::SERVER_IP << "\nPort: " << config::SERVER_PORT << "\n";
 
     initRigidBodies();
+
+    swamp = new Swamp(1, world);
 
     return true;
 }
@@ -118,9 +123,13 @@ void Server::handleClientJoin(int clientId) {
     std::string packet = message.dump() + "\n";
     boost::asio::write(*socket, boost::asio::buffer(packet));
 
+    // Send over the swamp init info
+    std::string swampPacket = swamp->getInitInfo();
+    boost::asio::write(*socket, boost::asio::buffer(swampPacket));
+
     glm::vec3 position = config::PLAYER_SPAWNS[clientId];
     glm::vec3 direction = glm::normalize(glm::vec3(-position.x, 0.0f, -position.z)); // will change this later
-    Player * player = new Player(to_string(clientId), 0, position, direction);
+    Player * player = new Player(clientId, 0, position, direction);
     players[clientId] = player;
 
     // add player to physics world
@@ -191,6 +200,8 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
+            broadcastGameStates();
+            
             startTick();
         }
     });
@@ -285,6 +296,19 @@ void Server::broadcastTimeLeft() {
 
     if (timeLeft > 0) {
         --timeLeft;
+    }
+}
+
+void Server::broadcastGameStates() {
+    for (const auto& [clientId, socket] : clients) {
+        std::string swampPacket = swamp->getUpdatePacket();
+
+        try {
+            boost::asio::write(*socket, boost::asio::buffer(swampPacket));
+        }
+        catch (const std::exception& e) {
+            handleClientDisconnect(clientId);
+        }
     }
 }
 

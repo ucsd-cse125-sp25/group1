@@ -12,6 +12,9 @@
 #include "model.hpp"
 #include "modelInstance.hpp"
 #include "shader.hpp"
+#include "uielement.hpp"
+#include "timerdisplay.hpp"
+#include "json.hpp"
 
 /**
  * @brief Manages the 3D scene, including models and player entities.
@@ -66,6 +69,8 @@ public:
      */
     void render(const Camera& camera, bool boundingBoxMode);
 
+    void updateTimer(int minutes, int seconds);
+
 private:
     /**
      * @brief Sets up rooms and the objects they contain.
@@ -78,9 +83,13 @@ private:
 
     std::unique_ptr<Shader> shader;
     std::unique_ptr<Shader> modelShader;
+    std::unique_ptr<Shader> uiShader;
 
     std::unique_ptr<Model> room;
     std::unique_ptr<Model> table;
+    
+    std::unique_ptr<TimerDisplay> timer;
+
     std::unique_ptr<Model> door;
 
     std::vector<std::unique_ptr<ModelInstance>> modelInstances;  // Top-level model instances with their child models.

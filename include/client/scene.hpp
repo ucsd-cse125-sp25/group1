@@ -62,6 +62,7 @@ public:
      * Draws static models and dynamic player cubes.
      * 
      * @param camera The active camera providing view and projection matrices.
+     * @param boundingBoxMode If true, draws bounding boxes for debugging.
      */
     void render(const Camera& camera, bool boundingBoxMode);
 

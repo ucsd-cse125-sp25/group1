@@ -93,6 +93,6 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
     shader->setMat4("projection", camera.getProjectionMatrix());
 
     for (auto& [id, player] : players) {
-        player.draw(*shader);
+        player.draw(*shader, boundingBoxMode);
     }
 }

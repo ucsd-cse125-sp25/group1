@@ -71,4 +71,4 @@ void Player::handleMouseInput(glm::vec3 direction) {
     body.setDirection(direction);
 }
 
-void Player::customCollision(const ICustomPhysics* otherObject) const {}
+void Player::customCollision(ICustomPhysics* otherObject) {}

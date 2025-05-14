@@ -26,7 +26,7 @@ public:
 	/**
 	 * Overridable custom collision handling, default does nothing
 	 */
-	virtual void customCollision(const ICustomPhysics* otherObject) const {}
+	virtual void customCollision(ICustomPhysics* otherObject) {}
 };
 
 class RigidBody {
@@ -151,7 +151,7 @@ public:
 	 */
 	const Collider* getCollider() const;
 
-	const ICustomPhysics* getCustomPhysics() const;
+	ICustomPhysics* getCustomPhysics() const;
 
 	/**
 	 * @brief Returns whether the rigid body is static (immovable).

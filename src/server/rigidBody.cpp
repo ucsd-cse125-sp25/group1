@@ -116,7 +116,7 @@ void RigidBody::setDirection(vec3 newDirection) {
 	mat3 rotation = mat3(rotate(mat4(1.0f), radians, glm::vec3(0, 1, 0)));
 
 	// Resize the AABB based on the rotation
-	transformBox(rotation);
+	// transformBox(rotation);
 
 	// Update the facing direction of the rigid body
 	transform->direction = newDirection;
@@ -126,7 +126,7 @@ const Collider* RigidBody::getCollider() const {
 	return collider;
 }
 
-const ICustomPhysics* RigidBody::getCustomPhysics() const {
+ICustomPhysics* RigidBody::getCustomPhysics() const {
 	return customPhysics;
 }
 

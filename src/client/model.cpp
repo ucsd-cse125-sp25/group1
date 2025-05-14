@@ -17,9 +17,10 @@ Model::~Model() {
     }
 }
 
-void Model::draw(Shader& shader) {
+void Model::draw(Shader& shader, bool boundingBoxMode) {
     for (const auto& mesh : subMeshes) {
-        if (mesh.isBoundingBox) continue;
+        if (mesh.isBoundingBox && !boundingBoxMode) continue;
+        if (!mesh.isBoundingBox && boundingBoxMode) continue;
 
         if (mesh.hasTexture) {
             glActiveTexture(GL_TEXTURE0);
@@ -31,6 +32,9 @@ void Model::draw(Shader& shader) {
             shader.setBool("hasTexture", false);
             shader.setVec3("color", mesh.color);
         }
+
+        shader.setVec3("specular", mesh.specular);
+        shader.setFloat("shininess", mesh.shininess);
 
         mesh.draw();
     }
@@ -82,14 +86,28 @@ void Model::loadModel(const std::string& path) {
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
         glm::vec3 color = glm::vec3(0.0f);
+        glm::vec3 specular = glm::vec3(0.0f);
+        float shininess = 32.0f;
+
         aiColor3D kd(0.0f);
+        aiColor3D ks(0.0f);
 
         // Get diffuse color if available
         if (material->Get(AI_MATKEY_COLOR_DIFFUSE, kd) == AI_SUCCESS) {
             color = glm::vec3(kd.r, kd.g, kd.b);
         }
 
+        // Get specular reflectivy if available
+        if (material->Get(AI_MATKEY_COLOR_SPECULAR, ks) == AI_SUCCESS) {
+            specular = glm::vec3(ks.r, ks.g, ks.b);
+        }
+
+        // Get shininess if available
+        material->Get(AI_MATKEY_SHININESS, shininess);
+
         subMesh.color = color;
+        subMesh.specular = specular;
+        subMesh.shininess = shininess;
 
         std::string directory = path.substr(0, path.find_last_of('/'));
         aiString textureImage;

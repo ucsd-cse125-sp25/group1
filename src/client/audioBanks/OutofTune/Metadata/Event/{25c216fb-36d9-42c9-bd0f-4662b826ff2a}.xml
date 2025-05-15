@@ -5,7 +5,7 @@
 			<value>swampAmbience</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{4a27a7f9-24c6-43fd-8e6a-56fd8e3f9879}</destination>
@@ -111,9 +111,11 @@
 	<object class="MixerBusEffectChain" id="{2940e9e6-2c66-4e13-b3ce-a80fc6055622}">
 		<relationship name="effects">
 			<destination>{2947d234-1790-4f8e-9f34-989dfde50597}</destination>
+			<destination>{14e3156f-2a44-4d73-bf84-f76b475479c4}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e50bb429-f9da-49c1-86e8-2c157bd110c9}" />
 	<object class="MixerBusFader" id="{1c1bf791-026b-4abb-9886-17bbf4bb64bd}" />
 	<object class="MixerBusFader" id="{2947d234-1790-4f8e-9f34-989dfde50597}" />
+	<object class="SpatialiserEffect" id="{14e3156f-2a44-4d73-bf84-f76b475479c4}" />
 </objects>

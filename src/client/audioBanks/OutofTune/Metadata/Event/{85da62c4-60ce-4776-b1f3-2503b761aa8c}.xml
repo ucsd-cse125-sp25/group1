@@ -59,7 +59,11 @@
 			<destination>{a49326d3-ad59-4849-a4b9-9356db210399}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{86cf4653-e73a-4297-a05d-72f532040738}" />
+	<object class="EventAutomatableProperties" id="{86cf4653-e73a-4297-a05d-72f532040738}">
+		<property name="dopplerEnabled">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{523ae9d2-5d4d-4a61-85b0-14b13213a678}" />
 	<object class="Timeline" id="{7439718c-39d7-41d6-9ba8-5eb6ab698fa7}">
 		<property name="isProxyEnabled">

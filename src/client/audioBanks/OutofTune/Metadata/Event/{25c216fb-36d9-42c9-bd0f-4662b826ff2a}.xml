@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{25c216fb-36d9-42c9-bd0f-4662b826ff2a}">
 		<property name="name">
-			<value>SwampAmbience</value>
+			<value>swampAmbience</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>

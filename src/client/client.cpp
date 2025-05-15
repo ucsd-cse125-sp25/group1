@@ -81,7 +81,7 @@ bool Client::init() {
         std::cerr << "Failed to initialize FMOD.\n";
         return 1;
     }
-
+    audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/Master.bank");
     audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/BGM.bank");
     audioManager.loadFMODStudioEvent("{25c216fb-36d9-42c9-bd0f-4662b826ff2a}");
     audioManager.setEventVolume("{25c216fb-36d9-42c9-bd0f-4662b826ff2a}", 1.0f);

@@ -8,12 +8,17 @@ Compass::Compass(glm::vec2 pos) {
 	/*glm::vec2 offset = glm::vec2((256.0f - 800.0f)/1600.0f, (450.0f - 256.0f)/900.0f);*/
 	position = pos;
 	scale = glm::vec2(.30f, .5f);
+	
 	uiTexture = { "../src/client/ui/compass_frame.png", glm::vec2(256.0f, 256.0f), glm::vec2(256.0f,256.0f) };
 	uiELement = new UIElement(glm::vec3(position.x, position.y, 0.0f), scale, initialSpriteCoords, uiTexture);
+
+	handsTexture = { "../src/client/ui/compass_hands.png", glm::vec2(256.0f, 256.0f), glm::vec2(256.0f,256.0f) };
+	compassHands = new UIElement(glm::vec3(position.x, position.y, 0.0f), scale, initialSpriteCoords, handsTexture);
 }
 
 Compass::~Compass() {
 	delete uiELement;
+	delete compassHands;
 }
 
 void Compass::rotate(glm::vec3 dir) {
@@ -28,5 +33,10 @@ void Compass::rotate(glm::vec3 dir) {
 		degrees += 360.0f;
 	//std::cout << glm::to_string(orientation) << ", " << degrees << std::endl;
 
-	uiELement->rotate(degrees);
+	compassHands->rotate(degrees);
+}
+
+void Compass::draw(Shader& shader) {
+	uiELement->draw(shader);
+	compassHands->draw(shader);
 }

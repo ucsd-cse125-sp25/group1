@@ -20,5 +20,5 @@ private:
 	glm::vec2 timerPos = glm::vec2(-1.0f, 1.0f);
 
 	Compass* compass;
-	glm::vec2 compassPos = glm::vec2(0.7f, -0.5f);
+	glm::vec2 compassPos = glm::vec2(0.7f, 1.0f);
 };

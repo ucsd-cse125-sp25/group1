@@ -42,8 +42,9 @@ public:
      * sets shader uniforms, and draws the character cube.
      * 
      * @param shader Shader program to use for rendering.
+     * @param boundingBoxMode If true, draws bounding boxes for debugging.
      */
-    void draw(Shader& shader);
+    void draw(Shader& shader, bool boundingBoxMode);
     
     /**
      * @brief Gets the player's current position.

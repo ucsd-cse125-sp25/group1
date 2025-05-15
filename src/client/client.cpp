@@ -5,7 +5,7 @@
 using tcp = boost::asio::ip::tcp;
 using json = nlohmann::json;
 
-void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
+void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
     glViewport(0, 0, width, height);
 
     Client* client = static_cast<Client*>(glfwGetWindowUserPointer(window));
@@ -16,7 +16,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     client->camera.setAspect(aspect);
 }
 
-void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos) {
+void cursorPosCallback(GLFWwindow* window, double xpos, double ypos) {
     Client* client = static_cast<Client*>(glfwGetWindowUserPointer(window));
 
     if (!client) return;
@@ -52,6 +52,29 @@ void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos) {
     client->camera.setDirection(glm::normalize(cameraDir));
 }
 
+void keyCallback(GLFWwindow* window, int key, int, int action, int mods) {
+    if (action == GLFW_PRESS) {
+        Client* client = static_cast<Client*>(glfwGetWindowUserPointer(window));
+
+        // Toggle mouse lock with Esc
+        if (key == GLFW_KEY_ESCAPE) {
+            client->isMouseLocked = !client->isMouseLocked;
+
+            if (client->isMouseLocked) {
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                client->isFirstMouse = true;
+            } else {
+                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            }
+        }
+
+        // Toggle bounding box mode with Shift + B
+        if (key == GLFW_KEY_B && (mods & GLFW_MOD_SHIFT)) {
+            client->boundingBoxMode = !client->boundingBoxMode;
+        }
+    }
+}
+
 static float directionToYaw(const glm::vec3& direction) {
     return glm::degrees(atan2(direction.z, direction.x));
 }
@@ -68,7 +91,8 @@ Client::Client()
       lastMouseY(0.0),
       isFirstMouse(true),
       yaw(0.0f),
-      pitch(0.0f) {}
+      pitch(0.0f),
+      boundingBoxMode(false) {}
 
 Client::~Client() {}
 
@@ -224,26 +248,6 @@ static std::string mapKeyToAction(int key) {
     }
 }
 
-void Client::handleEscInput(GLFWwindow* window) {
-    static bool wasEscPressed = false;
-
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-        if (!wasEscPressed) {
-            isMouseLocked = !isMouseLocked;
-
-            if (isMouseLocked) {
-                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-                isFirstMouse = true;
-            } else {
-                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-            }
-        }
-        wasEscPressed = true;
-    } else {
-        wasEscPressed = false;
-    } 
-}
-
 void Client::handleKeyboardInput(GLFWwindow* window) {
     static const std::vector<int> keysToCheck = {
         GLFW_KEY_W, GLFW_KEY_UP,
@@ -325,8 +329,9 @@ bool Client::initWindow(GLFWwindow*& window) {
         return false;
     }
 
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    glfwSetCursorPosCallback(window, cursor_pos_callback);
+    glfwSetFramebufferSizeCallback(window, framebufferSizeCallback);
+    glfwSetCursorPosCallback(window, cursorPosCallback);
+    glfwSetKeyCallback(window, keyCallback);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); // lock & hide the cursor
 
     int width, height;
@@ -364,7 +369,6 @@ void Client::gameLoop(GLFWwindow* window) {
         glClearColor(0.75f, 0.9f, 1.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        handleEscInput(window);
         handleKeyboardInput(window);
         handleMouseInput();
 
@@ -379,7 +383,7 @@ void Client::gameLoop(GLFWwindow* window) {
         }
         disconnectedIds.clear();
 
-        scene->render(camera);
+        scene->render(camera, boundingBoxMode);
 
         audioManager.update();
 

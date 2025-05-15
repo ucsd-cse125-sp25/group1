@@ -45,6 +45,7 @@ namespace config {
     inline constexpr float PLAYER_WEIGHT = 10.0f;
     inline constexpr float PLAYER_WIDTH = 1.0f;
     inline constexpr float PLAYER_HEIGHT = 1.0f;
+    inline constexpr float PLAYER_DEPTH = 1.0f;
 
     inline constexpr float MOUSE_SENSITIVITY = 0.1f;
 

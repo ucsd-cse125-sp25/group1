@@ -16,6 +16,10 @@ void Camera::setPosition(const glm::vec3& position) {
     this->position = position;
 }
 
+glm::vec3 Camera::getPosition() const {
+    return position;
+}
+
 void Camera::setDirection(const glm::vec3& direction) {
     this->direction = glm::normalize(direction);
 }

@@ -16,12 +16,14 @@ BreakStringLiterals: true # allow wrapping of long string literals
 
 # C++ specific
 Language: Cpp
+Standard: Cpp20 # influences how clang-format understands code
 
 # Pointer and reference formatting
 PointerAlignment: Left # “int* x” vs “int *x”
 SpaceBeforeParens: ControlStatements # e.g. `if (`, but `Foo()` stays tight
 
-# includes
+# Namespace and includes
+IndentNamespaces: AfterNamespace # indent contents of `namespace { … }`
 IncludeBlocks: Preserve # leave blank lines in include blocks alone
 
 # Brace wrapping

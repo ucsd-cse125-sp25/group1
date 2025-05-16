@@ -1,9 +1,9 @@
 #include "player.hpp"
 
-Player::Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction)
+Player::Player(int playerID, Room* room, glm::vec3 position, glm::vec3 direction)
     : 
     id(playerID),
-    curRoomID(roomID), 
+    curRoom(room),
     body(
         glm::vec3(0.0f),
         glm::vec3(0.0f),
@@ -26,19 +26,19 @@ void Player::setName(const std::string& playerName){
     name = playerName;
 }
 
-int Player::getCurRoomID() const {
-    return curRoomID;
+Room* Player::getCurRoom() const {
+    return curRoom;
 }
 
-void Player::setCurRoomID(int roomID) {
-    curRoomID = roomID;
+void Player::setCurRoom(Room* room) {
+    curRoom = room;
 }
 
 RigidBody& Player::getBody() {
     return body;
 }
 
-void Player::handleKeyboardInput(std::string action) {
+void Player::handleMovementInput(std::string action) {
     // variable for projection
     vec3 moveDirection = body.getDirection();
     mat4 transform = mat4(1.0f);
@@ -69,6 +69,40 @@ void Player::handleKeyboardInput(std::string action) {
 
 void Player::handleMouseInput(glm::vec3 direction) {
     body.setDirection(direction);
+}
+
+void Player::handleGeneralInput(std::string action) {
+    if (action == "interact") {
+        Interactable* interactable = this->isNearInteractable();
+        if (interactable != nullptr) interactable->interact(*this);
+    } else {
+        return;
+    }
+}
+
+Interactable* Player::isNearInteractable() {
+    if (this->getCurRoom() == nullptr) return nullptr;
+
+    std::vector<Interactable*> interactables = this->getCurRoom()->getInteractables();
+    RigidBody* playerBody = &this->getBody();
+
+    // Find closest interactable
+    Interactable* closestInteractable = nullptr;
+    float closestDistance = 10.0f;      // maximum distance needed to interact with an object
+    for (Interactable* obj : interactables) {
+        RigidBody* objBody = &(static_cast<Object *>(obj)->getBody());
+
+        if (playerBody == objBody) continue;
+
+        // Compare to minimum distance
+        float currentDistance = glm::distance(playerBody->getPosition(), objBody->getPosition());
+        if (currentDistance < closestDistance) {
+            closestInteractable = obj;
+            closestDistance = currentDistance;
+        }
+    }
+
+    return closestInteractable;
 }
 
 void Player::customCollision(const ICustomPhysics* otherObject) const {}

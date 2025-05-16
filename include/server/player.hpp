@@ -9,8 +9,11 @@
 #include <string>
 #include <set>
 #include <glm/glm.hpp>
+#include <vector>
 #include "config.hpp"
 #include "rigidBody.hpp"
+#include "components/interactable.hpp"
+#include "components/room.hpp"
 
 class Player : public ICustomPhysics {
 public:
@@ -26,7 +29,7 @@ public:
      * @param position Initial position of the player.
      * @param direction Initial facing direction of the player.
      */
-    Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction);
+    Player(int playerID, Room* room, glm::vec3 position, glm::vec3 direction);
     ~Player();
     
     /**
@@ -44,18 +47,18 @@ public:
     void setName(const std::string& playerName);
 
     /**
-     * @brief Returns the ID of the room the player is currently in.
+     * @brief Returns the reference of the room the player is currently in.
      *
-     * @return Current room ID as an integer.
+     * @return Current room as a pointer.
      */
-    int getCurRoomID() const;
+    Room* getCurRoom() const;
 
     /**
      * @brief Sets the player's current room ID.
      *
      * @param roomID The new room ID to assign to the player.
      */
-    void setCurRoomID(int id);
+    void setCurRoom(Room* room);
 
     /**
      * @brief Returns the set of key IDs the player possesses.
@@ -96,7 +99,7 @@ public:
     RigidBody& getBody();
 
     /**
-     * @brief Handles player keyboard input actions by adjusting the player's velocity accordingly.
+     * @brief Handles player movement input actions by adjusting the player's velocity accordingly.
      *
      * Processes movement commands ("move_forward", "move_backward", "strafe_left", "strafe_right")
      * by projecting the player's movement direction onto the appropriate axis and applying
@@ -109,16 +112,43 @@ public:
      *
      * @param action String representing the player action to handle.
      */
-    void handleKeyboardInput(std::string action);
+    void handleMovementInput(std::string action);
 
+    /**
+     * @brief Updates the player's facing direction based on mouse input.
+     *
+     * @param direction A 3D vector indicating the new direction the player should face.
+     */
     void handleMouseInput(glm::vec3 direction);
+
+
+    /**
+     * @brief Handles general player actions such as interaction.
+     *
+     * If the action is "interact" and the player is near an interactable object,
+     * the player will interact with it.
+     *
+     * @param action A string representing the type of player action (e.g., "interact").
+     */
+    void handleGeneralInput(std::string action);
+
+    /**
+     * @brief Determines the nearest interactable object within interaction range.
+     *
+     * Iterates over all interactable objects in the current room and returns a pointer
+     * to the closest one, as long as it is within a defined maximum distance. Returns
+     * nullptr if no interactable is nearby or if the player is not in a room.
+     *
+     * @return Interactable* Pointer to the nearest interactable object, or nullptr if none.
+     */
+    Interactable* isNearInteractable();
 
     void customCollision(const ICustomPhysics* otherObject) const override;
 
 private:
     int id;
     std::string name;
-    int curRoomID;
+    Room* curRoom;
     RigidBody body;
     std::set<int> keyIDs; // Keys (by ID) the player has collected
 };

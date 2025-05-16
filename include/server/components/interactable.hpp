@@ -1,7 +1,10 @@
 #pragma once
 #include "player.hpp"
+#include "components/object.hpp"
 
-class Interactable
+class Player;
+
+class Interactable : public Object
 {
 public:
     Interactable();

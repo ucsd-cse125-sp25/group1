@@ -15,6 +15,7 @@
 #include "components/interactable.hpp"
 #include "components/room.hpp"
 
+class Interactable;
 class Room;
 
 class Player : public ICustomPhysics {

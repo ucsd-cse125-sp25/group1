@@ -1,7 +1,7 @@
 #include "components/door.hpp"
 
 Door::Door(int doorID, int room1, int room2, int keyID, glm::vec3 position, glm::vec3 direction)
-    : Interactable(),
+    : Interactable(doorID, position, direction, config::PLAYER_WIDTH, config::PLAYER_HEIGHT),
     doorID(doorID),
     keyID(keyID),
     locked(keyID != -1),
@@ -13,6 +13,7 @@ Door::Door(int doorID, int room1, int room2, int keyID, glm::vec3 position, glm:
         new Transform { position, direction },
         new BoxCollider{
             AABB,
+            // TODO: why is this the dimensions of a door?
             glm::vec3(-config::PLAYER_WIDTH / 2, -config::PLAYER_HEIGHT / 2, -config::PLAYER_WIDTH / 2),
             glm::vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT / 2, config::PLAYER_WIDTH / 2)
         },

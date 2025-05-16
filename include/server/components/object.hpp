@@ -30,7 +30,7 @@ public:
     */
     RigidBody& getBody();
 
-    void customCollision(const ICustomPhysics* otherObject) const override;
+    void customCollision(ICustomPhysics* otherObject) override;
     
 private:
     int objectID;

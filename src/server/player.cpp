@@ -105,4 +105,4 @@ Interactable* Player::isNearInteractable() {
     return closestInteractable;
 }
 
-void Player::customCollision(const ICustomPhysics* otherObject) const {}
+void Player::customCollision(ICustomPhysics* otherObject) {}

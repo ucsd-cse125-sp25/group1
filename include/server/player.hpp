@@ -143,7 +143,7 @@ public:
      */
     Interactable* isNearInteractable();
 
-    void customCollision(const ICustomPhysics* otherObject) const override;
+    void customCollision(ICustomPhysics* otherObject) override;
 
 private:
     int id;

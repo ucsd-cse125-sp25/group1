@@ -91,15 +91,17 @@ class Scene {
     void initRooms();
 
     std::unique_ptr<Shader> shader;
-    std::unique_ptr<Shader> modelShader;
+    std::map<std::string, std::unique_ptr<Shader>> shaders;
     std::unique_ptr<Shader> uiShader;
 
-    std::unique_ptr<Model> room;
-    std::unique_ptr<Model> table;
+    std::unique_ptr<Model> hotelRoomAsset;
+    std::unique_ptr<Model> tableAsset;
+    std::unique_ptr<Model> doorAsset;
+
+    std::unique_ptr<Model> swampRoomAsset;
+    std::unique_ptr<Model> lilypadAsset;
 
     std::unique_ptr<TimerDisplay> timer;
-
-    std::unique_ptr<Model> door;
 
     std::map<std::string, std::unique_ptr<ModelInstance>>
         modelInstances; // Top-level model instances with their child models.

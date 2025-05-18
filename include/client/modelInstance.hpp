@@ -59,8 +59,8 @@ struct ModelInstance {
         shader.setMat4("model", getWorldTransform());
         model->draw(shader, boundingBoxMode);
 
-        for (const auto& [type, id] : children) {
-            for (const auto& [id, child] : id) {
+        for (const auto& [type, idMap] : children) {
+            for (const auto& [id, child] : idMap) {
                 child->drawRecursive(shader, boundingBoxMode);
             }
         }

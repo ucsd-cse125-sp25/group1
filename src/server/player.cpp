@@ -88,7 +88,8 @@ Interactable* Player::isNearInteractable() {
 
     // Find closest interactable
     Interactable* closestInteractable = nullptr;
-    float closestDistance = 10.0f;      // maximum distance needed to interact with an object
+    // maximum distance needed to interact with an object
+    float closestDistance = config::PLAYER_INTERACT_RANGE;
     for (Interactable* obj : interactables) {
         RigidBody* objBody = &(static_cast<Object *>(obj)->getBody());
 

@@ -14,8 +14,4 @@ public:
 
 protected:
     virtual void handleInteract(const Player &player) = 0; //Pure virtual function, must be implemented by derived classes
-
-private:
-    int objectID;
-    RigidBody body;
 };

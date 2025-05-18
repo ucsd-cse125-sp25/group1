@@ -5,21 +5,7 @@ Door::Door(int doorID, int room1, int room2, int keyID, glm::vec3 position, glm:
     doorID(doorID),
     keyID(keyID),
     locked(keyID != -1),
-    open(false),
-    body(
-        glm::vec3(0.0f),
-        glm::vec3(0.0f),
-        0.0f, // mass of 0 - kinematics doesn't matter because it's static (imovable)
-        new Transform { position, direction },
-        new BoxCollider{
-            AABB,
-            // TODO: why is this the dimensions of a door?
-            glm::vec3(-config::PLAYER_WIDTH / 2, -config::PLAYER_HEIGHT / 2, -config::PLAYER_WIDTH / 2),
-            glm::vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT / 2, config::PLAYER_WIDTH / 2)
-        },
-        nullptr,
-        true
-    )
+    open(false)
 {
     rooms[0] = room1;
     rooms[1] = room2;

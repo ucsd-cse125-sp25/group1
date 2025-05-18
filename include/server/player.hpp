@@ -144,7 +144,7 @@ public:
      *
      * @return Interactable* Pointer to the nearest interactable object, or nullptr if none.
      */
-    Interactable* isNearInteractable();
+    Interactable* getNearestInteractable();
 
     void customCollision(ICustomPhysics* otherObject) override;
 

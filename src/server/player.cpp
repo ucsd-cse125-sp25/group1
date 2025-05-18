@@ -73,14 +73,14 @@ void Player::handleMouseInput(glm::vec3 direction) {
 
 void Player::handleGeneralInput(std::string action) {
     if (action == "interact") {
-        Interactable* interactable = this->isNearInteractable();
+        Interactable* interactable = this->getNearestInteractable();
         if (interactable != nullptr) interactable->interact(*this);
     } else {
         return;
     }
 }
 
-Interactable* Player::isNearInteractable() {
+Interactable* Player::getNearestInteractable() {
     if (this->getCurRoom() == nullptr) return nullptr;
 
     std::vector<Interactable*> interactables = this->getCurRoom()->getInteractables();

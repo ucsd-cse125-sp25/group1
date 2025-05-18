@@ -23,7 +23,6 @@ vec3 calculateTangentVelocity(RigidBody* body, Collision* collision) {
 void solveCollision(RigidBody* a, RigidBody* b, Collision collision) {
     // skip standard collision resolution if either collider is NONE, which ignores collision
     if (!(a->getCollider()->type == NONE || b->getCollider()->type == NONE)) {
-        cout << a->getCollider()->type << endl;
         // check if both dynamic, split positioning correction
         if (length(a->getVelocity()) >= 1e-6f && length(b->getVelocity()) >= 1e-6f) {
             // push object a out of b

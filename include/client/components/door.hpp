@@ -1,5 +1,6 @@
 #pragma once
 #include "components/interactable.hpp"
+#include "Shaders.h"
 
 class Door: public Interactable
 {
@@ -52,6 +53,17 @@ public:
      * @param state whether the door can be opened successfully.
      */
     void processInteractResult(bool state) override;
+
+    /**
+     * @brief Draws the door.
+     * 
+     * Applies translation and rotation based on position and facing direction,
+     * sets shader uniforms, and draws the door using rendered model.
+     * 
+     * @param shader Shader program to use for rendering.
+     */
+    void draw(Shader& shader);
+
 private:
     /**
      * @brief Open (or fail to open) the door.

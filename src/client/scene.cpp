@@ -29,13 +29,14 @@ void Scene::initRooms() {
     const glm::mat4 I4{1.0f};   // 4 x 4 identity matrix
 
     // Create first room
+    //Create an instance of the first room
     auto room1 = std::make_unique<ModelInstance>(room.get(), I4);
     ModelInstance* room1Ptr = room1.get();
 
     room1->children.emplace_back(std::make_unique<ModelInstance>(table.get(), I4, room1Ptr));
 
     std::array<float, 4> degrees = { 0.0f, 90.0f, 180.0f, 270.0f };
-
+    //Initialize with our door class and room class 
     for (int i = 0; i < 4; ++i) {
         glm::mat4 doorModel = glm::rotate(I4, glm::radians(degrees[i]), glm::vec3(0.0f, 1.0f, 0.0f));
         doorModel = glm::translate(doorModel, glm::vec3(10.0f, 0.0f, 0.0f));

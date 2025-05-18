@@ -75,6 +75,7 @@ private:
      */
     void initRooms();
 
+    //TODO: Initialize the door with our own class 
     std::unique_ptr<Shader> shader;
     std::unique_ptr<Shader> modelShader;
 

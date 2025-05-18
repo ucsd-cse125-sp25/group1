@@ -1,5 +1,5 @@
 #pragma once
-
+//This is basically our modelInstance class 
 class Object
 {
 public:

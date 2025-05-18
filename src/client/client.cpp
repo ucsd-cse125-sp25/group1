@@ -144,6 +144,7 @@ void Client::handleServerMessage(const std::string& message) {
     } else if (type == "time_left") {
         updateGameTimer(parsed);
     }
+    // Need to also udpate object states
 }
 
 void Client::updatePlayerStates(const json& parsed) {

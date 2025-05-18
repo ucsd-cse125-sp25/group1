@@ -1,4 +1,4 @@
-#include "components/door.hpp"
+#include "client/components/door.hpp"
 #include <stdexcept>
 
 Door::Door(int doorID, int room1, int room2, bool isLocked)

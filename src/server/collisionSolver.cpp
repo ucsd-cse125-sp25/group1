@@ -1,5 +1,5 @@
 #include "collisionSolver.hpp"
-#include <iostream>
+
 using namespace std;
 
 /**

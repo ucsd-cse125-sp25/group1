@@ -172,4 +172,5 @@ private:
 	Transform* transform;
 	ICustomPhysics* customPhysics;
 	bool isStatic;
+	Collider* colliderOriginal;
 };

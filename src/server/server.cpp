@@ -77,7 +77,7 @@ bool Server::init() {
 
     initRigidBodies();
 
-    swamp = new Swamp(1, world);
+    swamp = new Swamp(1, world, *this);
 
     return true;
 }
@@ -200,7 +200,6 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
-            broadcastGameStates();
             
             startTick();
         }
@@ -299,12 +298,12 @@ void Server::broadcastTimeLeft() {
     }
 }
 
-void Server::broadcastGameStates() {
-    for (const auto& [clientId, socket] : clients) {
-        std::string swampPacket = swamp->getUpdatePacket();
+void Server::broadcastMessage(std::string packet) {
 
+
+    for (const auto& [clientId, socket] : clients) {
         try {
-            boost::asio::write(*socket, boost::asio::buffer(swampPacket));
+            boost::asio::write(*socket, boost::asio::buffer(packet));
         }
         catch (const std::exception& e) {
             handleClientDisconnect(clientId);

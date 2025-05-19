@@ -1,8 +1,13 @@
-#include "lilypad.hpp"
+#include "components/lilypad.hpp"
 #include "config.hpp"
 #include "player.hpp"
+#include "server.hpp"
+#include "json.hpp"
+#include <iostream>
 
-LilyPad::LilyPad(int id, bool isGood, const glm::vec3& position, const glm::vec3& direction)
+using json = nlohmann::json;
+
+LilyPad::LilyPad(int id, bool isGood, const glm::vec3& position, const glm::vec3& direction, Server& serverRef)
     : 
     lilyPadID(id),
     isGood(isGood),
@@ -12,16 +17,26 @@ LilyPad::LilyPad(int id, bool isGood, const glm::vec3& position, const glm::vec3
         0.0f, // mass of 0 - kinematics doesn't matter because it's static (imovable)
         new Transform { position, direction },
         new BoxCollider{
-            AABB, //TODO: change this to a nothing collider that just calls customCollision when coliding.
+            isGood ? AABB : NONE, //TODO: change this to a nothing collider that just calls customCollision when coliding.
             glm::vec3(-config::SWAMP_LILYPAD_WIDTH / 2, -config::SWAMP_LILYPAD_HEIGHT / 2, -config::SWAMP_LILYPAD_WIDTH / 2),
             glm::vec3(config::SWAMP_LILYPAD_WIDTH / 2, config::SWAMP_LILYPAD_HEIGHT / 2, config::SWAMP_LILYPAD_WIDTH / 2)
         },
         this, // refernce to interface
         true
-    ) {}
+    ), 
+    server(serverRef){}
+//player position relative to room will this impact collision?
 
 RigidBody& LilyPad::getBody() {
     return body;
+}
+
+int LilyPad::getID() const {
+    return lilyPadID;
+}
+
+bool LilyPad::isGoodLilyPad() const {
+    return isGood;
 }
 
 void LilyPad::customCollision(ICustomPhysics* otherObject) {
@@ -29,13 +44,23 @@ void LilyPad::customCollision(ICustomPhysics* otherObject) {
     if(isGood){
         return;
     }
-    // Bad lilypad: dunk player and respawn them.
+    // Bad lilypad: dunk player and respawn them
     Player* playerPtr = dynamic_cast<Player*>(otherObject);
     // make sure it's a player that hit the lilypad
     if (!playerPtr) {
         return;
     }
-    // TODO: call server.broadcastMessage(packet) to let the client know to stop rendering this lilypad.
+
+    // Send Message to client to drop lily pad
+    json message;
+    message["type"] = "lilypad_drop";
+    message["id"] = lilyPadID;
+
+    std::string packet = message.dump() + "\n";
+    server.broadcastMessage(packet);
+
+    std::cout << "Lilypad " << lilyPadID << " dropped" << std::endl;
+
 
     /*
     TODO: move the following logic to the lower layer water rigidbody, rather than the lilypad.

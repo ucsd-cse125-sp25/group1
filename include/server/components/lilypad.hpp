@@ -2,6 +2,8 @@
 #include <glm/glm.hpp>
 #include "rigidBody.hpp"
 
+class Server;
+
 class LilyPad : public ICustomPhysics
 {
 public:
@@ -17,7 +19,7 @@ public:
      * @param position position of the object.
      * @param direction facing direction of the object.
      */
-    LilyPad(int id, bool isGood, const glm::vec3& position, const glm::vec3& direction);
+    LilyPad(int id, bool isGood, const glm::vec3& position, const glm::vec3& direction, Server& serverRef);
 
     ~LilyPad() = default;
 
@@ -29,9 +31,24 @@ public:
     RigidBody& getBody();
 
     void customCollision(ICustomPhysics* otherObject) override;
+
+    /**
+     * @brief Returns the ID of the lilypad.
+     *
+     * @return int ID of the lilypad.
+     */
+    int getID() const;
+
+    /**
+     * @brief Returns whether the lilypad is good or bad.
+     *
+     * @return bool true if the lilypad is good, false if it is bad.
+     */
+    bool isGoodLilyPad() const;
     
 private:
     int lilyPadID;
     bool isGood;
     RigidBody body;
+    Server& server;
 };

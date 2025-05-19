@@ -81,7 +81,7 @@ void RigidBody::setPosition(vec3 newPosition) {
 const vec3 RigidBody::getDirection() const {
 	return transform->direction;
 }
-#include <iostream>                         
+                
 void RigidBody::transformBox(mat3 rotation) {
 	float  a, b;
 	float  Amin[3], Amax[3];
@@ -118,8 +118,6 @@ void RigidBody::transformBox(mat3 rotation) {
 	Bmin[1] = Amin[1];
 	Bmax[1] = Amax[1];
 
-	std::cout << "X Min: " << Bmin[0] << " X Max: " << Bmax[0] << std::endl;
-	std::cout << "Z Min: " << Bmin[2] << " Z Max: " << Bmax[2] << std::endl;
 	// Copy the result into the new box				   
 	boxNew->minCorner = vec3(Bmin[0], Bmin[1], Bmin[2]);
 	boxNew->maxCorner = vec3(Bmax[0], Bmax[1], Bmax[2]);

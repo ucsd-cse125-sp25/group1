@@ -23,28 +23,11 @@ vec3 calculateTangentVelocity(RigidBody* body, Collision* collision) {
 void solveCollision(RigidBody* a, RigidBody* b, Collision collision) {
     // skip standard collision resolution if either collider is NONE, which ignores collision
     if (!(a->getCollider()->type == NONE || b->getCollider()->type == NONE)) {
-        // check if both dynamic, split positioning correction
-        if (length(a->getVelocity()) >= 1e-6f && length(b->getVelocity()) >= 1e-6f) {
-            // push object a out of b
-            vec3 newPositionA =
-                a->getPosition() + collision.normal * collision.depth * 0.5f;
-            a->setPosition(newPositionA);
 
-            // push object b out of a
-            vec3 newPositionB =
-                b->getPosition() - collision.normal * collision.depth * 0.5f;
-            b->setPosition(newPositionB);
-
-            // modify objects' velocities to slide on contact surface
-            a->setVelocity(calculateTangentVelocity(a, &collision));
-            b->setVelocity(calculateTangentVelocity(b, &collision));
-
-            // otherwise, one is static so correct position of dynamic
-        }
-        else {
+        // one is static so correct position of dynamic
+        if (a->getStatic() || b->getStatic()) {
             // check which one is static, and correct position/velocity for dynmaic
-            if (length(a->getVelocity()) < 1e-6f) {
-                a->setVelocity(vec3(0.0f));
+            if (a->getStatic()) {
                 collision.normal = -collision.normal;
                 swap(a, b);
             }
@@ -61,6 +44,25 @@ void solveCollision(RigidBody* a, RigidBody* b, Collision collision) {
                 return;
             }
             a->setVelocity(calculateTangentVelocity(a, &collision));
+        }
+
+        // both dynamic, split positioning correction
+        else {
+            // push object a out of b
+            vec3 newPositionA =
+                a->getPosition() + collision.normal * collision.depth * 0.5f;
+            a->setPosition(newPositionA);
+
+            // push object b out of a
+            vec3 newPositionB =
+                b->getPosition() - collision.normal * collision.depth * 0.5f;
+            b->setPosition(newPositionB);
+
+            // modify objects' velocities to slide on contact surface
+            if (length(a->getVelocity()) > 1e-6) 
+                a->setVelocity(calculateTangentVelocity(a, &collision));
+            if (length(b->getVelocity()) > 1e-6)
+                b->setVelocity(calculateTangentVelocity(b, &collision));
         }
     }
     ICustomPhysics* aCustomPhysics = a->getCustomPhysics();

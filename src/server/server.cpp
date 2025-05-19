@@ -27,27 +27,42 @@ static vec3 toVec3(const json& arr) {
 }
 
 void Server::initRigidBodies() {
-    std::ifstream in("../src/shared/layout.json");
-    json layout;
-    in >> layout;
+    std::ifstream inLayout("../src/server/data/layout.json");
+    std::ifstream inDimensions("../src/server/data/dimensions.json");
+    json layout, dimensions;
+    inLayout >> layout;
+    inDimensions >> dimensions;
 
     for (const auto& room : layout) {
         vec3 roomPosition = toVec3(room["position"]);
 
         for (const auto& obj : room["objects"]) {
+            string modelName = obj["model"];
             vec3 position = toVec3(obj["position"]);
-            vec3 minCorner = toVec3(obj["aabb"]["min"]);
-            vec3 maxCorner = toVec3(obj["aabb"]["max"]);
+            vec3 minCorner = toVec3(dimensions[modelName]["min"]);
+            vec3 maxCorner = toVec3(dimensions[modelName]["max"]);
+
+            bool isRotated = obj["rotated"];
+            if (isRotated) {
+                minCorner = vec3(minCorner.z, minCorner.y, minCorner.x);
+                maxCorner = vec3(maxCorner.z, maxCorner.y, maxCorner.x);
+            }
+
+            vec3 relativePosition = (toVec3(dimensions[modelName]["max"]) +
+                toVec3(dimensions[modelName]["min"])) * 0.5f;
+
+            vec3 relativeMinCorner = minCorner - relativePosition;
+            vec3 relativeMaxCorner = maxCorner - relativePosition;
 
             RigidBody* object = new RigidBody(
                 vec3(0.0f),
                 vec3(0.0f),
                 0.0f,
-                new Transform{ roomPosition + position, vec3(0.0f) },
+                new Transform{ roomPosition + position + relativePosition, vec3(0.0f) },
                 new BoxCollider{
                     AABB,
-                    minCorner,
-                    maxCorner
+                    relativeMinCorner,
+                    relativeMaxCorner
                 },
                 nullptr,
                 true

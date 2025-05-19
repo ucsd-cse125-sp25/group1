@@ -19,7 +19,7 @@ namespace config {
 
     inline constexpr float FOVY = 45.0f;
     inline constexpr float NEAR_CLIP = 0.1f;
-    inline constexpr float FAR_CLIP  = 100.0f;
+    inline constexpr float FAR_CLIP  = 120.0f;
 
     inline constexpr float MAX_PITCH = 89.0f;
     inline constexpr float MIN_PITCH = -89.0f;
@@ -45,12 +45,20 @@ namespace config {
     inline constexpr float PLAYER_WEIGHT = 10.0f;
     inline constexpr float PLAYER_WIDTH = 1.0f;
     inline constexpr float PLAYER_HEIGHT = 1.0f;
+    inline constexpr float PLAYER_DEPTH = 1.0f;
 
     inline constexpr float MOUSE_SENSITIVITY = 0.1f;
+
+    // Model positions
+    inline constexpr glm::vec3 HOTEL_ROOM_POSITION = {0.0f, 0.0f, 0.0f};
+    inline constexpr glm::vec3 TABLE_POSITION = {0.0f, 0.0f, 0.0f};
+    inline constexpr glm::vec3 SWAMP_ROOM_POSITION = {20.0f, 0.0f, 0.0f};
 
     // Swamp Related Configs
     inline constexpr glm::vec3 SWAMP_RESPAWN = { 0.0f, 1.0f, 0.0f };
     inline constexpr int SWAMP_NUM_PADS = 10;
+
+    inline constexpr int SWAMP_NUM_LILYPADS = 16;
 
     inline const std::vector<int> SWAMP_SOLUTION = { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 };
     inline constexpr const char* SWAMP_AUDIO_FILE = "solution_audio.mp3";

@@ -30,8 +30,8 @@ vec3 computeLighting(vec3 lightDir, vec3 lightColor, vec3 normal, vec3 viewDir) 
     float spec = pow(max(dot(normal, halfwayDir), 0.0), shininess);
 
     vec3 ambient = 0.3 * lightColor;
-    vec3 diffuse = 0.5 * diff * lightColor;
-    vec3 specularComponent = specular * spec * lightColor;
+    vec3 diffuse = 0.4 * diff * lightColor;
+    vec3 specularComponent = 0.1 * specular * spec * lightColor;
 
     return ambient + diffuse + specularComponent;
 }

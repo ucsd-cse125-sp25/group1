@@ -16,6 +16,8 @@ struct SubMesh {
     GLuint vao, vbo, ebo;
     GLuint indexCount;          // Number of indices to draw.
     glm::vec3 color;            // Base color of the sub-mesh
+    glm::vec3 specular;         // Specular reflectivity of the sub-mesh
+    float shininess;            // Shininess of the sub-mesh
 
     GLuint textureId = 0;       // Texture ID if a texture is loaded.
     bool hasTexture = false;    // True if this sub-mesh uses a texture.
@@ -58,8 +60,9 @@ public:
      * and issues the draw call.
      * 
      * @param shader The shader program to use when drawing.
+     * @param boundingBoxMode If true, renders only bounding boxes.
      */
-    void draw(Shader& shader);
+    void draw(Shader& shader, bool boundingBoxMode);
 
 private:
     std::vector<SubMesh> subMeshes;      // List of all sub-meshes that make up the model.   

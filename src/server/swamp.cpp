@@ -58,9 +58,11 @@ glm::vec3 Swamp::getRespawnPoint() {
 
 std::pair<LilyPad*, ColliderType> Swamp::createLilyPad() {
     int id = numPads;
-    bool isGood = solution[id / 2] == 1;
+    bool isGood = solution[id / 2] == id %2;
+
     ColliderType colliderType = isGood ? AABB : NONE;
     LilyPad* newPad = new LilyPad(id, isGood, server);
+
     pads.push_back(newPad);
 
     numPads++;

@@ -5,6 +5,7 @@
 #include <glad/glad.h>
 #include <iostream>
 #include <vector>
+#include "components/room.hpp"
 
 struct PointLight {
     glm::vec3 position;
@@ -43,24 +44,29 @@ void Scene::initRooms() {
     const glm::mat4 I4{1.0f}; // 4 x 4 identity matrix
 
     // Hotel room
-    glm::mat4 hotelRoomModel = glm::translate(I4, config::HOTEL_ROOM_POSITION);
-    auto hotelRoom = std::make_unique<ModelInstance>(hotelRoomAsset.get(), hotelRoomModel);
+    // glm::mat4 hotelRoomModel = glm::translate(I4, config::HOTEL_ROOM_POSITION);
+    // auto hotelRoom = std::make_unique<ModelInstance>(hotelRoomAsset.get(), hotelRoomModel);
 
-    glm::mat4 tableModel = glm::translate(I4, config::TABLE_POSITION);
-    hotelRoom->children["table"][0] =
-        std::make_unique<ModelInstance>(tableAsset.get(), tableModel, hotelRoom.get());
+    // glm::mat4 tableModel = glm::translate(I4, config::TABLE_POSITION);
+    // hotelRoom->children["table"][0] =
+    //     std::make_unique<ModelInstance>(tableAsset.get(), tableModel, hotelRoom.get());
 
-    // Temporarily remove the door between the hotel room and swamp room until door unlocking is
-    // implemented
-    std::array<float, 3> degrees = {90.0f, 180.0f, 270.0f}; // Add 0.0f later
+    // // Temporarily remove the door between the hotel room and swamp room until door unlocking is
+    // // implemented
+    // std::array<float, 3> degrees = {90.0f, 180.0f, 270.0f}; // Add 0.0f later
 
-    for (int i = 0; i < degrees.size(); ++i) {
-        glm::mat4 doorModel =
-            glm::rotate(I4, glm::radians(degrees[i]), glm::vec3(0.0f, 1.0f, 0.0f));
-        doorModel = glm::translate(doorModel, glm::vec3(10.0f, 0.0f, 0.0f));
-        hotelRoom->children["door"][i] =
-            std::make_unique<ModelInstance>(doorAsset.get(), doorModel, hotelRoom.get());
-    }
+    // for (int i = 0; i < degrees.size(); ++i) {
+    //     glm::mat4 doorModel =
+    //         glm::rotate(I4, glm::radians(degrees[i]), glm::vec3(0.0f, 1.0f, 0.0f));
+    //     doorModel = glm::translate(doorModel, glm::vec3(10.0f, 0.0f, 0.0f));
+    //     hotelRoom->children["door"][i] =
+    //         std::make_unique<ModelInstance>(doorAsset.get(), doorModel, hotelRoom.get());
+    // }
+
+    auto hotelRoom = std::make_unique<Room>(1, "hotelRoom", hotelRoomAsset.get(), doorAsset.get());
+    glm::mat4 tableTransform = glm::translate(I4, config::TABLE_POSITION);
+    hotelRoom->addVisualObject("table", 0, tableAsset.get(), tableTransform);
+    rooms["hotelRoom"] = std::move(hotelRoom);
 
     // Swamp room
     glm::mat4 swampRoomModel = glm::translate(I4, config::SWAMP_ROOM_POSITION);
@@ -78,7 +84,7 @@ void Scene::initRooms() {
             std::make_unique<ModelInstance>(lilypadAsset.get(), lilypadModel, swampRoom.get());
     }
 
-    modelInstances["hotelRoom"] = std::move(hotelRoom);
+    modelInstances["hotelRoom"] = std::unique_ptr<ModelInstance>(rooms["hotelRoom"]->getModelInstanceRoot());
     modelInstances["swampRoom"] = std::move(swampRoom);
 }
 

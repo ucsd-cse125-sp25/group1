@@ -15,6 +15,7 @@
 #include "shader.hpp"
 #include "timerdisplay.hpp"
 #include "uielement.hpp"
+#include "components/room.hpp"
 
 /**
  * @brief Manages the 3D scene, including models and player entities.
@@ -105,6 +106,8 @@ class Scene {
 
     std::map<std::string, std::unique_ptr<ModelInstance>>
         modelInstances; // Top-level model instances with their child models.
+    std::unordered_map<std::string, std::unique_ptr<Room>> rooms;
+
 
     std::unordered_map<int, Player> players; // Active players in the scene.
 };

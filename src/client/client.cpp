@@ -169,10 +169,9 @@ void Client::handleServerMessage(const std::string& message) {
         updateGameTimer(parsed);
     } else if (type == "swamp_init") {
         int roomID = parsed["room_ID"];
-        int numPads = parsed["num_pads"];
         std::string audioFile = parsed["audio_file"];
 
-        swamp = new Swamp(roomID, numPads, audioFile);
+        swamp = new Swamp(roomID, audioFile);
     } else if (type == "lilypad_drop") {
         auto id = parsed["id"];
 

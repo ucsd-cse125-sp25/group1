@@ -1,24 +1,25 @@
 #pragma once
 
-#include <vector>
-#include <array>
-#include "components/room.hpp"
-#include "components/object.hpp"
-#include "components/lilypad.hpp"
-#include "components/frog.hpp"
-#include "world.hpp"
 #include <glm/glm.hpp>
+#include <array>
+#include <utility>
+#include <vector>
+#include "collider.hpp"
+#include "components/lilypad.hpp"
+#include "components/object.hpp"
+#include "components/room.hpp"
+#include "rigidBody.hpp"
+#include "world.hpp"
 
 class Server;
 
-
 class Swamp : public Room {
-public:
+  public:
     /**
-    * @brief Constructs a Swamp instance.
-    *
-    * Initializes the swamp
-    */
+     * @brief Constructs a Swamp instance.
+     *
+     * Initializes the swamp
+     */
     Swamp(int roomID, World& worldRef, Server& serverRef);
 
     /**
@@ -44,32 +45,30 @@ public:
 
     glm::vec3 getRespawnPoint();
 
-private:
+    std::pair<LilyPad*, ColliderType> createLilyPad();
+
+  private:
     /**
      * @brief Number of pads in the swamp game
+     *
+     * incremented as lilypads created to reach the total number of pads
      */
     int numPads;
 
-    
     /**
-    * @brief List of lily pads in the swamp game
-    *
-    * A vector of pairs, each element is a pair of pointers to the two lilypads that are part of the same step.
-    */
-    std::vector<std::array<LilyPad*, 2>> pads;
-
-    /**
+     * @brief List of lily pads in the swamp game
      *
-     *@brief list of the frogs that are interactable in swamp game
+     * A vector of pairs, each element is a pair of pointers to the two lilypads that are part of
+     * the same step.
      */
-    std::vector<Frog*> frogs;
-
+    std::vector<LilyPad*> pads;
 
     /**
-      *  @brief Solution Key to the Swamp Game
-      *
-      * A vector, where each element is 0 or 1 representing, the correct lilpad for that step [index] .
-      */
+     *  @brief Solution Key to the Swamp Game
+     *
+     * A vector, where each element is 0 or 1 representing, the correct lilpad for that step [index]
+     * .
+     */
     std::vector<int> solution;
 
     /**
@@ -79,7 +78,6 @@ private:
      */
     std::string audioFile;
 
-
     /**
      * @brief Respawn Point in Swamp Game when player dies
      *
@@ -88,7 +86,7 @@ private:
 
     /**
      * @brief Reference to the world object
-     * 
+     *
      */
     World& world;
 

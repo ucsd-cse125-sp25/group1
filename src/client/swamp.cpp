@@ -1,10 +1,7 @@
 #include "swamp.hpp"
 #include <iostream>
 
-Swamp::Swamp(int roomID, int numPads, std::string audioFile)
-    : Room(roomID), numPads(numPads), audioFile(audioFile) {
-
-}
+Swamp::Swamp(int roomID, std::string audioFile) : Room(roomID), audioFile(audioFile) {}
 
 Swamp::~Swamp() {
     // Destructor

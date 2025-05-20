@@ -36,8 +36,7 @@ class Swamp : public Room {
      * {
      *     "type": "swamp_init",
      *     "room_ID": 1,
-     *     "num_pads": 4,
-     *     "game_state": {{1,1},{1,1},{1,1},{1,1}}
+     *     "audio_file": "swamp_audio.mp3"
      *     "audio_file": "swamp_audio.mp3"
      * }
      */
@@ -58,8 +57,7 @@ class Swamp : public Room {
     /**
      * @brief List of lily pads in the swamp game
      *
-     * A vector of pairs, each element is a pair of pointers to the two lilypads that are part of
-     * the same step.
+     * A vector of pointers to lilypad. Lilypadd ordering goes right, left, right, left...
      */
     std::vector<LilyPad*> pads;
 
@@ -67,7 +65,7 @@ class Swamp : public Room {
      *  @brief Solution Key to the Swamp Game
      *
      * A vector, where each element is 0 or 1 representing, the correct lilpad for that step [index]
-     * .
+     * 0: right lilypad, 1: left lilypad
      */
     std::vector<int> solution;
 

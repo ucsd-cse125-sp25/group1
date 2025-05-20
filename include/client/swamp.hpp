@@ -10,7 +10,6 @@ class Swamp : public Room {
      * @brief Constructor for the Swamp class
      *
      * @param roomID The ID of the room.
-     * @param numPads The number of pads in the swamp game.
      * @param audioFile The audio file associated with the swamp game.
      *
      */

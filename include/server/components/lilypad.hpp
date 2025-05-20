@@ -7,16 +7,11 @@ class Server;
 class LilyPad : public ICustomPhysics {
   public:
     /**
-     * @brief Constructs a Lilypad with a given id, solidity, position, and direction.
+     * @brief Constructs a Lilypad with a given id, isGood
      *
-     * Initializes a lilypad at the specified position and orientation, with
-     * the property of whether or not the player will fall through when jumping
-     * on the lilypad.
      *
      * @param id ID of the object
      * @param isGood whether the lilypad will hold the player or fall through on impact
-     * @param position position of the object.
-     * @param direction facing direction of the object.
      */
     LilyPad(int id, bool isGood, Server& serverRef);
 
@@ -25,7 +20,7 @@ class LilyPad : public ICustomPhysics {
     /**
      * @brief Returns the rigid body of the object.
      *
-     * @return RigidBody& reference to the object's rigid body.
+     * @return RigidBody* reference to the object's rigid body.
      */
     RigidBody* getBody();
 
@@ -36,6 +31,11 @@ class LilyPad : public ICustomPhysics {
      */
     void setBody(RigidBody* newBody);
 
+    /**
+     * @brief custom collision response of lilypad
+     *
+     * @param ptr to the object class that this object collided with
+     */
     void customCollision(ICustomPhysics* otherObject) override;
 
     /**

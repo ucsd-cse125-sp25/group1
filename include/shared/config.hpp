@@ -48,7 +48,7 @@ inline constexpr glm::vec3 TABLE_POSITION = {0.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 SWAMP_ROOM_POSITION = {20.0f, 0.0f, 0.0f};
 
 // Swamp Related Configs
-inline constexpr glm::vec3 SWAMP_RESPAWN = {0.0f, 1.0f, 0.0f};
+inline constexpr glm::vec3 SWAMP_RESPAWN = {21.0f, 1.0f, 0.0f};
 inline constexpr int SWAMP_NUM_ROWS = 8;
 
 inline constexpr int SWAMP_NUM_LILYPADS = 16; // Total

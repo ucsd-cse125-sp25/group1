@@ -5,6 +5,7 @@
 #include <string>
 #include "model.hpp"
 #include "shader.hpp"
+#include <unordered_map>
 
 /**
  * @brief A single instance of a 3D model placed in the scene.

@@ -9,6 +9,7 @@
 #include "world.hpp"
 #include "player.hpp"
 #include "swamp.hpp"
+#include "string"
 
 /**
  * @brief Handles server-side networking and world updates for a multiplayer game.
@@ -46,6 +47,13 @@ public:
      * and processing networking events.
      */
     void run();
+
+    /**
+     * @brief Takes in the stringified packet to send
+     *
+     * Includes player positions and directions.
+     */
+    void broadcastMessage(std::string packet);
 
 private:
     /**
@@ -132,13 +140,6 @@ private:
      * are connected and continues running until all clients disconnect.
      */
     void startGameTimer();
-    
-    /**
-     * @brief Sends game state updates to connected clients.
-     *
-     * Includes swamp game state and other relevant information.
-     */
-    void broadcastGameStates();
 
     /**
      * @brief Broadcasts the current time left to all clients.

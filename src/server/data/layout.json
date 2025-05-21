@@ -96,248 +96,248 @@
     },
     "swamp_room": {
         "position": [20.0, 0.0, 0.0],
-        "objects": [
-            {
-                "model": "swamp_00",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_01",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_02",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_03",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_04",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_05",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_06",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_07",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_08",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_09",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_10",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_11",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_12",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_13",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_14",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_15",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_16",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_17",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_18",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_19",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_20",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_21",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_22",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_23",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_24",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_25",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_26",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_27",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_28",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_29",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_30",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "swamp_31",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 22.0, 0.0, 3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 30.0, 0.0, 3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 38.0, 0.0, 3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 46.0, 0.0, 3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 54.0, 0.0, 3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 62.0, 0.0, 3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 70.0, 0.0, 3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 78.0, 0.0, 3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 22.0, 0.0, -3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 30.0, 0.0, -3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 38.0, 0.0, -3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 46.0, 0.0, -3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 54.0, 0.0, -3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 62.0, 0.0, -3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 70.0, 0.0, -3.0 ],
-                "rotated": false
-            },
-            {
-                "model": "lilypad_00",
-                "position": [ 78.0, 0.0, -3.0 ],
-                "rotated": false
-            }
+      "objects": [
+        {
+          "model": "swamp_00",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_01",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_02",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_03",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_04",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_05",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_06",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_07",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_08",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_09",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_10",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_11",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_12",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_13",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_14",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_15",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_16",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_17",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_18",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_19",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_20",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_21",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_22",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_23",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_24",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_25",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_26",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_27",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_28",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_29",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_30",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_31",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 22.0, 0.0, 3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 22.0, 0.0, -3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 30.0, 0.0, 3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 30.0, 0.0, -3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 38.0, 0.0, 3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 38.0, 0.0, -3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 46.0, 0.0, 3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 46.0, 0.0, -3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 54.0, 0.0, 3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 54.0, 0.0, -3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 62.0, 0.0, 3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 62.0, 0.0, -3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 70.0, 0.0, 3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 70.0, 0.0, -3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 78.0, 0.0, 3.0 ],
+          "rotated": false
+        },
+        {
+          "model": "lilypad_00",
+          "position": [ 78.0, 0.0, -3.0 ],
+          "rotated": false
+        }
 
-        ]
+      ]
     }
 }

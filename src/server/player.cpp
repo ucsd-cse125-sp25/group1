@@ -13,7 +13,8 @@ Player::Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction
             AABB,
             glm::vec3(-config::PLAYER_WIDTH / 2, -config::PLAYER_HEIGHT / 2, -config::PLAYER_WIDTH / 2),
             glm::vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT / 2, config::PLAYER_WIDTH / 2)
-        }
+        },
+        this
     ) {}
 
 Player::~Player() {}

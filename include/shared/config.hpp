@@ -87,4 +87,13 @@ namespace config {
     //TODO: Adjust once rendered
     inline constexpr float SWAMP_LILYPAD_WIDTH = 1.0f;
     inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;
+
+
+    //TODO: Convert GUID to event names
+    inline constexpr const char* SWAMP_AMBIENCE_TRACK = "{25c216fb-36d9-42c9-bd0f-4662b826ff2a}";
+    inline constexpr const char* footstepCarpet = "{5a18903c-2b5f-4fd0-b153-63a502130d90}";
+    inline constexpr const char* footstepWood = "{4834907d-09e7-460e-b9f9-4f18b067acf0}";
+    inline constexpr const char* jumpLilyPad = "{85da62c4-60ce-4776-b1f3-2503b761aa8c}";
+    inline constexpr const char* unlockDoor = "{008e7455-ae30-40ce-a197-5e85b67035b8}";
+
 }

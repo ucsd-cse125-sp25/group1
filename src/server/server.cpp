@@ -200,7 +200,7 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
-            broadcastGameStates();
+            //broadcastGameStates();
             
             startTick();
         }

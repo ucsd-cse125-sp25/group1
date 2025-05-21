@@ -105,10 +105,17 @@ bool Client::init() {
         std::cerr << "Failed to initialize FMOD.\n";
         return 1;
     }
+
     audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/Master.bank");
     audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/BGM.bank");
-    audioManager.loadFMODStudioEvent("{25c216fb-36d9-42c9-bd0f-4662b826ff2a}");
-    audioManager.setEventVolume("{25c216fb-36d9-42c9-bd0f-4662b826ff2a}", 1.0f);
+    audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/SFX.bank");
+
+    //To play audio, first load in the name of the event, then play the event. Can use setEventVolume to
+    //adjust the volume 
+
+  /*  audioManager.loadFMODStudioEvent("{25c216fb-36d9-42c9-bd0f-4662b826ff2a}");
+    audioManager.playEvent("{25c216fb-36d9-42c9-bd0f-4662b826ff2a}");
+    audioManager.setEventVolume("{25c216fb-36d9-42c9-bd0f-4662b826ff2a}", 1.0f);*/
     
     
 
@@ -268,6 +275,14 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
 
             if (!action.empty()) {
                 message["actions"].push_back(action);
+                if (action != "jump" && !audioManager.eventIsPlaying("{5a18903c-2b5f-4fd0-b153-63a502130d90}"))
+                {
+                    // This is footstep sfx
+                    /*audioManager.loadFMODStudioEvent("{5a18903c-2b5f-4fd0-b153-63a502130d90}");
+                    audioManager.setEventVolume("{5a18903c-2b5f-4fd0-b153-63a502130d90}", 0.1f);
+                    audioManager.playEvent("{5a18903c-2b5f-4fd0-b153-63a502130d90}");*/
+
+                }
             }
         }
     }

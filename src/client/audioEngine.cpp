@@ -2,7 +2,7 @@
 /// @file AudioEngine.cpp
 /// @author Ross Hoyt
 ///
-#include "AudioEngine.hpp"
+#include "audioEngine.hpp"
 #include <fmod_errors.h>
 #include <iostream>
 
@@ -186,7 +186,7 @@ void AudioEngine::loadFMODStudioEvent(const char* eventName, std::vector<std::pa
     }
     std::cout << std::endl;
 
-    ERRCHECK(eventInstance->start());
+    /*ERRCHECK(eventInstance->start());*/
 
     ERRCHECK(eventInstance->getPlaybackState(&state));
     std::cout << "After start(), playback state = ";

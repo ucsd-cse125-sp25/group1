@@ -88,3 +88,6 @@ out/
 
 # VS code settings folder
 .vscode
+
+
+!src/**/Build

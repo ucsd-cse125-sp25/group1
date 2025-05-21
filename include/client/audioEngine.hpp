@@ -53,67 +53,6 @@ public:
     * Method which should be called every frame of the game loop
     */
     void update();
-    
-    /**
-     * Loads a sound from disk using provided settings
-     * Prepares for later playback with playSound()
-     * Only reads the audio file and loads into the audio engine
-     * if the sound file has already been added to the cache
-     */
-    //void loadSound(SoundInfo soundInfo);
-
-    /**
-    * Plays a sound file using FMOD's low level audio system. If the sound file has not been
-    * previously loaded using loadSoundFile(), a console message is displayed
-    *
-    * @param filename - relative path to file from project directory. (Can be .OGG, .WAV, .MP3,
-    *                 or any other FMOD-supported audio format)
-    */
-    //void playSound(SoundInfo soundInfo);
-    
-    /**
-     * Stops a looping sound if it's currently playing.
-     */
-    //void stopSound(SoundInfo soundInfo);
-
-    /**
-     * Method that updates the volume of a soundloop that is playing. This can be used to create audio 'fades'
-     * where the volume ramps up or down to the provided new volume
-     * @param fadeSampleLength the length in samples of the intended volume sample. If less than 64 samples, the default 
-     *                         FMOD fade out is used
-     */
-    //void updateSoundLoopVolume(SoundInfo &soundInfo, float newVolume, unsigned int fadeSampleLength = 0);
-
-   
-
-    /**
-    * Updates the position of a looping 3D sound that has already been loaded and is playing back.
-    * The SoundInfo object's position coordinates will be used for the new sound position, so
-    * SoundInfo::set3DCoords(x,y,z) should be called before this method to set the new desired location.
-    */
-    //void update3DSoundPosition(SoundInfo soundInfo); 
-      
-    /**
-     * Checks if a looping sound is playing.
-     */
-    //bool soundIsPlaying(SoundInfo soundInfo); 
-   
-
-    /**
-     * Sets the position of the listener in the 3D scene.
-     * @param posX, posY, posZ - 3D translation of listener
-     * @param forwardX, forwardY, forwardZ - forward angle character is looking in
-     * @param upX, upY, upZ - up which must be perpendicular to forward vector
-     */
-    //void set3DListenerPosition(float posX,     float posY,     float posZ,
-    //                           float forwardX, float forwardY, float forwardZ,
-    //                           float upX,      float upY,      float upZ);
-
-    /**
-    * Utility method that returns the length of a SoundInfo's audio file in milliseconds
-    * If the sound hasn't been loaded, returns 0
-    */
-    //unsigned int getSoundLengthInMS(SoundInfo soundInfo);
 
     /**
      * Loads an FMOD Studio soundbank 
@@ -177,16 +116,6 @@ public:
 private:  
 
     /**
-     * Checks if a sound file is in the soundCache
-     */
-    //bool soundLoaded(SoundInfo soundInfo);
-
-    /**
-     * Sets the 3D position of a sound
-     */
-    //void set3dChannelPosition(SoundInfo soundInfo, FMOD::Channel* channel);
-
-    /**
      * Initializes the reverb effect
      */
     void initReverb();
@@ -231,14 +160,6 @@ private:
 
     // flag tracking if the Audio Engin is muted
     bool muted = false;
-
-    /*
-     * Map which caches FMOD Low-Level sounds
-     * Key is the SoundInfo's uniqueKey field.
-     * Value is the FMOD::Sound* to be played back.
-     * TODO Refactor to use numeric UID as key
-     */
-    std::map<std::string, FMOD::Sound*> sounds;
 
     /*
      * Map which stores the current playback channels of any playing sound loop

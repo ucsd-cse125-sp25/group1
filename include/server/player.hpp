@@ -8,6 +8,7 @@
 #pragma once
 #include <string>
 #include <set>
+#include <algorithm>
 #include <glm/glm.hpp>
 #include <vector>
 #include "config.hpp"
@@ -32,7 +33,7 @@ public:
      * @param position Initial position of the player.
      * @param direction Initial facing direction of the player.
      */
-    Player(int playerID, Room* room, glm::vec3 position, glm::vec3 direction);
+    Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction);
     ~Player();
     
     /**
@@ -50,18 +51,18 @@ public:
     void setName(const std::string& playerName);
 
     /**
-     * @brief Returns the reference of the room the player is currently in.
+     * @brief Returns the ID of the room the player is currently in.
      *
-     * @return Current room as a pointer.
+     * @return Current room ID as an integer.
      */
-    Room* getCurRoom() const;
+    int getCurRoomID() const;
 
     /**
      * @brief Sets the player's current room ID.
      *
      * @param roomID The new room ID to assign to the player.
      */
-    void setCurRoom(Room* room);
+    void setCurRoomID(int id);
 
     /**
      * @brief Returns the set of key IDs the player possesses.
@@ -151,7 +152,7 @@ public:
 private:
     int id;
     std::string name;
-    Room* curRoom;
+    int curRoomID;
     RigidBody body;
     std::set<int> keyIDs; // Keys (by ID) the player has collected
 };

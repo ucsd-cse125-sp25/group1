@@ -218,12 +218,8 @@ void Server::handleClientMessages() {
             std::string type = parsed.value("type", "");
 
             if (type == "keyboard_input") {
-                const auto& actions = parsed["actions"];
-
-                for (const std::string& action : actions) {
-                    players[clientId]->handleMovementInput(action);
-                    players[clientId]->handleGeneralInput(action);
-                }
+                const std::vector<std::string> actions = parsed["actions"].get<std::vector<std::string>>();
+                players[clientId]->handleKeyboardInput(actions);
             } else if (type == "mouse_input") {
                 glm::vec3 direction = toGlmVec3(parsed["direction"]);
                 players[clientId]->handleMouseInput(direction);

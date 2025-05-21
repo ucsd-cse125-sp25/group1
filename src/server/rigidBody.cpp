@@ -18,7 +18,15 @@ RigidBody::RigidBody(
 	customPhysics(customPhysics),
 	isStatic(isStatic),
 	gravity(isStatic ? glm::vec3(0.0f) : gravity)
-{}
+{
+	BoxCollider* temp = static_cast<BoxCollider*>(collider);
+	
+	colliderOriginal = new BoxCollider{
+		temp->type,
+		temp->minCorner,
+		temp->maxCorner
+	};
+}
 
 RigidBody::~RigidBody() {
 	delete transform;
@@ -73,7 +81,7 @@ void RigidBody::setPosition(vec3 newPosition) {
 const vec3 RigidBody::getDirection() const {
 	return transform->direction;
 }
-                               
+                
 void RigidBody::transformBox(mat3 rotation) {
 	float  a, b;
 	float  Amin[3], Amax[3];
@@ -81,6 +89,8 @@ void RigidBody::transformBox(mat3 rotation) {
 	int    i, j;
 
 	BoxCollider* box =
+		static_cast<BoxCollider*>(colliderOriginal);
+	BoxCollider* boxNew =
 		static_cast<BoxCollider*>(collider);
 
 	// Copy box into a min array and a max array for easy reference
@@ -90,33 +100,38 @@ void RigidBody::transformBox(mat3 rotation) {
 
 	// Find the extreme points by considering the product of the min
 	// and max with each component of the rotation matrix
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < 3; i++) {
+		if (i == 1) continue; // skip pitch
 		for (j = 0; j < 3; j++) {
 			a = rotation[j][i] * Amin[j];
 			b = rotation[j][i] * Amax[j];
 			if (a < b) {
 				Bmin[i] += a;
 				Bmax[i] += b;
-			} else {
+			}
+			else {
 				Bmin[i] += b;
 				Bmax[i] += a;
 			}
 		}
+	}
+	Bmin[1] = Amin[1];
+	Bmax[1] = Amax[1];
 
-	// Copy the result into the new box
-	box->minCorner = vec3(Bmin[0], box->minCorner.y, Bmin[2]);
-	box->maxCorner = vec3(Bmax[0], box->maxCorner.y, Bmax[2]);
+	// Copy the result into the new box				   
+	boxNew->minCorner = vec3(Bmin[0], Bmin[1], Bmin[2]);
+	boxNew->maxCorner = vec3(Bmax[0], Bmax[1], Bmax[2]);
 }
 
 void RigidBody::setDirection(vec3 newDirection) {
 	// Calculate the transformation matrix for the rotation
-	vec3 flattenedCurrent = vec3(transform->direction.x, 0, transform->direction.z);
 	vec3 flattenedNew = vec3(newDirection.x, 0, newDirection.z);
-	float radians = acos(dot(normalize(flattenedCurrent), normalize(flattenedNew)));
+	float radians = acos(dot(vec3(1.0f, 0.0f, 0.0f), normalize(flattenedNew)));
 	mat3 rotation = mat3(rotate(mat4(1.0f), radians, glm::vec3(0, 1, 0)));
 
 	// Resize the AABB based on the rotation
-	// transformBox(rotation);
+	if (transform->direction != newDirection)
+		transformBox(rotation);
 
 	// Update the facing direction of the rigid body
 	transform->direction = newDirection;

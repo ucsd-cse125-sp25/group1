@@ -1,9 +1,9 @@
 #include "player.hpp"
 
-Player::Player(int playerID, Room* room, glm::vec3 position, glm::vec3 direction)
+Player::Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction)
     : 
     id(playerID),
-    curRoom(room),
+    curRoomID(roomID),
     body(
         glm::vec3(0.0f),
         glm::vec3(0.0f),
@@ -26,19 +26,19 @@ void Player::setName(const std::string& playerName){
     name = playerName;
 }
 
-Room* Player::getCurRoom() const {
-    return curRoom;
+int Player::getCurRoomID() const {
+    return curRoomID;
 }
 
-void Player::setCurRoom(Room* room) {
-    curRoom = room;
+void Player::setCurRoomID(int roomID) {
+    curRoomID = roomID;
 }
 
 RigidBody& Player::getBody() {
     return body;
 }
 
-void Player::handleMovementInput(std::string action) {
+void Player::handleMovementInput(const std::vector<std::string> actions) {
     // variable for projection
     vec3 moveDirection = glm::vec3(0.0f);
     mat4 transform = mat4(1.0f);
@@ -78,19 +78,18 @@ void Player::handleMouseInput(glm::vec3 direction) {
     body.setDirection(direction);
 }
 
-void Player::handleGeneralInput(std::string action) {
-    if (action == "interact") {
-        Interactable* interactable = this->getNearestInteractable();
+void Player::handleGeneralInput(const std::vector<std::string> actions, Interactable* interactable) {
+    if (std::find(actions.begin(), actions.end(), "interact") != actions.end()) {
         if (interactable != nullptr) interactable->interact(*this);
     } else {
         return;
     }
 }
 
-Interactable* Player::getNearestInteractable() {
-    if (this->getCurRoom() == nullptr) return nullptr;
+Interactable* Player::getNearestInteractable(Room* room) {
+    if (room == nullptr) return nullptr;
 
-    std::vector<Interactable*> interactables = this->getCurRoom()->getInteractables();
+    std::vector<Interactable*> interactables = room->getInteractables();
     RigidBody* playerBody = &this->getBody();
 
     // Find closest interactable

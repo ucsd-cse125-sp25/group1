@@ -116,7 +116,7 @@ public:
      *
      * @param action String representing the player action to handle.
      */
-    void handleMovementInput(std::string action);
+    void handleMovementInput(const std::vector<std::string> actions);
 
     /**
      * @brief Updates the player's facing direction based on mouse input.
@@ -134,7 +134,7 @@ public:
      *
      * @param action A string representing the type of player action (e.g., "interact").
      */
-    void handleGeneralInput(std::string action);
+    void handleGeneralInput(const std::vector<std::string> actions, Interactable* interactable);
 
     /**
      * @brief Determines the nearest interactable object within interaction range.
@@ -145,7 +145,7 @@ public:
      *
      * @return Interactable* Pointer to the nearest interactable object, or nullptr if none.
      */
-    Interactable* getNearestInteractable();
+    Interactable* getNearestInteractable(Room* room);
 
     void customCollision(ICustomPhysics* otherObject) override;
 

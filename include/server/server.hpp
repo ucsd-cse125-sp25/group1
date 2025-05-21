@@ -162,6 +162,7 @@ private:
 
     World world;
     std::unordered_map<int, Player *> players;
+    std::unordered_map<int, Room*> rooms;
 
     std::unordered_map<int, std::deque<std::string>> clientMessages;
 

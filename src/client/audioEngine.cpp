@@ -6,7 +6,7 @@
 #include <fmod_errors.h>
 #include <iostream>
 
-AudioEngine::AudioEngine() : sounds(), loopsPlaying(), soundBanks(),
+AudioEngine::AudioEngine() : loopsPlaying(), soundBanks(),
 eventDescriptions(), eventInstances() {}
 
 bool AudioEngine::init() {

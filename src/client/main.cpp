@@ -1,5 +1,7 @@
 #include "client.hpp"
 #include <iostream>
+#include "audioEngine.hpp"
+
 
 int main() {
     Client client;
@@ -8,6 +10,9 @@ int main() {
         std::cerr << "Failed to initialize client.\n";
         return 1;
     }
+
+
+
 
     client.run();
 

@@ -99,6 +99,27 @@ Client::~Client() {}
 bool Client::init() {
     if (!connectToServer()) return false;
 
+    
+    if (!audioManager.init())
+    {
+        std::cerr << "Failed to initialize FMOD.\n";
+        return 1;
+    }
+
+    audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/Master.bank");
+    audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/BGM.bank");
+    audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/SFX.bank");
+
+    //To play audio, first load in the name of the event, then play the event. Can use setEventVolume to
+    //adjust the volume 
+
+    audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
+    audioManager.playEvent(config::SWAMP_AMBIENCE_TRACK);
+    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 1.0f);
+    
+    
+
+
     return true;
 }
 
@@ -254,6 +275,14 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
 
             if (!action.empty()) {
                 message["actions"].push_back(action);
+                if (action != "jump" && !audioManager.eventIsPlaying(config::footstepCarpet))
+                {
+                    // This is footstep sfx
+                    audioManager.loadFMODStudioEvent(config::footstepCarpet);
+                    audioManager.setEventVolume(config::footstepCarpet, 0.1f);
+                    audioManager.playEvent(config::footstepCarpet);
+
+                }
             }
         }
     }
@@ -370,6 +399,8 @@ void Client::gameLoop(GLFWwindow* window) {
         disconnectedIds.clear();
 
         scene->render(camera, boundingBoxMode);
+
+        audioManager.update();
 
         glfwSwapBuffers(window);
         glfwPollEvents();

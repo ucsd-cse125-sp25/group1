@@ -18,12 +18,25 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 if(APPLE)
-  add_definitions(-DGL_SILENCE_DEPRECATION)
+    add_definitions(-DGL_SILENCE_DEPRECATION)
 endif()
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+if (APPLE)
+    set(FMOD_PLATFORM "mac")
+    set(FMOD_LIBS fmod fmodstudio)
+elseif (WIN32)
+    set(FMOD_PLATFORM "windows")
+    set(FMOD_LIBS fmod_vc fmodstudio_vc)
+elseif (UNIX)
+    set(FMOD_PLATFORM "linux")
+    set(FMOD_LIBS fmod fmodstudio)
+endif()
+
+set(FMOD_ROOT ${CMAKE_SOURCE_DIR}/dependencies/fmod)
+set(FMOD_LIB_DIR ${FMOD_ROOT}/${FMOD_PLATFORM}/lib)
 
 add_subdirectory(dependencies/assimp)
 add_subdirectory(dependencies/boost)

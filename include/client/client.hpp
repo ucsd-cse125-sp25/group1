@@ -13,6 +13,7 @@
 #include "scene.hpp"
 #include "shader.hpp"
 #include "swamp.hpp"
+#include "audioEngine.hpp"
 
 /**
  * @brief Handles client-side networking, input, and rendering.
@@ -181,4 +182,6 @@ private:
      * @brief Reference to instance for client-side swamp minigame
      */
     Swamp* swamp;
+
+    AudioEngine audioManager;
 };

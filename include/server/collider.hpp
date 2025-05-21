@@ -13,7 +13,8 @@ using namespace glm;
 
 // types of colliders
 enum ColliderType {
-	AABB,
+	AABB,				// standard rigid body
+	NONE				// ignores collision solver, custom collision valid still
 };
 
 // collider of type ColliderType

@@ -38,32 +38,39 @@ RigidBody& Player::getBody() {
     return body;
 }
 
-void Player::handleKeyboardInput(std::string action) {
+void Player::handleKeyboardInput(const std::vector<std::string> actions) {
     // variable for projection
-    vec3 moveDirection = body.getDirection();
+    vec3 moveDirection = glm::vec3(0.0f);
     mat4 transform = mat4(1.0f);
     vec3 axis = vec3(0, 1, 0);
     float angle = glm::radians(90.0f);
 
-    if (action == "move_forward") {
-        moveDirection = moveDirection;
-    } else if (action == "move_backward") {
-        moveDirection = -moveDirection;
-    } else if (action == "strafe_left") {
+    // handle horizontal movement
+    if (std::find(actions.begin(), actions.end(), "move_forward") != actions.end()) {
+        moveDirection += body.getDirection();
+    }
+    if (std::find(actions.begin(), actions.end(), "move_backward") != actions.end()) {
+        moveDirection -= body.getDirection();
+    }
+    if (std::find(actions.begin(), actions.end(), "strafe_left") != actions.end()) {
         // project onto 90 degree left rotation
-        moveDirection = vec3(rotate(transform, angle, axis) * vec4(moveDirection, 0.0f));
-    } else if (action == "strafe_right") {
+        moveDirection += vec3(rotate(transform, angle, axis) * vec4(body.getDirection(), 0.0f));
+    }
+    if (std::find(actions.begin(), actions.end(), "strafe_right") != actions.end()) {
         // project onto 90 degree right rotation
-        moveDirection = vec3(rotate(transform, -angle, axis) * vec4(moveDirection, 0.0f));
-    } else if (action == "jump" && abs(body.getVelocity().y) < 1e-6f) {
+        moveDirection += vec3(rotate(transform, -angle, axis) * vec4(body.getDirection(), 0.0f));
+    }
+
+    // flatten on xz plane and normalize all horizontal movement
+    if (length(moveDirection) > 1e-6f)
+        moveDirection = normalize(glm::vec3(moveDirection.x, 0.0f, moveDirection.z));
+
+    // add jump if inputted
+    if ((std::find(actions.begin(), actions.end(), "jump") != actions.end()) && (abs(body.getVelocity().y) < 1e-6f)) {
         // if grounded, jump
-        body.setVelocity(vec3(body.getVelocity().x, config::PLAYER_SPEED*0.5, body.getVelocity().z));
-        return;
-    } else {
-        return;
+        moveDirection.y = 0.5f;
     }
     
-    moveDirection = normalize(glm::vec3(moveDirection.x, 0.0f, moveDirection.z));
     body.setVelocity(body.getVelocity() + moveDirection * config::PLAYER_SPEED);
 }
 
@@ -71,4 +78,4 @@ void Player::handleMouseInput(glm::vec3 direction) {
     body.setDirection(direction);
 }
 
-void Player::customCollision(const ICustomPhysics* otherObject) const {}
+void Player::customCollision(ICustomPhysics* otherObject) {}

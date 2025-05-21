@@ -8,6 +8,7 @@
 #pragma once
 #include <string>
 #include <set>
+#include <algorithm>
 #include <glm/glm.hpp>
 #include "config.hpp"
 #include "rigidBody.hpp"
@@ -109,11 +110,11 @@ public:
      *
      * @param action String representing the player action to handle.
      */
-    void handleKeyboardInput(std::string action);
+    void handleKeyboardInput(const std::vector<std::string> actions);
 
     void handleMouseInput(glm::vec3 direction);
 
-    void customCollision(const ICustomPhysics* otherObject) const override;
+    void customCollision(ICustomPhysics* otherObject) override;
 
 private:
     int id;

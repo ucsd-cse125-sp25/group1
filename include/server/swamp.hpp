@@ -8,10 +8,12 @@
 #include "components/lilypad.hpp"
 #include "components/object.hpp"
 #include "components/room.hpp"
+#include "components/water.hpp"
 #include "rigidBody.hpp"
 #include "world.hpp"
 
 class Server;
+class Water;
 
 class Swamp : public Room {
   public:
@@ -46,6 +48,14 @@ class Swamp : public Room {
 
     std::pair<LilyPad*, ColliderType> createLilyPad();
 
+    /**
+     * @brief Initializes the water plane that respawns players upon contact.
+     * 
+     * Note: the setBody() method must be called on the returned Water instance.
+     * 
+     */
+    Water* createWaterRespawn();
+
   private:
     /**
      * @brief Number of pads in the swamp game
@@ -75,6 +85,15 @@ class Swamp : public Room {
      * The audio file to be played during the swamp game.
      */
     std::string audioFile;
+
+    /**
+     * @brief Plane under the water that respawns the player when they hit it
+     * 
+     * The plane that respawns the player when they go under water. 
+     * It is used so that players can fall through bad lilypads or miss the jump
+     * altogether, and then respawn once they fall through the water.
+     */
+    Water* waterRespawnPlane;
 
     /**
      * @brief Respawn Point in Swamp Game when player dies

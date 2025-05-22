@@ -31,7 +31,6 @@ RigidBody::RigidBody(
 RigidBody::~RigidBody() {
 	delete transform;
 	delete collider;
-	delete customPhysics;
 }
 
 void RigidBody::updateVelocity(float dt) {

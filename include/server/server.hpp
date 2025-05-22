@@ -11,6 +11,8 @@
 #include "swamp.hpp"
 #include "string"
 
+class Swamp;
+
 /**
  * @brief Handles server-side networking and world updates for a multiplayer game.
  * 

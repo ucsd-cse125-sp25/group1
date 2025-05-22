@@ -65,6 +65,15 @@ void Server::initRigidBodies() {
                     true);
 
                 lilyPad->setBody(object);
+            } else if (modelName == "water_00"){
+                Water* waterRespawnPlane = swamp->createWaterRespawn();
+                //TODO: add the position/relative position in the json dimensions file
+                object = new RigidBody(
+                    vec3(0.0f), vec3(0.0f), 0.0f,
+                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
+                    new BoxCollider{NONE, relativeMinCorner, relativeMaxCorner}, waterRespawnPlane,
+                    true);
+                waterRespawnPlane->setBody(object);
             } else {
                 // Default object creation
                 object = new RigidBody(

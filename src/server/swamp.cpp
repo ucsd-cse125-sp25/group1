@@ -22,6 +22,7 @@ Swamp::~Swamp() {
     for (int i = 0; i < numPads; i++) {
             delete pads[i];
     }
+    delete waterRespawnPlane;
 }
 
 std::string Swamp::getInitInfo() {
@@ -52,4 +53,11 @@ std::pair<LilyPad*, ColliderType> Swamp::createLilyPad() {
     numPads++;
 
     return std::make_pair(newPad, colliderType);
+}
+
+Water* Swamp::createWaterRespawn(){
+    // TODO: what should the id be? It doesn't really matter
+    int id = numPads;
+    waterRespawnPlane = new Water(id, server);
+    return waterRespawnPlane;
 }

@@ -48,16 +48,4 @@ void LilyPad::customCollision(ICustomPhysics* otherObject) {
     server.broadcastMessage(packet);
 
     std::cout << "Lilypad " << lilyPadID << " dropped" << std::endl;
-
-    /*
-    TODO: move the following logic to the lower layer water rigidbody, rather than the lilypad.
-    This way, the player falls all the way through the lilypad, goes underwater, and then respawns.
-    */
-    // respawn player at the spawn point
-    RigidBody& body = playerPtr->getBody();
-    // Make sure the player has no residual movement on respawn
-    body.setForce(glm::vec3{0.0f, 0.0f, 0.0f});
-    body.setVelocity(config::SWAMP_RESPAWN);
-    // TODO: add offset for the individual player, so 2 players don't spawn into the same spot.
-    body.setPosition(config::SWAMP_RESPAWN);
 }

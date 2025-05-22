@@ -336,6 +336,11 @@
           "model": "lilypad_00",
           "position": [ 78.0, 0.0, -3.0 ],
           "rotated": false
+        },
+        {
+          "model": "water_00",
+          "position": [ 0.0, -7.0, 0.0 ],
+          "rotated": false
         }
 
       ]

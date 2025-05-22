@@ -2,7 +2,7 @@
 
 Interactable::Interactable() = default;
 
-void Interactable::interact(int playerID){
-    // TODO: handle keypress
-    sendInteractRequest(playerID);
+void Interactable::interact(int playerID) {
+  // TODO: handle keypress
+  sendInteractRequest(playerID);
 }

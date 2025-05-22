@@ -118,9 +118,10 @@ void AudioEngine::setFMODEventParamValue(const char* eventName, const char* para
                                          float value) {
     if (eventInstances.count(eventName) > 0)
         ERRCHECK(eventInstances[eventName]->setParameterByName(parameterName, value));
-    else
-    // std::cout << "AudioEngine: Event " << eventName
-    //   << " was not in event instance cache, can't set param \n";
+    else {
+        std::cout << "AudioEngine: Event " << eventName
+                  << " was not in event instance cache, can't set param \n";
+    }
 }
 
 void AudioEngine::playEvent(const char* eventName, int instanceIndex) {
@@ -128,17 +129,19 @@ void AudioEngine::playEvent(const char* eventName, int instanceIndex) {
     auto eventInstance = eventInstances[eventName];
     if (eventInstances.count(eventName) > 0)
         ERRCHECK(eventInstances[eventName]->start());
-    else
-    // std::cout << "AudioEngine: Event " << eventName
-    //   << " was not in event instance cache, cannot play \n";
+    else {
+        std::cout << "AudioEngine: Event " << eventName
+                  << " was not in event instance cache, cannot play \n";
+    }
 }
 
 void AudioEngine::stopEvent(const char* eventName, int instanceIndex) {
     if (eventInstances.count(eventName) > 0)
         ERRCHECK(eventInstances[eventName]->stop(FMOD_STUDIO_STOP_ALLOWFADEOUT));
-    else
-    //         std::cout << "AudioEngine: Event " << eventName
-    //                   << " was not in event instance cache, cannot stop \n";
+    else {
+        std::cout << "AudioEngine: Event " << eventName
+                  << " was not in event instance cache, cannot stop \n";
+    }
 }
 
 void AudioEngine::setEventVolume(const char* eventName, float volume0to1) {
@@ -167,9 +170,10 @@ bool AudioEngine::isMuted() {
 }
 
 void ERRCHECK_fn(FMOD_RESULT result, const char* file, int line) {
-    if (result != FMOD_OK)
-    // std::cout << "FMOD ERROR: AudioEngine.cpp [Line " << line << "] " << result << "  - "
-    //           << FMOD_ErrorString(result) << '\n';
+    if (result != FMOD_OK) {
+        std::cout << "FMOD ERROR: AudioEngine.cpp [Line " << line << "] " << result << "  - "
+                  << FMOD_ErrorString(result) << '\n';
+    }
 }
 
 void AudioEngine::printEventInfo(FMOD::Studio::EventDescription* eventDescription) {

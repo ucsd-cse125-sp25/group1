@@ -2,8 +2,10 @@
 
 #include <boost/asio.hpp>
 #include <glm/glm.hpp>
-#include <GLFW/glfw3.h>
+// clang-format off
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
+// clang-format on
 #include <memory>
 #include <unordered_map>
 #include <unordered_set>

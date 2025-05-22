@@ -12,6 +12,7 @@ public:
 	~UIElement();
 	void draw(Shader& shader);
 	void changeSprite(glm::vec2 coords);
+	void changeDimensions(glm::vec2 dim);
 	void rotate(float deg);
 private:
 	GLfloat width, height, angle;

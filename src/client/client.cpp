@@ -13,6 +13,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
     if (!client) return;
 
     float aspect = static_cast<float>(width) / height;
+
+    //scene->updateWindow(window);
+    
     client->camera.setAspect(aspect);
 }
 
@@ -385,6 +388,7 @@ void Client::run() {
 
     initGL();
     initScene();
+    scene->window = window;
     gameLoop(window);
     cleanup(window);
 }

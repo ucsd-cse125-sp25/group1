@@ -3,6 +3,7 @@
 #include <player.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <GLFW/glfw3.h>
 #include <memory>
 #include <unordered_map>
 #include <vector>
@@ -14,6 +15,7 @@
 #include "shader.hpp"
 #include "canvas.hpp"
 #include "json.hpp"
+
 
 /**
  * @brief Manages the 3D scene, including models and player entities.
@@ -71,6 +73,9 @@ public:
 
     void updateCompass(glm::vec3 direction);
 
+    void updateWindow();
+public:
+    GLFWwindow* window;
 private:
     /**
      * @brief Sets up rooms and the objects they contain.
@@ -91,6 +96,7 @@ private:
     std::unique_ptr<Canvas> canvas;
 
     std::unique_ptr<Model> door;
+
 
     std::vector<std::unique_ptr<ModelInstance>> modelInstances;  // Top-level model instances with their child models.
 

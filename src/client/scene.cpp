@@ -74,6 +74,13 @@ void Scene::updateTimer(int minutes, int seconds) {
     timer->updateTimer(minutes,seconds);
 }
 
+void Scene::updateWindow() {
+    int width, height;
+    glfwGetWindowSize(this->window, &width, &height);
+
+    std::cout << "(" << width << "," << height << ")" << std::endl;
+}
+
 void Scene::updateCompass(glm::vec3 direction) {
     Compass* compass = static_cast<Compass*>(canvas->findElement("compass"));
     compass->rotate(direction);
@@ -103,7 +110,8 @@ void Scene::render(const Camera& camera) {
     for (auto& [id, player] : players) {
         player.draw(*shader);
     }
-
+    
     //UI
+    updateWindow();
     canvas->draw(*uiShader);
 }

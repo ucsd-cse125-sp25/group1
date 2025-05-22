@@ -31,7 +31,6 @@ RigidBody::RigidBody(
 RigidBody::~RigidBody() {
 	delete transform;
 	delete collider;
-	// delete customPhysics; // This line caused a double free error upon client disconnection
 }
 
 void RigidBody::updateVelocity(float dt) {

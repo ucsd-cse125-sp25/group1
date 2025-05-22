@@ -4,6 +4,8 @@
 #include <memory> 
 #include "components/interactable.hpp"
 
+class Interactable;
+
 class Room
 {
 public:

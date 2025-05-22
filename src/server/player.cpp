@@ -3,7 +3,7 @@
 Player::Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction)
     : 
     id(playerID),
-    curRoomID(roomID), 
+    curRoomID(roomID),
     body(
         glm::vec3(0.0f),
         glm::vec3(0.0f),
@@ -39,7 +39,7 @@ RigidBody& Player::getBody() {
     return body;
 }
 
-void Player::handleKeyboardInput(const std::vector<std::string> actions) {
+void Player::handleMovementInput(const std::vector<std::string> actions) {
     // variable for projection
     vec3 moveDirection = glm::vec3(0.0f);
     mat4 transform = mat4(1.0f);
@@ -77,6 +77,40 @@ void Player::handleKeyboardInput(const std::vector<std::string> actions) {
 
 void Player::handleMouseInput(glm::vec3 direction) {
     body.setDirection(direction);
+}
+
+void Player::handleGeneralInput(const std::vector<std::string> actions, Interactable* interactable) {
+    if (std::find(actions.begin(), actions.end(), "interact") != actions.end()) {
+        if (interactable != nullptr) interactable->interact(*this);
+    } else {
+        return;
+    }
+}
+
+Interactable* Player::getNearestInteractable(Room* room) {
+    if (room == nullptr) return nullptr;
+
+    std::vector<Interactable*> interactables = room->getInteractables();
+    RigidBody* playerBody = &this->getBody();
+
+    // Find closest interactable
+    Interactable* closestInteractable = nullptr;
+    // maximum distance needed to interact with an object
+    float closestDistance = config::PLAYER_INTERACT_RANGE;
+    for (Interactable* obj : interactables) {
+        RigidBody* objBody = &(static_cast<Object *>(obj)->getBody());
+
+        if (playerBody == objBody) continue;
+
+        // Compare to minimum distance
+        float currentDistance = glm::distance(playerBody->getPosition(), objBody->getPosition());
+        if (currentDistance < closestDistance) {
+            closestInteractable = obj;
+            closestDistance = currentDistance;
+        }
+    }
+
+    return closestInteractable;
 }
 
 void Player::customCollision(ICustomPhysics* otherObject) {}

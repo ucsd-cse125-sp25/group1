@@ -233,7 +233,18 @@ void Server::handleClientMessages() {
 
             if (type == "keyboard_input") {
                 const std::vector<std::string> actions = parsed["actions"].get<std::vector<std::string>>();
-                players[clientId]->handleKeyboardInput(actions);
+
+                // handle WASD and jump inputs
+                players[clientId]->handleMovementInput(actions);
+
+                int roomID = players[clientId]->getCurRoomID();
+                Interactable* interactable = players[clientId]->getNearestInteractable(rooms[roomID]);
+                // if an interactable is nearby, notify user on the client
+                if (interactable != nullptr) {
+                    // TODO: ping client that they are standing near an interactable
+                }
+                // handle misc inputs, such as interacting with environment
+                players[clientId]->handleGeneralInput(actions, interactable);
             } else if (type == "mouse_input") {
                 glm::vec3 direction = toGlmVec3(parsed["direction"]);
                 players[clientId]->handleMouseInput(direction);

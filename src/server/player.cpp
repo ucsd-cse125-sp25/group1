@@ -1,21 +1,15 @@
 #include "player.hpp"
 
 Player::Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction)
-    : 
-    id(playerID),
-    curRoomID(roomID),
-    body(
-        glm::vec3(0.0f),
-        glm::vec3(0.0f),
-        config::PLAYER_WEIGHT,
-        new Transform { position, direction },
-        new BoxCollider{
-            AABB,
-            glm::vec3(-config::PLAYER_WIDTH / 2, -config::PLAYER_HEIGHT / 2, -config::PLAYER_WIDTH / 2),
-            glm::vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT / 2, config::PLAYER_WIDTH / 2)
-        },
-        this
-    ) {}
+    : id(playerID), curRoomID(roomID),
+      body(glm::vec3(0.0f), glm::vec3(0.0f), config::PLAYER_WEIGHT,
+           new Transform{position, direction},
+           new BoxCollider{AABB,
+                           glm::vec3(-config::PLAYER_WIDTH / 2, -config::PLAYER_HEIGHT / 2,
+                                     -config::PLAYER_WIDTH / 2),
+                           glm::vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT / 2,
+                                     config::PLAYER_WIDTH / 2)},
+           this) {}
 
 Player::~Player() {}
 
@@ -23,7 +17,7 @@ const std::string& Player::getName() const {
     return name;
 }
 
-void Player::setName(const std::string& playerName){
+void Player::setName(const std::string& playerName) {
     name = playerName;
 }
 
@@ -67,11 +61,12 @@ void Player::handleMovementInput(const std::vector<std::string> actions) {
         moveDirection = normalize(glm::vec3(moveDirection.x, 0.0f, moveDirection.z));
 
     // add jump if inputted
-    if ((std::find(actions.begin(), actions.end(), "jump") != actions.end()) && (abs(body.getVelocity().y) < 1e-6f)) {
+    if ((std::find(actions.begin(), actions.end(), "jump") != actions.end()) &&
+        (abs(body.getVelocity().y) < 1e-6f)) {
         // if grounded, jump
         moveDirection.y = 0.5f;
     }
-    
+
     body.setVelocity(body.getVelocity() + moveDirection * config::PLAYER_SPEED);
 }
 
@@ -79,16 +74,19 @@ void Player::handleMouseInput(glm::vec3 direction) {
     body.setDirection(direction);
 }
 
-void Player::handleGeneralInput(const std::vector<std::string> actions, Interactable* interactable) {
+void Player::handleGeneralInput(const std::vector<std::string> actions,
+                                Interactable* interactable) {
     if (std::find(actions.begin(), actions.end(), "interact") != actions.end()) {
-        if (interactable != nullptr) interactable->interact(*this);
+        if (interactable != nullptr)
+            interactable->interact(*this);
     } else {
         return;
     }
 }
 
 Interactable* Player::getNearestInteractable(Room* room) {
-    if (room == nullptr) return nullptr;
+    if (room == nullptr)
+        return nullptr;
 
     std::vector<Interactable*> interactables = room->getInteractables();
     RigidBody* playerBody = &this->getBody();
@@ -98,9 +96,10 @@ Interactable* Player::getNearestInteractable(Room* room) {
     // maximum distance needed to interact with an object
     float closestDistance = config::PLAYER_INTERACT_RANGE;
     for (Interactable* obj : interactables) {
-        RigidBody* objBody = &(static_cast<Object *>(obj)->getBody());
+        RigidBody* objBody = &(static_cast<Object*>(obj)->getBody());
 
-        if (playerBody == objBody) continue;
+        if (playerBody == objBody)
+            continue;
 
         // Compare to minimum distance
         float currentDistance = glm::distance(playerBody->getPosition(), objBody->getPosition());

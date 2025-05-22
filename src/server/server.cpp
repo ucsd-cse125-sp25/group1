@@ -65,9 +65,9 @@ void Server::initRigidBodies() {
                     true);
 
                 lilyPad->setBody(object);
-            } else if (modelName == "water_00"){
+            } else if (modelName == "water_00") {
                 Water* waterRespawnPlane = swamp->createWaterRespawn();
-                //TODO: add the position/relative position in the json dimensions file
+                // TODO: add the position/relative position in the json dimensions file
                 object = new RigidBody(
                     vec3(0.0f), vec3(0.0f), 0.0f,
                     new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
@@ -232,13 +232,15 @@ void Server::handleClientMessages() {
             std::string type = parsed.value("type", "");
 
             if (type == "keyboard_input") {
-                const std::vector<std::string> actions = parsed["actions"].get<std::vector<std::string>>();
+                const std::vector<std::string> actions =
+                    parsed["actions"].get<std::vector<std::string>>();
 
                 // handle WASD and jump inputs
                 players[clientId]->handleMovementInput(actions);
 
                 int roomID = players[clientId]->getCurRoomID();
-                Interactable* interactable = players[clientId]->getNearestInteractable(rooms[roomID]);
+                Interactable* interactable =
+                    players[clientId]->getNearestInteractable(rooms[roomID]);
                 // if an interactable is nearby, notify user on the client
                 if (interactable != nullptr) {
                     // TODO: ping client that they are standing near an interactable

@@ -4,9 +4,8 @@
 
 class ICustomPhysics;
 
-class Water : public ICustomPhysics
-{
-public:
+class Water : public ICustomPhysics {
+  public:
     /**
      * @brief Constructs a water respawn plane with the given id.
      *
@@ -48,7 +47,7 @@ public:
      */
     void customCollision(ICustomPhysics* otherObject) override;
 
-private:
+  private:
     int id;
     RigidBody* body = nullptr;
     Server& server;

@@ -20,7 +20,7 @@ Swamp::Swamp(int roomID, World& worldRef, Server& serverRef)
 Swamp::~Swamp() {
     // Destructor
     for (int i = 0; i < numPads; i++) {
-            delete pads[i];
+        delete pads[i];
     }
     delete waterRespawnPlane;
 }
@@ -43,7 +43,7 @@ glm::vec3 Swamp::getRespawnPoint() {
 
 std::pair<LilyPad*, ColliderType> Swamp::createLilyPad() {
     int id = numPads;
-    bool isGood = solution[id / 2] == id %2;
+    bool isGood = solution[id / 2] == id % 2;
 
     ColliderType colliderType = isGood ? AABB : NONE;
     LilyPad* newPad = new LilyPad(id, isGood, server);
@@ -55,7 +55,7 @@ std::pair<LilyPad*, ColliderType> Swamp::createLilyPad() {
     return std::make_pair(newPad, colliderType);
 }
 
-Water* Swamp::createWaterRespawn(){
+Water* Swamp::createWaterRespawn() {
     // TODO: what should the id be? It doesn't really matter
     int id = numPads;
     waterRespawnPlane = new Water(id, server);

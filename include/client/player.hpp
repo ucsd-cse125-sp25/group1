@@ -2,26 +2,26 @@
 
 #include <glm/glm.hpp>
 #include <memory>
-#include <string>
 #include <set>
+#include <string>
 #include "config.hpp"
 #include "cube.hpp"
 #include "shader.hpp"
 
 /**
  * @brief Represents the player
- * 
+ *
  * Stores player-specific data like position, direction, visual representation, along with
  * keys and current room ID.
  * Currently, each player is drawn as a colored cube aligned with their facing direction.
  */
 class Player {
-public:
+  public:
     /**
      * @brief Constructs a Player instance.
-     * 
+     *
      * Initializes the player ID, position, direction, and creates a cube for the character.
-     * 
+     *
      * @param id Player ID.
      * @param position Initial position.
      * @param direction Initial facing direction.
@@ -29,7 +29,7 @@ public:
     Player(int id, const glm::vec3& position, const glm::vec3& direction);
 
     ~Player() = default;
-    
+
     // Move semantics: allow efficient transfer of resources (the player cube)
     // when inserting into containers (e.g., std::unordered_map).
     Player(Player&&) noexcept = default;
@@ -37,15 +37,15 @@ public:
 
     /**
      * @brief Draws the player.
-     * 
+     *
      * Applies translation and rotation based on position and facing direction,
      * sets shader uniforms, and draws the character cube.
-     * 
+     *
      * @param shader Shader program to use for rendering.
      * @param boundingBoxMode If true, draws bounding boxes for debugging.
      */
     void draw(Shader& shader, bool boundingBoxMode);
-    
+
     /**
      * @brief Gets the player's current position.
      *
@@ -65,7 +65,7 @@ public:
     inline void setPosition(const glm::vec3& newPosition) {
         position = newPosition;
     }
-    
+
     /**
      * @brief Gets the player's current facing direction.
      *
@@ -112,7 +112,7 @@ public:
      * @param keyID ID of the key to remove.
      * @return true if the key was found and removed; false otherwise.
      */
-    bool removeKey(int keyID){
+    bool removeKey(int keyID) {
         bool found = keyIDs.erase(keyID) > 0;
         return found;
     }
@@ -151,18 +151,18 @@ public:
      *
      * @param playerName The new name for the player.
      */
-    void setName(const std::string& playerName){
+    void setName(const std::string& playerName) {
         name = playerName;
     }
 
-private:
-    int id;                             // Player ID.
-    glm::vec3 position;                 // Current position of the player.
-    glm::vec3 direction;                // Current facing direction of the player.
+  private:
+    int id;              // Player ID.
+    glm::vec3 position;  // Current position of the player.
+    glm::vec3 direction; // Current facing direction of the player.
 
-    std::unique_ptr<Cube> character;    // Cube model representing the player.
+    std::unique_ptr<Cube> character; // Cube model representing the player.
 
-    int currRoomID;                     // Room the player is currently in
-    std::string name;                   // Name chosen by the player
-    std::set<int> keyIDs;               // Keys (by ID) the player has collected
+    int currRoomID;       // Room the player is currently in
+    std::string name;     // Name chosen by the player
+    std::set<int> keyIDs; // Keys (by ID) the player has collected
 };

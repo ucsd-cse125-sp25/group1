@@ -14,8 +14,7 @@ using namespace std;
 vec3 calculateTangentVelocity(RigidBody* body, Collision* collision) {
     float velocityMagnitude = length(body->getVelocity());
     vec3 velocityNormal = body->getVelocity() / velocityMagnitude;
-    vec3 undesiredMotion =
-        collision->normal * dot(velocityNormal, collision->normal);
+    vec3 undesiredMotion = collision->normal * dot(velocityNormal, collision->normal);
     vec3 desiredMotion = velocityNormal - undesiredMotion;
     return desiredMotion * velocityMagnitude;
 }
@@ -33,8 +32,7 @@ void solveCollision(RigidBody* a, RigidBody* b, Collision collision) {
             }
 
             // push dynamic object out of static
-            vec3 newPosition =
-                a->getPosition() + collision.normal * collision.depth;
+            vec3 newPosition = a->getPosition() + collision.normal * collision.depth;
             a->setPosition(newPosition);
 
             // modify dynamic object velocity to slide on contact surface
@@ -49,17 +47,15 @@ void solveCollision(RigidBody* a, RigidBody* b, Collision collision) {
         // both dynamic, split positioning correction
         else {
             // push object a out of b
-            vec3 newPositionA =
-                a->getPosition() + collision.normal * collision.depth * 0.5f;
+            vec3 newPositionA = a->getPosition() + collision.normal * collision.depth * 0.5f;
             a->setPosition(newPositionA);
 
             // push object b out of a
-            vec3 newPositionB =
-                b->getPosition() - collision.normal * collision.depth * 0.5f;
+            vec3 newPositionB = b->getPosition() - collision.normal * collision.depth * 0.5f;
             b->setPosition(newPositionB);
 
             // modify objects' velocities to slide on contact surface
-            if (length(a->getVelocity()) > 1e-6) 
+            if (length(a->getVelocity()) > 1e-6)
                 a->setVelocity(calculateTangentVelocity(a, &collision));
             if (length(b->getVelocity()) > 1e-6)
                 b->setVelocity(calculateTangentVelocity(b, &collision));
@@ -67,6 +63,8 @@ void solveCollision(RigidBody* a, RigidBody* b, Collision collision) {
     }
     ICustomPhysics* aCustomPhysics = a->getCustomPhysics();
     ICustomPhysics* bCustomPhysics = b->getCustomPhysics();
-    if (aCustomPhysics != nullptr) aCustomPhysics->customCollision(bCustomPhysics);
-    if (bCustomPhysics != nullptr) bCustomPhysics->customCollision(aCustomPhysics);
+    if (aCustomPhysics != nullptr)
+        aCustomPhysics->customCollision(bCustomPhysics);
+    if (bCustomPhysics != nullptr)
+        bCustomPhysics->customCollision(aCustomPhysics);
 }

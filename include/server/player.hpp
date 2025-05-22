@@ -6,28 +6,28 @@
  * the player, including their physics body and other attributes specific to a player.
  */
 #pragma once
-#include <string>
-#include <set>
-#include <algorithm>
 #include <glm/glm.hpp>
+#include <algorithm>
+#include <set>
+#include <string>
 #include <vector>
-#include "config.hpp"
-#include "rigidBody.hpp"
 #include "components/interactable.hpp"
 #include "components/room.hpp"
+#include "config.hpp"
+#include "rigidBody.hpp"
 
 class Interactable;
 class Room;
 
 class Player : public ICustomPhysics {
-public:
+  public:
     /**
      * @brief Constructs a Player object with a given player id, room ID, position, and direction.
      *
      * Initializes the player's rigid body at the specified position and orientation,
      * assigning it a box collider based on player configuration settings.
      * Sets the player ID and the ID of the room they're currently in.
-     * 
+     *
      * @param playerID ID of the player
      * @param roomID ID of the room the player initially belongs to.
      * @param position Initial position of the player.
@@ -35,7 +35,7 @@ public:
      */
     Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction);
     ~Player();
-    
+
     /**
      * @brief Returns the name of the player.
      *
@@ -90,7 +90,7 @@ public:
      * @param keyID ID of the key to remove.
      * @return true if the key was found and removed; false otherwise.
      */
-    bool removeKey(int keyID){
+    bool removeKey(int keyID) {
         bool found = keyIDs.erase(keyID) > 0;
         return found;
     }
@@ -125,7 +125,6 @@ public:
      */
     void handleMouseInput(glm::vec3 direction);
 
-
     /**
      * @brief Handles general player actions such as interaction.
      *
@@ -149,7 +148,7 @@ public:
 
     void customCollision(ICustomPhysics* otherObject) override;
 
-private:
+  private:
     int id;
     std::string name;
     int curRoomID;

@@ -9,6 +9,8 @@ IndentWidth: 4 # number of spaces per indent level
 TabWidth: 4 # how wide tab characters count
 UseTab: Never # never use actual tab characters
 AllowShortFunctionsOnASingleLine: Empty # only allow truly empty functions on a single line
+InsertNewlineAtEOF: true
+KeepEmptyLinesAtEOF: true
 
 # Control line lengths
 ColumnLimit: 100 # wrap at 100 columns (0 = no limit)

@@ -9,6 +9,7 @@
 Run these commands from the **project root directory**:
 
 #### macOS / Linux
+
 ```bash
 mkdir build
 cd build
@@ -19,6 +20,7 @@ cmake --build .
 ```
 
 #### Windows (Visual Studio)
+
 ```bash
 mkdir build
 cd build
@@ -27,6 +29,7 @@ cmake --build .
 ./Debug/server.exe    # Run server
 ./Debug/client.exe    # Run client (open a separate terminal for each client)
 ```
+
 ⚠️ Important: Do not run executables from inside the Debug/ folder. Always run them from the **build/** directory–shader paths are resolved relative to the working directory, which is where you run the executable.
 
 ### 2. If You Add New .cpp or .hpp Files or Modify CMakeLists.txt
@@ -34,6 +37,7 @@ cmake --build .
 Run these commands from the **build directory**:
 
 #### macOS / Linux
+
 ```bash
 cmake ..
 cmake --build .
@@ -42,6 +46,7 @@ cmake --build .
 ```
 
 #### Windows (Visual Studio)
+
 ```bash
 cmake ..
 cmake --build .
@@ -54,6 +59,7 @@ cmake --build .
 Run these commands from the **build directory**:
 
 #### macOS / Linux
+
 ```bash
 cmake --build .
 ./server
@@ -61,6 +67,7 @@ cmake --build .
 ```
 
 #### Windows (Visual Studio)
+
 ```bash
 cmake --build .
 ./Debug/server.exe
@@ -70,10 +77,12 @@ cmake --build .
 ## Controls
 
 - **Mouse Movement**
+
   - Move the mouse up or down to look up and down.
   - Move the mouse left or right to look around and rotate the player's facing direction.
 
 - **Keyboard Movement**
+
   - Use **W** / **Up Arrow** to move forward.
   - Use **S** / **Down Arrow** to move backward.
   - Use **A** / **Left Arrow** to strafe left.

@@ -1,11 +1,9 @@
-#include <iostream>
 #include <cstdlib>
-#include <string>
-#include <vector>
+#include <fstream>
+#include <iostream>
 #include <queue>
 #include <set>
-#include <iostream>
-#include <fstream>
+#include <string>
 #include <vector>
 
 using namespace std;
@@ -32,7 +30,7 @@ enum TileType {
 /*
  * UnionFind (Disjoint Set Union - DSU)
  *
- * @brief Data structure to help track connectivity between two nodes 
+ * @brief Data structure to help track connectivity between two nodes
  *
  * This class implements the Union-Find (Disjoint Set Union) data structure,
  * which efficiently tracks a collection of disjoint sets and supports two primary operations:
@@ -44,12 +42,12 @@ class UnionFind {
 
     vector<int> parent;
 
-public:
+  public:
     UnionFind(int size) {
 
         parent.resize(size);
 
-        // Initialize the parent array with each 
+        // Initialize the parent array with each
         // element as its own representative
         for (int i = 0; i < size; i++) {
             parent[i] = i;
@@ -65,12 +63,12 @@ public:
             return i;
         }
 
-        // Else recursively find the representative 
+        // Else recursively find the representative
         // of the parent
         return find(parent[i]);
     }
 
-    // Unite (merge) the set that includes element 
+    // Unite (merge) the set that includes element
     // i and the set that includes element j
     void unite(int i, int j) {
 
@@ -86,10 +84,11 @@ public:
     }
 };
 
-
-pair<pair<int, int>, pair<int, int>> placeRoom(vector<vector<int>>* map, int roomHeight, int roomWidth, TileType roomID) {
+pair<pair<int, int>, pair<int, int>> placeRoom(vector<vector<int>>* map, int roomHeight,
+                                               int roomWidth, TileType roomID) {
     // randomize orientation of room
-    if (rand() % 2 == 0) swap(roomHeight, roomWidth);
+    if (rand() % 2 == 0)
+        swap(roomHeight, roomWidth);
 
     // check if occupied
     bool canPlaceRoom;
@@ -104,7 +103,8 @@ pair<pair<int, int>, pair<int, int>> placeRoom(vector<vector<int>>* map, int roo
         // check if full room size is placeable
         for (int i = 0; i < roomHeight; i++) {
             for (int j = 0; j < roomWidth; j++) {
-                if ((*map)[yRandom + i][xRandom + j] != 0) canPlaceRoom = false;
+                if ((*map)[yRandom + i][xRandom + j] != 0)
+                    canPlaceRoom = false;
                 continue;
             }
         }
@@ -119,22 +119,22 @@ pair<pair<int, int>, pair<int, int>> placeRoom(vector<vector<int>>* map, int roo
     }
 
     // return min and max corner of room
-    return { {yRandom, xRandom}, {yRandom + roomHeight, xRandom + roomWidth} };
+    return {{yRandom, xRandom}, {yRandom + roomHeight, xRandom + roomWidth}};
 }
 
-int connectRoom(vector<vector<int>>* map, UnionFind* uf, pair<int, int> roomMin, pair<int, int> roomMax, TileType roomID) {
-    set<pair<int, int>> explored = {};                                          // already explored
-    queue<pair<int, int>> frontier = {};                                        // to be explored next
-    vector<vector<pair<int, int>>> previous(                                    // path reconstruction
-        (*map).size(), vector<pair<int, int>>((*map)[0].size(), { -1, -1 })
-    );
-    pair<int, int> directions[4] = { {-1, 0}, {0, 1}, {1, 0}, {0, -1} };        // NESW
+int connectRoom(vector<vector<int>>* map, UnionFind* uf, pair<int, int> roomMin,
+                pair<int, int> roomMax, TileType roomID) {
+    set<pair<int, int>> explored = {};       // already explored
+    queue<pair<int, int>> frontier = {};     // to be explored next
+    vector<vector<pair<int, int>>> previous( // path reconstruction
+        (*map).size(), vector<pair<int, int>>((*map)[0].size(), {-1, -1}));
+    pair<int, int> directions[4] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}}; // NESW
 
     // explore entire room
     for (int i = roomMin.first; i < roomMax.first; i++) {
         for (int j = roomMin.second; j < roomMax.second; j++) {
-            explored.insert({ i, j });
-            frontier.push({ i, j });
+            explored.insert({i, j});
+            frontier.push({i, j});
         }
     }
 
@@ -145,9 +145,10 @@ int connectRoom(vector<vector<int>>* map, UnionFind* uf, pair<int, int> roomMin,
         frontier.pop();
 
         // check if found new disconnected room
-        if ((*map)[vertex.first][vertex.second] != roomID &&                    // check if new room other than self
-            (*map)[vertex.first][vertex.second] != EMPTY &&                     // check if not empty space
-            uf->find(roomID) != uf->find((*map)[vertex.first][vertex.second]))  // check if disjoint from its self
+        if ((*map)[vertex.first][vertex.second] != roomID && // check if new room other than self
+            (*map)[vertex.first][vertex.second] != EMPTY &&  // check if not empty space
+            uf->find(roomID) !=
+                uf->find((*map)[vertex.first][vertex.second])) // check if disjoint from its self
         {
             // path reconstruction
             pair<int, int> current = vertex;
@@ -168,18 +169,19 @@ int connectRoom(vector<vector<int>>* map, UnionFind* uf, pair<int, int> roomMin,
         // look at all neighbors of current vertex
         for (int x = 0; x < 4; x++) {
             // calculate neighbor given direction
-            pair<int, int> neighbor = { vertex.first + directions[x].first, vertex.second + directions[x].second };
+            pair<int, int> neighbor = {vertex.first + directions[x].first,
+                                       vertex.second + directions[x].second};
 
             // check if neighbor is in bounds
-            if (neighbor.first < 0 || neighbor.first >= (*map).size() ||
-                neighbor.second < 0 || neighbor.second >= (*map)[0].size())
+            if (neighbor.first < 0 || neighbor.first >= (*map).size() || neighbor.second < 0 ||
+                neighbor.second >= (*map)[0].size())
                 continue;
 
             // explore neighbor if it hasn't been already
             if (explored.find(neighbor) == explored.end()) {
                 frontier.push(neighbor);
                 explored.insert(neighbor);
-                previous[neighbor.first][neighbor.second] = { vertex.first, vertex.second };
+                previous[neighbor.first][neighbor.second] = {vertex.first, vertex.second};
             }
         }
     }
@@ -203,21 +205,19 @@ vector<vector<int>> generateMap(int height, int width) {
     // connect rooms
     UnionFind uf(roomPositions.size());
     for (int i = 0; i < roomPositions.size() - 1; i++) {
-        uf.unite(i + 1,
-            connectRoom(&map, &uf, roomPositions[i].first, roomPositions[i].second, (TileType)(i + 1)));
+        uf.unite(i + 1, connectRoom(&map, &uf, roomPositions[i].first, roomPositions[i].second,
+                                    (TileType)(i + 1)));
     }
 
     return map;
 }
-
 
 bool isCastableToInt(const string& str) {
     try {
         size_t pos;
         stoi(str, &pos);
         return pos == str.length();
-    }
-    catch (...) {
+    } catch (...) {
         return false;
     }
 }

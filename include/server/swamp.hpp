@@ -50,9 +50,9 @@ class Swamp : public Room {
 
     /**
      * @brief Initializes the water plane that respawns players upon contact.
-     * 
+     *
      * Note: the setBody() method must be called on the returned Water instance.
-     * 
+     *
      */
     Water* createWaterRespawn();
 
@@ -88,8 +88,8 @@ class Swamp : public Room {
 
     /**
      * @brief Plane under the water that respawns the player when they hit it
-     * 
-     * The plane that respawns the player when they go under water. 
+     *
+     * The plane that respawns the player when they go under water.
      * It is used so that players can fall through bad lilypads or miss the jump
      * altogether, and then respawn once they fall through the water.
      */

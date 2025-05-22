@@ -47,5 +47,5 @@ void LilyPad::customCollision(ICustomPhysics* otherObject) {
     std::string packet = message.dump() + "\n";
     server.broadcastMessage(packet);
 
-    std::cout << "Lilypad " << lilyPadID << " dropped" << std::endl;
+    // std::cout << "Lilypad " << lilyPadID << " dropped" << std::endl;
 }

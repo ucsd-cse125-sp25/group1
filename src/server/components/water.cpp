@@ -1,15 +1,14 @@
 #include "components/water.hpp"
-#include "player.hpp"
 #include <iostream>
+#include "player.hpp"
 
-Water::Water(int id, Server& serverRef)
-    : id(id), server(serverRef){}
+Water::Water(int id, Server& serverRef) : id(id), server(serverRef) {}
 
-RigidBody* Water::getBody(){
+RigidBody* Water::getBody() {
     return body;
 }
 
-void Water::setBody(RigidBody* newBody){
+void Water::setBody(RigidBody* newBody) {
     body = newBody;
 }
 

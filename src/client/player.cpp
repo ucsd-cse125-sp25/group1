@@ -2,12 +2,9 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 Player::Player(int id, const glm::vec3& position, const glm::vec3& direction)
-    : id(id),
-      position(position),
-      direction(direction),
+    : id(id), position(position), direction(direction),
       // TODO: init currRoomID to the id of the lobby
       character(std::make_unique<Cube>()) {}
-
 
 void Player::draw(Shader& shader, bool boundingBoxMode) {
     glm::vec3 forward = glm::vec3(0.0f, 0.0f, 1.0f);
@@ -27,13 +24,10 @@ void Player::draw(Shader& shader, bool boundingBoxMode) {
         playerModel *= rotation;
     } else {
         glm::mat3 rot3x3 = glm::mat3(rotation);
-        glm::mat3 absRot = glm::mat3(
-            glm::abs(rot3x3[0]),
-            glm::abs(rot3x3[1]),
-            glm::abs(rot3x3[2])
-        );
+        glm::mat3 absRot = glm::mat3(glm::abs(rot3x3[0]), glm::abs(rot3x3[1]), glm::abs(rot3x3[2]));
 
-        glm::vec3 halfSize = glm::vec3(config::PLAYER_WIDTH, config::PLAYER_HEIGHT, config::PLAYER_DEPTH) / 2.0f;
+        glm::vec3 halfSize =
+            glm::vec3(config::PLAYER_WIDTH, config::PLAYER_HEIGHT, config::PLAYER_DEPTH) / 2.0f;
         glm::vec3 worldHalfSize = absRot * halfSize;
         glm::vec3 worldSize = worldHalfSize * 2.0f;
 

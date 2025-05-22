@@ -13,17 +13,17 @@ using namespace glm;
 
 // types of colliders
 enum ColliderType {
-	AABB,				// standard rigid body
-	NONE				// ignores collision solver, custom collision valid still
+    AABB, // standard rigid body
+    NONE  // ignores collision solver, custom collision valid still
 };
 
 // collider of type ColliderType
 struct Collider {
-	ColliderType type;
+    ColliderType type;
 };
 
 // AABB box collider geometry
 struct BoxCollider : Collider {
-	vec3 minCorner;		// least x, y, z corner relative to center
-	vec3 maxCorner;		// greatest x, y, z corner relative to center
+    vec3 minCorner; // least x, y, z corner relative to center
+    vec3 maxCorner; // greatest x, y, z corner relative to center
 };

@@ -2,7 +2,7 @@
 #include "fmod_studio.hpp"
 
 class audioManager {
-public:
+  public:
     FMOD::Studio::System* system = nullptr;
 
     bool initialize() {
@@ -19,7 +19,7 @@ public:
             exit(-1);
         }
 
-        std::cout << "FMOD successfully initialized!" << std::endl;
+        // std::cout << "FMOD successfully initialized!" << std::endl;
         return true;
     }
 

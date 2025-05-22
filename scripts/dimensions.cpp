@@ -1,12 +1,12 @@
 #include <assimp/Importer.hpp>
+#include <glm/glm.hpp>
+#include <nlohmann/json.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
-#include <glm/glm.hpp>
-#include <iostream>
-#include <fstream>
+#include <cfloat> // For FLT_MAX
 #include <filesystem>
-#include <nlohmann/json.hpp>
-#include <cfloat>   // For FLT_MAX
+#include <fstream>
+#include <iostream>
 
 using json = nlohmann::json;
 
@@ -21,10 +21,9 @@ int main() {
 
             // EXPLICIT conversion from std::filesystem::path to const char*
             const std::string filepath = entry.path().string();
-            const aiScene* scene = importer.ReadFile(
-                filepath.c_str(),
-                aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace
-            );
+            const aiScene* scene =
+                importer.ReadFile(filepath.c_str(), aiProcess_Triangulate | aiProcess_FlipUVs |
+                                                        aiProcess_CalcTangentSpace);
 
             if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
                 std::cerr << "Error: " << importer.GetErrorString() << "\n";
@@ -38,7 +37,8 @@ int main() {
                 // Check if the mesh name starts with "UCX_" (used for collision boxes)
                 std::string meshName = mesh->mName.C_Str();
                 bool isBoundingBox = meshName.rfind("UCX_", 0) == 0;
-                if (!isBoundingBox) continue;
+                if (!isBoundingBox)
+                    continue;
 
                 // Get min and max points
                 float minX = FLT_MAX, minY = FLT_MAX, minZ = FLT_MAX;
@@ -54,8 +54,8 @@ int main() {
                 }
 
                 // Store min and max points into JSON format
-                j[meshName.substr(4)]["min"] = { minX, minY, minZ };
-                j[meshName.substr(4)]["max"] = { maxX, maxY, maxZ };
+                j[meshName.substr(4)]["min"] = {minX, minY, minZ};
+                j[meshName.substr(4)]["max"] = {maxX, maxY, maxZ};
             }
 
             // Output to JSON file

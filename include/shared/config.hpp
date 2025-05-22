@@ -8,6 +8,7 @@
 namespace config {
 inline constexpr const char* SERVER_IP = "127.0.0.1";
 inline constexpr int SERVER_PORT = 1111;
+inline constexpr bool BYPASS = true;
 
 inline constexpr int MAX_PLAYERS = 4;
 inline constexpr int TICK_RATE = 30;

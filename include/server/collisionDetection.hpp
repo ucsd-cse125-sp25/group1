@@ -7,15 +7,15 @@
  */
 #pragma once
 
+#include <algorithm>
+#include "collider.hpp"
 #include "rigidBody.hpp"
 #include "transform.hpp"
-#include "collider.hpp"
-#include <algorithm>
 
 struct Collision {
-	vec3 normal; 		// contact normal
-	float depth;    	// depth of penetration
-	bool isColliding;	// is there a collision
+    vec3 normal;      // contact normal
+    float depth;      // depth of penetration
+    bool isColliding; // is there a collision
 };
 
 /**

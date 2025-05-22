@@ -2,30 +2,26 @@
 #include <stdexcept>
 
 Door::Door(int doorID, int room1, int room2, bool isLocked)
-    : Interactable(),
-    doorID(doorID),
-    locked(isLocked),
-    open(false)
-{
+    : Interactable(), doorID(doorID), locked(isLocked), open(false) {
     rooms[0] = room1;
     rooms[1] = room2;
 }
 
 int Door::getDestinationRoomID(int currRoomID) const {
-    if (currRoomID == rooms[0]){
+    if (currRoomID == rooms[0]) {
         return rooms[1];
     }
-    if (currRoomID == rooms[1]){
+    if (currRoomID == rooms[1]) {
         return rooms[0];
     }
     throw std::invalid_argument("Door::getDestinationRoomID: bad currRoomID");
 }
 
-bool Door::isLocked() const{
+bool Door::isLocked() const {
     return locked;
 }
 
-bool Door::isOpen() const{
+bool Door::isOpen() const {
     return open;
 }
 
@@ -47,18 +43,17 @@ void Door::openDoor() {
     // TODO: play door opening animation and move position of door
 }
 
-void Door::tryOpen(bool success){
+void Door::tryOpen(bool success) {
     // attempt to unlock door (if it has a lock)
-    if (locked){
-        if (success){
+    if (locked) {
+        if (success) {
             unlockDoor();
-        }
-        else {
+        } else {
             // TODO: play animation of door shuddering (not opening because it's locked)
         }
     }
     // attempt to open door
-    if (success){
+    if (success) {
         openDoor();
     }
 }

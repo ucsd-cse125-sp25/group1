@@ -2,9 +2,8 @@
 #include <glm/glm.hpp>
 #include "rigidBody.hpp"
 
-class Object
-{
-public:
+class Object : public ICustomPhysics {
+  public:
     /**
      * @brief Constructs an object with a given id position, and direction.
      *
@@ -20,11 +19,21 @@ public:
      * @param height height of the object.
      * Can construct with a pointer to rigidBody?
      */
-    Object(int id, const glm::vec3& position, const glm::vec3& direction, float width, float height);
+    Object(int id, const glm::vec3& position, const glm::vec3& direction, float width,
+           float height);
 
     ~Object() = default;
-    
-private:
+
+    /**
+     * @brief Returns the rigid body of the object.
+     *
+     * @return RigidBody& reference to the object's rigid body.
+     */
+    RigidBody& getBody();
+
+    void customCollision(ICustomPhysics* otherObject) override;
+
+  private:
     int objectID;
     RigidBody body;
 };

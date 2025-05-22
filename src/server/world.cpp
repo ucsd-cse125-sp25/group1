@@ -38,6 +38,7 @@ void World::resolveCollisions() {
 
             Collision collision = testCollision(a, b);
 
-            if (collision.isColliding) solveCollision(a, b, collision);
+            if (collision.isColliding)
+                solveCollision(a, b, collision);
         }
 }

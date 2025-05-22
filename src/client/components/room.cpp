@@ -1,17 +1,21 @@
 #include "components/room.hpp"
 #include <algorithm>
 
-Room::Room(int id, const std::string &name) : roomID(id), roomName(name) {
-  // Todo: any additional initialization (i.e. doors) if needed
+Room::Room(int id, const std::string& name) : roomID(id), roomName(name) {
+    // Todo: any additional initialization (i.e. doors) if needed
 }
 
 Room::~Room() {
-  // Nothing todo yet; free any dynamically allocated in the future if added.
+    // Nothing todo yet; free any dynamically allocated in the future if added.
 }
 
-int Room::getID() const { return roomID; }
+int Room::getID() const {
+    return roomID;
+}
 
-std::string Room::getName() const { return roomName; }
+std::string Room::getName() const {
+    return roomName;
+}
 
 void Room::addInteractable(std::unique_ptr<Interactable> object) {
   interactables.push_back(std::move(object));
@@ -26,9 +30,8 @@ std::vector<Interactable *> Room::getInteractables() const {
   return out;
 }
 
-void Room::removeInteractable(Interactable *object) {
-  auto it =
-      std::remove_if(interactables.begin(), interactables.end(),
-                     [object](auto const &up) { return up.get() == object; });
-  interactables.erase(it, interactables.end());
+void Room::removeInteractable(Interactable* object) {
+    auto it = std::remove_if(interactables.begin(), interactables.end(),
+                             [object](auto const& up) { return up.get() == object; });
+    interactables.erase(it, interactables.end());
 }

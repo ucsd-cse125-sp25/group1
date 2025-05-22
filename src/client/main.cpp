@@ -1,5 +1,6 @@
-#include "client.hpp"
 #include <iostream>
+#include "audioEngine.hpp"
+#include "client.hpp"
 
 int main() {
     Client client;

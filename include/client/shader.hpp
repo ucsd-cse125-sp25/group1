@@ -1,22 +1,22 @@
 #pragma once
 
-#include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <glad/glad.h>
 #include <string>
 
 /**
  * @brief Encapsulates an OpenGL shader program.
- * 
+ *
  * Handles loading, compiling, linking, and using vertex and fragment shaders,
  * and provides convenient methods to set uniform variables.
  */
 class Shader {
-public:
+  public:
     /**
      * @brief Constructs a Shader instance from vertex and fragment shader files.
-     * 
+     *
      * Loads, compiles, and links the shaders into a shader program.
-     * 
+     *
      * @param vertPath Path to the vertex shader source file.
      * @param fragPath Path to the fragment shader source file.
      */
@@ -29,7 +29,7 @@ public:
 
     /**
      * @brief Sets a boolean uniform variable in the shader.
-     * 
+     *
      * @param name Name of the uniform variable.
      * @param val Boolean value to set.
      */
@@ -37,7 +37,7 @@ public:
 
     /**
      * @brief Sets an integer uniform variable in the shader.
-     * 
+     *
      * @param name Name of the uniform variable.
      * @param val Integer value to set.
      */
@@ -45,7 +45,7 @@ public:
 
     /**
      * @brief Sets a float uniform variable in the shader.
-     * 
+     *
      * @param name Name of the uniform variable.
      * @param val Float value to set.
      */
@@ -53,7 +53,7 @@ public:
 
     /**
      * @brief Sets a vec3 uniform variable in the shader.
-     * 
+     *
      * @param name Name of the uniform variable.
      * @param val glm::vec3 value to set.
      */
@@ -61,12 +61,12 @@ public:
 
     /**
      * @brief Sets a mat4 uniform variable in the shader.
-     * 
+     *
      * @param name Name of the uniform variable.
      * @param mat glm::mat4 value to set.
      */
     void setMat4(const std::string& name, const glm::mat4& mat) const;
 
-private:
-    GLuint id;      // OpenGL shader program ID.
+  private:
+    GLuint id; // OpenGL shader program ID.
 };

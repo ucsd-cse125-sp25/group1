@@ -1,0 +1,46 @@
+# Use this file to configure clang-format. Put it in your repo root.
+# You can override per-directory by placing another .clang-format deeper in the tree.
+
+# Base on one of clang-format’s built-in styles:
+BasedOnStyle: LLVM
+
+# Adjust general layout
+IndentWidth: 4 # number of spaces per indent level
+TabWidth: 4 # how wide tab characters count
+UseTab: Never # never use actual tab characters
+AllowShortFunctionsOnASingleLine: Empty # only allow truly empty functions on a single line
+InsertNewlineAtEOF: true
+KeepEmptyLinesAtEOF: true
+
+# Control line lengths
+ColumnLimit: 100 # wrap at 100 columns (0 = no limit)
+BreakStringLiterals: true # allow wrapping of long string literals
+
+# C++ specific
+Language: Cpp
+
+# Pointer and reference formatting
+PointerAlignment: Left # “int* x” vs “int *x”
+SpaceBeforeParens: ControlStatements # e.g. `if (`, but `Foo()` stays tight
+
+# includes
+IncludeBlocks: Preserve # leave blank lines in include blocks alone
+
+# Brace wrapping
+BraceWrapping:
+  AfterClass: true
+  AfterControlStatement: Always
+  AfterFunction: true
+  AfterNamespace: true
+  BeforeElse: true
+
+# Sort includes (requires LLVM ≥ 14)
+IncludeCategories:
+  - Regex: '^<.*\.hpp>$'
+    Priority: 1
+  - Regex: "^<.*>$"
+    Priority: 2
+  - Regex: ".*"
+    Priority: 3
+
+SortIncludes: true

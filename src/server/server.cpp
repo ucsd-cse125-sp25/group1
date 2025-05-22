@@ -1,54 +1,87 @@
 #include "server.hpp"
+#include <boost/system/error_code.hpp>
+#include <chrono>
+#include <fstream>
+#include <iostream>
+#include <thread>
 #include "config.hpp"
 #include "json.hpp"
-#include <boost/system/error_code.hpp>
-#include <iostream>
-#include <chrono>
-#include <thread>
-#include <fstream>
 
 using tcp = boost::asio::ip::tcp;
 using json = nlohmann::json;
 using Clock = std::chrono::steady_clock;
 
 Server::Server()
-    : acceptor(ioContext, tcp::endpoint(tcp::v4(), config::SERVER_PORT)),
-      tickTimer(ioContext),
-      gameTimer(ioContext),
-      hasTimerStarted(false),
-      timeLeft(config::TOTAL_GAME_TIME) {}
+    : acceptor(ioContext, tcp::endpoint(tcp::v4(), config::SERVER_PORT)), tickTimer(ioContext),
+      gameTimer(ioContext), hasTimerStarted(false), timeLeft(config::TOTAL_GAME_TIME) {}
 
-Server::~Server() {}
+Server::~Server() {
+    delete swamp;
+}
 
 static vec3 toVec3(const json& arr) {
     return vec3(arr[0], arr[1], arr[2]);
 }
 
 void Server::initRigidBodies() {
-    std::ifstream in("../src/shared/layout.json");
-    json layout;
-    in >> layout;
+    std::ifstream inLayout("../src/server/data/layout.json");
+    std::ifstream inDimensions("../src/server/data/dimensions.json");
+    json layout, dimensions;
+    inLayout >> layout;
+    inDimensions >> dimensions;
 
     for (const auto& room : layout) {
         vec3 roomPosition = toVec3(room["position"]);
 
         for (const auto& obj : room["objects"]) {
+            string modelName = obj["model"];
             vec3 position = toVec3(obj["position"]);
-            vec3 minCorner = toVec3(obj["aabb"]["min"]);
-            vec3 maxCorner = toVec3(obj["aabb"]["max"]);
+            vec3 minCorner = toVec3(dimensions[modelName]["min"]);
+            vec3 maxCorner = toVec3(dimensions[modelName]["max"]);
 
-            RigidBody* object = new RigidBody(
-                vec3(0.0f),
-                vec3(0.0f),
-                0.0f,
-                new Transform{ roomPosition + position, vec3(0.0f) },
-                new BoxCollider{
-                    AABB,
-                    minCorner,
-                    maxCorner
-                },
-                true
-            );
+            bool isRotated = obj["rotated"];
+            if (isRotated) {
+                minCorner = vec3(minCorner.z, minCorner.y, minCorner.x);
+                maxCorner = vec3(maxCorner.z, maxCorner.y, maxCorner.x);
+            }
+
+            vec3 relativePosition =
+                (toVec3(dimensions[modelName]["max"]) + toVec3(dimensions[modelName]["min"])) *
+                0.5f;
+
+            vec3 relativeMinCorner = minCorner - relativePosition;
+            vec3 relativeMaxCorner = maxCorner - relativePosition;
+
+            RigidBody* object = nullptr;
+
+            if (modelName == "lilypad_00") {
+                // Special handling for lilypad
+                auto [lilyPad, colliderType] = swamp->createLilyPad();
+
+                object = new RigidBody(
+                    vec3(0.0f), vec3(0.0f), 0.0f,
+                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
+                    new BoxCollider{colliderType, relativeMinCorner, relativeMaxCorner}, lilyPad,
+                    true);
+
+                lilyPad->setBody(object);
+            } else if (modelName == "water_00") {
+                Water* waterRespawnPlane = swamp->createWaterRespawn();
+                // TODO: add the position/relative position in the json dimensions file
+                object = new RigidBody(
+                    vec3(0.0f), vec3(0.0f), 0.0f,
+                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
+                    new BoxCollider{NONE, relativeMinCorner, relativeMaxCorner}, waterRespawnPlane,
+                    true);
+                waterRespawnPlane->setBody(object);
+            } else {
+                // Default object creation
+                object = new RigidBody(
+                    vec3(0.0f), vec3(0.0f), 0.0f,
+                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
+                    new BoxCollider{AABB, relativeMinCorner, relativeMaxCorner}, nullptr, true);
+            }
+
             world.addObject(object);
         }
     }
@@ -57,6 +90,8 @@ void Server::initRigidBodies() {
 bool Server::init() {
     std::cout << "IP Address: " << config::SERVER_IP << "\nPort: " << config::SERVER_PORT << "\n";
 
+    swamp = new Swamp(1, world, *this);
+
     initRigidBodies();
 
     return true;
@@ -64,7 +99,8 @@ bool Server::init() {
 
 int Server::findAvailableId() {
     for (int i = 0; i < config::MAX_PLAYERS; ++i) {
-        if (!clients.contains(i)) return i;
+        if (!clients.contains(i))
+            return i;
     }
     return -1;
 }
@@ -103,9 +139,14 @@ void Server::handleClientJoin(int clientId) {
     std::string packet = message.dump() + "\n";
     boost::asio::write(*socket, boost::asio::buffer(packet));
 
+    // Send over the swamp init info
+    std::string swampPacket = swamp->getInitInfo();
+    boost::asio::write(*socket, boost::asio::buffer(swampPacket));
+
     glm::vec3 position = config::PLAYER_SPAWNS[clientId];
-    glm::vec3 direction = glm::normalize(glm::vec3(-position.x, 0.0f, -position.z)); // will change this later
-    Player * player = new Player(clientId, 0, position, direction);
+    glm::vec3 direction =
+        glm::normalize(glm::vec3(-position.x, 0.0f, -position.z)); // will change this later
+    Player* player = new Player(clientId, 0, position, direction);
     players[clientId] = player;
 
     // add player to physics world
@@ -145,14 +186,13 @@ void Server::listenToClient(int clientId) {
     auto socket = clients[clientId];
 
     boost::asio::async_read_until(
-        *socket,
-        buffers[clientId],
-        '\n',
+        *socket, buffers[clientId], '\n',
         [this, clientId](const boost::system::error_code& ec, std::size_t) {
             if (!ec) {
                 std::string message;
 
-                if (!clients.contains(clientId)) return;
+                if (!clients.contains(clientId))
+                    return;
 
                 std::istream is(&buffers[clientId]);
                 std::getline(is, message);
@@ -165,8 +205,7 @@ void Server::listenToClient(int clientId) {
             } else {
                 handleClientDisconnect(clientId);
             }
-        }
-    );
+        });
 }
 
 void Server::startTick() {
@@ -176,6 +215,7 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
+
             startTick();
         }
     });
@@ -192,11 +232,21 @@ void Server::handleClientMessages() {
             std::string type = parsed.value("type", "");
 
             if (type == "keyboard_input") {
-                const auto& actions = parsed["actions"];
+                const std::vector<std::string> actions =
+                    parsed["actions"].get<std::vector<std::string>>();
 
-                for (const std::string& action : actions) {
-                    players[clientId]->handleKeyboardInput(action);
+                // handle WASD and jump inputs
+                players[clientId]->handleMovementInput(actions);
+
+                int roomID = players[clientId]->getCurRoomID();
+                Interactable* interactable =
+                    players[clientId]->getNearestInteractable(rooms[roomID]);
+                // if an interactable is nearby, notify user on the client
+                if (interactable != nullptr) {
+                    // TODO: ping client that they are standing near an interactable
                 }
+                // handle misc inputs, such as interacting with environment
+                players[clientId]->handleGeneralInput(actions, interactable);
             } else if (type == "mouse_input") {
                 glm::vec3 direction = toGlmVec3(parsed["direction"]);
                 players[clientId]->handleMouseInput(direction);
@@ -225,8 +275,8 @@ void Server::broadcastPlayerStates() {
 
             json entry;
             entry["id"] = id;
-            entry["position"] = { position.x, position.y, position.z };
-            entry["direction"] = { direction.x, direction.y, direction.z };
+            entry["position"] = {position.x, position.y, position.z};
+            entry["direction"] = {direction.x, direction.y, direction.z};
 
             message["players"].push_back(entry);
         }
@@ -270,6 +320,17 @@ void Server::broadcastTimeLeft() {
 
     if (timeLeft > 0) {
         --timeLeft;
+    }
+}
+
+void Server::broadcastMessage(std::string packet) {
+
+    for (const auto& [clientId, socket] : clients) {
+        try {
+            boost::asio::write(*socket, boost::asio::buffer(packet));
+        } catch (const std::exception& e) {
+            handleClientDisconnect(clientId);
+        }
     }
 }
 

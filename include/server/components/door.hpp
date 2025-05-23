@@ -7,7 +7,7 @@
 class Door : public Interactable {
   public:
     // Todo: add constructor and destructor
-    Door(int doorID, int room1, int room2); // doors without locks
+    Door(int doorID, int room1, int room2);            // doors without locks
     Door(int doorID, int room1, int room2, int keyID); // locked doors
     ~Door() = default;
 

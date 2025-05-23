@@ -1,14 +1,12 @@
 #include "components/door.hpp"
 
 Door::Door(int doorID, int room1, int room2, int keyID)
-    : Interactable(doorID),
-      keyID(keyID), locked(keyID != -1), open(false) {
+    : Interactable(doorID), keyID(keyID), locked(keyID != -1), open(false) {
     rooms[0] = room1;
     rooms[1] = room2;
 }
 
-Door::Door(int doorID, int room1, int room2)
-    : Interactable(doorID), open(false) {
+Door::Door(int doorID, int room1, int room2) : Interactable(doorID), open(false) {
     rooms[0] = room1;
     rooms[1] = room2;
 }

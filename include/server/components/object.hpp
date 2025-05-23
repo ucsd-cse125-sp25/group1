@@ -5,29 +5,29 @@
 class Object : public ICustomPhysics {
   public:
     /**
-     * @brief Constructs an object with a given id position, and direction.
+     * @brief Constructs an object with a given id.
      *
-     * Initializes an object at the specified position and orientation,
-     * assigning it a box collider based on the given width and height.
-     * An object is any item in a room that is not interactable via a key press.
-     * It only has a rigidbody that can be collided with.
+     * Initializes an object with a given id.
      *
      * @param id ID of the object
-     * @param position position of the object.
-     * @param direction facing direction of the object.
-     * @param width width of the object.
-     * @param height height of the object.
      */
     Object(int id);
 
     ~Object() = default;
 
     /**
+     * @brief Returns the ID of the object.
+     *
+     * @return int ID of the object.
+     */
+    int getID() const;
+
+    /**
      * @brief Returns the rigid body of the object.
      *
      * @return RigidBody& reference to the object's rigid body.
      */
-    RigidBody& getBody();
+    RigidBody* getBody();
 
     /**
      * @brief Sets rigid body of object to argument.
@@ -38,5 +38,5 @@ class Object : public ICustomPhysics {
 
   private:
     int objectID;
-    RigidBody body;
+    RigidBody* body = nullptr;
 };

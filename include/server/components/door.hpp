@@ -28,10 +28,8 @@ class Door : public Interactable {
   private:
     void openDoor();
     void unlockDoor();
-    int doorID;
     int keyID;
     bool locked;
     bool open;
     int rooms[2];
-    RigidBody body;
 };

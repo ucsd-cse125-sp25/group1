@@ -58,15 +58,15 @@ void Server::initRigidBodies() {
                                   relativeMaxCorner};
 
             if (modelName == "door_00") {
-                object = initDoor(data, &this);
+                object = initDoor(data, &doors);
             } else if (modelName == "frog_00") {
-                object = initFrog(data, &this);
+                object = initFrog(data, &objects);
             } else if (modelName == "lilypad_00") {
-                object = initLilyPad(data, &this);
+                object = initLilyPad(data, swamp);
             } else if (modelName == "water_00") {
-                object = initWater(data, &this);
+                object = initWater(data, swamp);
             } else {
-                object = initObject(data);
+                object = initObject(data, &objects);
             }
 
             world.addObject(object);

@@ -2,12 +2,18 @@
 
 Object::Object(int id) : objectID(id) {}
 
-RigidBody& Object::getBody() {
+int Object::getID() const {
+    return objectID;
+}
+
+RigidBody* Object::getBody() {
     return body;
 }
 
 void Object::setBody(RigidBody* newBody) {
-    body = *newBody;
+    if (newBody == nullptr)
+        return;
+    body = newBody;
 }
 
 void Object::customCollision(ICustomPhysics* otherObject) {}

@@ -1,47 +1,50 @@
 #include "initBody.hpp"
 
-RigidBody* initObject(TransformData data, Server* serverRef) {
-    Object object = new Object(serverRef->objects.size());
+RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* objects) {
+    Object* object = new Object(objects->size());
+    (*objects)[object->getID()] = object;
 
     // Default object creation
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, object, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, nullptr, true);
 
     object->setBody(body);
     return body;
 }
 
-RigidBody* initDoor(TransformData data, Server* serverRef) {
+RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors) {
     int roomID1 = 0;
     int roomID2 = 0;
-    int keyID;
-    Door door = new Door(serverRef->doors.size(), roomID1, roomID2, keyID);
+    int keyID = 0;
+    Door* door = new Door(doors->size(), roomID1, roomID2, keyID);
+    (*doors)[door->getID()] = door;
 
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, door, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, nullptr, true);
 
     door->setBody(body);
     return body;
 }
 
-RigidBody* initFrog(TransformData data, Server* serverRef) {
-    Frog frog = new Frog(serverRef->objects.size());
+RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* objects) {
+    Frog* frog = new Frog(objects->size());
+    (*objects)[frog->getID()] = frog;
 
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, frog, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, nullptr, true);
 
     frog->setBody(body);
     return body;
 }
 
-RigidBody* initLilyPad(TransformData data, Server* serverRef) {
-    auto [lilyPad, colliderType] = serverRef->swamp->createLilyPad();
+RigidBody* initLilyPad(TransformData data, Swamp* swamp) {
+    auto [lilyPad, colliderType] = swamp->createLilyPad();
 
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
@@ -53,8 +56,8 @@ RigidBody* initLilyPad(TransformData data, Server* serverRef) {
     return body;
 }
 
-RigidBody* initWater(TransformData data, Server* serverRef) {
-    Water* waterRespawnPlane = serverRef->swamp->createWaterRespawn();
+RigidBody* initWater(TransformData data, Swamp* swamp) {
+    Water* waterRespawnPlane = swamp->createWaterRespawn();
 
     // TODO: add the position/relative position in the json dimensions file
     RigidBody* body = new RigidBody(

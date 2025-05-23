@@ -54,32 +54,15 @@ void Server::initRigidBodies() {
 
             RigidBody* object = nullptr;
 
-            if (modelName == "lilypad_00") {
-                // Special handling for lilypad
-                auto [lilyPad, colliderType] = swamp->createLilyPad();
-
-                object = new RigidBody(
-                    vec3(0.0f), vec3(0.0f), 0.0f,
-                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
-                    new BoxCollider{colliderType, relativeMinCorner, relativeMaxCorner}, lilyPad,
-                    true);
-
-                lilyPad->setBody(object);
-            } else if (modelName == "water_00") {
-                Water* waterRespawnPlane = swamp->createWaterRespawn();
-                // TODO: add the position/relative position in the json dimensions file
-                object = new RigidBody(
-                    vec3(0.0f), vec3(0.0f), 0.0f,
-                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
-                    new BoxCollider{NONE, relativeMinCorner, relativeMaxCorner}, waterRespawnPlane,
-                    true);
-                waterRespawnPlane->setBody(object);
-            } else {
-                // Default object creation
-                object = new RigidBody(
-                    vec3(0.0f), vec3(0.0f), 0.0f,
-                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
-                    new BoxCollider{AABB, relativeMinCorner, relativeMaxCorner}, nullptr, true);
+            switch (modelName) {
+            case "lilypad_00":
+                initLilyPad();
+                break;
+            case "water_00":
+                initWater();
+                break;
+            default:
+                initObject();
             }
 
             world.addObject(object);

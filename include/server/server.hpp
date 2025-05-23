@@ -9,7 +9,8 @@
 #include "player.hpp"
 #include "string"
 #include "swamp.hpp"
-#include "world.hpp"
+#include "initBody.hpp"
+#include "string"
 
 class Swamp;
 

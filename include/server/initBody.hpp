@@ -1,11 +1,22 @@
+#pragma once
+
 #include "rigidBody.hpp"
+#include "swamp.hpp"
 
-RigidBody* initObject();
+struct TransformData {
+    float roomPosition;
+    float position;
+    float relativePosition;
+    float relativeMinCorner;
+    float relativeMaxCorner;
+};
 
-RigidBody* initDoor();
+RigidBody* initObject(TransformData data);
 
-RigidBody* initFrog();
+RigidBody* initDoor(TransformData data);
 
-RigidBody* initLilyPad();
+RigidBody* initFrog(TransformData data);
 
-RigidBody* initWater();
+RigidBody* initLilyPad(TransformData data, Swamp* swamp);
+
+RigidBody* initWater(TransformData data, Swamp* swamp);

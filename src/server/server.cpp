@@ -54,15 +54,18 @@ void Server::initRigidBodies() {
 
             RigidBody* object = nullptr;
 
+            TransformData data = {roomPosition, position, relativePosition, relativeMinCorner,
+                                  relativeMaxCorner};
+
             switch (modelName) {
             case "lilypad_00":
-                initLilyPad();
+                object = initLilyPad(data, swamp);
                 break;
             case "water_00":
-                initWater();
+                object = initWater(data, swamp);
                 break;
             default:
-                initObject();
+                object = initObject(data);
             }
 
             world.addObject(object);

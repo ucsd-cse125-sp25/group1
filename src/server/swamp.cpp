@@ -57,6 +57,6 @@ std::pair<LilyPad*, ColliderType> Swamp::createLilyPad() {
 
 Water* Swamp::createWaterRespawn() {
     int id = 0;
-    waterRespawnPlane = new Water(id, server);
+    waterRespawnPlane = new Water(id);
     return waterRespawnPlane;
 }

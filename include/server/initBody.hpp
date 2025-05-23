@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <unordered_map>
 #include "components/door.hpp"
 #include "components/frog.hpp"
 #include "components/lilypad.hpp"

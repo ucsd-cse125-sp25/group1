@@ -6,11 +6,11 @@
 #include <memory>
 #include <mutex>
 #include <unordered_map>
+#include "initBody.hpp"
 #include "player.hpp"
 #include "string"
 #include "swamp.hpp"
-#include "initBody.hpp"
-#include "string"
+#include "world.hpp"
 
 class Swamp;
 
@@ -167,6 +167,8 @@ class Server {
     World world;
     std::unordered_map<int, Player*> players;
     std::unordered_map<int, Room*> rooms;
+    std::unordered_map<int, Object*> objects;
+    std::unordered_map<int, Door*> doors;
 
     std::unordered_map<int, std::deque<std::string>> clientMessages;
 

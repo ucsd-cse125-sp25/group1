@@ -57,14 +57,15 @@ void Server::initRigidBodies() {
             TransformData data = {roomPosition, position, relativePosition, relativeMinCorner,
                                   relativeMaxCorner};
 
-            switch (modelName) {
-            case "lilypad_00":
-                object = initLilyPad(data, swamp);
-                break;
-            case "water_00":
-                object = initWater(data, swamp);
-                break;
-            default:
+            if (modelName == "door_00") {
+                object = initDoor(data, &this);
+            } else if (modelName == "frog_00") {
+                object = initFrog(data, &this);
+            } else if (modelName == "lilypad_00") {
+                object = initLilyPad(data, &this);
+            } else if (modelName == "water_00") {
+                object = initWater(data, &this);
+            } else {
                 object = initObject(data);
             }
 

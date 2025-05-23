@@ -1,14 +1,18 @@
 #include "components/door.hpp"
 
-Door::Door(int doorID, int room1, int room2, int keyID, glm::vec3 position, glm::vec3 direction)
-    : Interactable(doorID, position, direction, config::PLAYER_WIDTH, config::PLAYER_HEIGHT),
+Door::Door(int doorID, int room1, int room2, int keyID)
+    : Interactable(doorID),
       doorID(doorID), keyID(keyID), locked(keyID != -1), open(false) {
     rooms[0] = room1;
     rooms[1] = room2;
 }
 
-Door::Door(int doorID, int room1, int room2, glm::vec3 position, glm::vec3 direction)
-    : Door(doorID, room1, room2, -1, position, direction) {}
+Door::Door(int doorID, int room1, int room2)
+    : Interactable(doorID),
+      doorID(doorID), open(false) {
+    rooms[0] = room1;
+    rooms[1] = room2;
+}
 
 void Door::handleInteract(const Player& player) {
     if (!locked) {

@@ -56,8 +56,7 @@ std::pair<LilyPad*, ColliderType> Swamp::createLilyPad() {
 }
 
 Water* Swamp::createWaterRespawn() {
-    // TODO: what should the id be? It doesn't really matter
-    int id = numPads;
+    int id = 0;
     waterRespawnPlane = new Water(id, server);
     return waterRespawnPlane;
 }

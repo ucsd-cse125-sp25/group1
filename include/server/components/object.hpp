@@ -18,8 +18,7 @@ class Object : public ICustomPhysics {
      * @param width width of the object.
      * @param height height of the object.
      */
-    Object(int id, const glm::vec3& position, const glm::vec3& direction, float width,
-           float height);
+    Object(int id);
 
     ~Object() = default;
 
@@ -29,6 +28,11 @@ class Object : public ICustomPhysics {
      * @return RigidBody& reference to the object's rigid body.
      */
     RigidBody& getBody();
+
+    /**
+     * @brief Sets rigid body of object to argument.
+     */
+    void setBody(RigidBody* newBody);
 
     void customCollision(ICustomPhysics* otherObject) override;
 

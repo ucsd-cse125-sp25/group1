@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include "components/door.hpp"
 #include "components/frog.hpp"
-#include "components/lilyPad.hpp"
+#include "components/lilypad.hpp"
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "components/water.hpp"

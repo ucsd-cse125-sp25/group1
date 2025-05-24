@@ -54,32 +54,19 @@ void Server::initRigidBodies() {
 
             RigidBody* object = nullptr;
 
-            if (modelName == "lilypad_00") {
-                // Special handling for lilypad
-                auto [lilyPad, colliderType] = swamp->createLilyPad();
+            TransformData data = {roomPosition, position, relativePosition, relativeMinCorner,
+                                  relativeMaxCorner};
 
-                object = new RigidBody(
-                    vec3(0.0f), vec3(0.0f), 0.0f,
-                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
-                    new BoxCollider{colliderType, relativeMinCorner, relativeMaxCorner}, lilyPad,
-                    true);
-
-                lilyPad->setBody(object);
+            if (modelName == "door_00") {
+                object = initDoor(data, &doors);
+            } else if (modelName == "frog_00") {
+                object = initFrog(data, &objects);
+            } else if (modelName == "lilypad_00") {
+                object = initLilyPad(data, swamp);
             } else if (modelName == "water_00") {
-                Water* waterRespawnPlane = swamp->createWaterRespawn();
-                // TODO: add the position/relative position in the json dimensions file
-                object = new RigidBody(
-                    vec3(0.0f), vec3(0.0f), 0.0f,
-                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
-                    new BoxCollider{NONE, relativeMinCorner, relativeMaxCorner}, waterRespawnPlane,
-                    true);
-                waterRespawnPlane->setBody(object);
+                object = initWater(data, swamp);
             } else {
-                // Default object creation
-                object = new RigidBody(
-                    vec3(0.0f), vec3(0.0f), 0.0f,
-                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
-                    new BoxCollider{AABB, relativeMinCorner, relativeMaxCorner}, nullptr, true);
+                object = initObject(data, &objects);
             }
 
             world.addObject(object);

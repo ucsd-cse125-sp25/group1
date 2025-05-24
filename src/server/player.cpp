@@ -96,7 +96,7 @@ Interactable* Player::getNearestInteractable(Room* room) {
     // maximum distance needed to interact with an object
     float closestDistance = config::PLAYER_INTERACT_RANGE;
     for (Interactable* obj : interactables) {
-        RigidBody* objBody = &(static_cast<Object*>(obj)->getBody());
+        RigidBody* objBody = obj->getBody();
 
         if (playerBody == objBody)
             continue;

@@ -7,8 +7,7 @@ class Object;
 
 class Interactable : public Object {
   public:
-    Interactable(int id, const glm::vec3& position, const glm::vec3& direction, float width,
-                 float height);
+    Interactable(int id);
     virtual ~Interactable() = default;
     void interact(const Player& player); // calls the overriden handleInteract function.
 

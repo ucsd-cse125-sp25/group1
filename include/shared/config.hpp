@@ -70,4 +70,6 @@ inline constexpr const char* footstepWood = "{4834907d-09e7-460e-b9f9-4f18b067ac
 inline constexpr const char* jumpLilyPad = "{85da62c4-60ce-4776-b1f3-2503b761aa8c}";
 inline constexpr const char* unlockDoor = "{008e7455-ae30-40ce-a197-5e85b67035b8}";
 
+inline constexpr float CANNONBALL_SPEED = 20.0f;
+
 } // namespace config

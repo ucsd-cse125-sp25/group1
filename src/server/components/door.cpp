@@ -6,7 +6,7 @@ Door::Door(int doorID, int room1, int room2, int keyID)
     rooms[1] = room2;
 }
 
-Door::Door(int doorID, int room1, int room2) : Interactable(doorID), open(false) {
+Door::Door(int doorID, int room1, int room2) : Door(doorID, room1, room2, -1) {
     rooms[0] = room1;
     rooms[1] = room2;
 }

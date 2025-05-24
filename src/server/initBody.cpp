@@ -8,7 +8,7 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, nullptr, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, object, true);
 
     object->setBody(body);
     return body;
@@ -24,7 +24,7 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors) {
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, nullptr, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, door, true);
 
     door->setBody(body);
     return body;
@@ -37,7 +37,7 @@ RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* object
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, nullptr, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, frog, true);
 
     frog->setBody(body);
     return body;

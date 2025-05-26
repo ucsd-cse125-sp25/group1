@@ -260,6 +260,8 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
     message["type"] = "keyboard_input";
     message["actions"] = json::array();
 
+    audioManager.loadFMODStudioEvent(config::footstepCarpet);
+
     for (const int& key : keysToCheck) {
         if (glfwGetKey(window, key) == GLFW_PRESS) {
             std::string action = mapKeyToAction(key);
@@ -268,7 +270,7 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
                 message["actions"].push_back(action);
                 if (action != "jump" && !audioManager.eventIsPlaying(config::footstepCarpet)) {
                     // This is footstep sfx
-                    audioManager.loadFMODStudioEvent(config::footstepCarpet);
+                    
                     audioManager.setEventVolume(config::footstepCarpet, 0.1f);
                     audioManager.playEvent(config::footstepCarpet);
                 }

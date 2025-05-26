@@ -6,6 +6,8 @@
 #include <map>
 #include <memory>
 #include <unordered_map>
+#include "animatedModel.hpp"
+#include "animator.hpp"
 #include "camera.hpp"
 #include "config.hpp"
 #include "cube.hpp"
@@ -90,7 +92,13 @@ class Scene {
      */
     void initRooms();
 
+    std::unique_ptr<Animator> animator;
+    std::map<std::string, std::unique_ptr<Animation>> animations;
+
+    std::unique_ptr<AnimatedModel> character;
+
     std::unique_ptr<Shader> shader;
+    std::unique_ptr<Shader> characterShader;
     std::map<std::string, std::unique_ptr<Shader>> shaders;
     std::unique_ptr<Shader> uiShader;
 

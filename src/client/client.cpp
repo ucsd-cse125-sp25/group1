@@ -112,9 +112,9 @@ bool Client::init() {
     // To play audio, first load in the name of the event, then play the event. Can use
     // setEventVolume to adjust the volume
 
-    /*audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
-    audioManager.playEvent(config::SWAMP_AMBIENCE_TRACK);
-    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 1.0f);*/
+     audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
+     audioManager.playEvent(config::SWAMP_AMBIENCE_TRACK);
+     audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 0.2f);
 
     return true;
 }
@@ -199,13 +199,15 @@ void Client::handleServerMessage(const std::string& message) {
         // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,
         // "action": "jump"} client id that of the person triggering the sfx
 
-        //const char* sfxID = sfxIDStr.c_str();
+        std::string sfxIDStr = parsed["sfx_id"];
+        const char* sfxID = sfxIDStr.c_str();
         int clientId = parsed["client_id"];
+        std::string action = parsed["action"];
+
+
         if (clientId == this->clientId) {
 
-            const char* sfxID = config::JUMPLILYPAD;
-
-            if (jumpSfxCooldown) {
+            if (action == "jump" && jumpSfxCooldown) {
                 return;
             }
 
@@ -213,7 +215,9 @@ void Client::handleServerMessage(const std::string& message) {
             audioManager.playEvent(sfxID);
             audioManager.setEventVolume(sfxID, 1.0f);
 
-            jumpSfxCooldown = true;
+            if (action == "jump") {
+                jumpSfxCooldown = true;
+            }
         }
     }
 }

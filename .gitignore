@@ -93,5 +93,6 @@ more/
 # VS code settings folder
 .vscode
 
-
 !src/**/Build
+
+**/.cache/

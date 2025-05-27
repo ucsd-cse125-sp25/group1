@@ -44,7 +44,6 @@ void LilyPad::customCollision(ICustomPhysics* otherObject) {
         std::string sfxPacket = sfx.dump() + "\n";
         server.broadcastMessage(sfxPacket);
 
-        std::cout << "sfx lilypad" << std::endl;
         playerPtr->setJumpSfxCooldown(true);
     }
 
@@ -60,6 +59,4 @@ void LilyPad::customCollision(ICustomPhysics* otherObject) {
 
     std::string packet = message.dump() + "\n";
     server.broadcastMessage(packet);
-
-    // std::cout << "Lilypad " << lilyPadID << " dropped" << std::endl;
 }

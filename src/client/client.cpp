@@ -112,9 +112,9 @@ bool Client::init() {
     // To play audio, first load in the name of the event, then play the event. Can use
     // setEventVolume to adjust the volume
 
-     audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
-     audioManager.playEvent(config::SWAMP_AMBIENCE_TRACK);
-     audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 0.2f);
+    audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
+    audioManager.playEvent(config::SWAMP_AMBIENCE_TRACK);
+    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 1.0f);
 
     return true;
 }
@@ -204,20 +204,10 @@ void Client::handleServerMessage(const std::string& message) {
         int clientId = parsed["client_id"];
         std::string action = parsed["action"];
 
-
         if (clientId == this->clientId) {
-
-       /*     if (action == "jump" && jumpSfxCooldown) {
-                return;
-            }*/
-
             audioManager.loadFMODStudioEvent(sfxID);
             audioManager.playEvent(sfxID);
             audioManager.setEventVolume(sfxID, 1.0f);
-
-            if (action == "jump") {
-                //jumpSfxCooldown = true;
-            }
         }
     }
 }
@@ -298,10 +288,6 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
                     audioManager.loadFMODStudioEvent(config::FOOTSTEPCARPET);
                     audioManager.setEventVolume(config::FOOTSTEPCARPET, 0.1f);
                     audioManager.playEvent(config::FOOTSTEPCARPET);
-                }
-
-                if (action == "jump") {
-                    jumpSfxCooldown = false;
                 }
             }
         }

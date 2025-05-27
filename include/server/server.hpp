@@ -10,6 +10,7 @@
 #include "string"
 #include "swamp.hpp"
 #include "world.hpp"
+#include "components/key.hpp"
 
 class Swamp;
 

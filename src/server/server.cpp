@@ -74,7 +74,19 @@ void Server::initRigidBodies() {
                     new BoxCollider{NONE, relativeMinCorner, relativeMaxCorner}, waterRespawnPlane,
                     true);
                 waterRespawnPlane->setBody(object);
-            } else {
+            } else if (modelName == "key_00") {
+                // Special handling for key
+                int keyID = obj["id"];  // make sure your layout.json has a unique key ID
+                std::string roomName = obj["room_name"];
+                //Key* key = new Key(keyID, "swampRoom", *this); 
+                Key* key = new Key(keyID, roomName, *this); 
+                object = new RigidBody(
+                    vec3(0.0f), vec3(0.0f), 0.0f,
+                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
+                    new BoxCollider{AABB, relativeMinCorner, relativeMaxCorner}, key, true);
+                key->setBody(object);
+            }
+            else {
                 // Default object creation
                 object = new RigidBody(
                     vec3(0.0f), vec3(0.0f), 0.0f,

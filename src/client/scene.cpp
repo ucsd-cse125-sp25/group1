@@ -34,6 +34,8 @@ void Scene::init() {
     swampRoomAsset = std::make_unique<Model>("../src/client/models/swamp_room.obj");
     lilypadAsset = std::make_unique<Model>("../src/client/models/lilypad.obj");
 
+    keyAsset = std::make_unique<Model>("../src/client/models/key.obj");
+
     timer = std::make_unique<TimerDisplay>();
 
     initRooms();

@@ -1,6 +1,5 @@
 #pragma once
 #include "components/interactable.hpp"
-#include "Shaders.h"
 
 class Door : public Interactable {
   public:

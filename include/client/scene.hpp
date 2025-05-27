@@ -98,6 +98,7 @@ class Scene {
     std::unique_ptr<Model> hotelRoomAsset;
     std::unique_ptr<Model> tableAsset;
     std::unique_ptr<Model> doorAsset;
+    std::unique_ptr<Model> keyAsset;
 
     std::unique_ptr<Model> swampRoomAsset;
     std::unique_ptr<Model> lilypadAsset;

@@ -3,14 +3,16 @@
 #include <array>
 #include <cmath>
 #include <glad/glad.h>
+#include <glm/gtx/string_cast.hpp>
 #include <iostream>
 #include <vector>
+#include "timerdisplay.hpp"
+#include "compass.hpp"
 
 struct PointLight {
     glm::vec3 position;
     glm::vec3 color;
 };
-
 Scene::Scene() {}
 Scene::~Scene() {}
 
@@ -34,9 +36,9 @@ void Scene::init() {
     swampRoomAsset = std::make_unique<Model>("../src/client/models/swamp_room.obj");
     lilypadAsset = std::make_unique<Model>("../src/client/models/lilypad.obj");
 
-    timer = std::make_unique<TimerDisplay>();
+    canvas = std::make_unique<Canvas>();
 
-    initRooms();
+	initRooms();
 }
 
 void Scene::initRooms() {
@@ -83,26 +85,37 @@ void Scene::initRooms() {
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
-    if (!players.contains(id)) {
-        players.emplace(id, Player(id, position, direction));
-    } else {
-        players.at(id).setPosition(position);
-        players.at(id).setDirection(direction);
-    }
+	if (!players.contains(id)) {
+		players.emplace(id, Player(id, position, direction));
+	}
+	else {
+		players.at(id).setPosition(position);
+		players.at(id).setDirection(direction);
+	}
 }
 
 void Scene::updateTimer(int minutes, int seconds) {
-    timer->updateTimer(minutes, seconds);
-    // int lMinutes = minutes / 10;
-    // int rMinutes = minutes % 10;
+	//for (auto& [id, player] : players) {
+	//    glm::vec3 dir = player.getDirection();
+	//    std::cout << id << ": " << glm::to_string(dir) << std::endl;
+	//}
+	TimerDisplay* timer = static_cast<TimerDisplay*>(canvas->findElement("timerdisplay"));
+	timer->updateTimer(minutes, seconds);
+}
 
-    // int lSeconds = seconds / 10;
-    // int rSeconds = seconds % 10;
-    // std::cout << lMinutes << rMinutes << ":" << lSeconds << rSeconds << std::endl;
+void Scene::updateWindow() {
+	int width, height;
+	glfwGetWindowSize(this->window, &width, &height);
+	canvas->updateWindow(width, height);
+}
+
+void Scene::updateCompass(glm::vec3 direction) {
+	Compass* compass = static_cast<Compass*>(canvas->findElement("compass"));
+	compass->rotate(direction);
 }
 
 void Scene::removePlayer(int id) {
-    players.erase(id);
+	players.erase(id);
 }
 
 void Scene::removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id) {
@@ -159,15 +172,16 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         }
     }
 
-    shader->use();
+	shader->use();
 
-    shader->setMat4("view", camera.getViewMatrix());
-    shader->setMat4("projection", camera.getProjectionMatrix());
+	shader->setMat4("view", camera.getViewMatrix());
+	shader->setMat4("projection", camera.getProjectionMatrix());
 
     for (auto& [id, player] : players) {
         player.draw(*shader, boundingBoxMode);
     }
 
-    // UI
-    timer->draw(*uiShader);
+	//UI
+	updateWindow();
+	canvas->draw(*uiShader);
 }

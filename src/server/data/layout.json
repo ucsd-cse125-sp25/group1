@@ -9,11 +9,6 @@
             },
             {
                 "model": "door_00",
-                "position": [ 0.0, 0.0, 10.0 ],
-                "rotated": true
-            },
-            {
-                "model": "door_00",
                 "position": [ 0.0, 0.0, -10.0 ],
                 "rotated": true
             },
@@ -88,6 +83,41 @@
                 "rotated": false
             }
         ]
+    },
+    "parkour_room_1": {
+      "position": [0.0, 0.0, 20.0],
+      "objects": [
+        {
+          "model": "parkour1_floor",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "small_table_00",
+          "position": [ 0.0, -1.5, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "small_table_00",
+          "position": [ 2.5, -0.75, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "small_table_00",
+          "position": [ 5.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "small_table_00",
+          "position": [ 5.0, 0.0, 4.0 ],
+          "rotated": false
+        },
+        {
+          "model": "small_table_00",
+          "position": [ 2.5, 0.0, 8.0 ],
+          "rotated": false
+        }
+      ]
     },
     "swamp_room": {
         "position": [20.0, 0.0, 0.0],

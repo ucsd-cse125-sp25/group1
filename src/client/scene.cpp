@@ -64,7 +64,8 @@ void Scene::initRooms() {
 
     // Temporarily remove the door between the hotel room and swamp room until door unlocking is
     // implemented
-    std::array<float, 3> degrees = {90.0f, 180.0f, 270.0f}; // Add 0.0f later
+    // std::array<float, 3> degrees = {90.0f, 180.0f, 270.0f}; // Add 0.0f later
+    std::array<float, 2> degrees = {90.0f, 180.0f}; // Add 0.0f, 270.0f later
 
     for (int i = 0; i < degrees.size(); ++i) {
         glm::mat4 doorModel =
@@ -73,6 +74,30 @@ void Scene::initRooms() {
         hotelRoom->children["door"][i] =
             std::make_unique<ModelInstance>(doorAsset.get(), doorModel, hotelRoom.get());
     }
+
+    // Parkour rooms
+    glm::mat4 parkourRoomModel1 = glm::translate(I4, config::PARKOUR_ROOM_1_POSITION);
+    auto parkourRoom1 = std::make_unique<ModelInstance>(hotelRoomAsset.get(), parkourRoomModel1);
+
+    glm::mat4 parkour1Table1 = glm::translate(I4, config::PARKOUR_1_TABLE_1_POSITION);
+    parkourRoom1->children["table"][0] =
+        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table1, parkourRoom1.get());
+
+    glm::mat4 parkour1Table2 = glm::translate(I4, config::PARKOUR_1_TABLE_2_POSITION);
+    parkourRoom1->children["table"][1] =
+        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table2, parkourRoom1.get());
+
+    glm::mat4 parkour1Table3 = glm::translate(I4, config::PARKOUR_1_TABLE_3_POSITION);
+    parkourRoom1->children["table"][2] =
+        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table3, parkourRoom1.get());
+
+    glm::mat4 parkour1Table4 = glm::translate(I4, config::PARKOUR_1_TABLE_4_POSITION);
+    parkourRoom1->children["table"][3] =
+        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table4, parkourRoom1.get());
+
+    glm::mat4 parkour1Table5 = glm::translate(I4, config::PARKOUR_1_TABLE_5_POSITION);
+    parkourRoom1->children["table"][4] =
+        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table5, parkourRoom1.get());
 
     // Swamp room
     glm::mat4 swampRoomModel = glm::translate(I4, config::SWAMP_ROOM_POSITION);
@@ -92,6 +117,7 @@ void Scene::initRooms() {
 
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);
+    modelInstances["parkourRoom1"] = std::move(parkourRoom1);
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
@@ -141,7 +167,7 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
 
     // Draw all model instances in the scene
     for (const auto& [name, instance] : modelInstances) {
-        if (name == "hotelRoom") {
+        if (name == "hotelRoom" || name == "parkourRoom1") {
             shaders["model"]->use();
 
             // This is for testing, will change this later

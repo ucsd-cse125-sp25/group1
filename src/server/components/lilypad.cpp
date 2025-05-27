@@ -28,14 +28,23 @@ bool LilyPad::isGoodLilyPad() const {
 }
 
 void LilyPad::customCollision(ICustomPhysics* otherObject) {
-    // Good lilypad: normal collision
-    if (isGood) {
-        return;
-    }
-    // Bad lilypad: dunk player and respawn them
     Player* playerPtr = dynamic_cast<Player*>(otherObject);
     // make sure it's a player that hit the lilypad
     if (!playerPtr) {
+        return;
+    }
+
+    json sfx;
+    sfx["type"] = "sfx";
+    sfx["sfx_id"] = config::JUMPLILYPAD;
+    sfx["client_id"] = playerPtr->getID();
+    sfx["action"] = "jump";
+
+    std::string sfxPacket = sfx.dump() + "\n";
+    server.broadcastMessage(sfxPacket);
+
+    // Good lilypad: normal collision
+    if (isGood) {
         return;
     }
 

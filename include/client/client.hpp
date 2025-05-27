@@ -187,4 +187,6 @@ class Client {
     Swamp* swamp;
 
     AudioEngine audioManager;
+
+    bool jumpSfxCooldown = false;
 };

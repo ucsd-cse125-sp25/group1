@@ -195,6 +195,26 @@ void Client::handleServerMessage(const std::string& message) {
         auto id = parsed["id"];
 
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
+    } else if (type == "sfx") {
+        // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,
+        // "action": "jump"} client id that of the person triggering the sfx
+
+        //const char* sfxID = sfxIDStr.c_str();
+        int clientId = parsed["client_id"];
+        if (clientId == this->clientId) {
+
+            const char* sfxID = config::UNLOCKDOOR;
+
+            if (jumpSfxCooldown) {
+                return;
+            }
+
+            audioManager.loadFMODStudioEvent(sfxID);
+            audioManager.playEvent(sfxID);
+            audioManager.setEventVolume(sfxID, 1.0f);
+
+            jumpSfxCooldown = true;
+        }
     }
 }
 
@@ -274,6 +294,8 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
                     audioManager.loadFMODStudioEvent(config::footstepCarpet);
                     audioManager.setEventVolume(config::footstepCarpet, 0.1f);
                     audioManager.playEvent(config::footstepCarpet);
+                if (action == "jump") {
+                    jumpSfxCooldown = false;
                 }
             }
         }

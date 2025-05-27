@@ -148,6 +148,13 @@ class Player : public ICustomPhysics {
 
     void customCollision(ICustomPhysics* otherObject) override;
 
+    /**
+     * @brief Returns the ID of the player.
+     *
+     * @return Player ID as an integer.
+     */
+    int getID() const;
+
   private:
     int id;
     std::string name;

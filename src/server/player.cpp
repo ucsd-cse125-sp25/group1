@@ -112,4 +112,8 @@ Interactable* Player::getNearestInteractable(Room* room) {
     return closestInteractable;
 }
 
+int Player::getID() const {
+    return id;
+}
+
 void Player::customCollision(ICustomPhysics* otherObject) {}

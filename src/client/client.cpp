@@ -207,16 +207,16 @@ void Client::handleServerMessage(const std::string& message) {
 
         if (clientId == this->clientId) {
 
-            if (action == "jump" && jumpSfxCooldown) {
+       /*     if (action == "jump" && jumpSfxCooldown) {
                 return;
-            }
+            }*/
 
             audioManager.loadFMODStudioEvent(sfxID);
             audioManager.playEvent(sfxID);
             audioManager.setEventVolume(sfxID, 1.0f);
 
             if (action == "jump") {
-                jumpSfxCooldown = true;
+                //jumpSfxCooldown = true;
             }
         }
     }

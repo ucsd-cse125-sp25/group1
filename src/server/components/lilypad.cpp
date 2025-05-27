@@ -34,14 +34,19 @@ void LilyPad::customCollision(ICustomPhysics* otherObject) {
         return;
     }
 
-    json sfx;
-    sfx["type"] = "sfx";
-    sfx["sfx_id"] = config::JUMPLILYPAD;
-    sfx["client_id"] = playerPtr->getID();
-    sfx["action"] = "jump";
+    if (!playerPtr->getJumpSfxCooldown()) {
+        json sfx;
+        sfx["type"] = "sfx";
+        sfx["sfx_id"] = config::JUMPLILYPAD;
+        sfx["client_id"] = playerPtr->getID();
+        sfx["action"] = "jump";
 
-    std::string sfxPacket = sfx.dump() + "\n";
-    server.broadcastMessage(sfxPacket);
+        std::string sfxPacket = sfx.dump() + "\n";
+        server.broadcastMessage(sfxPacket);
+
+        std::cout << "sfx lilypad" << std::endl;
+        playerPtr->setJumpSfxCooldown(true);
+    }
 
     // Good lilypad: normal collision
     if (isGood) {

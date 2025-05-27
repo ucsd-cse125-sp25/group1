@@ -133,6 +133,7 @@ UIElement::UIElement(glm::vec3 position, glm::vec2 initSpriteCoords, UITexture& 
 	stbi_image_free(data);
 
 	changeSprite(initSpriteCoords);
+
 }
 
 UIElement::~UIElement() {
@@ -142,7 +143,6 @@ UIElement::~UIElement() {
 }
 
 void UIElement::changeSprite(glm::vec2 coords) {
-
 	float atlasWidth = uiTexture.atlasDimensions.x;
 	float atlasHeight = uiTexture.atlasDimensions.y;
 	float spriteWidth = uiTexture.spriteDimensions.x;

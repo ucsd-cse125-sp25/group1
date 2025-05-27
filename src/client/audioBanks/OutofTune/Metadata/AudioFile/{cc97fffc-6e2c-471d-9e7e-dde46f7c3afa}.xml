@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{cc97fffc-6e2c-471d-9e7e-dde46f7c3afa}">
+		<property name="assetPath">
+			<value>LilyPadFootsetpSFX.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>0.63941043083900229</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{897da1ba-febd-4b80-8e98-8d40fd0aa078}</destination>
+		</relationship>
+	</object>
+</objects>

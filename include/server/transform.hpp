@@ -13,6 +13,6 @@ using namespace glm;
 
 // describes an objects location
 struct Transform {
-	vec3 position;
-	vec3 direction;
+    vec3 position;
+    vec3 direction;
 };

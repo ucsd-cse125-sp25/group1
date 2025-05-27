@@ -1,19 +1,19 @@
 #include "camera.hpp"
-#include "config.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
+#include "config.hpp"
 
 Camera::Camera()
-    : position(0.0f),
-      direction(0.0f, 0.0f, 1.0f),
-      up(0.0f, 1.0f, 0.0f),
-      fovy(config::FOVY),
+    : position(0.0f), direction(0.0f, 0.0f, 1.0f), up(0.0f, 1.0f, 0.0f), fovy(config::FOVY),
       aspect(static_cast<float>(config::WORLD_WIDTH) / config::WORLD_HEIGHT),
-      nearClip(config::NEAR_CLIP),
-      farClip(config::FAR_CLIP) {}
+      nearClip(config::NEAR_CLIP), farClip(config::FAR_CLIP) {}
 
 void Camera::setPosition(const glm::vec3& position) {
     this->position = position;
+}
+
+glm::vec3 Camera::getPosition() const {
+    return position;
 }
 
 void Camera::setDirection(const glm::vec3& direction) {

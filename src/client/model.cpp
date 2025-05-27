@@ -17,9 +17,12 @@ Model::~Model() {
     }
 }
 
-void Model::draw(Shader& shader) {
+void Model::draw(Shader& shader, bool boundingBoxMode) {
     for (const auto& mesh : subMeshes) {
-        if (mesh.isBoundingBox) continue;
+        if (mesh.isBoundingBox && !boundingBoxMode)
+            continue;
+        if (!mesh.isBoundingBox && boundingBoxMode)
+            continue;
 
         if (mesh.hasTexture) {
             glActiveTexture(GL_TEXTURE0);
@@ -32,13 +35,17 @@ void Model::draw(Shader& shader) {
             shader.setVec3("color", mesh.color);
         }
 
+        shader.setVec3("specular", mesh.specular);
+        shader.setFloat("shininess", mesh.shininess);
+
         mesh.draw();
     }
 }
 
 void Model::loadModel(const std::string& path) {
     Assimp::Importer importer;
-    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs |
+                                                       aiProcess_CalcTangentSpace);
 
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
         std::cerr << "Error: " << importer.GetErrorString() << "\n";
@@ -47,7 +54,7 @@ void Model::loadModel(const std::string& path) {
 
     for (unsigned int i = 0; i < scene->mNumMeshes; ++i) {
         aiMesh* mesh = scene->mMeshes[i];
-        
+
         std::vector<GLfloat> vertices;
         std::vector<GLuint> indices;
 
@@ -82,14 +89,28 @@ void Model::loadModel(const std::string& path) {
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
         glm::vec3 color = glm::vec3(0.0f);
+        glm::vec3 specular = glm::vec3(0.0f);
+        float shininess = 32.0f;
+
         aiColor3D kd(0.0f);
+        aiColor3D ks(0.0f);
 
         // Get diffuse color if available
         if (material->Get(AI_MATKEY_COLOR_DIFFUSE, kd) == AI_SUCCESS) {
             color = glm::vec3(kd.r, kd.g, kd.b);
         }
 
+        // Get specular reflectivy if available
+        if (material->Get(AI_MATKEY_COLOR_SPECULAR, ks) == AI_SUCCESS) {
+            specular = glm::vec3(ks.r, ks.g, ks.b);
+        }
+
+        // Get shininess if available
+        material->Get(AI_MATKEY_SHININESS, shininess);
+
         subMesh.color = color;
+        subMesh.specular = specular;
+        subMesh.shininess = shininess;
 
         std::string directory = path.substr(0, path.find_last_of('/'));
         aiString textureImage;
@@ -107,10 +128,11 @@ void Model::loadModel(const std::string& path) {
 
             if (data) {
                 GLenum format = (channels == 3) ? GL_RGB : GL_RGBA;
-                glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+                glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE,
+                             data);
                 glGenerateMipmap(GL_TEXTURE_2D);
             } else {
-                std::cerr << "Error: Failed to load texture.\n"; 
+                std::cerr << "Error: Failed to load texture.\n";
             }
 
             stbi_image_free(data);
@@ -131,9 +153,8 @@ void Model::loadModel(const std::string& path) {
     }
 }
 
-void Model::setupSubMesh(SubMesh& mesh,
-                          const std::vector<GLfloat>& vertices,
-                          const std::vector<GLuint>& indices) {
+void Model::setupSubMesh(SubMesh& mesh, const std::vector<GLfloat>& vertices,
+                         const std::vector<GLuint>& indices) {
     mesh.indexCount = indices.size();
 
     glGenVertexArrays(1, &mesh.vao);
@@ -143,18 +164,22 @@ void Model::setupSubMesh(SubMesh& mesh,
     glBindVertexArray(mesh.vao);
 
     glBindBuffer(GL_ARRAY_BUFFER, mesh.vbo);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(),
+                 GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(),
+                 GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat),
+                          (void*)(3 * sizeof(GLfloat)));
     glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void*)(6 * sizeof(GLfloat)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat),
+                          (void*)(6 * sizeof(GLfloat)));
     glEnableVertexAttribArray(2);
 
     glBindVertexArray(0);

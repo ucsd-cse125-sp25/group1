@@ -1,22 +1,28 @@
 #pragma once
 
-#include <vector>
-#include <array>
-#include "components/room.hpp"
-#include "components/interactable.hpp"
-#include "components/object.hpp"
-#include "world.hpp"
 #include <glm/glm.hpp>
+#include <array>
+#include <utility>
+#include <vector>
+#include "collider.hpp"
+#include "components/lilypad.hpp"
+#include "components/object.hpp"
+#include "components/room.hpp"
+#include "components/water.hpp"
+#include "rigidBody.hpp"
+#include "world.hpp"
 
+class Server;
+class Water;
 
 class Swamp : public Room {
-public:
+  public:
     /**
-    * @brief Constructs a Swamp instance.
-    *
-    * Initializes the swamp
-    */
-    Swamp(int roomID, World& worldRef);
+     * @brief Constructs a Swamp instance.
+     *
+     * Initializes the swamp
+     */
+    Swamp(int roomID, World& worldRef, Server& serverRef);
 
     /**
      * @brief Destructor for Swamp.
@@ -32,66 +38,46 @@ public:
      * {
      *     "type": "swamp_init",
      *     "room_ID": 1,
-     *     "num_pads": 4,
-     *     "game_state": {{1,1},{1,1},{1,1},{1,1}}
+     *     "audio_file": "swamp_audio.mp3"
      *     "audio_file": "swamp_audio.mp3"
      * }
      */
     std::string getInitInfo();
 
-
-    /**
-     * @brief The game state of the swamp game
-     *
-     * @return A vector of pairs representing the game state of the swamp game.
-     */
-    std::vector<std::array<int, 2>> getGameState();
-
     glm::vec3 getRespawnPoint();
 
+    std::pair<LilyPad*, ColliderType> createLilyPad();
+
     /**
-     * @brief Returns the game state client side needs in a packet for update
+     * @brief Initializes the water plane that respawns players upon contact.
      *
-     * @return A JSON string containing the game state
+     * Note: the setBody() method must be called on the returned Water instance.
      *
-     * Example JSON:
-     * {
-     *     "type": "swamp_update",
-     *     "game_state": {{1,1},{1,1},{1,1},{1,1}}
-     * }
      */
-    std::string getUpdatePacket();
+    Water* createWaterRespawn();
 
-
-
-private:
+  private:
     /**
      * @brief Number of pads in the swamp game
+     *
+     * incremented as lilypads created to reach the total number of pads
      */
     int numPads;
 
     /**
-     * @brief Current game state of the swamp game
+     * @brief List of lily pads in the swamp game
      *
-     * A vector of length numPads of pairs, each element is either 0 (lilypad has sunk) or 1 (lilypad is rendered).
+     * A vector of pointers to lilypad. Lilypadd ordering goes right, left, right, left...
      */
-    std::vector<std::array<int, 2>> gameState;
-
-    
-    /**
-    * @brief List of lily pads in the swamp game
-    *
-    * A vector of pairs, each element is a pair of pointers to the two lilypads that are part of the same step.
-    */
-    std::vector<std::array<Object*, 2>> pads;
-
+    std::vector<LilyPad*> pads;
 
     /**
-      *  @brief Solution Key to the Swamp Game
-      *
-      * A vector, where each element is 0 or 1 representing, the correct lilpad for that step [index] .
-      */
-    std::vector<int> soluiton;
+     *  @brief Solution Key to the Swamp Game
+     *
+     * A vector, where each element is 0 or 1 representing, the correct lilpad for that step [index]
+     * 0: right lilypad, 1: left lilypad
+     */
+    std::vector<int> solution;
 
     /**
      * @brief Audio file for the swamp game
@@ -100,6 +86,14 @@ private:
      */
     std::string audioFile;
 
+    /**
+     * @brief Plane under the water that respawns the player when they hit it
+     *
+     * The plane that respawns the player when they go under water.
+     * It is used so that players can fall through bad lilypads or miss the jump
+     * altogether, and then respawn once they fall through the water.
+     */
+    Water* waterRespawnPlane;
 
     /**
      * @brief Respawn Point in Swamp Game when player dies
@@ -109,7 +103,9 @@ private:
 
     /**
      * @brief Reference to the world object
-     * 
+     *
      */
     World& world;
+
+    Server& server;
 };

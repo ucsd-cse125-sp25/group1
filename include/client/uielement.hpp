@@ -1,6 +1,6 @@
 #pragma once
-#include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <glad/glad.h>
 #include "shader.hpp"
 #include "uitexture.hpp"
 
@@ -28,23 +28,21 @@ private:
 
 	UITexture uiTexture;
 
-	const GLuint indices[6] = {
-		0,  2,  1,  0,  3,  2 // Front
-	};
+    UITexture uiTexture;
 
-	const GLfloat posCols[24] = {
-		// positions          // colors           
-		1.0f,  1.0f, 0.0f,   1.0f, 0.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,   0.0f, 1.0f, 0.0f,
-		-1.0f, -1.0f, 0.0f,   0.0f, 0.0f, 1.0f,
-		-1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 0.0f
-	};
+    const GLuint indices[6] = {
+        0, 2, 1, 0, 3, 2 // Front
+    };
 
-	const GLfloat texCoords[8] = {
-		0.0f, 0.0f,   // top right
-		0.0f, 0.0f,   // bottom right
-		0.0f, 0.0f,   // bottom left
-		0.0f, 0.0f    // top left 
-	};
+    const GLfloat posCols[24] = {
+        // positions          // colors
+        1.0f,  1.0f,  0.0f, 1.0f, 0.0f, 0.0f, 1.0f,  -1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+        -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f, -1.0f, 1.0f,  0.0f, 1.0f, 1.0f, 0.0f};
 
+    const GLfloat texCoords[8] = {
+        0.0f, 0.0f, // top right
+        0.0f, 0.0f, // bottom right
+        0.0f, 0.0f, // bottom left
+        0.0f, 0.0f  // top left
+    };
 };

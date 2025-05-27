@@ -9,19 +9,19 @@
 
 #pragma once
 
-#include <vector>
 #include <glm/glm.hpp>
-#include <algorithm>        // find
-#include "rigidBody.hpp"
+#include <algorithm> // find
+#include <vector>
 #include "collider.hpp"
-#include "transform.hpp"
 #include "collisionDetection.hpp"
 #include "collisionSolver.hpp"
+#include "rigidBody.hpp"
+#include "transform.hpp"
 
 using namespace std;
 
 class World {
-public:
+  public:
     // constructor/destructor
     World();
     ~World();
@@ -62,7 +62,7 @@ public:
      * Static objects are not moved or adjusted.
      */
     void resolveCollisions();
-    
-private:
+
+  private:
     vector<RigidBody*> objects;
 };

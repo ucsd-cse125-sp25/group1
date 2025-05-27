@@ -1,21 +1,19 @@
-#include <algorithm>
 #include "components/room.hpp"
+#include <algorithm>
 
-Room::Room(int id, const std::string& name)
-    : roomID(id), roomName(name)
-{
+Room::Room(int id, const std::string& name) : roomID(id), roomName(name) {
     // Todo: any additional initialization (i.e. doors) if needed
 }
 
-Room::~Room(){
+Room::~Room() {
     // Nothing todo yet; free any dynamically allocated in the future if added.
 }
 
-int Room::getID() const{
+int Room::getID() const {
     return roomID;
 }
 
-std::string Room::getName() const{
+std::string Room::getName() const {
     return roomName;
 }
 
@@ -33,10 +31,7 @@ std::vector<Interactable*> Room::getInteractables() const {
 }
 
 void Room::removeInteractable(Interactable* object) {
-    auto it = std::remove_if(
-      interactables.begin(),
-      interactables.end(),
-      [object](auto const& up) { return up.get() == object; }
-    );
+    auto it = std::remove_if(interactables.begin(), interactables.end(),
+                             [object](auto const& up) { return up.get() == object; });
     interactables.erase(it, interactables.end());
-  }
+}

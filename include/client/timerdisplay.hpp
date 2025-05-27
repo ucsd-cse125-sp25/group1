@@ -53,4 +53,9 @@ private:
 		glm::vec2(0.0f,0.0f)
 	};
 
+    glm::vec2 spriteMap[10] = {glm::vec2(128.0f, 0.0f),   glm::vec2(0.0f, 384.0f),
+                               glm::vec2(128.0f, 384.0f), glm::vec2(256.0f, 384.0f),
+                               glm::vec2(0.0f, 256.0f),   glm::vec2(128.0f, 256.0f),
+                               glm::vec2(256.0f, 256.0f), glm::vec2(0.0f, 128.0f),
+                               glm::vec2(128.0f, 128.0f), glm::vec2(256.0f, 128.0f)};
 };

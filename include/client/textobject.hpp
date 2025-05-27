@@ -1,9 +1,9 @@
 #pragma once
-#include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <glad/glad.h>
 class TextObject {
-public:
-	TextObject();
-	~TextObject();
-	void draw();
+  public:
+    TextObject();
+    ~TextObject();
+    void draw();
 };

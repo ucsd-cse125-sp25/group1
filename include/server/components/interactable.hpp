@@ -1,13 +1,17 @@
 #pragma once
+#include "components/object.hpp"
 #include "player.hpp"
 
-class Interactable
-{
-public:
-    Interactable();
-    virtual ~Interactable() = default;
-    void interact(const Player &player); //calls the overriden handleInteract function.
+class Player;
+class Object;
 
-protected:
-    virtual void handleInteract(const Player &player) = 0; //Pure virtual function, must be implemented by derived classes
+class Interactable : public Object {
+  public:
+    Interactable(int id);
+    virtual ~Interactable() = default;
+    void interact(const Player& player); // calls the overriden handleInteract function.
+
+  protected:
+    virtual void handleInteract(
+        const Player& player) = 0; // Pure virtual function, must be implemented by derived classes
 };

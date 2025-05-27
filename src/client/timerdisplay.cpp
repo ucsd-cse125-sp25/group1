@@ -2,7 +2,6 @@
 #include <algorithm>
 
 TimerDisplay::TimerDisplay(glm::vec2 position) {
-
 	rMinute_val = 9;
 	lSecond_val = 5;
 	rSecond_val = 9;
@@ -115,24 +114,25 @@ void TimerDisplay::onWindowUpdate(int width, int height) {
 }
 
 void TimerDisplay::updateTimer(int minutes, int seconds) {
+
 	int rMin_curr = minutes % 10;
 
-	int lSec_curr = seconds / 10;
-	int rSec_curr = seconds % 10;
+    int lSec_curr = seconds / 10;
+    int rSec_curr = seconds % 10;
 
 	if (rMinute_val != rMin_curr) {
 		rMinute_val = rMin_curr;
 		rMinute->changeSprite(spriteMap[rMinute_val]);
 	}
 
-	if (lSecond_val != lSec_curr) {
-		lSecond_val = lSec_curr;
-		lSecond->changeSprite(spriteMap[lSecond_val]);
-	}
-	if (rSecond_val != rSec_curr) {
-		rSecond_val = rSec_curr;
-		rSecond->changeSprite(spriteMap[rSecond_val]);
-	}
+    if (lSecond_val != lSec_curr) {
+        lSecond_val = lSec_curr;
+        lSecond->changeSprite(spriteMap[lSecond_val]);
+    }
+    if (rSecond_val != rSec_curr) {
+        rSecond_val = rSec_curr;
+        rSecond->changeSprite(spriteMap[rSecond_val]);
+    }
 }
 
 void TimerDisplay::draw(Shader& shader) {

@@ -18,7 +18,7 @@ class TimerDisplay : public CanvasElement {
     void onWindowUpdate(int width, int height) override;
 
   private:
-    void changePosition(glm::vec2 position);
+    void changePosition();
 
   private:
     bool hidden = false;

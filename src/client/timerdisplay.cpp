@@ -73,8 +73,7 @@ TimerDisplay::~TimerDisplay() {
     delete rSecond;
 }
 
-void TimerDisplay::changePosition(glm::vec2 position) {
-    pos = position;
+void TimerDisplay::changePosition() {
 
     glm::vec2 digitsPos = pos + indent;
     rMinute->position = glm::vec3(digitsPos.x, digitsPos.y, 0.0f);
@@ -87,7 +86,7 @@ void TimerDisplay::changePosition(glm::vec2 position) {
 }
 
 void TimerDisplay::onWindowUpdate(int width, int height) {
-    std::cout << "(" << width << "," << height << ")" << std::endl;
+    //std::cout << "(" << width << "," << height << ")" << std::endl;
     float widthOffset = (1600.0f / (float)width);
     float heightOffset = (900.0f / (float)height);
     for (unsigned int i = 0; i < 5; i++) {
@@ -115,7 +114,7 @@ void TimerDisplay::onWindowUpdate(int width, int height) {
         digitGap = .06f;
         indent = glm::vec2(.15f, -0.04f);
     }
-    changePosition(pos);
+    changePosition();
     /*std::cout << posMod << std::endl;*/
 }
 

@@ -15,8 +15,8 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 
     float aspect = static_cast<float>(width) / height;
 
-    //scene->updateWindow(window);
-    
+    // scene->updateWindow(window);
+
     client->camera.setAspect(aspect);
 }
 
@@ -292,7 +292,7 @@ void Client::handleMouseInput() {
     if (scene)
         scene->updateCompass(direction);
     json message;
-    
+
     message["type"] = "mouse_input";
     message["direction"] = {direction.x, direction.y, direction.z};
 

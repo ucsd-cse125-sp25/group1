@@ -1,6 +1,5 @@
 #pragma once
 #include "components/object.hpp"
-#include "server.hpp"
 
 class ICustomPhysics;
 
@@ -13,9 +12,8 @@ class Water : public ICustomPhysics {
      * modeled by the client. Its purpose is to respawn the player upon contact.
      *
      * @param id ID of the water
-     * @param serverRef A reference to the server
      */
-    Water(int id, Server& serverRef);
+    Water(int id);
 
     ~Water() = default;
 
@@ -50,5 +48,4 @@ class Water : public ICustomPhysics {
   private:
     int id;
     RigidBody* body = nullptr;
-    Server& server;
 };

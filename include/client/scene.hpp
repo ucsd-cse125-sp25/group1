@@ -3,18 +3,20 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <player.hpp>
+#include <GLFW/glfw3.h>
 #include <map>
 #include <memory>
 #include <unordered_map>
+#include "animatedModel.hpp"
+#include "animator.hpp"
 #include "camera.hpp"
+#include "canvas.hpp"
 #include "config.hpp"
 #include "cube.hpp"
 #include "json.hpp"
 #include "model.hpp"
 #include "modelInstance.hpp"
 #include "shader.hpp"
-#include "timerdisplay.hpp"
-#include "uielement.hpp"
 
 /**
  * @brief Manages the 3D scene, including models and player entities.
@@ -80,6 +82,12 @@ class Scene {
 
     void updateTimer(int minutes, int seconds);
 
+    void updateCompass(glm::vec3 direction);
+
+    void updateWindow();
+
+    GLFWwindow* window;
+
   private:
     /**
      * @brief Sets up rooms and the objects they contain.
@@ -90,8 +98,18 @@ class Scene {
      */
     void initRooms();
 
-    //TODO: Initialize the door with our own class 
+    std::unique_ptr<Animator> animator;
+    std::map<std::string, std::unique_ptr<Animation>> animations;
+
+    std::unique_ptr<AnimatedModel> character;
+
+    std::unique_ptr<Animator> animator;
+    std::map<std::string, std::unique_ptr<Animation>> animations;
+
+    std::unique_ptr<AnimatedModel> character;
+
     std::unique_ptr<Shader> shader;
+    std::unique_ptr<Shader> characterShader;
     std::map<std::string, std::unique_ptr<Shader>> shaders;
     std::unique_ptr<Shader> uiShader;
 
@@ -103,7 +121,7 @@ class Scene {
     std::unique_ptr<Model> swampRoomAsset;
     std::unique_ptr<Model> lilypadAsset;
 
-    std::unique_ptr<TimerDisplay> timer;
+    std::unique_ptr<Canvas> canvas;
 
     std::map<std::string, std::unique_ptr<ModelInstance>>
         modelInstances; // Top-level model instances with their child models.

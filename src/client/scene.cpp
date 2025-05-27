@@ -1,10 +1,13 @@
 #include "scene.hpp"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include <array>
 #include <cmath>
 #include <glad/glad.h>
 #include <iostream>
 #include <vector>
+#include "compass.hpp"
+#include "timerdisplay.hpp"
 
 struct PointLight {
     glm::vec3 position;
@@ -18,6 +21,9 @@ void Scene::init() {
     shader = std::make_unique<Shader>("../src/client/shaders/basic.vert",
                                       "../src/client/shaders/basic.frag");
 
+    characterShader = std::make_unique<Shader>("../src/client/shaders/character.vert",
+                                               "../src/client/shaders/character.frag");
+
     shaders["model"] = std::make_unique<Shader>("../src/client/shaders/model.vert",
                                                 "../src/client/shaders/model.frag");
 
@@ -26,6 +32,12 @@ void Scene::init() {
 
     uiShader =
         std::make_unique<Shader>("../src/client/shaders/ui.vert", "../src/client/shaders/ui.frag");
+
+    character =
+        std::make_unique<AnimatedModel>("../src/client/characters/player_character_idle.fbx");
+
+    animations["idle"] = std::make_unique<Animation>(character->getScene(), character.get());
+    animator = std::make_unique<Animator>(animations["idle"].get());
 
     hotelRoomAsset = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
     tableAsset = std::make_unique<Model>("../src/client/models/table.obj");
@@ -36,7 +48,9 @@ void Scene::init() {
 
     keyAsset = std::make_unique<Model>("../src/client/models/key.obj");
 
-    timer = std::make_unique<TimerDisplay>();
+    keyAsset = std::make_unique<Model>("../src/client/models/key.obj");
+
+    canvas = std::make_unique<Canvas>();
 
     initRooms();
 }
@@ -94,13 +108,23 @@ void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3
 }
 
 void Scene::updateTimer(int minutes, int seconds) {
+    // for (auto& [id, player] : players) {
+    //     glm::vec3 dir = player.getDirection();
+    //     std::cout << id << ": " << glm::to_string(dir) << std::endl;
+    // }
+    TimerDisplay* timer = static_cast<TimerDisplay*>(canvas->findElement("timerdisplay"));
     timer->updateTimer(minutes, seconds);
-    // int lMinutes = minutes / 10;
-    // int rMinutes = minutes % 10;
+}
 
-    // int lSeconds = seconds / 10;
-    // int rSeconds = seconds % 10;
-    // std::cout << lMinutes << rMinutes << ":" << lSeconds << rSeconds << std::endl;
+void Scene::updateWindow() {
+    int width, height;
+    glfwGetWindowSize(this->window, &width, &height);
+    canvas->updateWindow(width, height);
+}
+
+void Scene::updateCompass(glm::vec3 direction) {
+    Compass* compass = static_cast<Compass*>(canvas->findElement("compass"));
+    compass->rotate(direction);
 }
 
 void Scene::removePlayer(int id) {
@@ -170,6 +194,24 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         player.draw(*shader, boundingBoxMode);
     }
 
+    characterShader->use();
+
+    characterShader->setMat4("view", camera.getViewMatrix());
+    characterShader->setMat4("projection", camera.getProjectionMatrix());
+
+    glm::mat4 characterModel = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+    characterShader->setMat4("model", characterModel);
+
+    animator->update(1.0f / 60.0f);
+    const auto& boneMatrices = animator->getBoneMatrices();
+
+    for (int i = 0; i < boneMatrices.size(); ++i) {
+        characterShader->setMat4("boneMatrices[" + std::to_string(i) + "]", boneMatrices[i]);
+    }
+
+    character->draw();
+
     // UI
-    timer->draw(*uiShader);
+    updateWindow();
+    canvas->draw(*uiShader);
 }

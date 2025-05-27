@@ -7,20 +7,25 @@
 class UIElement {
 public:
 	UIElement(glm::vec3 position, glm::vec2 scale, glm::vec2 initSpriteCoords, UITexture& uiTexture);
-	UIElement(glm::vec3 position, glm::vec2 initSpriteCoords, UITexture &uiTexture);
+	UIElement(glm::vec3 position, glm::vec2 initSpriteCoords, UITexture& uiTexture);
 
 	~UIElement();
 	void draw(Shader& shader);
 	void changeSprite(glm::vec2 coords);
 	void changeDimensions(glm::vec2 dim);
 	void rotate(float deg);
-private:
-	GLfloat width, height, angle;
+public:
+	GLfloat widthModifier, heightModifier;
+	glm::vec2 positionModifier;
 	glm::vec3 position;
+
+private:
+	GLfloat baseWidth, baseHeight, angle;
+
 	GLuint vao, ebo;
 	GLuint vbo[2];
 	GLuint texture = 0;
-	
+
 	UITexture uiTexture;
 
 	const GLuint indices[6] = {

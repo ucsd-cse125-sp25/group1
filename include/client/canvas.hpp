@@ -9,6 +9,7 @@ public:
 	Canvas();
 	~Canvas();
 	void draw(Shader& shader);
+	void updateWindow(int width, int height);
 	CanvasElement* findElement(const std::string name);
 private:
 	std::unordered_map<std::string, CanvasElement*> elements;

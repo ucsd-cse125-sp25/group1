@@ -4,185 +4,193 @@
 #include <string>
 
 UIElement::UIElement(glm::vec3 position, glm::vec2 scale, glm::vec2 initSpriteCoords, UITexture& uiTexture) {
-    this->position = position;
-    this->width = scale.x;
-    this->height = scale.y;
-    this->uiTexture = uiTexture;
-    this->angle = 0.0f;
+	this->position = position;
+	this->baseWidth = scale.x;
+	this->baseHeight = scale.y;
+	this->widthModifier = 1.0f;
+	this->heightModifier = 1.0f;
+	this->uiTexture = uiTexture;
+	this->angle = 0.0f;
 
-    glGenVertexArrays(1, &vao);
-    glGenBuffers(2, vbo);
-    glGenBuffers(1, &ebo);
+	this->positionModifier = glm::vec2(1.0f, 1.0f);
 
-    glBindVertexArray(vao);
+	glGenVertexArrays(1, &vao);
+	glGenBuffers(2, vbo);
+	glGenBuffers(1, &ebo);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(posCols), posCols, GL_STATIC_DRAW);
+	glBindVertexArray(vao);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(posCols), posCols, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0); // position
-    glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));   // color
-    glEnableVertexAttribArray(1);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0); // position
+	glEnableVertexAttribArray(0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));   // color
+	glEnableVertexAttribArray(1);
 
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);   // texture pos
-    glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
 
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);   // texture pos
+	glEnableVertexAttribArray(2);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // -> This line causes the weird line to show up
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // -> This line causes the weird line to show up
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load(this->uiTexture.filePath.c_str(), &width, &height, &nrChannels, 0);
-    if (data) {
-        if (nrChannels == 3)
-        {
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        }
-        else if (nrChannels == 4)
-        {
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-        }
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-    changeSprite(initSpriteCoords);
+	int width, height, nrChannels;
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* data = stbi_load(this->uiTexture.filePath.c_str(), &width, &height, &nrChannels, 0);
+	if (data) {
+		if (nrChannels == 3)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		}
+		else if (nrChannels == 4)
+		{
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		}
+	}
+	else {
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(data);
+
+	changeSprite(initSpriteCoords);
 }
 
-UIElement::UIElement(glm::vec3 position, glm::vec2 initSpriteCoords, UITexture &uiTexture) {
-    this->position = position;
-    this->width = 1.0f;
-    this->height = 1.0f;
-    this->uiTexture = uiTexture;
-    this->angle = 0.0f;
+UIElement::UIElement(glm::vec3 position, glm::vec2 initSpriteCoords, UITexture& uiTexture) {
+	this->position = position;
+	this->baseWidth = 1.0f;
+	this->baseHeight = 1.0f;
+	this->widthModifier = 1.0f;
+	this->heightModifier = 1.0f;
+	this->uiTexture = uiTexture;
+	this->angle = 0.0f;
 
-    glGenVertexArrays(1, &vao);
-    glGenBuffers(2, vbo);
-    glGenBuffers(1, &ebo);
+	this->positionModifier = glm::vec2(1.0f, 1.0f);
 
-    glBindVertexArray(vao);
+	glGenVertexArrays(1, &vao);
+	glGenBuffers(2, vbo);
+	glGenBuffers(1, &ebo);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(posCols), posCols, GL_STATIC_DRAW);
+	glBindVertexArray(vao);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(posCols), posCols, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0); // position
-    glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));   // color
-    glEnableVertexAttribArray(1);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0); // position
+	glEnableVertexAttribArray(0);
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
-    
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);   // texture pos
-    glEnableVertexAttribArray(2);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));   // color
+	glEnableVertexAttribArray(1);
 
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(texCoords), texCoords, GL_STATIC_DRAW);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);    // -> This line causes the weird line to show up
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);   // texture pos
+	glEnableVertexAttribArray(2);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glGenTextures(1, &texture);
+	glBindTexture(GL_TEXTURE_2D, texture);
 
-    int width, height, nrChannels;
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char* data = stbi_load(this->uiTexture.filePath.c_str(), &width, &height, &nrChannels, 0);
-    if (data) {
-        if (nrChannels == 3)
-        {
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-        }
-        else if (nrChannels == 4)
-        {
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-        }
-    }
-    else {
-        std::cout << "Failed to load texture" << std::endl;
-    }
-    stbi_image_free(data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);    // -> This line causes the weird line to show up
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-    changeSprite(initSpriteCoords);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+	int width, height, nrChannels;
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char* data = stbi_load(this->uiTexture.filePath.c_str(), &width, &height, &nrChannels, 0);
+	if (data) {
+		if (nrChannels == 3)
+		{
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		}
+		else if (nrChannels == 4)
+		{
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		}
+	}
+	else {
+		std::cout << "Failed to load texture" << std::endl;
+	}
+	stbi_image_free(data);
+
+	changeSprite(initSpriteCoords);
 }
 
 UIElement::~UIElement() {
-    glDeleteVertexArrays(1, &vao);
-    glDeleteBuffers(2, vbo);
-    glDeleteBuffers(1, &ebo);
+	glDeleteVertexArrays(1, &vao);
+	glDeleteBuffers(2, vbo);
+	glDeleteBuffers(1, &ebo);
 }
 
 void UIElement::changeSprite(glm::vec2 coords) {
-    
-    float atlasWidth = uiTexture.atlasDimensions.x;
-    float atlasHeight = uiTexture.atlasDimensions.y;
-    float spriteWidth = uiTexture.spriteDimensions.x;
-    float spriteHeight = uiTexture.spriteDimensions.y;
 
-    float uMin = coords.x / atlasWidth;
-    float vMin = coords.y / atlasHeight;
-    float uMax = (coords.x + spriteWidth) / atlasWidth;
-    float vMax = (coords.y + spriteHeight) / atlasHeight;
+	float atlasWidth = uiTexture.atlasDimensions.x;
+	float atlasHeight = uiTexture.atlasDimensions.y;
+	float spriteWidth = uiTexture.spriteDimensions.x;
+	float spriteHeight = uiTexture.spriteDimensions.y;
 
-    float spriteCoords[] = {
-        uMax, vMax,   // top right
-        uMax, vMin,   // bottom right
-        uMin, vMin,   // bottom left
-        uMin, vMax    // top left 
-    };
+	float uMin = coords.x / atlasWidth;
+	float vMin = coords.y / atlasHeight;
+	float uMax = (coords.x + spriteWidth) / atlasWidth;
+	float vMax = (coords.y + spriteHeight) / atlasHeight;
 
-    glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
-    glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(spriteCoords), spriteCoords);
+	float spriteCoords[] = {
+		uMax, vMax,   // top right
+		uMax, vMin,   // bottom right
+		uMin, vMin,   // bottom left
+		uMin, vMax    // top left 
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, vbo[1]);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(spriteCoords), spriteCoords);
 }
 
 void UIElement::changeDimensions(glm::vec2 dim) {
-    this->width = dim.x;
-    this->height = dim.y;
+	this->widthModifier = dim.x;
+	this->heightModifier = dim.y;
 }
 
 void UIElement::rotate(float deg) {
-    this->angle = deg;
+	this->angle = deg;
 }
 
-void UIElement::draw(Shader& shader){
-    
-    shader.setInt("ourTexture", 0);
-    shader.setVec3("origin", this->position);
-    shader.setFloat("width", this->width);
-    shader.setFloat("height", this->height);
-    shader.setFloat("angle", glm::radians(this->angle));
-    
-//    glViewport(0, 0, 1600, 900);
+void UIElement::draw(Shader& shader) {
 
-    glDepthMask(GL_FALSE); // Disable writing to the depth buffer
+	shader.setInt("ourTexture", 0);
+	shader.setVec3("origin", glm::vec3(position.x * positionModifier.x, position.y * positionModifier.y, position.z));
+	shader.setFloat("width", this->widthModifier * this->baseWidth);
+	shader.setFloat("height", this->heightModifier * this->baseHeight);
+	shader.setFloat("angle", glm::radians(this->angle));
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);   // just like other objects (vao, vbo, etc.) we gotta bind our texture so opengl knows what to reference
-    
-    glBindVertexArray(vao);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);    //6 indices
-    glDepthMask(GL_TRUE); // Disable writing to the depth buffer
+	//    glViewport(0, 0, 1600, 900);
 
-    glBindVertexArray(0);
+	glDepthMask(GL_FALSE); // Disable writing to the depth buffer
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture);   // just like other objects (vao, vbo, etc.) we gotta bind our texture so opengl knows what to reference
+
+	glBindVertexArray(vao);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);    //6 indices
+	glDepthMask(GL_TRUE); // Disable writing to the depth buffer
+
+	glBindVertexArray(0);
 }

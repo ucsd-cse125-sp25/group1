@@ -20,7 +20,7 @@ class PianoKey : public Object {
      *
      * @param dt Time step duration in seconds.
      */
-    void updatePosition(float dt);
+    void updatePosition(float dt, bool isPressed);
 
     /**
      * @brief When player collides with piano key, simulate spring mechanics and play sound.

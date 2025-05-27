@@ -5,8 +5,6 @@ PianoKey::PianoKey(int id, float kConstant, float dampFactor, glm::vec3 target,
     : Object(id), kConstant(kConstant), dampFactor(dampFactor), target(target),
       initialPosition(initialPosition) {}
 
-PianoKey::~PianoKey() {}
-
 void PianoKey::updatePosition(float dt, bool isPressed) {
     RigidBody* body = this->getBody();
     // check if pressed, return to initial position if not pressed

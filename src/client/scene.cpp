@@ -1,18 +1,19 @@
 #include "scene.hpp"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include <array>
 #include <cmath>
 #include <glad/glad.h>
-#include <glm/gtx/string_cast.hpp>
 #include <iostream>
 #include <vector>
-#include "timerdisplay.hpp"
 #include "compass.hpp"
+#include "timerdisplay.hpp"
 
 struct PointLight {
     glm::vec3 position;
     glm::vec3 color;
 };
+
 Scene::Scene() {}
 Scene::~Scene() {}
 
@@ -47,7 +48,7 @@ void Scene::init() {
 
     canvas = std::make_unique<Canvas>();
 
-	initRooms();
+    initRooms();
 }
 
 void Scene::initRooms() {
@@ -94,37 +95,36 @@ void Scene::initRooms() {
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
-	if (!players.contains(id)) {
-		players.emplace(id, Player(id, position, direction));
-	}
-	else {
-		players.at(id).setPosition(position);
-		players.at(id).setDirection(direction);
-	}
+    if (!players.contains(id)) {
+        players.emplace(id, Player(id, position, direction));
+    } else {
+        players.at(id).setPosition(position);
+        players.at(id).setDirection(direction);
+    }
 }
 
 void Scene::updateTimer(int minutes, int seconds) {
-	//for (auto& [id, player] : players) {
-	//    glm::vec3 dir = player.getDirection();
-	//    std::cout << id << ": " << glm::to_string(dir) << std::endl;
-	//}
-	TimerDisplay* timer = static_cast<TimerDisplay*>(canvas->findElement("timerdisplay"));
-	timer->updateTimer(minutes, seconds);
+    // for (auto& [id, player] : players) {
+    //     glm::vec3 dir = player.getDirection();
+    //     std::cout << id << ": " << glm::to_string(dir) << std::endl;
+    // }
+    TimerDisplay* timer = static_cast<TimerDisplay*>(canvas->findElement("timerdisplay"));
+    timer->updateTimer(minutes, seconds);
 }
 
 void Scene::updateWindow() {
-	int width, height;
-	glfwGetWindowSize(this->window, &width, &height);
-	canvas->updateWindow(width, height);
+    int width, height;
+    glfwGetWindowSize(this->window, &width, &height);
+    canvas->updateWindow(width, height);
 }
 
 void Scene::updateCompass(glm::vec3 direction) {
-	Compass* compass = static_cast<Compass*>(canvas->findElement("compass"));
-	compass->rotate(direction);
+    Compass* compass = static_cast<Compass*>(canvas->findElement("compass"));
+    compass->rotate(direction);
 }
 
 void Scene::removePlayer(int id) {
-	players.erase(id);
+    players.erase(id);
 }
 
 void Scene::removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id) {
@@ -181,33 +181,33 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         }
     }
 
-	shader->use();
+    shader->use();
 
-	shader->setMat4("view", camera.getViewMatrix());
-	shader->setMat4("projection", camera.getProjectionMatrix());
+    shader->setMat4("view", camera.getViewMatrix());
+    shader->setMat4("projection", camera.getProjectionMatrix());
 
-  for (auto& [id, player] : players) {
-      player.draw(*shader, boundingBoxMode);
-  }
+    for (auto& [id, player] : players) {
+        player.draw(*shader, boundingBoxMode);
+    }
 
-  characterShader->use();
+    characterShader->use();
 
-  characterShader->setMat4("view", camera.getViewMatrix());
-  characterShader->setMat4("projection", camera.getProjectionMatrix());
+    characterShader->setMat4("view", camera.getViewMatrix());
+    characterShader->setMat4("projection", camera.getProjectionMatrix());
 
-  glm::mat4 characterModel = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
-  characterShader->setMat4("model", characterModel);
+    glm::mat4 characterModel = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+    characterShader->setMat4("model", characterModel);
 
-  animator->update(1.0f / 60.0f);
-  const auto& boneMatrices = animator->getBoneMatrices();
+    animator->update(1.0f / 60.0f);
+    const auto& boneMatrices = animator->getBoneMatrices();
 
-  for (int i = 0; i < boneMatrices.size(); ++i) {
-      characterShader->setMat4("boneMatrices[" + std::to_string(i) + "]", boneMatrices[i]);
-  }
+    for (int i = 0; i < boneMatrices.size(); ++i) {
+        characterShader->setMat4("boneMatrices[" + std::to_string(i) + "]", boneMatrices[i]);
+    }
 
-  character->draw();
+    character->draw();
 
-	//UI
-	updateWindow();
-	canvas->draw(*uiShader);
+    // UI
+    updateWindow();
+    canvas->draw(*uiShader);
 }

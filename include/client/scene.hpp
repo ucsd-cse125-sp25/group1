@@ -3,22 +3,20 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <player.hpp>
-#include <map>
 #include <GLFW/glfw3.h>
+#include <map>
 #include <memory>
 #include <unordered_map>
 #include "animatedModel.hpp"
 #include "animator.hpp"
 #include "camera.hpp"
+#include "canvas.hpp"
 #include "config.hpp"
 #include "cube.hpp"
 #include "json.hpp"
 #include "model.hpp"
 #include "modelInstance.hpp"
 #include "shader.hpp"
-#include "canvas.hpp"
-#include "json.hpp"
-
 
 /**
  * @brief Manages the 3D scene, including models and player entities.
@@ -87,9 +85,10 @@ class Scene {
     void updateCompass(glm::vec3 direction);
 
     void updateWindow();
-public:
+
     GLFWwindow* window;
-private:
+
+  private:
     /**
      * @brief Sets up rooms and the objects they contain.
      *

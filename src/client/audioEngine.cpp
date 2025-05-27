@@ -145,7 +145,7 @@ void AudioEngine::stopEvent(const char* eventName, int instanceIndex) {
 }
 
 void AudioEngine::setEventVolume(const char* eventName, float volume0to1) {
-    // std::cout << "AudioEngine: Setting Event Volume\n";
+    //std::cout << "AudioEngine: Setting Event Volume\n";
     ERRCHECK(eventInstances[eventName]->setVolume(volume0to1));
 }
 

@@ -66,6 +66,8 @@ void Server::initRigidBodies() {
             } else if (modelName == "water_00") {
                 object = initWater(data, swamp);
             } else {
+                if (modelName == "bypass_00" && !config::BYPASS)
+                    continue;
                 object = initObject(data, &objects);
             }
 

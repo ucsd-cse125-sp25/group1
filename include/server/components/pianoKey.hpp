@@ -1,8 +1,14 @@
 #pragma once
 
+#include <glm/glm.hpp>
+#include "player.hpp"
+#include "config.hpp"
+#include "rigidBody.hpp"
+
 class PianoKey : public Object {
   public:
-    PianoKey(int id);
+    PianoKey(int id, float kConstant, float dampFactor, glm::vec3 target,
+             glm::vec3 initialPosition);
 
     ~PianoKey() = default;
 
@@ -22,4 +28,10 @@ class PianoKey : public Object {
      * @param otherObject Object to check collision with
      */
     void customCollision(ICustomPhysics* otherObject) override;
+
+  private:
+    float kConstant;
+    float dampFactor;
+    glm::vec3 target;
+    glm::vec3 initialPosition;
 };

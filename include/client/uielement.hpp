@@ -13,10 +13,17 @@ class UIElement {
     ~UIElement();
     void draw(Shader& shader);
     void changeSprite(glm::vec2 coords);
+    void changeDimensions(glm::vec2 dim);
+    void rotate(float deg);
+
+  public:
+    GLfloat widthModifier, heightModifier;
+    glm::vec2 positionModifier;
+    glm::vec3 position;
 
   private:
-    GLfloat width, height;
-    glm::vec3 position;
+    GLfloat baseWidth, baseHeight, angle;
+
     GLuint vao, ebo;
     GLuint vbo[2];
     GLuint texture = 0;

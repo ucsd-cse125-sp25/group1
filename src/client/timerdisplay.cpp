@@ -1,59 +1,130 @@
 #include "timerdisplay.hpp"
+#include <algorithm>
 
-TimerDisplay::TimerDisplay() {
+TimerDisplay::TimerDisplay(glm::vec2 position) {
 
-    lMinute_val = 1;
-    rMinute_val = 0;
-    lSecond_val = 0;
-    rSecond_val = 0;
+    rMinute_val = 9;
+    lSecond_val = 5;
+    rSecond_val = 9;
 
-    pos = glm::vec2(-1.0f, 1.0f);
-    lMinute =
-        new UIElement(glm::vec3(pos.x, pos.y, 0.0f), scale, spriteMap[lMinute_val], uiTexture);
-    rMinute = new UIElement(glm::vec3(pos.x + digitGap, pos.y, 0.0f), scale, spriteMap[rMinute_val],
-                            uiTexture);
-    lSecond = new UIElement(glm::vec3(pos.x + (digitGap * 2.5f), pos.y, 0.0f), scale,
+    // pos = glm::vec2(-1.0f, 1.0f);
+    pos = position;
+    initPos = position;
+    background = new UIElement(glm::vec3(pos.x, pos.y, 0.0f), scale * 4.0f, glm::vec2(0.0f, 0.0f),
+                               backgroundTexture);
+    elements[0] = background;
+
+    glm::vec2 digitsPos = pos + indent;
+    rMinute = new UIElement(glm::vec3(digitsPos.x, digitsPos.y, 0.0f), scale,
+                            spriteMap[rMinute_val], uiTexture);
+    elements[1] = rMinute;
+
+    column = new UIElement(glm::vec3(digitsPos.x + digitGap, digitsPos.y, 0.0f), scale,
+                           spriteMap[10], uiTexture);
+    elements[2] = column;
+
+    lSecond = new UIElement(glm::vec3(digitsPos.x + (digitGap * 2.0f), digitsPos.y, 0.0f), scale,
                             spriteMap[lSecond_val], uiTexture);
-    rSecond = new UIElement(glm::vec3(pos.x + (digitGap * 2.5f) + digitGap, pos.y, 0.0f), scale,
-                            spriteMap[rSecond_val], uiTexture);
+    elements[3] = lSecond;
+
+    rSecond =
+        new UIElement(glm::vec3(digitsPos.x + (digitGap * 2.5f) + digitGap, digitsPos.y, 0.0f),
+                      scale, spriteMap[rSecond_val], uiTexture);
+    elements[4] = rSecond;
 }
 
-TimerDisplay::TimerDisplay(int lMin, int rMin, int lSec, int rSec) {
+TimerDisplay::TimerDisplay(glm::vec2 position, int rMin, int lSec, int rSec) {
 
-    lMinute_val = lMin;
     rMinute_val = rMin;
     lSecond_val = lSec;
     rSecond_val = rSec;
 
-    pos = glm::vec2(-1.0f, 1.0f);
-    lMinute =
-        new UIElement(glm::vec3(pos.x, pos.y, 0.0f), scale, spriteMap[lMinute_val], uiTexture);
-    rMinute = new UIElement(glm::vec3(pos.x + digitGap, pos.y, 0.0f), scale, spriteMap[rMinute_val],
-                            uiTexture);
-    lSecond = new UIElement(glm::vec3(pos.x + (digitGap * 2.5f), pos.y, 0.0f), scale,
+    // pos = glm::vec2(-1.0f, 1.0f);
+    pos = position;
+    initPos = position;
+    background = new UIElement(glm::vec3(pos.x, pos.y, 0.0f), scale * 3.5f, glm::vec2(0.0f, 0.0f),
+                               backgroundTexture);
+    elements[0] = background;
+
+    glm::vec2 digitsPos = pos + indent;
+    rMinute = new UIElement(glm::vec3(digitsPos.x, digitsPos.y, 0.0f), scale,
+                            spriteMap[rMinute_val], uiTexture);
+    elements[1] = rMinute;
+
+    column = new UIElement(glm::vec3(digitsPos.x + digitGap, digitsPos.y, 0.0f), scale,
+                           spriteMap[10], uiTexture);
+    elements[2] = column;
+
+    lSecond = new UIElement(glm::vec3(digitsPos.x + (digitGap * 2.0f), digitsPos.y, 0.0f), scale,
                             spriteMap[lSecond_val], uiTexture);
-    rSecond = new UIElement(glm::vec3(pos.x + (digitGap * 2.5f) + digitGap, pos.y, 0.0f), scale,
-                            spriteMap[rSecond_val], uiTexture);
+    elements[3] = lSecond;
+
+    rSecond =
+        new UIElement(glm::vec3(digitsPos.x + (digitGap * 2.5f) + digitGap, digitsPos.y, 0.0f),
+                      scale, spriteMap[rSecond_val], uiTexture);
+    elements[4] = rSecond;
 }
 
 TimerDisplay::~TimerDisplay() {
-    delete lMinute;
+    delete background;
     delete rMinute;
+    delete column;
     delete lSecond;
     delete rSecond;
 }
 
+void TimerDisplay::changePosition(glm::vec2 position) {
+    pos = position;
+
+    glm::vec2 digitsPos = pos + indent;
+    rMinute->position = glm::vec3(digitsPos.x, digitsPos.y, 0.0f);
+
+    column->position = glm::vec3(digitsPos.x + digitGap, digitsPos.y, 0.0f);
+
+    lSecond->position = glm::vec3(digitsPos.x + (digitGap * 2.0f), digitsPos.y, 0.0f);
+
+    rSecond->position = glm::vec3(digitsPos.x + (digitGap * 2.5f) + digitGap, digitsPos.y, 0.0f);
+}
+
+void TimerDisplay::onWindowUpdate(int width, int height) {
+    std::cout << "(" << width << "," << height << ")" << std::endl;
+    float widthOffset = (1600.0f / (float)width);
+    float heightOffset = (900.0f / (float)height);
+    for (unsigned int i = 0; i < 5; i++) {
+        elements[i]->changeDimensions(glm::vec2(widthOffset, heightOffset));
+    }
+    if (width < 600) {
+        digitGap = .2f;
+        indent = glm::vec2(.48f, -0.04f);
+    } else if (width < 800) {
+        digitGap = .15f;
+        indent = glm::vec2(.38f, -0.04f);
+    } else if (width < 1000) {
+        digitGap = .12f;
+        indent = glm::vec2(.28f, -0.04f);
+    } else if (width < 1200) {
+        digitGap = .1f;
+        indent = glm::vec2(.24f, -0.04f);
+    } else if (width < 1400) {
+        digitGap = .09f;
+        indent = glm::vec2(.2f, -0.04f);
+    } else if (width <= 1600) {
+        digitGap = .07f;
+        indent = glm::vec2(.18f, -0.04f);
+    } else {
+        digitGap = .06f;
+        indent = glm::vec2(.15f, -0.04f);
+    }
+    changePosition(pos);
+    /*std::cout << posMod << std::endl;*/
+}
+
 void TimerDisplay::updateTimer(int minutes, int seconds) {
-    int lMin_curr = minutes / 10;
     int rMin_curr = minutes % 10;
 
     int lSec_curr = seconds / 10;
     int rSec_curr = seconds % 10;
 
-    if (lMinute_val != lMin_curr) {
-        lMinute_val = lMin_curr;
-        lMinute->changeSprite(spriteMap[lMinute_val]);
-    }
     if (rMinute_val != rMin_curr) {
         rMinute_val = rMin_curr;
         rMinute->changeSprite(spriteMap[rMinute_val]);
@@ -70,8 +141,19 @@ void TimerDisplay::updateTimer(int minutes, int seconds) {
 }
 
 void TimerDisplay::draw(Shader& shader) {
-    lMinute->draw(shader);
+    if (hidden)
+        return;
+    background->draw(shader);
     rMinute->draw(shader);
+    column->draw(shader);
     lSecond->draw(shader);
     rSecond->draw(shader);
+}
+
+void TimerDisplay::setHidden(bool val) {
+    hidden = val;
+}
+
+std::string TimerDisplay::getName() {
+    return name;
 }

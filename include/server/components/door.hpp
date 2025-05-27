@@ -7,10 +7,8 @@
 class Door : public Interactable {
   public:
     // Todo: add constructor and destructor
-    Door(int doorID, int room1, int room2, glm::vec3 position,
-         glm::vec3 direction); // doors without locks
-    Door(int doorID, int room1, int room2, int keyID, glm::vec3 position,
-         glm::vec3 direction); // locked doors
+    Door(int doorID, int room1, int room2);            // doors without locks
+    Door(int doorID, int room1, int room2, int keyID); // locked doors
     ~Door() = default;
 
     bool isLocked() const;
@@ -30,10 +28,8 @@ class Door : public Interactable {
   private:
     void openDoor();
     void unlockDoor();
-    int doorID;
     int keyID;
     bool locked;
     bool open;
     int rooms[2];
-    RigidBody body;
 };

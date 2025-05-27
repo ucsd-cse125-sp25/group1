@@ -6,9 +6,14 @@
 UIElement::UIElement(glm::vec3 position, glm::vec2 scale, glm::vec2 initSpriteCoords,
                      UITexture& uiTexture) {
     this->position = position;
-    this->width = scale.x;
-    this->height = scale.y;
+    this->baseWidth = scale.x;
+    this->baseHeight = scale.y;
+    this->widthModifier = 1.0f;
+    this->heightModifier = 1.0f;
     this->uiTexture = uiTexture;
+    this->angle = 0.0f;
+
+    this->positionModifier = glm::vec2(1.0f, 1.0f);
 
     glGenVertexArrays(1, &vao);
     glGenBuffers(2, vbo);
@@ -38,8 +43,9 @@ UIElement::UIElement(glm::vec3 position, glm::vec2 scale, glm::vec2 initSpriteCo
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+                    GL_CLAMP_TO_EDGE); // -> This line causes the weird line to show up
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
@@ -67,9 +73,14 @@ UIElement::UIElement(glm::vec3 position, glm::vec2 scale, glm::vec2 initSpriteCo
 
 UIElement::UIElement(glm::vec3 position, glm::vec2 initSpriteCoords, UITexture& uiTexture) {
     this->position = position;
-    this->width = 1.0f;
-    this->height = 1.0f;
+    this->baseWidth = 1.0f;
+    this->baseHeight = 1.0f;
+    this->widthModifier = 1.0f;
+    this->heightModifier = 1.0f;
     this->uiTexture = uiTexture;
+    this->angle = 0.0f;
+
+    this->positionModifier = glm::vec2(1.0f, 1.0f);
 
     glGenVertexArrays(1, &vao);
     glGenBuffers(2, vbo);
@@ -99,8 +110,9 @@ UIElement::UIElement(glm::vec3 position, glm::vec2 initSpriteCoords, UITexture& 
     glGenTextures(1, &texture);
     glBindTexture(GL_TEXTURE_2D, texture);
 
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+                    GL_CLAMP_TO_EDGE); // -> This line causes the weird line to show up
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
@@ -155,13 +167,27 @@ void UIElement::changeSprite(glm::vec2 coords) {
     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(spriteCoords), spriteCoords);
 }
 
+void UIElement::changeDimensions(glm::vec2 dim) {
+    this->widthModifier = dim.x;
+    this->heightModifier = dim.y;
+}
+
+void UIElement::rotate(float deg) {
+    this->angle = deg;
+}
+
 void UIElement::draw(Shader& shader) {
 
-    shader.use();
     shader.setInt("ourTexture", 0);
-    shader.setVec3("origin", this->position);
-    shader.setFloat("width", this->width);
-    shader.setFloat("height", this->height);
+    shader.setVec3("origin", glm::vec3(position.x * positionModifier.x,
+                                       position.y * positionModifier.y, position.z));
+    shader.setFloat("width", this->widthModifier * this->baseWidth);
+    shader.setFloat("height", this->heightModifier * this->baseHeight);
+    shader.setFloat("angle", glm::radians(this->angle));
+
+    //    glViewport(0, 0, 1600, 900);
+
+    glDepthMask(GL_FALSE); // Disable writing to the depth buffer
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture); // just like other objects (vao, vbo, etc.) we gotta bind
@@ -169,5 +195,7 @@ void UIElement::draw(Shader& shader) {
 
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // 6 indices
+    glDepthMask(GL_TRUE);                                // Disable writing to the depth buffer
+
     glBindVertexArray(0);
 }

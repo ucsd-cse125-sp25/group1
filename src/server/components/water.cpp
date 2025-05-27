@@ -2,7 +2,7 @@
 #include <iostream>
 #include "player.hpp"
 
-Water::Water(int id, Server& serverRef) : id(id), server(serverRef) {}
+Water::Water(int id) : id(id) {}
 
 RigidBody* Water::getBody() {
     return body;

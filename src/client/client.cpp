@@ -14,6 +14,9 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
         return;
 
     float aspect = static_cast<float>(width) / height;
+
+    // scene->updateWindow(window);
+
     client->camera.setAspect(aspect);
 }
 
@@ -288,7 +291,8 @@ void Client::handleMouseInput() {
         return;
 
     glm::vec3 direction = yawToDirection(yaw);
-
+    if (scene)
+        scene->updateCompass(direction);
     json message;
 
     message["type"] = "mouse_input";
@@ -408,6 +412,7 @@ void Client::run() {
 
     initGL();
     initScene();
+    scene->window = window;
     gameLoop(window);
     cleanup(window);
 }

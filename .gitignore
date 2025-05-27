@@ -36,6 +36,10 @@ bld/
 [Ll]ogs/
 out/
 
+tools/
+libs/
+more/
+
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 
@@ -89,5 +93,6 @@ out/
 # VS code settings folder
 .vscode
 
-
 !src/**/Build
+
+**/.cache/

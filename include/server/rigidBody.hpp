@@ -14,7 +14,7 @@
 
 using namespace glm;
 
-#define ACCELERATION_GRAVITY -9.81f
+#define ACCELERATION_GRAVITY -15.0f
 
 /**
  * Interface for implementing custom collision handling for rigid bodies

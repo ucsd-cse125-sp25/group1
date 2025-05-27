@@ -339,5 +339,80 @@
         }
 
       ]
+    },
+    "swampkey_room": {
+        "position": [120.0, 0.0, 0.0],
+        "objects": [
+            {
+                "model": "key_00",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+              "model": "1x1_hotel_room_00",
+              "position": [ 0.0, 0.0, 0.0 ],
+              "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_01",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_02",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_03",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_04",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_05",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_06",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_07",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_08",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_09",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_10",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_11",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            },
+            {
+                "model": "1x1_hotel_room_12",
+                "position": [ 0.0, 0.0, 0.0 ],
+                "rotated": false
+            }
+        ]
     }
 }

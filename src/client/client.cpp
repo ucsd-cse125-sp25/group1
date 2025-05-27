@@ -289,11 +289,13 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
 
             if (!action.empty()) {
                 message["actions"].push_back(action);
-                if (action != "jump" && !audioManager.eventIsPlaying(config::footstepCarpet)) {
+                if (action != "jump" && !audioManager.eventIsPlaying(config::FOOTSTEPCARPET)) {
                     // This is footstep sfx
-                    audioManager.loadFMODStudioEvent(config::footstepCarpet);
-                    audioManager.setEventVolume(config::footstepCarpet, 0.1f);
-                    audioManager.playEvent(config::footstepCarpet);
+                    audioManager.loadFMODStudioEvent(config::FOOTSTEPCARPET);
+                    audioManager.setEventVolume(config::FOOTSTEPCARPET, 0.1f);
+                    audioManager.playEvent(config::FOOTSTEPCARPET);
+                }
+
                 if (action == "jump") {
                     jumpSfxCooldown = false;
                 }

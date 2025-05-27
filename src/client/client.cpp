@@ -112,9 +112,9 @@ bool Client::init() {
     // To play audio, first load in the name of the event, then play the event. Can use
     // setEventVolume to adjust the volume
 
-    audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
+    /*audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
     audioManager.playEvent(config::SWAMP_AMBIENCE_TRACK);
-    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 1.0f);
+    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 1.0f);*/
 
     return true;
 }
@@ -203,7 +203,7 @@ void Client::handleServerMessage(const std::string& message) {
         int clientId = parsed["client_id"];
         if (clientId == this->clientId) {
 
-            const char* sfxID = config::UNLOCKDOOR;
+            const char* sfxID = config::JUMPLILYPAD;
 
             if (jumpSfxCooldown) {
                 return;

@@ -359,6 +359,111 @@
           "rotated": false
         },
         {
+          "model": "swamp_32",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_33",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_34",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_35",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_36",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_37",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_38",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_40",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_41",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_42",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_43",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_44",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_45",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_46",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_47",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_48",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_49",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_50",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_51",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_52",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
+          "model": "swamp_53",
+          "position": [ 0.0, 0.0, 0.0 ],
+          "rotated": false
+        },
+        {
           "model": "lilypad_00",
           "position": [ 22.0, 0.0, 3.0 ],
           "rotated": false

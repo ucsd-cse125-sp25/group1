@@ -10,6 +10,8 @@ inline constexpr const char* SERVER_IP = "127.0.0.1";
 inline constexpr int SERVER_PORT = 1111;
 inline constexpr bool BYPASS = false;
 
+inline constexpr float gravity = -15.0f;
+
 inline constexpr int MAX_PLAYERS = 4;
 inline constexpr int TICK_RATE = 30;
 
@@ -23,23 +25,25 @@ inline constexpr float NEAR_CLIP = 0.1f;
 inline constexpr float FAR_CLIP = 120.0f;
 
 inline constexpr float MAX_PITCH = 89.0f;
-inline constexpr float MIN_PITCH = -89.0f;
+inline constexpr float MIN_PITCH = -45.0f;
 
-inline constexpr glm::vec3 CAMERA_OFFSET = {0.0f, 3.0f, 0.0f};
+inline constexpr glm::vec3 CAMERA_OFFSET = {0.0f, 2.8f, 0.0f};
 
 inline constexpr glm::vec3 PLAYER_SPAWNS[4] = {
-    {-3.0f, 1.0f, 3.0f}, {3.0f, 1.0f, 3.0f}, {-3.0f, 1.0f, -3.0f}, {3.0f, 1.0f, -3.0f}};
+    {-3.0f, 0.0f, 3.0f}, {3.0f, 0.0f, 3.0f}, {-3.0f, 0.0f, -3.0f}, {3.0f, 0.0f, -3.0f}};
 
 // Remove this when we stop using cubes for characters
-inline constexpr glm::vec3 PLAYER_COLORS[4] = {glm::vec3(1.0f, 0.8f, 0.9f),
-                                               glm::vec3(1.0, 0.78, 0.62), glm::vec3(0.8, 0.7, 1.0),
-                                               glm::vec3(0.75, 0.9, 1.0)};
+inline constexpr glm::vec3 PLAYER_COLORS[4] = {
+    glm::vec3(1.0f, 0.2f, 0.6f), glm::vec3(1.0f, 0.7f, 0.4f), glm::vec3(0.4f, 0.7f, 1.0f),
+    glm::vec3(1.0f, 0.93f, 0.55f)};
 
 inline constexpr float PLAYER_SPEED = 10.0f;
 inline constexpr float PLAYER_WEIGHT = 10.0f;
-inline constexpr float PLAYER_WIDTH = 1.0f;
-inline constexpr float PLAYER_HEIGHT = 1.0f;
-inline constexpr float PLAYER_DEPTH = 1.0f;
+
+inline constexpr float PLAYER_WIDTH = 1.64476f;
+inline constexpr float PLAYER_HEIGHT = 3.3f;
+inline constexpr float PLAYER_DEPTH = 2.71356f;
+
 inline constexpr float PLAYER_INTERACT_RANGE = 10.0f;
 
 inline constexpr float MOUSE_SENSITIVITY = 0.1f;

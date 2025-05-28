@@ -10,11 +10,12 @@
 #include <glm/glm.hpp>
 #include <cmath>
 #include "collider.hpp"
+#include "config.hpp"
 #include "transform.hpp"
 
 using namespace glm;
 
-#define ACCELERATION_GRAVITY -15.0f
+constexpr auto ACCELERATION_GRAVITY = config::gravity;
 
 /**
  * Interface for implementing custom collision handling for rigid bodies

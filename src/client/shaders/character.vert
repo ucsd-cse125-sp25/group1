@@ -23,7 +23,7 @@ void main() {
     vec4 worldPos = model * skinMatrix * vec4(aPosition, 1.0);
 
     fragPos = vec3(worldPos);
-    normal = mat3(model * skinMatrix) * aNormal;
+    normal = normalize(mat3(transpose(inverse(model * skinMatrix))) * aNormal);
     texCoords = aTexCoords;
 
     gl_Position = projection * view * worldPos;

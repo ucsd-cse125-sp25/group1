@@ -107,6 +107,9 @@ class Scene {
 
     std::unique_ptr<Model> swampRoomAsset;
     std::unique_ptr<Model> lilypadAsset;
+    std::unique_ptr<Model> frogAsset;
+
+    std::unique_ptr<Model> circusRoomAsset;
 
     std::unique_ptr<Canvas> canvas;
 

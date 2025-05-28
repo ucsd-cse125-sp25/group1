@@ -32,10 +32,15 @@ void Server::initRigidBodies() {
 
     for (const auto& room : layout) {
         vec3 roomPosition = toVec3(room["position"]);
+            cout<<"Room:" <<endl;
 
         for (const auto& obj : room["objects"]) {
+
             string modelName = obj["model"];
-            vec3 position = toVec3(obj["position"]);
+
+            vec3 position = toVec3(obj["position"]);  
+
+            cout << "Modelname: " << modelName << endl;
             vec3 minCorner = toVec3(dimensions[modelName]["min"]);
             vec3 maxCorner = toVec3(dimensions[modelName]["max"]);
 
@@ -66,11 +71,12 @@ void Server::initRigidBodies() {
             } else if (modelName == "water_00") {
                object = initWater(data, swamp);
             } else if (modelName == "key_00") {
+
                 // Special handling for key
-                int keyID = obj["id"]; // make sure your layout.json has a unique key ID
-                std::string roomName = obj["room_name"];
+                //int keyID = obj["id"]; // make sure your layout.json has a unique key ID
+                std::string roomName = "swampkeyRoom";
                 // Key* key = new Key(keyID, "swampRoom", *this);
-                Key* key = new Key(keyID, roomName, *this);
+                Key* key = new Key(0, roomName, *this);
                 object = new RigidBody(
                     vec3(0.0f), vec3(0.0f), 0.0f,
                     new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
@@ -81,6 +87,7 @@ void Server::initRigidBodies() {
                     continue;
                 object = initObject(data, &objects);
             }
+
 
             world.addObject(object);
         }

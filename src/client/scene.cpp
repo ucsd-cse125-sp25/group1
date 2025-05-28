@@ -48,8 +48,6 @@ void Scene::init() {
 
     keyAsset = std::make_unique<Model>("../src/client/models/key.obj");
 
-    keyAsset = std::make_unique<Model>("../src/client/models/key.obj");
-
     canvas = std::make_unique<Canvas>();
 
     initRooms();
@@ -94,8 +92,16 @@ void Scene::initRooms() {
             std::make_unique<ModelInstance>(lilypadAsset.get(), lilypadModel, swampRoom.get());
     }
 
+    // Add the key to the swamp room
+    glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMPKEY_ROOM_POSITION);
+    auto swampKeyRoom = std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel);
+    glm::mat4 keyModel = glm::translate(I4, config::SWAMP_KEY_POSITION);
+    swampKeyRoom->children["key"][0] =
+        std::make_unique<ModelInstance>(keyAsset.get(), keyModel, swampKeyRoom.get());
+
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);
+    modelInstances["swampKeyRoom"] = std::move(swampKeyRoom);
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
@@ -145,7 +151,7 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
 
     // Draw all model instances in the scene
     for (const auto& [name, instance] : modelInstances) {
-        if (name == "hotelRoom") {
+        if (name == "hotelRoom" || name == "swampKeyRoom") {
             shaders["model"]->use();
 
             // This is for testing, will change this later

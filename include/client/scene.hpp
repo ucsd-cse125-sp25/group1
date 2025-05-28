@@ -98,10 +98,6 @@ class Scene {
      */
     void initRooms();
 
-    std::unique_ptr<Animator> animator;
-    std::map<std::string, std::unique_ptr<Animation>> animations;
-
-    std::unique_ptr<AnimatedModel> character;
 
     std::unique_ptr<Animator> animator;
     std::map<std::string, std::unique_ptr<Animation>> animations;

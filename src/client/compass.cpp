@@ -1,5 +1,4 @@
 #include "compass.hpp"
-#include <glm/gtx/string_cast.hpp>
 #include <cmath>
 #include <iostream>
 

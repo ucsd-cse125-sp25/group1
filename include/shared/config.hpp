@@ -40,9 +40,9 @@ inline constexpr glm::vec3 PLAYER_COLORS[4] = {
 inline constexpr float PLAYER_SPEED = 10.0f;
 inline constexpr float PLAYER_WEIGHT = 10.0f;
 
-inline constexpr float PLAYER_WIDTH = 1.64476f;
-inline constexpr float PLAYER_HEIGHT = 3.3f;
-inline constexpr float PLAYER_DEPTH = 2.71356f;
+inline constexpr float PLAYER_WIDTH = 1.53f;
+inline constexpr float PLAYER_HEIGHT = 3.2f;
+inline constexpr float PLAYER_DEPTH = 2.3f;
 
 inline constexpr float PLAYER_INTERACT_RANGE = 10.0f;
 

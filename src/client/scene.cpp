@@ -35,6 +35,9 @@ void Scene::init() {
 
     swampRoomAsset = std::make_unique<Model>("../src/client/models/swamp_room.obj");
     lilypadAsset = std::make_unique<Model>("../src/client/models/lilypad.obj");
+    frogAsset = std::make_unique<Model>("../src/client/models/froggie.obj");
+
+    circusRoomAsset = std::make_unique<Model>("../src/client/models/tent.obj");
 
     canvas = std::make_unique<Canvas>();
 
@@ -54,7 +57,7 @@ void Scene::initRooms() {
 
     // Temporarily remove the door between the hotel room and swamp room until door unlocking is
     // implemented
-    std::array<float, 3> degrees = {90.0f, 180.0f, 270.0f}; // Add 0.0f later
+    std::array<float, 2> degrees = {90.0f, 270.0f}; // Add 0.0f, 180.0f later
 
     for (int i = 0; i < degrees.size(); ++i) {
         glm::mat4 doorModel =
@@ -80,8 +83,18 @@ void Scene::initRooms() {
             std::make_unique<ModelInstance>(lilypadAsset.get(), lilypadModel, swampRoom.get());
     }
 
+    glm::mat4 frogModel = glm::translate(I4, config::FROG_POSITION);
+    frogModel = glm::rotate(frogModel, glm::radians(-120.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    swampRoom->children["frog"][0] =
+        std::make_unique<ModelInstance>(frogAsset.get(), frogModel, swampRoom.get());
+
+    // Circus room
+    glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
+    auto circusRoom = std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel);
+
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);
+    modelInstances["circusRoom"] = std::move(circusRoom);
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
@@ -134,44 +147,40 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
 
     // Draw all model instances in the scene
     for (const auto& [name, instance] : modelInstances) {
+        Shader* shader = nullptr;
+        std::vector<PointLight> testLights;
+
         if (name == "hotelRoom") {
-            shaders["model"]->use();
+            shader = shaders["model"].get();
 
             // This is for testing, will change this later
-            std::vector<PointLight> testLights = {
-                {glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f)},
-            };
+            testLights.emplace_back(glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f));
 
-            // This is for testing, will change this later
-            shaders["model"]->setInt("numLights", testLights.size());
-            for (int i = 0; i < testLights.size(); ++i) {
-                shaders["model"]->setVec3("pointLights[" + std::to_string(i) + "].position",
-                                          testLights[i].position);
-                shaders["model"]->setVec3("pointLights[" + std::to_string(i) + "].color",
-                                          testLights[i].color);
-            }
-
-            instance->drawRecursive(*shaders["model"], boundingBoxMode);
         } else if (name == "swampRoom") {
-            shaders["swamp"]->use();
+            shader = shaders["swamp"].get();
 
             // This is for testing, will change this later
-            std::vector<PointLight> testLights = {
-                {glm::vec3(30.0f, 10.0f, 0.0f), glm::vec3(1.0f)},
-                {glm::vec3(60.0f, 7.0f, 0.0f), glm::vec3(1.0f)},
-            };
+            testLights.emplace_back(glm::vec3(30.0f, 10.0f, 0.0f), glm::vec3(0.3f));
+            testLights.emplace_back(glm::vec3(60.0f, 7.0f, 0.0f), glm::vec3(1.0f));
+
+        } else if (name == "circusRoom") {
+            shader = shaders["model"].get();
 
             // This is for testing, will change this later
-            shaders["swamp"]->setInt("numLights", testLights.size());
-            for (int i = 0; i < testLights.size(); ++i) {
-                shaders["swamp"]->setVec3("pointLights[" + std::to_string(i) + "].position",
-                                          testLights[i].position);
-                shaders["swamp"]->setVec3("pointLights[" + std::to_string(i) + "].color",
-                                          testLights[i].color);
-            }
-
-            instance->drawRecursive(*shaders["swamp"], boundingBoxMode);
+            testLights.emplace_back(glm::vec3(-50.0f, 30.0f, 0.0f), glm::vec3(0.6f));
         }
+
+        shader->use();
+
+        // This is for testing, will change this later
+        shader->setInt("numLights", testLights.size());
+        for (int i = 0; i < testLights.size(); ++i) {
+            shader->setVec3("pointLights[" + std::to_string(i) + "].position",
+                            testLights[i].position);
+            shader->setVec3("pointLights[" + std::to_string(i) + "].color", testLights[i].color);
+        }
+
+        instance->drawRecursive(*shader, boundingBoxMode);
     }
 
     shaders["character"]->use();

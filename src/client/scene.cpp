@@ -1,6 +1,5 @@
 #include "scene.hpp"
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/string_cast.hpp>
 #include <array>
 #include <cmath>
 #include <glad/glad.h>
@@ -18,11 +17,8 @@ Scene::Scene() {}
 Scene::~Scene() {}
 
 void Scene::init() {
-    shader = std::make_unique<Shader>("../src/client/shaders/basic.vert",
-                                      "../src/client/shaders/basic.frag");
-
-    characterShader = std::make_unique<Shader>("../src/client/shaders/character.vert",
-                                               "../src/client/shaders/character.frag");
+    shaders["character"] = std::make_unique<Shader>("../src/client/shaders/character.vert",
+                                                    "../src/client/shaders/character.frag");
 
     shaders["model"] = std::make_unique<Shader>("../src/client/shaders/model.vert",
                                                 "../src/client/shaders/model.frag");
@@ -32,12 +28,6 @@ void Scene::init() {
 
     uiShader =
         std::make_unique<Shader>("../src/client/shaders/ui.vert", "../src/client/shaders/ui.frag");
-
-    character =
-        std::make_unique<AnimatedModel>("../src/client/characters/player_character_idle.fbx");
-
-    animations["idle"] = std::make_unique<Animation>(character->getScene(), character.get());
-    animator = std::make_unique<Animator>(animations["idle"].get());
 
     hotelRoomAsset = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
     tableAsset = std::make_unique<Model>("../src/client/models/table.obj");
@@ -96,7 +86,10 @@ void Scene::initRooms() {
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
     if (!players.contains(id)) {
-        players.emplace(id, Player(id, position, direction));
+        auto [it, inserted] = players.emplace(id, Player(id, position, direction));
+        if (inserted) {
+            it->second.init();
+        }
     } else {
         players.at(id).setPosition(position);
         players.at(id).setDirection(direction);
@@ -181,31 +174,11 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         }
     }
 
-    shader->use();
-
-    shader->setMat4("view", camera.getViewMatrix());
-    shader->setMat4("projection", camera.getProjectionMatrix());
+    shaders["character"]->use();
 
     for (auto& [id, player] : players) {
-        player.draw(*shader, boundingBoxMode);
+        player.draw(*shaders["character"]);
     }
-
-    characterShader->use();
-
-    characterShader->setMat4("view", camera.getViewMatrix());
-    characterShader->setMat4("projection", camera.getProjectionMatrix());
-
-    glm::mat4 characterModel = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
-    characterShader->setMat4("model", characterModel);
-
-    animator->update(1.0f / 60.0f);
-    const auto& boneMatrices = animator->getBoneMatrices();
-
-    for (int i = 0; i < boneMatrices.size(); ++i) {
-        characterShader->setMat4("boneMatrices[" + std::to_string(i) + "]", boneMatrices[i]);
-    }
-
-    character->draw();
 
     // UI
     updateWindow();

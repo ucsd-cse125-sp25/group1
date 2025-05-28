@@ -11,6 +11,13 @@ struct AnimatedSubMesh {
 
     GLuint vao, vbo, ebo;
 
+    glm::vec3 color;
+    glm::vec3 specular;
+    float shininess;
+
+    GLuint textureId = 0;
+    bool hasTexture = false;
+
     /**
      * @brief Sets up the VAO, VBO, and EBO for rendering this sub-mesh with OpenGL.
      *

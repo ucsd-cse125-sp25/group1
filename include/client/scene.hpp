@@ -28,8 +28,9 @@ class Scene {
   public:
     /**
      * @brief Constructs a Scene instance.
+     * @param playerID Player ID.
      */
-    Scene();
+    Scene(int playerID);
 
     /**
      * @brief Destroys the Scene instance.
@@ -97,6 +98,8 @@ class Scene {
      * Called when the scene is initialized.
      */
     void initRooms();
+
+    int playerID;
 
     std::map<std::string, std::unique_ptr<Shader>> shaders;
     std::unique_ptr<Shader> uiShader;

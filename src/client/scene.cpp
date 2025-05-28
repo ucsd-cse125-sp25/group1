@@ -13,7 +13,7 @@ struct PointLight {
     glm::vec3 color;
 };
 
-Scene::Scene() {}
+Scene::Scene(int playerID) : playerID(playerID) {}
 Scene::~Scene() {}
 
 void Scene::init() {
@@ -186,6 +186,9 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
     shaders["character"]->use();
 
     for (auto& [id, player] : players) {
+        if (id == playerID)
+            continue;
+
         player.draw(*shaders["character"]);
     }
 

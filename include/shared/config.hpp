@@ -48,6 +48,8 @@ inline constexpr float PLAYER_INTERACT_RANGE = 10.0f;
 
 inline constexpr float MOUSE_SENSITIVITY = 0.1f;
 
+inline constexpr float CANNONBALL_SPEED = 20.0f;
+
 // Model positions
 inline constexpr glm::vec3 HOTEL_ROOM_POSITION = {0.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 TABLE_POSITION = {0.0f, 0.0f, 0.0f};

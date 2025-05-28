@@ -4,6 +4,9 @@
 #include <memory>
 #include <set>
 #include <string>
+#include "animatedModel.hpp"
+#include "animation.hpp"
+#include "animator.hpp"
 #include "config.hpp"
 #include "cube.hpp"
 #include "shader.hpp"
@@ -36,6 +39,11 @@ class Player {
     Player& operator=(Player&&) noexcept = default;
 
     /**
+     * @brief Initializes all components required for the animated character.
+     */
+    void init();
+
+    /**
      * @brief Draws the player.
      *
      * Applies translation and rotation based on position and facing direction,
@@ -44,7 +52,7 @@ class Player {
      * @param shader Shader program to use for rendering.
      * @param boundingBoxMode If true, draws bounding boxes for debugging.
      */
-    void draw(Shader& shader, bool boundingBoxMode);
+    void draw(Shader& shader);
 
     /**
      * @brief Gets the player's current position.
@@ -160,7 +168,10 @@ class Player {
     glm::vec3 position;  // Current position of the player.
     glm::vec3 direction; // Current facing direction of the player.
 
-    std::unique_ptr<Cube> character; // Cube model representing the player.
+    std::unique_ptr<Animator> animator;
+    std::map<std::string, std::unique_ptr<Animation>> animations;
+
+    std::unique_ptr<AnimatedModel> character;
 
     int currRoomID;       // Room the player is currently in
     std::string name;     // Name chosen by the player

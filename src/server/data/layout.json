@@ -434,7 +434,7 @@
       },
       {
         "model": "water_00",
-        "position": [ 0.0, -7.0, 0.0 ],
+        "position": [ 0.0, 0.0, 0.0 ],
         "rotated": false
       },
       {

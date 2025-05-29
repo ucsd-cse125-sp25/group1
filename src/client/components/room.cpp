@@ -18,16 +18,16 @@ std::string Room::getName() const {
 }
 
 void Room::addInteractable(std::unique_ptr<Interactable> object) {
-  interactables.push_back(std::move(object));
+    interactables.push_back(std::move(object));
 }
 
 // return a vector of raw pointers for read-only access
-std::vector<Interactable *> Room::getInteractables() const {
-  std::vector<Interactable *> out;
-  out.reserve(interactables.size());
-  for (auto &uptr : interactables)
-    out.push_back(uptr.get());
-  return out;
+std::vector<Interactable*> Room::getInteractables() const {
+    std::vector<Interactable*> out;
+    out.reserve(interactables.size());
+    for (auto& uptr : interactables)
+        out.push_back(uptr.get());
+    return out;
 }
 
 void Room::removeInteractable(Interactable* object) {

@@ -11,6 +11,7 @@
 #include "string"
 #include "swamp.hpp"
 #include "world.hpp"
+#include "components/interactable.hpp"
 
 class Swamp;
 
@@ -173,4 +174,5 @@ class Server {
     std::unordered_map<int, std::deque<std::string>> clientMessages;
 
     Swamp* swamp;
+    Interactable* interactableTracked = nullptr;
 };

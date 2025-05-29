@@ -56,6 +56,12 @@ class Swamp : public Room {
      */
     Water* createWaterRespawn();
 
+    /**
+     * @brief Returns references  to the server
+     * @return Server&
+     */
+    Server& getServer();
+
   private:
     /**
      * @brief Number of pads in the swamp game

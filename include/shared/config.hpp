@@ -65,8 +65,8 @@ inline constexpr int SWAMP_NUM_ROWS = 8;
 
 inline constexpr int SWAMP_NUM_LILYPADS = 16; // Total
 
-inline const std::vector<int> SWAMP_SOLUTION = {0, 1, 0, 1, 0, 1, 0, 1};
-inline constexpr const char* SWAMP_AUDIO_FILE = "solution_audio.mp3";
+inline const std::vector<int> SWAMP_SOLUTION = {0, 1, 1, 1, 0, 1, 1, 0};
+inline constexpr const char* SWAMP_AUDIO_FILE = "{9b22e271-4a2c-47cd-8662-1a4f0ddee8de}";
 
 inline constexpr int SWAMP_NUM_FROGS = 3;
 

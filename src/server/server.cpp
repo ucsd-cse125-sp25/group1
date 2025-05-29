@@ -32,7 +32,6 @@ void Server::initRigidBodies() {
 
     for (const auto& room : layout) {
         vec3 roomPosition = toVec3(room["position"]);
-        cout << "Room:" << endl;
 
         for (const auto& obj : room["objects"]) {
 
@@ -40,7 +39,6 @@ void Server::initRigidBodies() {
 
             vec3 position = toVec3(obj["position"]);
 
-            cout << "Modelname: " << modelName << endl;
             vec3 minCorner = toVec3(dimensions[modelName]["min"]);
             vec3 maxCorner = toVec3(dimensions[modelName]["max"]);
 

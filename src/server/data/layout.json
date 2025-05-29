@@ -449,7 +449,7 @@
         }
       ]
     },
-    "swampkey_room": {
+    "swampKeyRoom": {
         "position": [120.0, 0.0, 0.0],
         "objects": [
             {

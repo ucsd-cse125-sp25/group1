@@ -28,6 +28,5 @@ void Key::customCollision(ICustomPhysics* otherObject) {
     std::string packet = message.dump() + "\n";
     server.broadcastMessage(packet);
 
-    std::cout << message << std::endl;
     world.removeObject(this->getBody());
 }

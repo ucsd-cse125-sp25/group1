@@ -70,7 +70,9 @@ RigidBody* initWater(TransformData data, Swamp* swamp) {
     return body;
 }
 
-RigidBody* initKey(TransformData data, Server& server, World& world, const std::string& roomName){//Switch this to ID) 
+RigidBody* initKey(TransformData data, Server& server, World& world,
+                   const std::string& roomName) { // Switch this to ID)
+    // TODO: change this from 0 to whatever key ID
     Key* key = new Key(0, roomName, server, world);
 
     RigidBody* body = new RigidBody(

@@ -41,6 +41,16 @@ Object* Circus::createWall() {
     return newWall;
 }
 
+void stopMusicMessage() {
+    json message;
+    message["type"] = "stop_music";
+
+    return message;
+}
+
 void fireCannons() {
-    // TODO
+    for (CannonBall* cannonBall : cannonBalls) {
+        RigidBody* cannonBallBody = cannonBall->getBody();
+        cannonBallBody.setVelocity(/*TODO*/);
+    }
 }

@@ -5,6 +5,7 @@
 #include <utility>
 #include <vector>
 #include "collider.hpp"
+#include "components/cannonball.hpp"
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "rigidBody.hpp"
@@ -44,6 +45,11 @@ class Circus : public Room {
 
     Object* createWall();
 
+    /**
+     * @brief send a message to the client to stop the music
+     */
+    void stopMusicMessage();
+
     void fireCannons();
 
   private:
@@ -55,11 +61,18 @@ class Circus : public Room {
     int numWalls;
 
     /**
-     * @brief List of lily pads in the swamp game
+     * @brief List of walls in the circus game
      *
-     * A vector of pointers to lilypad. Lilypadd ordering goes right, left, right, left...
+     * A vector of pointers to Objects (walls).
      */
     std::vector<Object*> walls;
+
+    /**
+     * @brief List of cannon balls in the circus game
+     *
+     * A vector of pointers to CannonBalls. Used for firing logic.
+     */
+    std::vector<CannonBall*> cannonBalls;
 
     /**
      * @brief Respawn Point in Swamp Game when player dies

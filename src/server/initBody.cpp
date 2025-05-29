@@ -70,3 +70,15 @@ RigidBody* initWater(TransformData data, Swamp* swamp) {
     return body;
 }
 
+RigidBody* initKey(TransformData data, Server& server, World& world, const std::string& roomName){//Switch this to ID) 
+    Key* key = new Key(0, roomName, server, world);
+
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, key, true);
+
+    key->setBody(body);
+    return body;
+}
+

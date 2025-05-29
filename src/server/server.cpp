@@ -75,12 +75,13 @@ void Server::initRigidBodies() {
                 // std::string roomName = "swampkeyRoom";
                 // Key* key = new Key(keyID, "swampRoom", *this);
                 // Key* key = new Key(0, roomName, *this);
-                Key* key = new Key(0, "swampKeyRoom", *this, world);
-                object = new RigidBody(
-                    vec3(0.0f), vec3(0.0f), 0.0f,
-                    new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
-                    new BoxCollider{NONE, relativeMinCorner, relativeMaxCorner}, key, true);
-                key->setBody(object);
+                object = initKey(data, *this, world, "swampKeyRoom");
+                // Key* key = new Key(0, "swampKeyRoom", *this, world);
+                // object = new RigidBody(
+                //     vec3(0.0f), vec3(0.0f), 0.0f,
+                //     new Transform{roomPosition + position + relativePosition, vec3(0.0f)},
+                //     new BoxCollider{NONE, relativeMinCorner, relativeMaxCorner}, key, true);
+                // key->setBody(object);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;

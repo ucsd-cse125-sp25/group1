@@ -15,6 +15,7 @@
 #include "components/room.hpp"
 #include "config.hpp"
 #include "rigidBody.hpp"
+#include <iostream>
 
 class Interactable;
 class Room;
@@ -80,6 +81,7 @@ class Player : public ICustomPhysics {
      */
     void addKey(int keyID) {
         keyIDs.insert(keyID);
+        std::cout << "Player " << id << " added key with ID: " << keyID << std::endl;
     }
 
     /**

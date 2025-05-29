@@ -8,6 +8,7 @@
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "components/water.hpp"
+#include "components/key.hpp"
 #include "rigidBody.hpp"
 #include "swamp.hpp"
 
@@ -79,3 +80,16 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp);
  * @return Pointer to the initialized RigidBody.
  */
 RigidBody* initWater(TransformData data, Swamp* swamp);
+
+/**
+ * @brief Initializes a Key object with a unique ID and attaches a RigidBody.
+ * 
+ * The Key is created with a reference to the Server and World, allowing it to broadcast pickup events.
+ * 
+ * @param data Transform data including position and collider dimensions.
+ * @param serverRef Reference to the Server instance for broadcasting messages.
+ * @param worldRef Reference to the World instance for managing physics.
+ * @param roomName The name of the room where the key is located.
+ * @return Pointer to the initialized RigidBody associated with the Key.
+ */
+RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef, const std::string& roomName);

@@ -1,6 +1,6 @@
 # Blender 4.4.3
 # www.blender.org
-mtllib key.mtl
+mtllib Key.mtl
 o Key
 v 0.322216 0.420552 -0.021261
 v 0.343932 0.496587 -0.026790

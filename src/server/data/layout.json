@@ -1,452 +1,507 @@
 {
-    "1x1_hotel_room": {
-        "position": [0.0, 0.0, 0.0],
-        "objects": [
-            {
-                "model": "door_00",
-                "position": [ -10.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "door_00",
-                "position": [ 0.0, 0.0, 10.0 ],
-                "rotated": true
-            },
-            {
-                "model": "door_00",
-                "position": [ 0.0, 0.0, -10.0 ],
-                "rotated": true
-            },
-            {
-                "model": "small_table_00",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-              "model": "1x1_hotel_room_00",
-              "position": [ 0.0, 0.0, 0.0 ],
-              "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_01",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_02",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_03",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_04",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_05",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_06",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_07",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_08",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_09",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_10",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_11",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            },
-            {
-                "model": "1x1_hotel_room_12",
-                "position": [ 0.0, 0.0, 0.0 ],
-                "rotated": false
-            }
-        ]
-    },
-    "swamp_room": {
-        "position": [20.0, 0.0, 0.0],
-      "objects": [
-        {
-          "model": "swamp_00",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_01",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_02",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_03",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_04",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_05",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_06",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_07",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_08",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_09",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_10",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_11",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_12",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_13",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_14",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_15",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_16",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_17",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_18",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_19",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_20",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_21",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_22",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_23",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_24",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_25",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_26",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_27",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_28",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_29",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_30",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_31",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_32",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_33",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_34",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_35",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_36",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_37",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_38",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_40",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_41",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_42",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_43",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_44",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_45",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_46",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_47",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_48",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_49",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_50",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_51",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_52",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "swamp_53",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 22.0, 0.0, 3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 22.0, 0.0, -3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 30.0, 0.0, 3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 30.0, 0.0, -3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 38.0, 0.0, 3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 38.0, 0.0, -3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 46.0, 0.0, 3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 46.0, 0.0, -3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 54.0, 0.0, 3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 54.0, 0.0, -3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 62.0, 0.0, 3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 62.0, 0.0, -3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 70.0, 0.0, 3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 70.0, 0.0, -3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 78.0, 0.0, 3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "lilypad_00",
-          "position": [ 78.0, 0.0, -3.0 ],
-          "rotated": false
-        },
-        {
-          "model": "water_00",
-          "position": [ 0.0, -7.0, 0.0 ],
-          "rotated": false
-        },
-        {
-          "model": "bypass_00",
-          "position": [ 0.0, 0.0, 0.0 ],
-          "rotated": false
-        }
-      ]
-    }
+  "1x1_hotel_room": {
+    "position": [0.0, 0.0, 0.0],
+    "objects": [
+      {
+        "model": "door_00",
+        "position": [ 0.0, 0.0, 10.0 ],
+        "rotated": true
+      },
+      {
+        "model": "door_00",
+        "position": [ 0.0, 0.0, -10.0 ],
+        "rotated": true
+      },
+      {
+        "model": "small_table_00",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_00",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_01",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_02",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_03",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_04",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_05",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_06",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_07",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_08",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_09",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_10",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_11",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_12",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      }
+    ]
+  },
+  "swamp_room": {
+    "position": [20.0, 0.0, 0.0],
+    "objects": [
+      {
+        "model": "swamp_00",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_01",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_02",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_03",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_04",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_05",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_06",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_07",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_08",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_09",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_10",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_11",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_12",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_13",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_14",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_15",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_16",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_17",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_18",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_19",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_20",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_21",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_22",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_23",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_24",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_25",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_26",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_27",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_28",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_29",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_30",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_31",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_32",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_33",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_34",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_35",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_36",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_37",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_38",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_40",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_41",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_42",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_43",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_44",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_45",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_46",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_47",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_48",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_49",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_50",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_51",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_52",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "swamp_53",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 22.0, 0.0, 3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 22.0, 0.0, -3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 30.0, 0.0, 3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 30.0, 0.0, -3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 38.0, 0.0, 3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 38.0, 0.0, -3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 46.0, 0.0, 3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 46.0, 0.0, -3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 54.0, 0.0, 3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 54.0, 0.0, -3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 62.0, 0.0, 3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 62.0, 0.0, -3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 70.0, 0.0, 3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 70.0, 0.0, -3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 78.0, 0.0, 3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "lilypad_00",
+        "position": [ 78.0, 0.0, -3.0 ],
+        "rotated": false
+      },
+      {
+        "model": "water_00",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "bypass_00",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "frog_00",
+        "position": [ 7.0, 0.0, 4.0 ],
+        "rotated": false
+      }
+    ]
+  },
+  "circus_room": {
+    "position": [-50.0, 0.0, 0.0],
+    "objects": [
+      {
+        "model": "circus_00",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "circus_01",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "circus_02",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "circus_03",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "circus_04",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "circus_05",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "circus_06",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "circus_07",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "circus_08",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      },
+      {
+        "model": "circus_09",
+        "position": [ 0.0, 0.0, 0.0 ],
+        "rotated": false
+      }
+    ]
+  }
 }

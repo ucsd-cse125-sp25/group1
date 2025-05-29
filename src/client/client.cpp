@@ -114,7 +114,7 @@ bool Client::init() {
 
     audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
     audioManager.playEvent(config::SWAMP_AMBIENCE_TRACK);
-    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 1.0f);
+    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 0.2f);
 
     return true;
 }
@@ -204,11 +204,16 @@ void Client::handleServerMessage(const std::string& message) {
         int clientId = parsed["client_id"];
         std::string action = parsed["action"];
 
+        audioManager.stopEvent(sfxID); // Stop the event if it's already playing
         if (clientId == this->clientId) {
             audioManager.loadFMODStudioEvent(sfxID);
             audioManager.playEvent(sfxID);
             audioManager.setEventVolume(sfxID, 1.0f);
         }
+    } else if (type == "interactable_nearby") {
+        // TODO: Trigger UI
+    } else if (type == "interactable_not_nearby") {
+        // TODO: untrigger UI
     }
 }
 
@@ -283,7 +288,8 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
 
             if (!action.empty()) {
                 message["actions"].push_back(action);
-                if (action != "jump" && !audioManager.eventIsPlaying(config::FOOTSTEPCARPET)) {
+                if (action != "jump" && action != "interact" &&
+                    !audioManager.eventIsPlaying(config::FOOTSTEPCARPET)) {
                     // This is footstep sfx
                     audioManager.loadFMODStudioEvent(config::FOOTSTEPCARPET);
                     audioManager.setEventVolume(config::FOOTSTEPCARPET, 0.1f);

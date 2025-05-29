@@ -52,7 +52,7 @@ inline constexpr float MOUSE_SENSITIVITY = 0.1f;
 inline constexpr glm::vec3 HOTEL_ROOM_POSITION = {0.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 TABLE_POSITION = {0.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 SWAMP_ROOM_POSITION = {20.0f, 0.0f, 0.0f};
-inline constexpr glm::vec3 SWAMPKEY_ROOM_POSITION = {120.0f, 0.0f, 0.0f};
+inline constexpr glm::vec3 SWAMPKEY_ROOM_POSITION = {120.1f, 0.0f, 0.0f};
 inline constexpr glm::vec3 SWAMP_KEY_POSITION = {0.0f, 1.0f, 0.0f};
 
 // Swamp Related Configs

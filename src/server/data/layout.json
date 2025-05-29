@@ -450,7 +450,7 @@
       ]
     },
     "swampKeyRoom": {
-        "position": [120.0, 0.0, 0.0],
+        "position": [120.1, 0.0, 0.0],
         "objects": [
             {
                 "model": "key_00",

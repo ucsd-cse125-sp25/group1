@@ -180,8 +180,9 @@ static glm::vec3 toVec3(json arr) {
 
 void Client::handleServerMessage(const std::string& message) {
     json parsed = json::parse(message);
+    std::cout << "parsed is: " << parsed << std::endl;
+    std::cout << "parsed[type] is: " << parsed["type"] << std::endl;
     std::string type = parsed.value("type", "");
-
     if (type == "player_states") {
         updatePlayerStates(parsed);
     } else if (type == "time_left") {
@@ -196,9 +197,13 @@ void Client::handleServerMessage(const std::string& message) {
 
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
     } else if (type == "key_pickup") {
+        std::cout << "In key_pickup if!" << std::endl;
         auto id = parsed["id"];
-        auto roomName = parsed["room_name"];
+        std::cout << "id is" << id << std::endl;
+        auto roomName = parsed["room"];
+        std::cout << "roomName is " << roomName << std::endl;
         scene->removeInstanceFromRoom(roomName, "key", id);
+        std::cout << "key removed successfully! " << std::endl;
     }
     // Need to also udpate object states
 }

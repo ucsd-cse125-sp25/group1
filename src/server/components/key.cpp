@@ -7,25 +7,9 @@
 
 using json = nlohmann::json;
 
-Key::Key(int id, std::string room, Server& serverRef)
-    : keyID(id), roomName(room), server(serverRef) {}
+Key::Key(int id, std::string room, Server& serverRef, World& worldRef)
+    : Object(id), roomName(room), server(serverRef), world(worldRef) {}
 // player position relative to room will this impact collision?
-
-RigidBody* Key::getBody() {
-    return body;
-}
-
-void Key::setBody(RigidBody* newBody) {
-    body = newBody;
-}
-
-int Key::getID() const {
-    return keyID;
-}
-
-std::string Key::getRoomName() const {
-    return roomName;
-}
 
 void Key::customCollision(ICustomPhysics* otherObject) {
 
@@ -37,11 +21,13 @@ void Key::customCollision(ICustomPhysics* otherObject) {
 
     json message;
     message["type"] = "key_pickup";
-    message["room_name"] = roomName; // Room where the key is located
-    message["id"] = keyID;
-    playerPtr->addKey(keyID);
+    message["room"] = roomName;
+    message["id"] = this->getID();
+    playerPtr->addKey(this->getID());
 
     std::string packet = message.dump() + "\n";
     server.broadcastMessage(packet);
 
+    std::cout << message << std::endl;
+    world.removeObject(this->getBody());
 }

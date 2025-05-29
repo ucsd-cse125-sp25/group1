@@ -1,11 +1,14 @@
 #pragma once
 #include <glm/glm.hpp>
-#include "rigidBody.hpp"
 #include <string>
+#include "rigidBody.hpp"
+#include "server.hpp"
+#include "world.hpp"
 
 class Server;
+class World;
 
-class Key : public ICustomPhysics {
+class Key : public Object {
   public:
     /**
      * @brief Constructs a Key object with a given ID and room name.
@@ -13,24 +16,11 @@ class Key : public ICustomPhysics {
      * @param id The unique identifier for the key.
      * @param room The name of the room where the key is located.
      * @param serverRef Reference to the Server instance for broadcasting messages.
+     * @param worldRef Reference to the physics world instance for removing its rigidBody.
      */
-    Key(int id, std::string room, Server& serverRef);
+    Key(int id, std::string room, Server& serverRef, World& worldRef);
 
     ~Key() = default;
-
-    /**
-     * @brief Returns the rigid body of the object.
-     *
-     * @return RigidBody* reference to the object's rigid body.
-     */
-    RigidBody* getBody();
-
-    /**
-     * @brief Sets the rigid body of the object.
-     *
-     * @param newBody The new rigid body to set.
-     */
-    void setBody(RigidBody* newBody);
 
     /**
      * @brief custom collision response of lilypad
@@ -39,23 +29,9 @@ class Key : public ICustomPhysics {
      */
     void customCollision(ICustomPhysics* otherObject) override;
 
-    /**
-     * @brief Returns the ID of the key.
-     *
-     * @return int ID of the key.
-     */
-    int getID() const;
-
-    /**
-     * @brief Returns the name of the room where the key is located.
-     *
-     * @return std::string Name of the room.
-     */
-    std::string getRoomName() const;
-
   private:
-    int keyID;
     std::string roomName;
     RigidBody* body = nullptr;
     Server& server;
+    World& world;
 };

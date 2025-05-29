@@ -72,6 +72,10 @@ inline constexpr int SWAMP_NUM_FROGS = 3;
 inline constexpr float SWAMP_LILYPAD_WIDTH = 1.0f;
 inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;
 
+// Circus Related Configs
+inline constexpr glm::vec3 CIRCUS_RESPAWN = {-51.0f, 1.0f, 0.0f};
+
+// Sound effects
 // TODO: Convert GUID to event names
 inline constexpr const char* SWAMP_AMBIENCE_TRACK = "{25c216fb-36d9-42c9-bd0f-4662b826ff2a}";
 inline constexpr const char* footstepCarpet = "{5a18903c-2b5f-4fd0-b153-63a502130d90}";

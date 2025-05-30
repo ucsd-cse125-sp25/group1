@@ -114,7 +114,7 @@ bool Client::init() {
 
     audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
     audioManager.playEvent(config::SWAMP_AMBIENCE_TRACK);
-    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 1.0f);
+    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 0.2f);
 
     return true;
 }
@@ -195,6 +195,25 @@ void Client::handleServerMessage(const std::string& message) {
         auto id = parsed["id"];
 
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
+    } else if (type == "sfx") {
+        // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,
+        // "action": "jump"} client id that of the person triggering the sfx
+
+        std::string sfxIDStr = parsed["sfx_id"];
+        const char* sfxID = sfxIDStr.c_str();
+        int clientId = parsed["client_id"];
+        std::string action = parsed["action"];
+
+        audioManager.stopEvent(sfxID); // Stop the event if it's already playing
+        if (clientId == this->clientId) {
+            audioManager.loadFMODStudioEvent(sfxID);
+            audioManager.playEvent(sfxID);
+            audioManager.setEventVolume(sfxID, 1.0f);
+        }
+    } else if (type == "interactable_nearby") {
+        // TODO: Trigger UI
+    } else if (type == "interactable_not_nearby") {
+        // TODO: untrigger UI
     }
 }
 
@@ -269,11 +288,12 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
 
             if (!action.empty()) {
                 message["actions"].push_back(action);
-                if (action != "jump" && !audioManager.eventIsPlaying(config::footstepCarpet)) {
+                if (action != "jump" && action != "interact" &&
+                    !audioManager.eventIsPlaying(config::FOOTSTEPCARPET)) {
                     // This is footstep sfx
-                    audioManager.loadFMODStudioEvent(config::footstepCarpet);
-                    audioManager.setEventVolume(config::footstepCarpet, 0.1f);
-                    audioManager.playEvent(config::footstepCarpet);
+                    audioManager.loadFMODStudioEvent(config::FOOTSTEPCARPET);
+                    audioManager.setEventVolume(config::FOOTSTEPCARPET, 0.1f);
+                    audioManager.playEvent(config::FOOTSTEPCARPET);
                 }
             }
         }

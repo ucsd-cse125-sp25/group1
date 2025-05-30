@@ -11,6 +11,15 @@ Door::Door(int doorID, int room1, int room2) : Door(doorID, room1, room2, -1) {
     rooms[1] = room2;
 }
 
+void Door::setRoomZones(RigidBody* room1, RigidBody* room2) {
+    roomZones[0] = room1;
+    roomZones[1] = room2;
+}
+
+int Door::getRoomID(int index) const {
+    return rooms[index];
+}
+
 void Door::handleInteract(const Player& player) {
     if (!locked) {
         openDoor();
@@ -25,7 +34,8 @@ void Door::handleInteract(const Player& player) {
 
 void Door::openDoor() {
     open = true;
-    // TODO: move rigid body
+    delete this->getBody();
+    this->setBody(nullptr);
 }
 
 void Door::unlockDoor() {

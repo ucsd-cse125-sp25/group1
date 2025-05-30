@@ -6,13 +6,15 @@
 
 class Door : public Interactable {
   public:
-    // Todo: add constructor and destructor
+    // NOTE: first index is ALWAYS the negative most side of the door
     Door(int doorID, int room1, int room2);            // doors without locks
     Door(int doorID, int room1, int room2, int keyID); // locked doors
     ~Door() = default;
 
     bool isLocked() const;
     bool isOpen() const;
+    void setRoomZones(RigidBody* room1, RigidBody* room2);
+    int getRoomID(int index) const;
 
   protected:
     /**
@@ -32,4 +34,5 @@ class Door : public Interactable {
     bool locked;
     bool open;
     int rooms[2];
+    RigidBody* roomZones[2] = {nullptr, nullptr};
 };

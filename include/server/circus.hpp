@@ -9,10 +9,12 @@
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "rigidBody.hpp"
+#include "server.hpp"
 #include "world.hpp"
 
 class Server;
 class World;
+// class Cannonball;
 
 class Circus : public Room {
   public:
@@ -45,6 +47,8 @@ class Circus : public Room {
 
     Object* createWall();
 
+    Cannonball* createCannonball(glm::vec3 cannonPosition);
+
     /**
      * @brief send a message to the client to stop the music
      */
@@ -61,6 +65,13 @@ class Circus : public Room {
     int numWalls;
 
     /**
+     * @brief Number of cannonballs in the circus game
+     *
+     * incremented as cannonballs created to reach the total number of cannonballs
+     */
+    int numCannonballs;
+
+    /**
      * @brief List of walls in the circus game
      *
      * A vector of pointers to Objects (walls).
@@ -68,11 +79,11 @@ class Circus : public Room {
     std::vector<Object*> walls;
 
     /**
-     * @brief List of cannon balls in the circus game
+     * @brief List of cannonballs in the circus game
      *
-     * A vector of pointers to CannonBalls. Used for firing logic.
+     * A vector of pointers to Cannonballs. Used for firing logic.
      */
-    std::vector<CannonBall*> cannonBalls;
+    std::vector<Cannonball*> cannonballs;
 
     /**
      * @brief Respawn Point in Swamp Game when player dies
@@ -86,5 +97,9 @@ class Circus : public Room {
      */
     World& world;
 
+    /**
+     * @brief Reference to the server
+     *
+     */
     Server& server;
 };

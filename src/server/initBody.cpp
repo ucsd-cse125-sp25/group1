@@ -73,3 +73,28 @@ RigidBody* initWater(TransformData data, Swamp* swamp) {
     waterRespawnPlane->setBody(body);
     return body;
 }
+
+RigidBody* initCannonball(TransformData data, Circus* circus) {
+    glm::vec3 absolutePosition = data.roomPosition + data.position + data.relativePosition;
+    // TODO: is this bad? createCannonball expects cannon position, but we give cannonball position
+    Cannonball* cannonball = circus->createCannonball(absolutePosition);
+
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f, new Transform{absolutePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, cannonball, true);
+
+    cannonball->setBody(body);
+    return body;
+}
+
+RigidBody* initWall(TransformData data, Circus* circus) {
+    Object* wall = circus->createWall();
+
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, wall, true);
+
+    wall->setBody(body);
+    return body;
+}

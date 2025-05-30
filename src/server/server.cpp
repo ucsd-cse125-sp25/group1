@@ -17,6 +17,7 @@ Server::Server()
 
 Server::~Server() {
     delete swamp;
+    delete circus;
 }
 
 static vec3 toVec3(const json& arr) {
@@ -65,6 +66,12 @@ void Server::initRigidBodies() {
                 object = initLilyPad(data, swamp);
             } else if (modelName == "water_00") {
                 object = initWater(data, swamp);
+            } else if (modelName == "cannonball_00") {
+                // TODO: should it take in &objects like initFrog does?
+                object = initCannonball(data, circus);
+            } else if (modelName == "wall_00") {
+                // TODO: should it take in &objects like initFrog does?
+                object = initWall(data, circus);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;
@@ -80,7 +87,9 @@ bool Server::init() {
     std::cout << "IP Address: " << config::SERVER_IP << "\nPort: " << config::SERVER_PORT << "\n";
 
     swamp = new Swamp(1, world, *this);
+    circus = new Circus(2, world, *this);
     rooms[1] = swamp;
+    rooms[2] = circus;
 
     initRigidBodies();
 

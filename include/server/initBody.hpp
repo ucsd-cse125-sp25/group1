@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <unordered_map>
+#include "circus.hpp"
 #include "components/door.hpp"
 #include "components/frog.hpp"
 #include "components/lilypad.hpp"
@@ -12,6 +13,7 @@
 #include "swamp.hpp"
 
 class Swamp;
+class Circus;
 
 struct TransformData {
     glm::vec3 roomPosition;
@@ -80,3 +82,25 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp);
  * @return Pointer to the initialized RigidBody.
  */
 RigidBody* initWater(TransformData data, Swamp* swamp);
+
+/**
+ * @brief Initializes a cannonball entity via the Circus pointer and assigns it a RigidBody.
+ *
+ * A RigidBody is initialized with provided transform data and linked to the cannonball.
+ *
+ * @param data Transform data for positioning and bounding the cannonball.
+ * @param swamp Pointer to the owning Circus environment.
+ * @return Pointer to the initialized RigidBody.
+ */
+RigidBody* initCannonball(TransformData data, Circus* circus);
+
+/**
+ * @brief Initializes a wall entity via the Circus pointer and assigns it a RigidBody.
+ *
+ * A RigidBody is initialized with provided transform data and linked to the wall.
+ *
+ * @param data Transform data for positioning and bounding the wall.
+ * @param swamp Pointer to the owning Circus environment.
+ * @return Pointer to the initialized RigidBody.
+ */
+RigidBody* initWall(TransformData data, Circus* circus);

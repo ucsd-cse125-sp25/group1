@@ -1,7 +1,7 @@
 #include "circus.hpp"
 #include <iostream>
 
-Circus::Circus(int roomID) : Room(roomID), audioFile(audioFile) {}
+Circus::Circus(int roomID) : Room(roomID) {}
 
 Circus::~Circus() {}
 

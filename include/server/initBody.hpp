@@ -9,8 +9,10 @@
 #include "components/room.hpp"
 #include "components/water.hpp"
 #include "components/key.hpp"
+#include "config.hpp"
 #include "rigidBody.hpp"
 #include "swamp.hpp"
+#include "world.hpp"
 
 class Swamp;
 
@@ -44,7 +46,8 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
  * @param doors Pointer to the server's map storing Door instances.
  * @return Pointer to the initialized RigidBody.
  */
-RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors);
+RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
+                    std::unordered_map<int, Room*>* rooms, World* world);
 
 /**
  * @brief Initializes a Frog object with a unique ID and default RigidBody.

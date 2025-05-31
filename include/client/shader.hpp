@@ -23,6 +23,17 @@ class Shader {
     Shader(const std::string& vertPath, const std::string& fragPath);
 
     /**
+     * @brief Constructs a Shader instance from vertex, fragment, and geometry shader files.
+     *
+     * Loads, compiles, and links the shaders into a shader program.
+     *
+     * @param vertPath Path to the vertex shader source file.
+     * @param fragPath Path to the fragment shader source file.
+     * @param geomPath Path to the geometry shader source file.
+     */
+    Shader(const std::string& vertPath, const std::string& fragPath, const std::string& geomPath);
+
+    /**
      * @brief Activates the shader program for rendering.
      */
     void use() const;

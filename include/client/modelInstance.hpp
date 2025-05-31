@@ -19,6 +19,7 @@ struct ModelInstance {
     Model* model;
     glm::mat4 localTransform;
     ModelInstance* parent;
+    bool isStatic;
 
     /**
      * @brief Stores all child model instances grouped by type and ID.
@@ -36,8 +37,8 @@ struct ModelInstance {
      * @param parent Optional parent instance for hierarchical transforms.
      */
     ModelInstance(Model* model, const glm::mat4& localTransform = glm::mat4(1.0f),
-                  ModelInstance* parent = nullptr)
-        : model(model), localTransform(localTransform), parent(parent) {}
+                  ModelInstance* parent = nullptr, bool isStatic = true)
+        : model(model), localTransform(localTransform), parent(parent), isStatic(isStatic) {}
 
     /**
      * @brief Computes the world transform of this instance.

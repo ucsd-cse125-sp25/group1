@@ -16,7 +16,9 @@
 #include "json.hpp"
 #include "model.hpp"
 #include "modelInstance.hpp"
+#include "pointLight.hpp"
 #include "shader.hpp"
+#include "shadowMap.hpp"
 
 /**
  * @brief Manages the 3D scene, including models and player entities.
@@ -72,6 +74,11 @@ class Scene {
     void removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id);
 
     /**
+     * @brief Renders shadow maps for static geometry.
+     */
+    void renderStaticShadowPass();
+
+    /**
      * @brief Renders the entire scene.
      *
      * Draws static models and dynamic player cubes.
@@ -99,7 +106,20 @@ class Scene {
      */
     void initRooms();
 
+    /**
+     * @brief Initializes point lights per room.
+     */
+    void initLights();
+
+    /**
+     * @brief Initializes shadow maps for all point lights.
+     */
+    void initShadowMaps();
+
     int playerID;
+
+    std::unordered_map<std::string, std::vector<PointLight>> pointLights;
+    std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> staticShadowMaps;
 
     std::map<std::string, std::unique_ptr<Shader>> shaders;
     std::unique_ptr<Shader> uiShader;
@@ -116,7 +136,7 @@ class Scene {
 
     std::unique_ptr<Canvas> canvas;
 
-    std::map<std::string, std::unique_ptr<ModelInstance>>
+    std::unordered_map<std::string, std::unique_ptr<ModelInstance>>
         modelInstances; // Top-level model instances with their child models.
 
     std::unordered_map<int, Player> players; // Active players in the scene.

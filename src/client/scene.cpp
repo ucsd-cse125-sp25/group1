@@ -99,7 +99,7 @@ void Scene::initLights() {
     pointLights["hotelRoom"] = {PointLight(glm::translate(I4, config::HOTEL_ROOM_POSITION),
                                            glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
     pointLights["swampRoom"] = {PointLight(glm::translate(I4, config::SWAMP_ROOM_POSITION),
-                                           glm::vec3(40.0f, 10.0f, 0.0f), glm::vec3(0.7f)),
+                                           glm::vec3(30.0f, 10.0f, 0.0f), glm::vec3(0.7f)),
                                 PointLight(glm::translate(I4, config::SWAMP_ROOM_POSITION),
                                            glm::vec3(70.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
     pointLights["circusRoom"] = {PointLight(glm::translate(I4, config::CIRCUS_ROOM_POSITION),
@@ -150,7 +150,6 @@ void Scene::renderStaticShadowPass() {
             Shader& shader = shadowMap->getShader();
             shader.setBool("isSkinned", false);
             modelInstances[name]->drawRecursive(shader, false);
-            shader.setBool("isSkinned", false);
 
             shadowMap->end();
         }

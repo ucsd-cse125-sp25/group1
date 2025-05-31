@@ -63,6 +63,7 @@ void Player::handleMovementInput(const std::vector<std::string> actions) {
         (abs(body.getVelocity().y) < 1e-6f)) {
         // if grounded, jump
         moveDirection.y = 0.5f;
+        jumpSfxCooldown = false;
     }
 
     body.setVelocity(body.getVelocity() + moveDirection * config::PLAYER_SPEED);
@@ -108,6 +109,18 @@ Interactable* Player::getNearestInteractable(Room* room) {
     }
 
     return closestInteractable;
+}
+
+int Player::getID() const {
+    return id;
+}
+
+bool Player::getJumpSfxCooldown() const {
+    return jumpSfxCooldown;
+}
+
+void Player::setJumpSfxCooldown(bool value) {
+    jumpSfxCooldown = value;
 }
 
 void Player::customCollision(ICustomPhysics* otherObject) {}

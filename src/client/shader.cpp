@@ -3,34 +3,53 @@
 #include <iostream>
 #include <sstream>
 
-Shader::Shader(const std::string& vertPath, const std::string& fragPath) {
-    std::ifstream vertFile(vertPath);
-    std::ifstream fragFile(fragPath);
+static GLuint compileShaderFromFile(const std::string& path, GLenum type) {
+    std::ifstream file(path);
 
-    std::stringstream vertStream, fragStream;
-    vertStream << vertFile.rdbuf();
-    fragStream << fragFile.rdbuf();
+    if (!file.is_open()) {
+        std::cerr << "Error: Failed to open shader file: " << path << "\n";
+        return 0; // invalid shader
+    }
 
-    std::string vertStr = vertStream.str();
-    std::string fragStr = fragStream.str();
-    const char* vert = vertStr.c_str();
-    const char* frag = fragStr.c_str();
+    std::stringstream sourceStream;
+    sourceStream << file.rdbuf();
 
-    GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex, 1, &vert, nullptr);
-    glCompileShader(vertex);
+    std::string sourceStr = sourceStream.str();
+    const char* source = sourceStr.c_str();
 
-    GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment, 1, &frag, nullptr);
-    glCompileShader(fragment);
+    GLuint shader = glCreateShader(type);
+    glShaderSource(shader, 1, &source, nullptr);
+    glCompileShader(shader);
+
+    return shader;
+}
+
+Shader::Shader(const std::string& vertPath, const std::string& fragPath)
+    : Shader(vertPath, fragPath, "") {}
+
+Shader::Shader(const std::string& vertPath, const std::string& fragPath,
+               const std::string& geomPath) {
+    GLuint vertex = compileShaderFromFile(vertPath, GL_VERTEX_SHADER);
+    GLuint fragment = compileShaderFromFile(fragPath, GL_FRAGMENT_SHADER);
+    GLuint geometry = 0;
+
+    bool hasGeometry = !geomPath.empty();
+
+    if (hasGeometry) {
+        geometry = compileShaderFromFile(geomPath, GL_GEOMETRY_SHADER);
+    }
 
     id = glCreateProgram();
     glAttachShader(id, vertex);
     glAttachShader(id, fragment);
+    if (hasGeometry)
+        glAttachShader(id, geometry);
     glLinkProgram(id);
 
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+    if (hasGeometry)
+        glDeleteShader(geometry);
 }
 
 void Shader::use() const {

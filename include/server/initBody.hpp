@@ -54,9 +54,10 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors);
  *
  * @param data Transform and collider bounds.
  * @param objects Pointer to the server's object map.
+ * @param swamp Pointer to the Swamp environment managing the Frog.
  * @return Pointer to the initialized RigidBody.
  */
-RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* objects);
+RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* objects, Swamp* swamp);
 
 /**
  * @brief Initializes a lily pad entity via the Swamp object and assigns it a RigidBody.

@@ -30,16 +30,20 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors) {
     return body;
 }
 
-RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* objects) {
-    Frog* frog = new Frog(objects->size());
-    (*objects)[frog->getID()] = frog;
+RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* objects, Swamp* swamp) {
+    auto frog = std::make_unique<Frog>(objects->size(), swamp);
+
+    Frog* frogPtr = frog.get();
+    (*objects)[frog->getID()] = frog.get();
+
+    swamp->addInteractable(std::move(frog));
 
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, frog, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, frogPtr, true);
 
-    frog->setBody(body);
+    frogPtr->setBody(body);
     return body;
 }
 

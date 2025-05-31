@@ -150,10 +150,32 @@ class Player : public ICustomPhysics {
 
     void customCollision(ICustomPhysics* otherObject) override;
 
+    /**
+     * @brief Returns the ID of the player.
+     *
+     * @return Player ID as an integer.
+     */
+    int getID() const;
+
+    /**
+     * @brief Returns the value of jumpsfxcooldown
+     *
+     * @return bool
+     */
+    bool getJumpSfxCooldown() const;
+
+    /**
+     * @brief Sets the value of jumpsfxcooldown
+     *
+     * @param value The new value for jumpSfxCooldown.
+     */
+    void setJumpSfxCooldown(bool value);
+
   private:
     int id;
     std::string name;
     int curRoomID;
     RigidBody body;
     std::set<int> keyIDs; // Keys (by ID) the player has collected
+    bool jumpSfxCooldown = false;
 };

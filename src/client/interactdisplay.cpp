@@ -3,6 +3,7 @@
 InteractDisplay::InteractDisplay(glm::vec2 pos) {
     name = "interactdisplay";
     position = glm::vec2(pos.x, pos.y);
+    hidden = true;
     scale = glm::vec2(0.6f, 0.6f);
     uiTexture = {"../src/client/ui/interact.png", glm::vec2(1024.0f, 1024.0f),
                  glm::vec2(1024.0f, 1024.0f)};

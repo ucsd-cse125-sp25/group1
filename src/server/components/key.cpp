@@ -16,6 +16,7 @@ void Key::customCollision(ICustomPhysics* otherObject) {
     // Collision response for Key
     Player* playerPtr = dynamic_cast<Player*>(otherObject);
     if (!playerPtr) {
+        std::cerr << "Key collided with non-player object." << std::endl;
         return;
     }
 

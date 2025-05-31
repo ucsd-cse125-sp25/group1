@@ -227,7 +227,7 @@ void Client::updatePlayerStates(const json& parsed) {
 }
 
 void Client::updateGameTimer(const json& parsed) {
-    scene->updateTimer(parsed["minutes"], parsed["seconds"]);
+    scene->canvas->updateTimer(parsed["minutes"], parsed["seconds"]);
 }
 
 static std::string mapKeyToAction(int key) {
@@ -290,7 +290,7 @@ void Client::handleMouseInput() {
 
     glm::vec3 direction = yawToDirection(yaw);
     if (scene)
-        scene->updateCompass(direction);
+        scene->canvas->updateCompass(direction);
     json message;
 
     message["type"] = "mouse_input";

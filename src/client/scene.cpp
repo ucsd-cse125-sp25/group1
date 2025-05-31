@@ -5,8 +5,6 @@
 #include <glad/glad.h>
 #include <iostream>
 #include <vector>
-#include "compass.hpp"
-#include "timerdisplay.hpp"
 
 struct PointLight {
     glm::vec3 position;
@@ -109,24 +107,10 @@ void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3
     }
 }
 
-void Scene::updateTimer(int minutes, int seconds) {
-    // for (auto& [id, player] : players) {
-    //     glm::vec3 dir = player.getDirection();
-    //     std::cout << id << ": " << glm::to_string(dir) << std::endl;
-    // }
-    TimerDisplay* timer = static_cast<TimerDisplay*>(canvas->findElement("timerdisplay"));
-    timer->updateTimer(minutes, seconds);
-}
-
 void Scene::updateWindow() {
     int width, height;
     glfwGetWindowSize(this->window, &width, &height);
     canvas->updateWindow(width, height);
-}
-
-void Scene::updateCompass(glm::vec3 direction) {
-    Compass* compass = static_cast<Compass*>(canvas->findElement("compass"));
-    compass->rotate(direction);
 }
 
 void Scene::removePlayer(int id) {

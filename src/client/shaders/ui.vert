@@ -36,6 +36,7 @@ void main() {
 		position.y = origin.y - height;
 	}
 	gl_Position = vec4(position,1.0);
+
 	ourColor = aColor;
 
 	vec2 centeredCoords = aTexCoord - vec2(0.5);	// origin is at (0,0), subtracting (-0.5,-0.5) centers the texture at its origin;

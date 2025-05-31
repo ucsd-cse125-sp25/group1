@@ -20,22 +20,25 @@ inline constexpr int TOTAL_GAME_TIME = 600; // 10 mins
 inline constexpr float WORLD_WIDTH = 1600.0f;
 inline constexpr float WORLD_HEIGHT = 900.0f;
 
+// Camera
 inline constexpr float FOVY = 45.0f;
 inline constexpr float NEAR_CLIP = 0.1f;
 inline constexpr float FAR_CLIP = 120.0f;
 
 inline constexpr float MAX_PITCH = 89.0f;
-inline constexpr float MIN_PITCH = -45.0f;
+inline constexpr float MIN_PITCH = -60.0f;
 
 inline constexpr glm::vec3 CAMERA_OFFSET = {0.0f, 2.8f, 0.0f};
 
+// Shadows
+inline constexpr int SHADOW_MAP_RESOLUTION_STATIC = 1024;
+inline constexpr float SHADOW_NEAR_CLIP = 0.1f;
+inline constexpr float SHADOW_FAR_CLIP = 25.0f;
+inline constexpr int SHADOW_TEXTURE_UNIT = 3;
+
+// Players
 inline constexpr glm::vec3 PLAYER_SPAWNS[4] = {
     {-3.0f, 0.0f, 3.0f}, {3.0f, 0.0f, 3.0f}, {-3.0f, 0.0f, -3.0f}, {3.0f, 0.0f, -3.0f}};
-
-// Remove this when we stop using cubes for characters
-inline constexpr glm::vec3 PLAYER_COLORS[4] = {
-    glm::vec3(1.0f, 0.2f, 0.6f), glm::vec3(1.0f, 0.7f, 0.4f), glm::vec3(0.4f, 0.7f, 1.0f),
-    glm::vec3(1.0f, 0.93f, 0.55f)};
 
 inline constexpr float PLAYER_SPEED = 10.0f;
 inline constexpr float PLAYER_WEIGHT = 10.0f;
@@ -52,7 +55,7 @@ inline constexpr float CANNONBALL_SPEED = 20.0f;
 
 // Model positions
 inline constexpr glm::vec3 HOTEL_ROOM_POSITION = {0.0f, 0.0f, 0.0f};
-inline constexpr glm::vec3 TABLE_POSITION = {0.0f, 0.0f, 0.0f};
+inline constexpr glm::vec3 TABLE_POSITION = {5.0f, 0.0f, -5.0f};
 
 inline constexpr glm::vec3 SWAMP_ROOM_POSITION = {20.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 FROG_POSITION = {7.0f, 0.0f, 4.0f};

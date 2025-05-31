@@ -131,8 +131,6 @@ class Scene {
 
     std::unique_ptr<Model> circusRoomAsset;
 
-    std::unique_ptr<Canvas> canvas;
-
     std::unordered_map<std::string, std::unique_ptr<ModelInstance>>
         modelInstances; // Top-level model instances with their child models.
 

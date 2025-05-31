@@ -31,6 +31,8 @@ void Server::initRigidBodies() {
     inDimensions >> dimensions;
 
     for (const auto& room : layout) {
+        
+        cout << "Initializing room: " << room["name"] << endl;
         vec3 roomPosition = toVec3(room["position"]);
 
         for (const auto& obj : room["objects"]) {
@@ -66,7 +68,7 @@ void Server::initRigidBodies() {
             } else if (modelName == "water_00") {
                 object = initWater(data, swamp);
             } else if (modelName == "key_00") {
-                object = initKey(data, *this, world, "swampKeyRoom");
+                object = initKey(data, *this, world, "swampKeyRoom", &keys);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;

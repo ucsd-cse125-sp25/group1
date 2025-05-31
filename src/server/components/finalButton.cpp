@@ -31,7 +31,7 @@ void FinalButton::pressButton() {
 
 void FinalButton::updateDoorState() {
     // Let finalDoor know that the button was pressed
-    door->addKey(buttonID);
+    door->updateButtonState(buttonID, true);
     if (door->canOpen()) {
         door->unlockAndOpen();
     }

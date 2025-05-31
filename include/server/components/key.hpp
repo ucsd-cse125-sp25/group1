@@ -2,8 +2,8 @@
 #include <glm/glm.hpp>
 #include <string>
 #include "rigidBody.hpp"
-#include "server.hpp"
 #include "world.hpp"
+#include "components/object.hpp"
 
 class Server;
 class World;

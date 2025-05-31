@@ -92,4 +92,4 @@ RigidBody* initWater(TransformData data, Swamp* swamp);
  * @param roomName The name of the room where the key is located.
  * @return Pointer to the initialized RigidBody associated with the Key.
  */
-RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef, const std::string& roomName);
+RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef, const std::string& roomName, std::unordered_map<int, Key*>* keys);

@@ -32,6 +32,11 @@ bool FinalDoor::canUnlock() {
     return unlockable;
 }
 
+void FinalDoor::updateButtonState(int buttonID, bool pressed) {
+    if (buttonID >= 0 && buttonID < 4) {
+        buttonStates[buttonID] = pressed; // Update the state of the button
+    }
+}
 bool FinalDoor::canOpen() {
     if (unlockable) {
 

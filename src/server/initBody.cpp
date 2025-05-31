@@ -71,7 +71,7 @@ RigidBody* initWater(TransformData data, Swamp* swamp) {
 }
 
 RigidBody* initKey(TransformData data, Server& server, World& world,
-                   const std::string& roomName) { // Switch this to ID)
+                   const std::string& roomName, std::unordered_map<int, Key*>* keys) { // Switch this to ID)
     // TODO: change this from 0 to whatever key ID
     Key* key = new Key(0, roomName, server, world);
 

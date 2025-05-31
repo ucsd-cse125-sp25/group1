@@ -30,6 +30,8 @@ class FinalDoor : public Interactable {
     // Used for game logic
     //----------------------------------------
 
+    void updateButtonState(int buttonID, bool pressed);
+
     /**
      * Unlock and open the door
      * This will be called by the last final button

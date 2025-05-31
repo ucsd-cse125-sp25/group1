@@ -211,9 +211,9 @@ void Client::handleServerMessage(const std::string& message) {
             audioManager.setEventVolume(sfxID, 1.0f);
         }
     } else if (type == "interactable_nearby") {
-        // TODO: Trigger UI
+        scene->canvas->setInteractHidden(false);
     } else if (type == "interactable_not_nearby") {
-        // TODO: untrigger UI
+        scene->canvas->setInteractHidden(true);
     }
 }
 

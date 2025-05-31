@@ -76,17 +76,17 @@ TimerDisplay::~TimerDisplay() {
 void TimerDisplay::changePosition() {
 
     glm::vec2 digitsPos = pos + indent;
-    rMinute->position = glm::vec3(digitsPos.x, digitsPos.y, 0.0f);
+    rMinute->changePosition(glm::vec2(digitsPos.x, digitsPos.y));
 
-    column->position = glm::vec3(digitsPos.x + digitGap, digitsPos.y, 0.0f);
+    column->changePosition(glm::vec2(digitsPos.x + digitGap, digitsPos.y));
 
-    lSecond->position = glm::vec3(digitsPos.x + (digitGap * 2.0f), digitsPos.y, 0.0f);
+    lSecond->changePosition(glm::vec2(digitsPos.x + (digitGap * 2.0f), digitsPos.y));
 
-    rSecond->position = glm::vec3(digitsPos.x + (digitGap * 2.5f) + digitGap, digitsPos.y, 0.0f);
+    rSecond->changePosition(glm::vec2(digitsPos.x + (digitGap * 2.5f) + digitGap, digitsPos.y));
 }
 
 void TimerDisplay::onWindowUpdate(int width, int height) {
-    //std::cout << "(" << width << "," << height << ")" << std::endl;
+    // std::cout << "(" << width << "," << height << ")" << std::endl;
     float widthOffset = (1600.0f / (float)width);
     float heightOffset = (900.0f / (float)height);
     for (unsigned int i = 0; i < 5; i++) {

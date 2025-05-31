@@ -88,13 +88,10 @@ class Scene {
      */
     void render(const Camera& camera, bool boundingBoxMode);
 
-    void updateTimer(int minutes, int seconds);
-
-    void updateCompass(glm::vec3 direction);
-
     void updateWindow();
 
     GLFWwindow* window;
+    std::unique_ptr<Canvas> canvas;
 
   private:
     /**

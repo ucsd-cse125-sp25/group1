@@ -211,9 +211,9 @@ void Client::handleServerMessage(const std::string& message) {
             audioManager.setEventVolume(sfxID, 1.0f);
         }
     } else if (type == "interactable_nearby") {
-        // TODO: Trigger UI
+        scene->canvas->setInteractHidden(false);
     } else if (type == "interactable_not_nearby") {
-        // TODO: untrigger UI
+        scene->canvas->setInteractHidden(true);
     }
 }
 
@@ -246,7 +246,7 @@ void Client::updatePlayerStates(const json& parsed) {
 }
 
 void Client::updateGameTimer(const json& parsed) {
-    scene->updateTimer(parsed["minutes"], parsed["seconds"]);
+    scene->canvas->updateTimer(parsed["minutes"], parsed["seconds"]);
 }
 
 static std::string mapKeyToAction(int key) {
@@ -310,7 +310,7 @@ void Client::handleMouseInput() {
 
     glm::vec3 direction = yawToDirection(yaw);
     if (scene)
-        scene->updateCompass(direction);
+        scene->canvas->updateCompass(direction);
     json message;
 
     message["type"] = "mouse_input";

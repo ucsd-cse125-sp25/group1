@@ -15,8 +15,7 @@
 class FinalDoor : public Interactable {
   public:
     /**
-     * Door should have constructor for how many keys is needed
-     * Does it also need param for rigid body?
+     * Door needs to know how many keys are needed
      * @param numKeys Number of keys required to unlock the door
      */
     FinalDoor(int numKeys);
@@ -26,10 +25,6 @@ class FinalDoor : public Interactable {
 
     // Check if the door is locked
     bool isLocked() const;
-
-    //---------------------------------------
-    // Would these mainly be used to call animation sequences?
-    //----------------------------------------
 
     /**
      * Unlock and open the door
@@ -54,11 +49,9 @@ class FinalDoor : public Interactable {
     bool canUnlock();
 
   private:
-    int numKeys; // Number of keys required to unlock the door
-    bool locked;
-    bool unlockable; // If all keys are present
-    // std::vector<std::string> keys; // Stores keys with their indices
-    // corresponding to their positions
+    int numKeys;                 // Number of keys required to unlock the door
+    bool locked;                 // true if not all keys have been added to the door
+    bool unlockable;             // If all keys are present
     int keyCount;                // Number of keys currently held
-    std::vector<bool> keyStates; // This will be initiated with the number of keys
+    std::vector<bool> keyStates; // initiated with the number of keys, indexed by ID
 };

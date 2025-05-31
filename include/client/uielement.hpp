@@ -14,19 +14,28 @@ class UIElement {
     void draw(Shader& shader);
     void changeSprite(glm::vec2 coords);
     void changeDimensions(glm::vec2 dim);
+    void changePosition(glm::vec2 pos);
     void rotate(float deg);
+
+    GLfloat getBaseWidth() {
+        return baseWidth;
+    }
+
+    glm::vec3 getPosition() {
+        return position;
+    }
 
   public:
     GLfloat widthModifier, heightModifier;
     glm::vec2 positionModifier;
-    glm::vec3 position;
 
   private:
     GLfloat baseWidth, baseHeight, angle;
-
     GLuint vao, ebo;
     GLuint vbo[2];
     GLuint texture = 0;
+
+    glm::vec3 position;
 
     UITexture uiTexture;
 

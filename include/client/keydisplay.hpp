@@ -1,23 +1,17 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <vector>
-#include "canvaselement.hpp"
+#include "canvasimage.hpp"
 #include "uielement.hpp"
 
-class KeyDisplay : public CanvasElement {
+class KeyDisplay : public CanvasImage {
   public:
-    KeyDisplay(glm::vec2 position);
+    KeyDisplay(glm::vec2 pos);
     ~KeyDisplay();
-    void draw(Shader& shader) override;
-    void setHidden(bool val) override;
-    std::string getName() override;
+    void onCollectKey();
 
   private:
-    bool hidden = false;
-    std::string name = "keydisplay";
-    glm::vec2 position;
-    glm::vec2 scale;
-    glm::vec2 initialSpriteCoords = glm::vec2(0.0f, 0.0f);
-    std::vector<UIElement*> keys;
-    UITexture uiTexture;
+    unsigned int collectedKeys = 0;
+    glm::vec2 spriteMap[4] = {glm ::vec2(0.0f, 1024.0f), glm ::vec2(1024.0f, 1024.0f),
+                              glm ::vec2(0.0f, 0.0f), glm ::vec2(1024.0f, 0.0f)};
 };

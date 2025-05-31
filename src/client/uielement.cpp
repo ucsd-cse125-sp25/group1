@@ -172,6 +172,10 @@ void UIElement::changeDimensions(glm::vec2 dim) {
     this->heightModifier = dim.y;
 }
 
+void UIElement::changePosition(glm::vec2 pos) {
+    this->position = glm::vec3(pos, 0.0f);
+}
+
 void UIElement::rotate(float deg) {
     this->angle = deg;
 }

@@ -110,6 +110,8 @@ class Scene {
     std::unique_ptr<Model> frogAsset;
 
     std::unique_ptr<Model> circusRoomAsset;
+    std::unique_ptr<Model> cannonballAsset;
+    std::unique_ptr<Model> cannonAsset;
 
     std::unique_ptr<Canvas> canvas;
 

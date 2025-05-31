@@ -38,6 +38,8 @@ void Scene::init() {
     frogAsset = std::make_unique<Model>("../src/client/models/froggie.obj");
 
     circusRoomAsset = std::make_unique<Model>("../src/client/models/tent.obj");
+    cannonballAsset = std::make_unique<Model>("../src/client/models/cannonball.obj");
+    cannonAsset = std::make_unique<Model>("../src/client/models/cannon.obj");
 
     canvas = std::make_unique<Canvas>();
 
@@ -91,6 +93,15 @@ void Scene::initRooms() {
     // Circus room
     glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
     auto circusRoom = std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel);
+
+    glm::mat4 cannonball1 = glm::translate(I4, config::CANNONBALL1_POSITION);
+    circusRoom->children["cannonball"][0] =
+        std::make_unique<ModelInstance>(cannonballAsset.get(), cannonball1, circusRoom.get());
+
+    glm::mat4 cannon1 = glm::translate(I4, config::CANNON1_POSITION);
+    cannon1 = glm::rotate(cannon1, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    circusRoom->children["cannon"][0] =
+        std::make_unique<ModelInstance>(cannonAsset.get(), cannon1, circusRoom.get());
 
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);

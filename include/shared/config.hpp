@@ -76,7 +76,8 @@ inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;
 
 // Circus Related Configs
 inline constexpr glm::vec3 CIRCUS_RESPAWN = {-51.0f, 1.0f, 0.0f};
-inline constexpr glm::vec3 CANNONBALL_FIRE_VELOCITY = {/* TODO */};
+inline constexpr glm::vec3 CANNONBALL1_POSITION = {-25.0f, 12.0f, 16.0f};
+inline constexpr glm::vec3 CANNON1_POSITION = {-35.0f, 13.0f, 16.0f};
 
 // Sound effects
 // TODO: Convert GUID to event names

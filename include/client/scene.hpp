@@ -80,13 +80,10 @@ class Scene {
      */
     void render(const Camera& camera, bool boundingBoxMode);
 
-    void updateTimer(int minutes, int seconds);
-
-    void updateCompass(glm::vec3 direction);
-
     void updateWindow();
 
     GLFWwindow* window;
+    std::unique_ptr<Canvas> canvas;
 
   private:
     /**
@@ -110,8 +107,6 @@ class Scene {
     std::unique_ptr<Model> frogAsset;
 
     std::unique_ptr<Model> circusRoomAsset;
-
-    std::unique_ptr<Canvas> canvas;
 
     std::map<std::string, std::unique_ptr<ModelInstance>>
         modelInstances; // Top-level model instances with their child models.

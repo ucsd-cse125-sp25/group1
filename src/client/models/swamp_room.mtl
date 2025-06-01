@@ -41,6 +41,16 @@ d 0.507042
 illum 9
 map_Kd TEX_swamp_water.png
 
+newmtl MAT_swamp_top_water
+Ns 3.550426
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 0.507042
+illum 9
+map_Kd TEX_swamp_water.png
+
 newmtl MAT_swamp_water_wall
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000

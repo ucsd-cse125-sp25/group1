@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "animatedSubMesh.hpp"
+#include "shader.hpp"
 
 /**
  * @brief Loads and stores a skinned 3D model with bones and sub-meshes.
@@ -28,7 +29,7 @@ class AnimatedModel {
     /**
      * @brief Draws all submeshes in the model.
      */
-    void draw();
+    void draw(Shader& shader);
 
     /**
      * @brief Checks if the model has a bone with the given name.
@@ -69,6 +70,8 @@ class AnimatedModel {
 
     Assimp::Importer importer;
     const aiScene* scene = nullptr;
+
+    std::string directory;
 
     /**
      * @brief Loads a model from the given file path.

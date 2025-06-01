@@ -377,7 +377,7 @@ void Client::initGL() {
 }
 
 void Client::initScene() {
-    scene = std::make_unique<Scene>();
+    scene = std::make_unique<Scene>(clientId);
     scene->init();
 
     glm::vec3 position = config::PLAYER_SPAWNS[clientId];

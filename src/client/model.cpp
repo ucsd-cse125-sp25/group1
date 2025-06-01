@@ -38,7 +38,21 @@ void Model::draw(Shader& shader, bool boundingBoxMode) {
         shader.setVec3("specular", mesh.specular);
         shader.setFloat("shininess", mesh.shininess);
 
+        shader.setBool("isWater", mesh.isWater);
+        shader.setBool("isTopWater", mesh.isTopWater);
+
+        if (mesh.isWater) {
+            glDepthMask(GL_FALSE);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        }
+
         mesh.draw();
+
+        if (mesh.isWater) {
+            glDepthMask(GL_TRUE);
+            glDisable(GL_BLEND);
+        }
     }
 }
 
@@ -141,6 +155,20 @@ void Model::loadModel(const std::string& path) {
             subMesh.hasTexture = true;
         } else {
             subMesh.hasTexture = false;
+        }
+
+        aiString name;
+        material->Get(AI_MATKEY_NAME, name);
+
+        // Check if the mesh is water
+        if (std::string(name.C_Str()) == "MAT_swamp_water" ||
+            std::string(name.C_Str()) == "MAT_swamp_top_water" ||
+            std::string(name.C_Str()) == "MAT_swamp_water_wall") {
+            subMesh.isWater = true;
+
+            if (std::string(name.C_Str()) == "MAT_swamp_top_water") {
+                subMesh.isTopWater = true;
+            }
         }
 
         // Check if the mesh name starts with "UCX_" (used for collision boxes)

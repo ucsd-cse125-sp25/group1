@@ -43,6 +43,7 @@ void Scene::init() {
     initShadowMaps();
 
     renderStaticShadowPass();
+    renderInteractableShadowPass();
 }
 
 void Scene::initRooms() {
@@ -111,11 +112,13 @@ void Scene::initRooms() {
     auto circusRoom =
         std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel, nullptr, true);
 
-    // Add the key to the swamp room
+    // Swamp key room
     glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMPKEY_ROOM_POSITION);
     auto swampKeyRoom =
         std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel, nullptr, true);
+
     glm::mat4 swampKey = glm::translate(I4, config::SWAMP_KEY_POSITION);
+    swampKey = glm::rotate(swampKey, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     swampKeyRoom->children["key"][0] =
         std::make_unique<ModelInstance>(keyAsset.get(), swampKey, swampKeyRoom.get(), false);
 
@@ -144,9 +147,14 @@ void Scene::initLights() {
 void Scene::initShadowMaps() {
     for (const auto& [name, lights] : pointLights) {
         for (const PointLight& light : lights) {
-            auto shadowMap = std::make_unique<ShadowMap>(light.worldPosition,
-                                                         config::SHADOW_MAP_RESOLUTION_STATIC);
-            staticShadowMaps[name].emplace_back(std::move(shadowMap));
+            auto staticShadowMap =
+                std::make_unique<ShadowMap>(light.worldPosition, config::SHADOW_MAP_RES_STATIC);
+            staticShadowMaps[name].emplace_back(std::move(staticShadowMap));
+
+            auto interactableShadowMap = std::make_unique<ShadowMap>(
+                light.worldPosition, config::SHADOW_MAP_RES_INTERACTABLE);
+            interactableShadowMaps[name].emplace_back(std::move(interactableShadowMap));
+            interactableShadowActive[name].emplace_back(false);
         }
     }
 }
@@ -174,8 +182,6 @@ void Scene::removePlayer(int id) {
 }
 
 void Scene::removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id) {
-    std::cout << "room name: " << roomName << std::endl;
-    std::cout << modelInstances[roomName] << std::endl;
     modelInstances[roomName]->deleteChild(type, id);
 }
 
@@ -186,10 +192,53 @@ void Scene::renderStaticShadowPass() {
 
             Shader& shader = shadowMap->getShader();
             shader.setBool("isSkinned", false);
-            modelInstances[name]->drawRecursive(shader, false);
+            modelInstances[name]->drawRecursive(shader, false, true);
 
             shadowMap->end();
         }
+    }
+}
+
+void Scene::renderInteractableShadowPass() {
+    renderLilypadShadowPass();
+
+    // Will refactor this if more interactable things (other than a key) are added
+    std::vector<std::string> keyRooms = {"swampKeyRoom", "parkourRoom1"};
+    for (const std::string& roomName : keyRooms) {
+        auto& shadowMaps = interactableShadowMaps[roomName];
+        shadowMaps[0]->begin();
+
+        Shader& shader = shadowMaps[0]->getShader();
+        shader.setBool("isSkinned", false);
+        modelInstances[roomName]->drawInteractable(shader, "key");
+
+        shadowMaps[0]->end();
+        interactableShadowActive[roomName][0] = true;
+    }
+}
+
+void Scene::renderLilypadShadowPass(int id) {
+    auto& shadowMaps = interactableShadowMaps["swampRoom"];
+
+    auto renderForIndex = [&](int index) {
+        shadowMaps[index]->begin();
+        Shader& shader = shadowMaps[index]->getShader();
+        shader.setBool("isSkinned", false);
+
+        int start = (index == 0) ? 0 : 8;
+        int end = (index == 0) ? 7 : 15;
+        modelInstances["swampRoom"]->drawInteractable(shader, "lilypad", start, end);
+
+        shadowMaps[index]->end();
+    };
+
+    if (id == -1) {
+        for (int i = 0; i < 2; ++i) {
+            renderForIndex(i);
+            interactableShadowActive["swampRoom"][i] = true;
+        }
+    } else {
+        renderForIndex((id < 8) ? 0 : 1);
     }
 }
 
@@ -201,11 +250,16 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         shader->setMat4("projection", camera.getProjectionMatrix());
         shader->setVec3("viewPos", camera.getPosition());
 
-        if (name != "character") {
-            shader->setInt("shadowDepthCubemap0", config::SHADOW_TEXTURE_UNIT);
-            shader->setInt("shadowDepthCubemap1", config::SHADOW_TEXTURE_UNIT + 1);
-            shader->setFloat("shadowFarClip", config::SHADOW_FAR_CLIP);
+        if (name == "character") {
+            continue;
         }
+
+        for (int i = 0; i < 4; ++i) {
+            shader->setInt("shadowDepthCubemap" + std::to_string(i),
+                           config::SHADOW_TEXTURE_UNIT + i);
+        }
+
+        shader->setFloat("shadowFarClip", config::SHADOW_FAR_CLIP);
     }
 
     // Draw all model instances in the scene
@@ -215,9 +269,13 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
 
         for (int i = 0; i < 2; ++i) {
             glActiveTexture(GL_TEXTURE0 + config::SHADOW_TEXTURE_UNIT + i);
-            GLuint tex = (i < staticShadowMaps[name].size())
-                             ? staticShadowMaps[name][i]->getDepthCubemap()
-                             : getDummyCubemap();
+            GLuint tex = (i < lights.size()) ? staticShadowMaps[name][i]->getDepthCubemap()
+                                             : getDummyCubemap();
+            glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
+
+            glActiveTexture(GL_TEXTURE0 + config::SHADOW_TEXTURE_UNIT + i + 2);
+            tex = i < (lights.size()) ? interactableShadowMaps[name][i]->getDepthCubemap()
+                                      : getDummyCubemap();
             glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
         }
 
@@ -240,6 +298,8 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             shader->setVec3("pointLights[" + std::to_string(i) + "].position",
                             lights[i].worldPosition);
             shader->setVec3("pointLights[" + std::to_string(i) + "].color", lights[i].color);
+            shader->setBool("interactableShadowActive[" + std::to_string(i) + "]",
+                            interactableShadowActive[name][i]);
         }
 
         instance->drawRecursive(*shader, boundingBoxMode);

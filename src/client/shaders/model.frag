@@ -15,9 +15,12 @@ out vec4 fragColor;
 
 uniform int numLights;
 uniform PointLight pointLights[MAX_LIGHTS];
+uniform bool interactableShadowActive[MAX_LIGHTS];
 
 uniform samplerCube shadowDepthCubemap0;
 uniform samplerCube shadowDepthCubemap1;
+uniform samplerCube shadowDepthCubemap2;
+uniform samplerCube shadowDepthCubemap3;
 
 uniform float shadowFarClip;
 uniform bool useFade;
@@ -47,7 +50,8 @@ float getShadowFactor(vec3 fragPosWorld, int index) {
     float currentDepth = length(fragToLight);
 
     // PCF parameters
-    float shadow = 0.0;
+    float shadowStatic = 0.0;
+    float shadowInteractable = 0.0;
     float samples = 3.0;
     float offset = 0.05 * (1.0 - currentDepth / shadowFarClip);
 
@@ -59,23 +63,41 @@ float getShadowFactor(vec3 fragPosWorld, int index) {
         for (float y = -1.0; y <= 1.0; y++) {
             for (float z = -1.0; z <= 1.0; z++) {
                 vec3 sampleDir = normalize(fragToLight + vec3(x, y, z) * offset);
-                float closestDepth = 0.0;
+                float closestDepthStatic = 0.0;
+                float closestDepthInteractable = 0.0;
 
                 if (index == 0) {
-                    closestDepth = texture(shadowDepthCubemap0, sampleDir).r * shadowFarClip;
+                    closestDepthStatic = texture(shadowDepthCubemap0, sampleDir).r * shadowFarClip;
+
+                    if (interactableShadowActive[0]) {
+                        closestDepthInteractable =
+                            texture(shadowDepthCubemap2, sampleDir).r * shadowFarClip;
+                    }
                 } else if (index == 1) {
-                    closestDepth = texture(shadowDepthCubemap1, sampleDir).r * shadowFarClip;
+                    closestDepthStatic = texture(shadowDepthCubemap1, sampleDir).r * shadowFarClip;
+
+                    if (interactableShadowActive[1]) {
+                        closestDepthInteractable =
+                            texture(shadowDepthCubemap3, sampleDir).r * shadowFarClip;
+                    }
                 }
 
-                if (currentDepth - bias > closestDepth) {
-                    shadow += 1.0;
+                if (currentDepth - bias > closestDepthStatic) {
+                    shadowStatic += 1.0;
+                }
+
+                if (interactableShadowActive[index] &&
+                    currentDepth - bias > closestDepthInteractable) {
+                    shadowInteractable += 1.0;
                 }
             }
         }
     }
 
-    shadow /= (samples * samples * samples);
-    return 1.0 - shadow;
+    shadowStatic /= (samples * samples * samples);
+    shadowInteractable /= (samples * samples * samples);
+
+    return 1.0 - max(shadowStatic, shadowInteractable);
 }
 
 void main() {
@@ -105,7 +127,7 @@ void main() {
             float fade = clamp(1.0 - dist / shadowFarClip, 0.0, 1.0);
             shadow = mix(0.5, 1.0, shadow * fade);
         } else {
-            shadow = mix(0.5, 1.0, shadow);
+            shadow = mix(0.65, 1.0, shadow);
         }
 
         result += lighting * baseColor * shadow;

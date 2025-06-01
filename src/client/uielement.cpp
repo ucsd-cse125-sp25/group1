@@ -58,8 +58,6 @@ UIElement::UIElement(glm::vec3 position, glm::vec2 scale, glm::vec2 initSpriteCo
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                          data);
         } else if (nrChannels == 4) {
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
                          data);
         }
@@ -125,8 +123,6 @@ UIElement::UIElement(glm::vec3 position, glm::vec2 initSpriteCoords, UITexture& 
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE,
                          data);
         } else if (nrChannels == 4) {
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
                          data);
         }
@@ -181,6 +177,8 @@ void UIElement::rotate(float deg) {
 }
 
 void UIElement::draw(Shader& shader) {
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     shader.setInt("ourTexture", 0);
     shader.setVec3("origin", glm::vec3(position.x * positionModifier.x,
@@ -199,7 +197,8 @@ void UIElement::draw(Shader& shader) {
 
     glBindVertexArray(vao);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // 6 indices
-    glDepthMask(GL_TRUE);                                // Disable writing to the depth buffer
+    glDepthMask(GL_TRUE);                                // Enable writing to the depth buffer
+    glDisable(GL_BLEND);
 
     glBindVertexArray(0);
 }

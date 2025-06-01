@@ -55,7 +55,7 @@ void Scene::initRooms() {
     hotelRoom->children["table"][0] =
         std::make_unique<ModelInstance>(tableAsset.get(), tableModel, hotelRoom.get(), true);
 
-    std::array<float, 2> degrees = {90.0f, 270.0f}; // Add 0.0f, 180.0f later
+    std::array<float, 1> degrees = {90.0f}; // Add 0.0f, 180.0f 270.0f later
 
     for (int i = 0; i < degrees.size(); ++i) {
         glm::mat4 doorModel =
@@ -64,6 +64,25 @@ void Scene::initRooms() {
         hotelRoom->children["door"][i] =
             std::make_unique<ModelInstance>(doorAsset.get(), doorModel, hotelRoom.get(), false);
     }
+
+    // Parkour rooms
+    glm::mat4 parkourRoom1Model = glm::translate(I4, config::PARKOUR_ROOM_1_POSITION);
+    auto parkourRoom1 = std::make_unique<ModelInstance>(hotelRoomAsset.get(), parkourRoom1Model);
+    glm::mat4 parkour1Key = glm::translate(I4, config::PARKOUR_1_KEY_POSITION);
+    parkourRoom1->children["key"][0] =
+        std::make_unique<ModelInstance>(keyAsset.get(), parkour1Key, parkourRoom1.get(), false);
+
+    glm::mat4 parkour1Table1 = glm::translate(I4, config::PARKOUR_1_TABLE_1_POSITION);
+    parkourRoom1->children["table"][0] =
+        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table1, parkourRoom1.get());
+
+    glm::mat4 parkour1Table2 = glm::translate(I4, config::PARKOUR_1_TABLE_2_POSITION);
+    parkourRoom1->children["table"][1] =
+        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table2, parkourRoom1.get());
+
+    glm::mat4 parkour1Table3 = glm::translate(I4, config::PARKOUR_1_TABLE_3_POSITION);
+    parkourRoom1->children["table"][2] =
+        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table3, parkourRoom1.get());
 
     // Swamp room
     glm::mat4 swampRoomModel = glm::translate(I4, config::SWAMP_ROOM_POSITION);
@@ -78,8 +97,8 @@ void Scene::initRooms() {
         lilypadModel =
             glm::rotate(lilypadModel, glm::radians(angleDegrees), glm::vec3(0.0f, 1.0f, 0.0f));
 
-        swampRoom->children["lilypad"][i] =
-            std::make_unique<ModelInstance>(lilypadAsset.get(), lilypadModel, swampRoom.get(), false);
+        swampRoom->children["lilypad"][i] = std::make_unique<ModelInstance>(
+            lilypadAsset.get(), lilypadModel, swampRoom.get(), false);
     }
 
     glm::mat4 frogModel = glm::translate(I4, config::FROG_POSITION);
@@ -94,13 +113,15 @@ void Scene::initRooms() {
 
     // Add the key to the swamp room
     glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMPKEY_ROOM_POSITION);
-    auto swampKeyRoom = std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel, nullptr, true);
-    glm::mat4 keyModel = glm::translate(I4, config::SWAMP_KEY_POSITION);
+    auto swampKeyRoom =
+        std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel, nullptr, true);
+    glm::mat4 swampKey = glm::translate(I4, config::SWAMP_KEY_POSITION);
     swampKeyRoom->children["key"][0] =
-        std::make_unique<ModelInstance>(keyAsset.get(), keyModel, swampKeyRoom.get(), false);
+        std::make_unique<ModelInstance>(keyAsset.get(), swampKey, swampKeyRoom.get(), false);
 
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);
+    modelInstances["parkourRoom1"] = std::move(parkourRoom1);
     modelInstances["swampKeyRoom"] = std::move(swampKeyRoom);
     modelInstances["circusRoom"] = std::move(circusRoom);
 }
@@ -115,6 +136,8 @@ void Scene::initLights() {
     pointLights["circusRoom"] = {PointLight(glm::translate(I4, config::CIRCUS_ROOM_POSITION),
                                             glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(1.0f))};
     pointLights["swampKeyRoom"] = {PointLight(glm::translate(I4, config::SWAMPKEY_ROOM_POSITION),
+                                              glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["parkourRoom1"] = {PointLight(glm::translate(I4, config::PARKOUR_ROOM_1_POSITION),
                                               glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
 }
 
@@ -151,6 +174,8 @@ void Scene::removePlayer(int id) {
 }
 
 void Scene::removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id) {
+    std::cout << "room name: " << roomName << std::endl;
+    std::cout << modelInstances[roomName] << std::endl;
     modelInstances[roomName]->deleteChild(type, id);
 }
 
@@ -196,7 +221,7 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
         }
 
-        if (name == "hotelRoom" || name == "swampKeyRoom") {
+        if (name == "hotelRoom" || name == "swampKeyRoom" || name == "parkourRoom1") {
             shader = shaders["model"].get();
             shader->use();
             shader->setBool("useFade", false);

@@ -216,6 +216,7 @@ void Client::handleServerMessage(const std::string& message) {
     } else if (type == "key_pickup") {
         auto id = parsed["id"];
         auto roomName = parsed["room"];
+        std::cout << "Key with ID: " << id << " picked up in room: " << roomName << "\n";
         scene->removeInstanceFromRoom(roomName, "key", id);
     }
     // Need to also udpate object states

@@ -94,10 +94,10 @@ void Scene::initRooms() {
 
     // Add the key to the swamp room
     glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMPKEY_ROOM_POSITION);
-    auto swampKeyRoom = std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel);
+    auto swampKeyRoom = std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel, nullptr, true);
     glm::mat4 keyModel = glm::translate(I4, config::SWAMP_KEY_POSITION);
     swampKeyRoom->children["key"][0] =
-        std::make_unique<ModelInstance>(keyAsset.get(), keyModel, swampKeyRoom.get());
+        std::make_unique<ModelInstance>(keyAsset.get(), keyModel, swampKeyRoom.get(), false);
 
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);
@@ -114,6 +114,8 @@ void Scene::initLights() {
                                            glm::vec3(70.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
     pointLights["circusRoom"] = {PointLight(glm::translate(I4, config::CIRCUS_ROOM_POSITION),
                                             glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["swampKeyRoom"] = {PointLight(glm::translate(I4, config::SWAMPKEY_ROOM_POSITION),
+                                              glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
 }
 
 void Scene::initShadowMaps() {

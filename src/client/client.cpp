@@ -214,10 +214,13 @@ void Client::handleServerMessage(const std::string& message) {
     } else if (type == "interactable_not_nearby") {
         scene->canvas->setInteractHidden(true);
     } else if (type == "key_pickup") {
-        auto id = parsed["id"];
+        auto keyID = parsed["keyID"];
+        auto playerID = parsed["playerID"];
         auto roomName = parsed["room"];
-        std::cout << "Key with ID: " << id << " picked up in room: " << roomName << "\n";
-        scene->removeInstanceFromRoom(roomName, "key", id);
+        scene->removeInstanceFromRoom(roomName, "key", keyID);
+        if (playerID == this->clientId) {
+            scene->canvas->collectKey();
+        }
     }
     // Need to also udpate object states
 }

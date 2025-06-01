@@ -23,7 +23,8 @@ void Key::customCollision(ICustomPhysics* otherObject) {
     json message;
     message["type"] = "key_pickup";
     message["room"] = roomName;
-    message["id"] = this->getID();
+    message["keyID"] = this->getID();
+    message["playerID"] = playerPtr->getID();
     playerPtr->addKey(this->getID());
 
     std::string packet = message.dump() + "\n";

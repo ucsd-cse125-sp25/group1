@@ -66,8 +66,11 @@ void Scene::initRooms() {
     }
 
     // Parkour rooms
-    glm::mat4 parkourRoomModel1 = glm::translate(I4, config::PARKOUR_ROOM_1_POSITION);
-    auto parkourRoom1 = std::make_unique<ModelInstance>(hotelRoomAsset.get(), parkourRoomModel1);
+    glm::mat4 parkourRoom1Model = glm::translate(I4, config::PARKOUR_ROOM_1_POSITION);
+    auto parkourRoom1 = std::make_unique<ModelInstance>(hotelRoomAsset.get(), parkourRoom1Model);
+    glm::mat4 parkour1Key = glm::translate(I4, config::PARKOUR_1_KEY_POSITION);
+    parkourRoom1->children["key"][0] =
+        std::make_unique<ModelInstance>(keyAsset.get(), parkour1Key, parkourRoom1.get(), false);
 
     glm::mat4 parkour1Table1 = glm::translate(I4, config::PARKOUR_1_TABLE_1_POSITION);
     parkourRoom1->children["table"][0] =
@@ -120,9 +123,9 @@ void Scene::initRooms() {
     glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMPKEY_ROOM_POSITION);
     auto swampKeyRoom =
         std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel, nullptr, true);
-    glm::mat4 keyModel = glm::translate(I4, config::SWAMP_KEY_POSITION);
+    glm::mat4 swampKey = glm::translate(I4, config::SWAMP_KEY_POSITION);
     swampKeyRoom->children["key"][0] =
-        std::make_unique<ModelInstance>(keyAsset.get(), keyModel, swampKeyRoom.get(), false);
+        std::make_unique<ModelInstance>(keyAsset.get(), swampKey, swampKeyRoom.get(), false);
 
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);
@@ -141,6 +144,8 @@ void Scene::initLights() {
     pointLights["circusRoom"] = {PointLight(glm::translate(I4, config::CIRCUS_ROOM_POSITION),
                                             glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(1.0f))};
     pointLights["swampKeyRoom"] = {PointLight(glm::translate(I4, config::SWAMPKEY_ROOM_POSITION),
+                                              glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["parkourRoom1"] = {PointLight(glm::translate(I4, config::SWAMPKEY_ROOM_POSITION),
                                               glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
 }
 
@@ -177,6 +182,8 @@ void Scene::removePlayer(int id) {
 }
 
 void Scene::removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id) {
+    std::cout << "room name: " << roomName << std::endl;
+    std::cout << modelInstances[roomName] << std::endl;
     modelInstances[roomName]->deleteChild(type, id);
 }
 

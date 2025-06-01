@@ -143,9 +143,18 @@
       }
     ]
   },
-  "parkour_room_1": {
+  "parkourRoom1": {
     "position": [0.0, 0.0, 20.0],
     "objects": [
+      {
+        "model": "key_00",
+        "position": [
+          -8.0,
+          6.0,
+          8.0
+        ],
+        "rotated": false
+      },
       {
         "model": "small_table_00",
         "position": [ 0.0, -1.5, 0.0 ],

@@ -84,14 +84,6 @@ void Scene::initRooms() {
     parkourRoom1->children["table"][2] =
         std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table3, parkourRoom1.get());
 
-    glm::mat4 parkour1Table4 = glm::translate(I4, config::PARKOUR_1_TABLE_4_POSITION);
-    parkourRoom1->children["table"][3] =
-        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table4, parkourRoom1.get());
-
-    glm::mat4 parkour1Table5 = glm::translate(I4, config::PARKOUR_1_TABLE_5_POSITION);
-    parkourRoom1->children["table"][4] =
-        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table5, parkourRoom1.get());
-
     // Swamp room
     glm::mat4 swampRoomModel = glm::translate(I4, config::SWAMP_ROOM_POSITION);
     auto swampRoom =

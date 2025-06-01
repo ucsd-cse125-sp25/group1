@@ -67,10 +67,8 @@ inline constexpr glm::vec3 SWAMP_KEY_POSITION = {0.0f, 1.0f, 0.0f};
 inline constexpr glm::vec3 PARKOUR_ROOM_1_POSITION = {0.0f, 0.0f, 20.0f};
 inline constexpr glm::vec3 PARKOUR_1_KEY_POSITION = {-8.0f, 6.0f, 8.0f};
 inline constexpr glm::vec3 PARKOUR_1_TABLE_1_POSITION = {0.0f, -1.5f, 0.0f};
-inline constexpr glm::vec3 PARKOUR_1_TABLE_2_POSITION = {2.5f, -0.75f, 0.0f};
-inline constexpr glm::vec3 PARKOUR_1_TABLE_3_POSITION = {5.0f, 0.0f, 0.0f};
-inline constexpr glm::vec3 PARKOUR_1_TABLE_4_POSITION = {5.0f, 0.0f, 4.0f};
-inline constexpr glm::vec3 PARKOUR_1_TABLE_5_POSITION = {2.5f, 0.0f, 8.0f};
+inline constexpr glm::vec3 PARKOUR_1_TABLE_2_POSITION = {2.5f, -0.5f, 0.0f};
+inline constexpr glm::vec3 PARKOUR_1_TABLE_3_POSITION = {5.0f, 0.5f, 0.0f};
 
 // Swamp Related Configs
 inline constexpr glm::vec3 SWAMP_RESPAWN = {21.0f, 1.0f, 0.0f};

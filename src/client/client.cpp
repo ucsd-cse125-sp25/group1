@@ -194,6 +194,7 @@ void Client::handleServerMessage(const std::string& message) {
         auto id = parsed["id"];
 
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
+        scene->renderLilypadShadowPass(id);
     } else if (type == "sfx") {
         // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,
         // "action": "jump"} client id that of the person triggering the sfx
@@ -232,6 +233,10 @@ void Client::handleServerMessage(const std::string& message) {
         if (playerID == this->clientId) {
             scene->canvas->collectKey();
         }
+
+        // Assumes there's only one key in the room for now.
+        // Will refactor if we add more interactable objects later.
+        scene->setInteractableShadowActive(roomName, 0, false);
     }
     // Need to also udpate object states
 }

@@ -31,7 +31,8 @@ inline constexpr float MIN_PITCH = -60.0f;
 inline constexpr glm::vec3 CAMERA_OFFSET = {0.0f, 2.8f, 0.0f};
 
 // Shadows
-inline constexpr int SHADOW_MAP_RESOLUTION_STATIC = 1024;
+inline constexpr int SHADOW_MAP_RES_STATIC = 1024;
+inline constexpr int SHADOW_MAP_RES_INTERACTABLE = 1024;
 inline constexpr float SHADOW_NEAR_CLIP = 0.1f;
 inline constexpr float SHADOW_FAR_CLIP = 25.0f;
 inline constexpr int SHADOW_TEXTURE_UNIT = 3;

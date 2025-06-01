@@ -75,8 +75,41 @@ class Scene {
 
     /**
      * @brief Renders shadow maps for static geometry.
+     *
+     * This is called only once when the scene initializes.
      */
     void renderStaticShadowPass();
+
+    /**
+     * @brief Renders shadow maps for interactable geometry.
+     *
+     * This is called only once when the scene initializes.
+     */
+    void renderInteractableShadowPass();
+
+    /**
+     * @brief Renders shadow maps for lilypad objects in the swamp room.
+     *
+     * If 'id' is -1 (default), renders all lilypads by splitting them across two shadow maps.
+     * Otherwise, renders only the shadow map responsible for the given lilypad ID.
+     *
+     * @param id Lilypad ID to render shadow map for, or -1 for all.
+     */
+    void renderLilypadShadowPass(int id = -1);
+
+    /**
+     * @brief Marks an interactable shadow map as active or inactive.
+     *
+     * This flag is passed to the fragment shader to skip sampling from unused shadow cubemaps,
+     * which helps avoid unnecessary texture lookups and improves performance.
+     *
+     * @param roomName Name of the room (e.g., "keyRoom").
+     * @param index Index of the shadow map to mark.
+     * @param isActive True to enable sampling; false to skip it in the shader.
+     */
+    void setInteractableShadowActive(std::string roomName, int index, bool isActive) {
+        interactableShadowActive[roomName][index] = isActive;
+    };
 
     /**
      * @brief Renders the entire scene.
@@ -117,6 +150,8 @@ class Scene {
 
     std::unordered_map<std::string, std::vector<PointLight>> pointLights;
     std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> staticShadowMaps;
+    std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> interactableShadowMaps;
+    std::unordered_map<std::string, std::vector<bool>> interactableShadowActive;
 
     std::map<std::string, std::unique_ptr<Shader>> shaders;
     std::unique_ptr<Shader> uiShader;

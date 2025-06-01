@@ -8,6 +8,7 @@ class Object;
 class Interactable : public Object {
   public:
     Interactable(int id);
+    Interactable(); // Default constructor, initializes with an invalid ID
     virtual ~Interactable() = default;
     void interact(const Player& player); // calls the overriden handleInteract function.
 

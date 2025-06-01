@@ -5,15 +5,10 @@
 #include <glad/glad.h>
 #include <iostream>
 #include <vector>
-#include "compass.hpp"
-#include "timerdisplay.hpp"
 
-struct PointLight {
-    glm::vec3 position;
-    glm::vec3 color;
-};
+static const glm::mat4 I4{1.0f};
 
-Scene::Scene() {}
+Scene::Scene(int playerID) : playerID(playerID) {}
 Scene::~Scene() {}
 
 void Scene::init() {
@@ -35,34 +30,39 @@ void Scene::init() {
 
     swampRoomAsset = std::make_unique<Model>("../src/client/models/swamp_room.obj");
     lilypadAsset = std::make_unique<Model>("../src/client/models/lilypad.obj");
+    frogAsset = std::make_unique<Model>("../src/client/models/froggie.obj");
+
+    circusRoomAsset = std::make_unique<Model>("../src/client/models/tent.obj");
+
+    keyAsset = std::make_unique<Model>("../src/client/models/key.obj");
 
     canvas = std::make_unique<Canvas>();
 
     initRooms();
+    initLights();
+    initShadowMaps();
+
+    renderStaticShadowPass();
 }
 
 void Scene::initRooms() {
-    const glm::mat4 I4{1.0f}; // 4 x 4 identity matrix
-
     // Hotel room
     glm::mat4 hotelRoomModel = glm::translate(I4, config::HOTEL_ROOM_POSITION);
-    auto hotelRoom = std::make_unique<ModelInstance>(hotelRoomAsset.get(), hotelRoomModel);
+    auto hotelRoom =
+        std::make_unique<ModelInstance>(hotelRoomAsset.get(), hotelRoomModel, nullptr, true);
 
     glm::mat4 tableModel = glm::translate(I4, config::TABLE_POSITION);
     hotelRoom->children["table"][0] =
-        std::make_unique<ModelInstance>(tableAsset.get(), tableModel, hotelRoom.get());
+        std::make_unique<ModelInstance>(tableAsset.get(), tableModel, hotelRoom.get(), true);
 
-    // Temporarily remove the door between the hotel room and swamp room until door unlocking is
-    // implemented
-    // std::array<float, 3> degrees = {90.0f, 180.0f, 270.0f}; // Add 0.0f later
-    std::array<float, 2> degrees = {90.0f, 180.0f}; // Add 0.0f, 270.0f later
+    std::array<float, 1> degrees = {90.0f}; // Add 0.0f, 180.0f 270.0f later
 
     for (int i = 0; i < degrees.size(); ++i) {
         glm::mat4 doorModel =
             glm::rotate(I4, glm::radians(degrees[i]), glm::vec3(0.0f, 1.0f, 0.0f));
         doorModel = glm::translate(doorModel, glm::vec3(10.0f, 0.0f, 0.0f));
         hotelRoom->children["door"][i] =
-            std::make_unique<ModelInstance>(doorAsset.get(), doorModel, hotelRoom.get());
+            std::make_unique<ModelInstance>(doorAsset.get(), doorModel, hotelRoom.get(), false);
     }
 
     // Parkour rooms
@@ -91,7 +91,8 @@ void Scene::initRooms() {
 
     // Swamp room
     glm::mat4 swampRoomModel = glm::translate(I4, config::SWAMP_ROOM_POSITION);
-    auto swampRoom = std::make_unique<ModelInstance>(swampRoomAsset.get(), swampRoomModel);
+    auto swampRoom =
+        std::make_unique<ModelInstance>(swampRoomAsset.get(), swampRoomModel, nullptr, true);
 
     for (int i = 0; i < config::SWAMP_NUM_LILYPADS; i++) {
         glm::mat4 lilypadModel =
@@ -101,13 +102,56 @@ void Scene::initRooms() {
         lilypadModel =
             glm::rotate(lilypadModel, glm::radians(angleDegrees), glm::vec3(0.0f, 1.0f, 0.0f));
 
-        swampRoom->children["lilypad"][i] =
-            std::make_unique<ModelInstance>(lilypadAsset.get(), lilypadModel, swampRoom.get());
+        swampRoom->children["lilypad"][i] = std::make_unique<ModelInstance>(
+            lilypadAsset.get(), lilypadModel, swampRoom.get(), false);
     }
+
+    glm::mat4 frogModel = glm::translate(I4, config::FROG_POSITION);
+    frogModel = glm::rotate(frogModel, glm::radians(-120.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    swampRoom->children["frog"][0] =
+        std::make_unique<ModelInstance>(frogAsset.get(), frogModel, swampRoom.get(), true);
+
+    // Circus room
+    glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
+    auto circusRoom =
+        std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel, nullptr, true);
+
+    // Add the key to the swamp room
+    glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMPKEY_ROOM_POSITION);
+    auto swampKeyRoom =
+        std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel, nullptr, true);
+    glm::mat4 keyModel = glm::translate(I4, config::SWAMP_KEY_POSITION);
+    swampKeyRoom->children["key"][0] =
+        std::make_unique<ModelInstance>(keyAsset.get(), keyModel, swampKeyRoom.get(), false);
 
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);
     modelInstances["parkourRoom1"] = std::move(parkourRoom1);
+    modelInstances["swampKeyRoom"] = std::move(swampKeyRoom);
+    modelInstances["circusRoom"] = std::move(circusRoom);
+}
+
+void Scene::initLights() {
+    pointLights["hotelRoom"] = {PointLight(glm::translate(I4, config::HOTEL_ROOM_POSITION),
+                                           glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["swampRoom"] = {PointLight(glm::translate(I4, config::SWAMP_ROOM_POSITION),
+                                           glm::vec3(30.0f, 10.0f, 0.0f), glm::vec3(0.7f)),
+                                PointLight(glm::translate(I4, config::SWAMP_ROOM_POSITION),
+                                           glm::vec3(70.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["circusRoom"] = {PointLight(glm::translate(I4, config::CIRCUS_ROOM_POSITION),
+                                            glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["swampKeyRoom"] = {PointLight(glm::translate(I4, config::SWAMPKEY_ROOM_POSITION),
+                                              glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+}
+
+void Scene::initShadowMaps() {
+    for (const auto& [name, lights] : pointLights) {
+        for (const PointLight& light : lights) {
+            auto shadowMap = std::make_unique<ShadowMap>(light.worldPosition,
+                                                         config::SHADOW_MAP_RESOLUTION_STATIC);
+            staticShadowMaps[name].emplace_back(std::move(shadowMap));
+        }
+    }
 }
 
 void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3& direction) {
@@ -122,24 +166,10 @@ void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3
     }
 }
 
-void Scene::updateTimer(int minutes, int seconds) {
-    // for (auto& [id, player] : players) {
-    //     glm::vec3 dir = player.getDirection();
-    //     std::cout << id << ": " << glm::to_string(dir) << std::endl;
-    // }
-    TimerDisplay* timer = static_cast<TimerDisplay*>(canvas->findElement("timerdisplay"));
-    timer->updateTimer(minutes, seconds);
-}
-
 void Scene::updateWindow() {
     int width, height;
     glfwGetWindowSize(this->window, &width, &height);
     canvas->updateWindow(width, height);
-}
-
-void Scene::updateCompass(glm::vec3 direction) {
-    Compass* compass = static_cast<Compass*>(canvas->findElement("compass"));
-    compass->rotate(direction);
 }
 
 void Scene::removePlayer(int id) {
@@ -150,59 +180,78 @@ void Scene::removeInstanceFromRoom(const std::string& roomName, const std::strin
     modelInstances[roomName]->deleteChild(type, id);
 }
 
+void Scene::renderStaticShadowPass() {
+    for (auto& [name, shadowMaps] : staticShadowMaps) {
+        for (const auto& shadowMap : shadowMaps) {
+            shadowMap->begin();
+
+            Shader& shader = shadowMap->getShader();
+            shader.setBool("isSkinned", false);
+            modelInstances[name]->drawRecursive(shader, false);
+
+            shadowMap->end();
+        }
+    }
+}
+
 void Scene::render(const Camera& camera, bool boundingBoxMode) {
     for (auto& [name, shader] : shaders) {
         shader->use();
+
         shader->setMat4("view", camera.getViewMatrix());
         shader->setMat4("projection", camera.getProjectionMatrix());
         shader->setVec3("viewPos", camera.getPosition());
+
+        if (name != "character") {
+            shader->setInt("shadowDepthCubemap0", config::SHADOW_TEXTURE_UNIT);
+            shader->setInt("shadowDepthCubemap1", config::SHADOW_TEXTURE_UNIT + 1);
+            shader->setFloat("shadowFarClip", config::SHADOW_FAR_CLIP);
+        }
     }
 
     // Draw all model instances in the scene
     for (const auto& [name, instance] : modelInstances) {
-        if (name == "hotelRoom" || name == "parkourRoom1") {
-            shaders["model"]->use();
+        Shader* shader = nullptr;
+        const auto& lights = pointLights[name];
 
-            // This is for testing, will change this later
-            std::vector<PointLight> testLights = {
-                {glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f)},
-            };
-
-            // This is for testing, will change this later
-            shaders["model"]->setInt("numLights", testLights.size());
-            for (int i = 0; i < testLights.size(); ++i) {
-                shaders["model"]->setVec3("pointLights[" + std::to_string(i) + "].position",
-                                          testLights[i].position);
-                shaders["model"]->setVec3("pointLights[" + std::to_string(i) + "].color",
-                                          testLights[i].color);
-            }
-
-            instance->drawRecursive(*shaders["model"], boundingBoxMode);
-        } else if (name == "swampRoom") {
-            shaders["swamp"]->use();
-
-            // This is for testing, will change this later
-            std::vector<PointLight> testLights = {
-                {glm::vec3(30.0f, 10.0f, 0.0f), glm::vec3(1.0f)},
-                {glm::vec3(60.0f, 7.0f, 0.0f), glm::vec3(1.0f)},
-            };
-
-            // This is for testing, will change this later
-            shaders["swamp"]->setInt("numLights", testLights.size());
-            for (int i = 0; i < testLights.size(); ++i) {
-                shaders["swamp"]->setVec3("pointLights[" + std::to_string(i) + "].position",
-                                          testLights[i].position);
-                shaders["swamp"]->setVec3("pointLights[" + std::to_string(i) + "].color",
-                                          testLights[i].color);
-            }
-
-            instance->drawRecursive(*shaders["swamp"], boundingBoxMode);
+        for (int i = 0; i < 2; ++i) {
+            glActiveTexture(GL_TEXTURE0 + config::SHADOW_TEXTURE_UNIT + i);
+            GLuint tex = (i < staticShadowMaps[name].size())
+                             ? staticShadowMaps[name][i]->getDepthCubemap()
+                             : getDummyCubemap();
+            glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
         }
+
+        if (name == "hotelRoom" || name == "swampKeyRoom" || name == "parkourRoom1") {
+            shader = shaders["model"].get();
+            shader->use();
+            shader->setBool("useFade", false);
+        } else if (name == "swampRoom") {
+            shader = shaders["swamp"].get();
+            shader->use();
+        } else if (name == "circusRoom") {
+            shader = shaders["model"].get();
+            shader->use();
+            shader->setBool("useFade", true);
+        }
+
+        shader->setInt("numLights", lights.size());
+
+        for (int i = 0; i < lights.size(); ++i) {
+            shader->setVec3("pointLights[" + std::to_string(i) + "].position",
+                            lights[i].worldPosition);
+            shader->setVec3("pointLights[" + std::to_string(i) + "].color", lights[i].color);
+        }
+
+        instance->drawRecursive(*shader, boundingBoxMode);
     }
 
     shaders["character"]->use();
 
     for (auto& [id, player] : players) {
+        if (id == playerID)
+            continue;
+
         player.draw(*shaders["character"]);
     }
 

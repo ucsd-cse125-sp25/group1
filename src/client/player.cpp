@@ -6,8 +6,7 @@ Player::Player(int id, const glm::vec3& position, const glm::vec3& direction)
 // TODO: init currRoomID to the id of the lobby
 
 void Player::init() {
-    character =
-        std::make_unique<AnimatedModel>("../src/client/characters/player_character_idle.fbx");
+    character = std::make_unique<AnimatedModel>("../src/client/characters/player_cat.fbx");
     animations["idle"] = std::make_unique<Animation>(character->getScene(), character.get());
     animator = std::make_unique<Animator>(animations["idle"].get());
 }
@@ -34,9 +33,6 @@ void Player::draw(Shader& shader) {
     playerModel = glm::rotate(playerModel, angle, glm::normalize(rotationAxis));
 
     shader.setMat4("model", playerModel);
-    shader.setVec3("color", config::PLAYER_COLORS[id]);
-    shader.setVec3("specular", glm::vec3(0.1f, 0.1f, 0.1f));
-    shader.setFloat("shininess", 16);
 
-    character->draw();
+    character->draw(shader);
 }

@@ -8,6 +8,7 @@
 #include <unordered_map>
 #include "components/door.hpp"
 #include "components/interactable.hpp"
+#include "components/key.hpp"
 #include "initBody.hpp"
 #include "player.hpp"
 #include "string"

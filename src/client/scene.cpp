@@ -36,6 +36,8 @@ void Scene::init() {
     cannonballAsset = std::make_unique<Model>("../src/client/models/cannonball.obj");
     cannonAsset = std::make_unique<Model>("../src/client/models/cannon.obj");
 
+    keyAsset = std::make_unique<Model>("../src/client/models/key.obj");
+
     canvas = std::make_unique<Canvas>();
 
     initRooms();
@@ -87,6 +89,14 @@ void Scene::initRooms() {
     swampRoom->children["frog"][0] =
         std::make_unique<ModelInstance>(frogAsset.get(), frogModel, swampRoom.get(), true);
 
+    // Add the key to the swamp room
+    glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMPKEY_ROOM_POSITION);
+    auto swampKeyRoom =
+        std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel, nullptr, true);
+    glm::mat4 keyModel = glm::translate(I4, config::SWAMP_KEY_POSITION);
+    swampKeyRoom->children["key"][0] =
+        std::make_unique<ModelInstance>(keyAsset.get(), keyModel, swampKeyRoom.get(), false);
+
     // Circus room
     glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
     auto circusRoom =
@@ -103,6 +113,7 @@ void Scene::initRooms() {
 
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);
+    modelInstances["swampKeyRoom"] = std::move(swampKeyRoom);
     modelInstances["circusRoom"] = std::move(circusRoom);
 }
 
@@ -115,6 +126,8 @@ void Scene::initLights() {
                                            glm::vec3(70.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
     pointLights["circusRoom"] = {PointLight(glm::translate(I4, config::CIRCUS_ROOM_POSITION),
                                             glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["swampKeyRoom"] = {PointLight(glm::translate(I4, config::SWAMPKEY_ROOM_POSITION),
+                                              glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
 }
 
 void Scene::initShadowMaps() {
@@ -195,7 +208,7 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
         }
 
-        if (name == "hotelRoom") {
+        if (name == "hotelRoom" || name == "swampKeyRoom") {
             shader = shaders["model"].get();
             shader->use();
             shader->setBool("useFade", false);

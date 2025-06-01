@@ -98,3 +98,18 @@ RigidBody* initWall(TransformData data, Circus* circus) {
     wall->setBody(body);
     return body;
 }
+
+RigidBody* initKey(TransformData data, Server& server, World& world, const std::string& roomName,
+                   std::unordered_map<int, Key*>* keys) { // Switch this to ID)
+    // TODO: change this from 0 to whatever key ID
+    Key* key = new Key(keys->size(), roomName, server, world);
+    (*keys)[key->getID()] = key;
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, key, true);
+
+    key->setBody(body);
+    return body;
+}
+

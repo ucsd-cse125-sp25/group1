@@ -61,6 +61,8 @@ inline constexpr glm::vec3 SWAMP_ROOM_POSITION = {20.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 FROG_POSITION = {7.0f, 0.0f, 4.0f};
 
 inline constexpr glm::vec3 CIRCUS_ROOM_POSITION = {-50.0f, 0.0f, 0.0f};
+inline constexpr glm::vec3 SWAMPKEY_ROOM_POSITION = {120.1f, 0.0f, 0.0f};
+inline constexpr glm::vec3 SWAMP_KEY_POSITION = {0.0f, 1.0f, 0.0f};
 
 // Swamp Related Configs
 inline constexpr glm::vec3 SWAMP_RESPAWN = {21.0f, 1.0f, 0.0f};

@@ -31,7 +31,11 @@ void Server::initRigidBodies() {
     inLayout >> layout;
     inDimensions >> dimensions;
 
-    for (const auto& room : layout) {
+    // for (const auto& room : layout) {
+    for (auto it = layout.begin(); it != layout.end(); ++it) {
+        const std::string& roomName = it.key();
+        const json& room = it.value();
+        cout << "Initializing room: " << roomName << endl;
         vec3 roomPosition = toVec3(room["position"]);
 
         for (const auto& obj : room["objects"]) {
@@ -72,6 +76,8 @@ void Server::initRigidBodies() {
             } else if (modelName == "wall_00") {
                 // TODO: should it take in &objects like initFrog does?
                 object = initWall(data, circus);
+            } else if (modelName == "key_00") {
+                object = initKey(data, *this, world, roomName, &keys);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;

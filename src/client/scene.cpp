@@ -34,6 +34,8 @@ void Scene::init() {
 
     circusRoomAsset = std::make_unique<Model>("../src/client/models/tent.obj");
 
+    keyAsset = std::make_unique<Model>("../src/client/models/key.obj");
+
     canvas = std::make_unique<Canvas>();
 
     initRooms();
@@ -76,8 +78,8 @@ void Scene::initRooms() {
         lilypadModel =
             glm::rotate(lilypadModel, glm::radians(angleDegrees), glm::vec3(0.0f, 1.0f, 0.0f));
 
-        swampRoom->children["lilypad"][i] = std::make_unique<ModelInstance>(
-            lilypadAsset.get(), lilypadModel, swampRoom.get(), false);
+        swampRoom->children["lilypad"][i] =
+            std::make_unique<ModelInstance>(lilypadAsset.get(), lilypadModel, swampRoom.get(), false);
     }
 
     glm::mat4 frogModel = glm::translate(I4, config::FROG_POSITION);
@@ -90,8 +92,16 @@ void Scene::initRooms() {
     auto circusRoom =
         std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel, nullptr, true);
 
+    // Add the key to the swamp room
+    glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMPKEY_ROOM_POSITION);
+    auto swampKeyRoom = std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel, nullptr, true);
+    glm::mat4 keyModel = glm::translate(I4, config::SWAMP_KEY_POSITION);
+    swampKeyRoom->children["key"][0] =
+        std::make_unique<ModelInstance>(keyAsset.get(), keyModel, swampKeyRoom.get(), false);
+
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);
+    modelInstances["swampKeyRoom"] = std::move(swampKeyRoom);
     modelInstances["circusRoom"] = std::move(circusRoom);
 }
 
@@ -104,6 +114,8 @@ void Scene::initLights() {
                                            glm::vec3(70.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
     pointLights["circusRoom"] = {PointLight(glm::translate(I4, config::CIRCUS_ROOM_POSITION),
                                             glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["swampKeyRoom"] = {PointLight(glm::translate(I4, config::SWAMPKEY_ROOM_POSITION),
+                                              glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
 }
 
 void Scene::initShadowMaps() {
@@ -184,7 +196,7 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
         }
 
-        if (name == "hotelRoom") {
+        if (name == "hotelRoom" || name == "swampKeyRoom") {
             shader = shaders["model"].get();
             shader->use();
             shader->setBool("useFade", false);

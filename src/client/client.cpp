@@ -181,7 +181,6 @@ static glm::vec3 toVec3(json arr) {
 void Client::handleServerMessage(const std::string& message) {
     json parsed = json::parse(message);
     std::string type = parsed.value("type", "");
-
     if (type == "player_states") {
         updatePlayerStates(parsed);
     } else if (type == "time_left") {
@@ -214,7 +213,13 @@ void Client::handleServerMessage(const std::string& message) {
         scene->canvas->setInteractHidden(false);
     } else if (type == "interactable_not_nearby") {
         scene->canvas->setInteractHidden(true);
+    } else if (type == "key_pickup") {
+        auto id = parsed["id"];
+        auto roomName = parsed["room"];
+        std::cout << "Key with ID: " << id << " picked up in room: " << roomName << "\n";
+        scene->removeInstanceFromRoom(roomName, "key", id);
     }
+    // Need to also udpate object states
 }
 
 void Client::updatePlayerStates(const json& parsed) {

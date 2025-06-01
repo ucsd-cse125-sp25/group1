@@ -170,6 +170,7 @@ class Server {
     std::unordered_map<int, Room*> rooms;
     std::unordered_map<int, Object*> objects;
     std::unordered_map<int, Door*> doors;
+    std::unordered_map<int, Key*> keys;
 
     std::unordered_map<int, std::deque<std::string>> clientMessages;
 

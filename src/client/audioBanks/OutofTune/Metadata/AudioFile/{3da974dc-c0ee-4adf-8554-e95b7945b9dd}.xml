@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{3da974dc-c0ee-4adf-8554-e95b7945b9dd}">
+		<property name="assetPath">
+			<value>grab-clothes-foley-308655.mp3</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.2879999999999998</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{897da1ba-febd-4b80-8e98-8d40fd0aa078}</destination>
+		</relationship>
+	</object>
+</objects>

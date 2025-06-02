@@ -32,10 +32,15 @@ void Server::initRigidBodies() {
 
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
-        if (roomName != "swamp_room") {
-            cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
-            rooms[rooms.size()] = new Room(rooms.size(), roomName);
+        cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
+        Room* room; 
+        if (roomName == "swamp_room") {
+            swamp = new Swamp(0, world, *this);
+            room = static_cast<Room*>(swamp);
+        } else {
+            room = new Room(rooms.size(), roomName);
         }
+        rooms[rooms.size()] = room;
     }
 
     // for (const auto& room : layout) {
@@ -92,9 +97,6 @@ void Server::initRigidBodies() {
 
 bool Server::init() {
     std::cout << "IP Address: " << config::SERVER_IP << "\nPort: " << config::SERVER_PORT << "\n";
-
-    swamp = new Swamp(0, world, *this);
-    rooms[0] = swamp;
 
     initRigidBodies();
 

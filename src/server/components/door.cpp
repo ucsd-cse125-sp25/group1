@@ -34,6 +34,10 @@ void Door::handleInteract(const Player& player) {
 
 void Door::openDoor() {
     open = true;
+    for (int i = 0; i < roomPtrs.size(); i++) {
+        Room* room = roomPtrs[i];
+        room->removeInteractable(static_cast<Interactable*>(this));
+    }
     delete body;
     this->setBody(nullptr);
 }

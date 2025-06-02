@@ -68,28 +68,6 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
         world->addObject(zone);
     }
 
-    RigidBody* roomZones[2];
-    for (int i = -1; i < 2; i += 2) {
-        // Shouldn't be a referenceable object
-        Object* object = new Object(-1, [i, roomIDs](ICustomPhysics* otherObject) {
-            // If the other object is a player, change their roomID
-            if (Player* player = dynamic_cast<Player*>(otherObject)) {
-                player->setCurRoomID(roomIDs[(i + 1) / 2]);
-            }
-        });
-
-        // Create a rigid body that changes the roomID of players that collide with it
-        float offset =
-            i * config::PLAYER_WIDTH / 2; // first room is always most negative side of the door
-        vec3 zonePosition = doorPosition + (offset * facingDirection);
-        RigidBody* zone = new RigidBody(
-            vec3(0.0f), vec3(0.0f), 0.0f, new Transform{zonePosition, vec3(0.0f)},
-            new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, object, true);
-
-        roomZones[(i + 1) / 2] = zone;
-        world->addObject(zone);
-    }
-
     door->setRoomZones(roomZones[0], roomZones[1]);
     door->setBody(body);
 

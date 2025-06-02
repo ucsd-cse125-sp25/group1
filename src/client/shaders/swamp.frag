@@ -33,6 +33,11 @@ uniform sampler2D modelTexture;
 
 uniform bool isWater;
 
+uniform bool useFog;
+uniform vec3 fogColor;
+uniform float fogStart;
+uniform float fogEnd;
+
 vec3 computeLighting(vec3 lightDir, vec3 lightColor, vec3 normal, vec3 viewDir) {
     vec3 halfwayDir = normalize(lightDir + viewDir);
 
@@ -117,8 +122,8 @@ void main() {
         vec3 lighting = computeLighting(lightDir, lightColor, normal, viewDir);
 
         // Distance-based fade
-        float dist = length(fragPos - pointLights[i].position);
-        float fade = clamp(1.0 - dist / shadowFarClip, 0.0, 1.0);
+        float distance = length(fragPos - pointLights[i].position);
+        float fade = clamp(1.0 - distance / shadowFarClip, 0.0, 1.0);
         shadow = mix(0.5, 1.0, shadow * fade);
 
         result += lighting * baseColor * shadow;
@@ -128,5 +133,11 @@ void main() {
         fragColor = vec4(result, WATER_OPAQUE);
     } else {
         fragColor = vec4(result, 1.0);
+    }
+
+    if (useFog) {
+        float distance = length(viewPos - fragPos);
+        float fogFactor = clamp((fogEnd - distance) / (fogEnd - fogStart), 0.0, 1.0);
+        fragColor = mix(vec4(fogColor, 1.0), fragColor, fogFactor);
     }
 }

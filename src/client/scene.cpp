@@ -306,6 +306,10 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         } else if (name == "swampRoom") {
             shader = shaders["swamp"].get();
             shader->use();
+            shader->setBool("useFog", true);
+            shader->setVec3("fogColor", glm::vec3(0.05f, 0.07f, 0.1f));
+            shader->setFloat("fogStart", 10.0f);
+            shader->setFloat("fogEnd", 60.0f);
         } else if (name == "circusRoom") {
             shader = shaders["model"].get();
             shader->use();

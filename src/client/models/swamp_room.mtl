@@ -1,4 +1,4 @@
-# Blender 4.4.3 MTL File: 'hotel rooms most recent sub 30.blend'
+# Blender 4.4.1 MTL File: 'hotel rooms most recent sub 30 (1) (1).blend'
 # www.blender.org
 
 newmtl MAT_dirt
@@ -32,16 +32,6 @@ illum 2
 map_Kd TEX_swamp_wall.png
 
 newmtl MAT_swamp_water
-Ns 3.550426
-Ka 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.500000
-d 0.507042
-illum 9
-map_Kd TEX_swamp_water.png
-
-newmtl MAT_swamp_top_water
 Ns 3.550426
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000

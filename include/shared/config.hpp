@@ -48,7 +48,7 @@ inline constexpr float PLAYER_WIDTH = 1.53f;
 inline constexpr float PLAYER_HEIGHT = 3.2f;
 inline constexpr float PLAYER_DEPTH = 2.3f;
 
-inline constexpr float PLAYER_INTERACT_RANGE = 10.0f;
+inline constexpr float PLAYER_INTERACT_RANGE = 5.0f;
 
 inline constexpr float MOUSE_SENSITIVITY = 0.1f;
 
@@ -62,7 +62,7 @@ inline constexpr glm::vec3 SWAMP_ROOM_POSITION = {20.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 FROG_POSITION = {7.0f, 0.0f, 4.0f};
 
 inline constexpr glm::vec3 CIRCUS_ROOM_POSITION = {-50.0f, 0.0f, 0.0f};
-inline constexpr glm::vec3 SWAMPKEY_ROOM_POSITION = {120.1f, 0.0f, 0.0f};
+inline constexpr glm::vec3 SWAMPKEY_ROOM_POSITION = {120.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 SWAMP_KEY_POSITION = {0.0f, 1.0f, 0.0f};
 
 inline constexpr glm::vec3 PARKOUR_ROOM_1_POSITION = {0.0f, 0.0f, 20.0f};

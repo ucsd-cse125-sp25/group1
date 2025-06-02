@@ -23,7 +23,6 @@ struct SubMesh {
     bool hasTexture = false; // True if this sub-mesh uses a texture.
 
     bool isWater = false;       // True if this sub-mesh is water.
-    bool isTopWater = false;    // True if this sub-mesh is the top water layer.
     bool isBoundingBox = false; // True if this sub-mesh is a bounding box.
 
     /**

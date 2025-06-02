@@ -32,7 +32,6 @@ uniform bool hasTexture;
 uniform sampler2D modelTexture;
 
 uniform bool isWater;
-uniform bool isTopWater;
 
 vec3 computeLighting(vec3 lightDir, vec3 lightColor, vec3 normal, vec3 viewDir) {
     vec3 halfwayDir = normalize(lightDir + viewDir);
@@ -96,12 +95,6 @@ float getShadowFactor(vec3 fragPosWorld, int index) {
 }
 
 void main() {
-    if (isWater && !isTopWater) {
-        vec3 baseColor = hasTexture ? texture(modelTexture, texCoords).rgb : color;
-        fragColor = vec4(baseColor, WATER_OPAQUE);
-        return;
-    }
-
     vec3 viewDir = normalize(viewPos - fragPos);
     vec3 baseColor = hasTexture ? texture(modelTexture, texCoords).rgb : color;
 

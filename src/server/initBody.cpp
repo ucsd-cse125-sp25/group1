@@ -17,7 +17,7 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
 RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
                     std::unordered_map<int, Room*>* rooms, World* world) {
     int keyID = -1;
-    int roomIDs[2] = {0, 1};
+    int roomIDs[2] = {0, 4};
 
     Door* door;
     if (keyID != -1) {

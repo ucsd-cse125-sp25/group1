@@ -35,7 +35,7 @@ void Server::initRigidBodies() {
         cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
         Room* room; 
         if (roomName == "swamp_room") {
-            swamp = new Swamp(0, world, *this);
+            swamp = new Swamp(rooms.size(), world, *this);
             room = static_cast<Room*>(swamp);
         } else {
             room = new Room(rooms.size(), roomName);

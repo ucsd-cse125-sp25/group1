@@ -1,6 +1,6 @@
 #include "initBody.hpp"
 
-RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* objects) {
+RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* objects, World* world) {
     Object* object = new Object(objects->size());
     (*objects)[object->getID()] = object;
 
@@ -8,7 +8,7 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, object, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, object, world, true);
 
     object->setBody(body);
     return body;
@@ -27,8 +27,8 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
     }
     (*doors)[door->getID()] = door;
 
-    //(*rooms)[roomIDs[0]]->addInteractable(door);
-    //(*rooms)[roomIDs[1]]->addInteractable(door);
+    (*rooms)[roomIDs[0]]->addInteractable(door);
+    (*rooms)[roomIDs[1]]->addInteractable(door);
 
     vec3 doorPosition = data.roomPosition + data.position + data.relativePosition;
     vec3 facingDirection;
@@ -43,7 +43,7 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
 
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f, new Transform{doorPosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, door, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, door, world, true);
 
     RigidBody* roomZones[2];
     for (int i = -1; i < 2; i += 2) {
@@ -61,7 +61,8 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
         vec3 zonePosition = doorPosition + (offset * facingDirection);
         RigidBody* zone = new RigidBody(
             vec3(0.0f), vec3(0.0f), 0.0f, new Transform{zonePosition, vec3(0.0f)},
-            new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, object, true);
+                          new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner},
+                          object, world, true);
 
         roomZones[(i + 1) / 2] = zone;
         world->addObject(zone);
@@ -73,37 +74,35 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
     return body;
 }
 
-RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* objects, Swamp* swamp) {
-    auto frog = std::make_unique<Frog>(objects->size(), swamp);
+RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* objects, Swamp* swamp,
+                    World* world) {
+    Frog* frog = new Frog(objects->size(), swamp);
 
-    Frog* frogPtr = frog.get();
-    (*objects)[frog->getID()] = frog.get();
-
-    swamp->addInteractable(std::move(frog));
+    swamp->addInteractable(frog);
 
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, frogPtr, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, frog, world, true);
 
-    frogPtr->setBody(body);
+    frog->setBody(body);
     return body;
 }
 
-RigidBody* initLilyPad(TransformData data, Swamp* swamp) {
+RigidBody* initLilyPad(TransformData data, Swamp* swamp, World* world) {
     auto [lilyPad, colliderType] = swamp->createLilyPad();
 
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
         new BoxCollider{colliderType, data.relativeMinCorner, data.relativeMaxCorner}, lilyPad,
-        true);
+        world, true);
 
     lilyPad->setBody(body);
     return body;
 }
 
-RigidBody* initWater(TransformData data, Swamp* swamp) {
+RigidBody* initWater(TransformData data, Swamp* swamp, World* world) {
     Water* waterRespawnPlane = swamp->createWaterRespawn();
 
     // TODO: add the position/relative position in the json dimensions file
@@ -111,7 +110,7 @@ RigidBody* initWater(TransformData data, Swamp* swamp) {
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
         new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, waterRespawnPlane,
-        true);
+        world, true);
 
     waterRespawnPlane->setBody(body);
     return body;
@@ -125,7 +124,7 @@ RigidBody* initKey(TransformData data, Server& server, World& world,
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, key, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, key, &world, true);
 
     key->setBody(body);
     return body;

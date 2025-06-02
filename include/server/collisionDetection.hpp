@@ -12,6 +12,8 @@
 #include "rigidBody.hpp"
 #include "transform.hpp"
 
+class RigidBody;
+
 struct Collision {
     vec3 normal;      // contact normal
     float depth;      // depth of penetration

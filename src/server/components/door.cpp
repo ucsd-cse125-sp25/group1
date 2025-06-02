@@ -34,7 +34,7 @@ void Door::handleInteract(const Player& player) {
 
 void Door::openDoor() {
     open = true;
-    delete this->getBody();
+    delete body;
     this->setBody(nullptr);
 }
 

@@ -13,6 +13,8 @@
 #include "canvas.hpp"
 #include "config.hpp"
 #include "cube.hpp"
+#include "firefly.hpp"
+#include "fireflyRenderer.hpp"
 #include "json.hpp"
 #include "model.hpp"
 #include "modelInstance.hpp"
@@ -146,6 +148,14 @@ class Scene {
      */
     void initShadowMaps();
 
+    /**
+     * Creates and stores a given number of fireflies with random positions, directions,
+     * speeds, and sizes inside a defined bounding area.
+     *
+     * @param count Number of fireflies to spawn.
+     */
+    void spawnFireflies(int count);
+
     int playerID;
 
     std::unordered_map<std::string, std::vector<PointLight>> pointLights;
@@ -171,4 +181,9 @@ class Scene {
         modelInstances; // Top-level model instances with their child models.
 
     std::unordered_map<int, Player> players; // Active players in the scene.
+
+    FireflyRenderer fireflyRenderer;
+    std::vector<Firefly> fireflies;
+
+    float lastFrame = 0.0f;
 };

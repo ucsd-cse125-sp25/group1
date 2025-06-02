@@ -398,6 +398,7 @@ void Client::initGL() {
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
+    glEnable(GL_PROGRAM_POINT_SIZE);
 }
 
 void Client::initScene() {

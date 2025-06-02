@@ -12,7 +12,6 @@ void Player::init() {
 }
 
 void Player::draw(Shader& shader) {
-    animator->update(1.0f / 60.0f);
     const auto& boneMatrices = animator->getBoneMatrices();
 
     for (int i = 0; i < boneMatrices.size(); ++i) {

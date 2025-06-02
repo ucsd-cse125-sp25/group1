@@ -17,7 +17,7 @@ void Animator::setAnimation(Animation* animation) {
 }
 
 void Animator::update(float deltaTime) {
-    float speedMultiplier = 2.0f;
+    float speedMultiplier = 1.5f;
 
     currentTime += deltaTime * animation->getTicksPerSecond() * speedMultiplier;
     currentTime = fmod(currentTime, animation->getDuration());

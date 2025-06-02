@@ -82,6 +82,8 @@ inline constexpr const char* SWAMP_AUDIO_FILE = "{9b22e271-4a2c-47cd-8662-1a4f0d
 
 inline constexpr int SWAMP_NUM_FROGS = 3;
 
+inline constexpr int SWAMP_NUM_FIREFLIES = 150;
+
 // TODO: Adjust once rendered
 inline constexpr float SWAMP_LILYPAD_WIDTH = 1.0f;
 inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;

@@ -49,7 +49,7 @@ class Object : public ICustomPhysics {
 
     void customCollision(ICustomPhysics* otherObject) override;
 
-  private:
+  protected:
     int objectID;
     RigidBody* body = nullptr;
     CollisionCallback func;

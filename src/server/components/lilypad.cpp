@@ -52,6 +52,9 @@ void LilyPad::customCollision(ICustomPhysics* otherObject) {
         return;
     }
 
+    delete body;
+    this->setBody(nullptr);
+
     // Send Message to client to drop lily pad
     json message;
     message["type"] = "lilypad_drop";

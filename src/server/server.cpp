@@ -30,6 +30,14 @@ void Server::initRigidBodies() {
     inLayout >> layout;
     inDimensions >> dimensions;
 
+    for (auto it = layout.begin(); it != layout.end(); ++it) {
+        const std::string& roomName = it.key();
+        if (roomName != "swamp_room") {
+            cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
+            rooms[rooms.size()] = new Room(rooms.size(), roomName);
+        }
+    }
+
     // for (const auto& room : layout) {
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
@@ -64,17 +72,17 @@ void Server::initRigidBodies() {
             if (modelName == "door_00") {
                 object = initDoor(data, &doors, &rooms, &world);
             } else if (modelName == "frog_00") {
-                object = initFrog(data, &objects, swamp);
+                object = initFrog(data, &objects, swamp, &world);
             } else if (modelName == "lilypad_00") {
-                object = initLilyPad(data, swamp);
+                object = initLilyPad(data, swamp, &world);
             } else if (modelName == "water_00") {
-                object = initWater(data, swamp);
+                object = initWater(data, swamp, &world);
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;
-                object = initObject(data, &objects);
+                object = initObject(data, &objects, &world);
             }
 
             world.addObject(object);
@@ -85,8 +93,8 @@ void Server::initRigidBodies() {
 bool Server::init() {
     std::cout << "IP Address: " << config::SERVER_IP << "\nPort: " << config::SERVER_PORT << "\n";
 
-    swamp = new Swamp(1, world, *this);
-    rooms[1] = swamp;
+    swamp = new Swamp(0, world, *this);
+    rooms[0] = swamp;
 
     initRigidBodies();
 
@@ -142,11 +150,11 @@ void Server::handleClientJoin(int clientId) {
     glm::vec3 position = config::PLAYER_SPAWNS[clientId];
     glm::vec3 direction =
         glm::normalize(glm::vec3(-position.x, 0.0f, -position.z)); // will change this later
-    Player* player = new Player(clientId, 0, position, direction);
+    Player* player = new Player(clientId, 0, position, direction, &world);
     players[clientId] = player;
 
     // Temporary:
-    player->setCurRoomID(1); // Set the player's current room to Swamp
+    player->setCurRoomID(0); // Set the player's current room to Swamp
 
     // add player to physics world
     world.addObject(&(player->getBody()));

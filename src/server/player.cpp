@@ -4,11 +4,9 @@ Player::Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction
     : id(playerID), curRoomID(roomID),
       body(glm::vec3(0.0f), glm::vec3(0.0f), config::PLAYER_WEIGHT,
            new Transform{position, direction},
-           new BoxCollider{AABB,
-                           glm::vec3(-config::PLAYER_WIDTH / 2, -config::PLAYER_HEIGHT / 2,
-                                     -config::PLAYER_WIDTH / 2),
-                           glm::vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT / 2,
-                                     config::PLAYER_WIDTH / 2)},
+           new BoxCollider{AABB, glm::vec3(-config::PLAYER_WIDTH / 2, 0, -config::PLAYER_DEPTH / 2),
+                           glm::vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT,
+                                     config::PLAYER_DEPTH / 2)},
            this) {}
 
 Player::~Player() {}
@@ -65,6 +63,7 @@ void Player::handleMovementInput(const std::vector<std::string> actions) {
         (abs(body.getVelocity().y) < 1e-6f)) {
         // if grounded, jump
         moveDirection.y = 0.5f;
+        jumpSfxCooldown = false;
     }
 
     body.setVelocity(body.getVelocity() + moveDirection * config::PLAYER_SPEED);
@@ -110,6 +109,18 @@ Interactable* Player::getNearestInteractable(Room* room) {
     }
 
     return closestInteractable;
+}
+
+int Player::getID() const {
+    return id;
+}
+
+bool Player::getJumpSfxCooldown() const {
+    return jumpSfxCooldown;
+}
+
+void Player::setJumpSfxCooldown(bool value) {
+    jumpSfxCooldown = value;
 }
 
 void Player::customCollision(ICustomPhysics* otherObject) {}

@@ -19,6 +19,7 @@ struct ModelInstance {
     Model* model;
     glm::mat4 localTransform;
     ModelInstance* parent;
+    bool isStatic;
 
     /**
      * @brief Stores all child model instances grouped by type and ID.
@@ -36,8 +37,8 @@ struct ModelInstance {
      * @param parent Optional parent instance for hierarchical transforms.
      */
     ModelInstance(Model* model, const glm::mat4& localTransform = glm::mat4(1.0f),
-                  ModelInstance* parent = nullptr)
-        : model(model), localTransform(localTransform), parent(parent) {}
+                  ModelInstance* parent = nullptr, bool isStatic = true)
+        : model(model), localTransform(localTransform), parent(parent), isStatic(isStatic) {}
 
     /**
      * @brief Computes the world transform of this instance.
@@ -54,14 +55,51 @@ struct ModelInstance {
      *
      * Sets the model matrix uniform, draws this model,
      * then recursively draws all children in the hierarchy.
+     *
+     * @param shader Shader used for rendering.
+     * @param boundingBoxMode If true, draws only bounding boxes.
+     * @param staticOnly If true, draws only static models; otherwise, draws all models.
      */
-    void drawRecursive(Shader& shader, bool boundingBoxMode) const {
+    void drawRecursive(Shader& shader, bool boundingBoxMode, bool staticOnly = false) const {
         shader.setMat4("model", getWorldTransform());
-        model->draw(shader, boundingBoxMode);
+
+        if (!staticOnly || isStatic) {
+            model->draw(shader, boundingBoxMode);
+        }
 
         for (const auto& [type, idMap] : children) {
             for (const auto& [id, child] : idMap) {
-                child->drawRecursive(shader, boundingBoxMode);
+                child->drawRecursive(shader, boundingBoxMode, staticOnly);
+            }
+        }
+    }
+
+    /**
+     * Draws interactable children of the given type.
+     *
+     * If no range is provided, draws all. Otherwise, draws only those
+     * with IDs from start to end (inclusive).
+     *
+     * @param shader Shader used for rendering.
+     * @param type Type of interactable (e.g., "lilypad").
+     * @param start Start ID to draw (default -1 for all).
+     * @param end End ID to draw (default -1 for all).
+     */
+    void drawInteractable(Shader& shader, std::string type, int start = -1, int end = -1) {
+        const auto& idMap = children.at(type);
+
+        if (start == -1 || end == -1) {
+            for (const auto& [id, child] : idMap) {
+                shader.setMat4("model", child->getWorldTransform());
+                child->model->draw(shader, false);
+            }
+        } else {
+            for (int id = start; id <= end; ++id) {
+                if (idMap.contains(id)) {
+                    const auto& child = idMap.at(id);
+                    shader.setMat4("model", child->getWorldTransform());
+                    child->model->draw(shader, false);
+                }
             }
         }
     }

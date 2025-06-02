@@ -16,14 +16,18 @@ out vec3 normal;
 out vec2 texCoords;
 
 void main() {
-    mat4 skinMatrix =
-        aWeights[0] * boneMatrices[aBoneIDs[0]] + aWeights[1] * boneMatrices[aBoneIDs[1]] +
-        aWeights[2] * boneMatrices[aBoneIDs[2]] + aWeights[3] * boneMatrices[aBoneIDs[3]];
+    mat4 skinMatrix = mat4(1.0);
+
+    if (aWeights[0] + aWeights[1] + aWeights[2] + aWeights[3] > 0.0) {
+        skinMatrix =
+            aWeights[0] * boneMatrices[aBoneIDs[0]] + aWeights[1] * boneMatrices[aBoneIDs[1]] +
+            aWeights[2] * boneMatrices[aBoneIDs[2]] + aWeights[3] * boneMatrices[aBoneIDs[3]];
+    }
 
     vec4 worldPos = model * skinMatrix * vec4(aPosition, 1.0);
 
     fragPos = vec3(worldPos);
-    normal = mat3(model * skinMatrix) * aNormal;
+    normal = normalize(mat3(transpose(inverse(model * skinMatrix))) * aNormal);
     texCoords = aTexCoords;
 
     gl_Position = projection * view * worldPos;

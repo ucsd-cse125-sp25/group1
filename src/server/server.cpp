@@ -30,7 +30,11 @@ void Server::initRigidBodies() {
     inLayout >> layout;
     inDimensions >> dimensions;
 
-    for (const auto& room : layout) {
+    // for (const auto& room : layout) {
+    for (auto it = layout.begin(); it != layout.end(); ++it) {
+        const std::string& roomName = it.key();
+        const json& room = it.value();
+        cout << "Initializing room: " << roomName << endl;
         vec3 roomPosition = toVec3(room["position"]);
 
         for (const auto& obj : room["objects"]) {
@@ -60,11 +64,13 @@ void Server::initRigidBodies() {
             if (modelName == "door_00") {
                 object = initDoor(data, &doors);
             } else if (modelName == "frog_00") {
-                object = initFrog(data, &objects);
+                object = initFrog(data, &objects, swamp);
             } else if (modelName == "lilypad_00") {
                 object = initLilyPad(data, swamp);
             } else if (modelName == "water_00") {
                 object = initWater(data, swamp);
+            } else if (modelName == "key_00") {
+                object = initKey(data, *this, world, roomName, &keys);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;
@@ -80,6 +86,7 @@ bool Server::init() {
     std::cout << "IP Address: " << config::SERVER_IP << "\nPort: " << config::SERVER_PORT << "\n";
 
     swamp = new Swamp(1, world, *this);
+    rooms[1] = swamp;
 
     initRigidBodies();
 
@@ -137,6 +144,9 @@ void Server::handleClientJoin(int clientId) {
         glm::normalize(glm::vec3(-position.x, 0.0f, -position.z)); // will change this later
     Player* player = new Player(clientId, 0, position, direction);
     players[clientId] = player;
+
+    // Temporary:
+    player->setCurRoomID(1); // Set the player's current room to Swamp
 
     // add player to physics world
     world.addObject(&(player->getBody()));
@@ -230,9 +240,41 @@ void Server::handleClientMessages() {
                 int roomID = players[clientId]->getCurRoomID();
                 Interactable* interactable =
                     players[clientId]->getNearestInteractable(rooms[roomID]);
+
                 // if an interactable is nearby, notify user on the client
                 if (interactable != nullptr) {
-                    // TODO: ping client that they are standing near an interactable
+                    if (interactableTracked == nullptr ||
+                        interactable->getID() != interactableTracked->getID()) {
+                        json interactableMessage;
+                        interactableMessage["type"] = "interactable_nearby";
+                        interactableMessage["id"] = interactable->getID();
+
+                        std::string packet = interactableMessage.dump() + "\n";
+
+                        interactableTracked = interactable;
+                        try {
+                            boost::asio::write(*clients[clientId], boost::asio::buffer(packet));
+                        } catch (const std::exception& e) {
+                            handleClientDisconnect(clientId);
+                            continue; // skip further processing for this client
+                        }
+                    }
+                } else {
+                    if (interactableTracked != nullptr) {
+
+                        json interactableMessage;
+                        interactableMessage["type"] = "interactable_not_nearby";
+
+                        std::string packet = interactableMessage.dump() + "\n";
+
+                        interactableTracked = nullptr;
+                        try {
+                            boost::asio::write(*clients[clientId], boost::asio::buffer(packet));
+                        } catch (const std::exception& e) {
+                            handleClientDisconnect(clientId);
+                            continue; // skip further processing for this client
+                        }
+                    }
                 }
                 // handle misc inputs, such as interacting with environment
                 players[clientId]->handleGeneralInput(actions, interactable);

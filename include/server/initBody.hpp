@@ -8,6 +8,7 @@
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "components/water.hpp"
+#include "components/key.hpp"
 #include "rigidBody.hpp"
 #include "swamp.hpp"
 
@@ -53,9 +54,10 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors);
  *
  * @param data Transform and collider bounds.
  * @param objects Pointer to the server's object map.
+ * @param swamp Pointer to the Swamp environment managing the Frog.
  * @return Pointer to the initialized RigidBody.
  */
-RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* objects);
+RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* objects, Swamp* swamp);
 
 /**
  * @brief Initializes a lily pad entity via the Swamp object and assigns it a RigidBody.
@@ -79,3 +81,16 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp);
  * @return Pointer to the initialized RigidBody.
  */
 RigidBody* initWater(TransformData data, Swamp* swamp);
+
+/**
+ * @brief Initializes a Key object with a unique ID and attaches a RigidBody.
+ * 
+ * The Key is created with a reference to the Server and World, allowing it to broadcast pickup events.
+ * 
+ * @param data Transform data including position and collider dimensions.
+ * @param serverRef Reference to the Server instance for broadcasting messages.
+ * @param worldRef Reference to the World instance for managing physics.
+ * @param roomName The name of the room where the key is located.
+ * @return Pointer to the initialized RigidBody associated with the Key.
+ */
+RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef, const std::string& roomName, std::unordered_map<int, Key*>* keys);

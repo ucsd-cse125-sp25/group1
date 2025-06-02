@@ -1,14 +1,31 @@
 #include "animatedModel.hpp"
 #include <glm/gtc/type_ptr.hpp>
 #include <assimp/postprocess.h>
+#include <filesystem>
 #include <iostream>
+#include <stb_image.h>
 
 AnimatedModel::AnimatedModel(const std::string& path) {
+    directory = path.substr(0, path.find_last_of('/'));
     loadModel(path);
 }
 
-void AnimatedModel::draw() {
+void AnimatedModel::draw(Shader& shader) {
     for (const auto& mesh : subMeshes) {
+        if (mesh.hasTexture) {
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, mesh.textureId);
+
+            shader.setBool("hasTexture", true);
+            shader.setInt("modelTexture", 0);
+        } else {
+            shader.setBool("hasTexture", false);
+            shader.setVec3("color", mesh.color);
+        }
+
+        shader.setVec3("specular", mesh.specular);
+        shader.setFloat("shininess", mesh.shininess);
+
         mesh.draw();
     }
 }
@@ -103,6 +120,63 @@ AnimatedSubMesh AnimatedModel::processMesh(aiMesh* mesh) {
         for (unsigned int i = 0; i < face.mNumIndices; ++i) {
             subMesh.indices.push_back(face.mIndices[i]);
         }
+    }
+
+    aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+
+    glm::vec3 color = glm::vec3(0.0f);
+    glm::vec3 specular = glm::vec3(0.0f);
+    float shininess = 16.0f;
+
+    aiColor3D kd(0.0f);
+    aiColor3D ks(0.0f);
+
+    // Get diffuse color if available
+    if (material->Get(AI_MATKEY_COLOR_DIFFUSE, kd) == AI_SUCCESS) {
+        color = glm::vec3(kd.r, kd.g, kd.b);
+    }
+
+    // Get specular reflectivy if available
+    if (material->Get(AI_MATKEY_COLOR_SPECULAR, ks) == AI_SUCCESS) {
+        specular = glm::vec3(ks.r, ks.g, ks.b);
+    }
+
+    // Get shininess if available
+    material->Get(AI_MATKEY_SHININESS, shininess);
+
+    subMesh.color = color;
+    subMesh.specular = specular;
+    subMesh.shininess = shininess;
+
+    aiString textureImage;
+
+    // Load texture if available
+    if (material->GetTexture(aiTextureType_DIFFUSE, 0, &textureImage) == AI_SUCCESS) {
+        std::string fileName = std::filesystem::path(textureImage.C_Str()).filename().string();
+        std::string texturePath = directory + "/" + fileName;
+
+        GLuint textureId;
+        glGenTextures(1, &textureId);
+        glBindTexture(GL_TEXTURE_2D, textureId);
+
+        int width, height, channels;
+        unsigned char* data = stbi_load(texturePath.c_str(), &width, &height, &channels, 0);
+
+        if (data) {
+            GLenum format = (channels == 3) ? GL_RGB : GL_RGBA;
+            glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE,
+                         data);
+            glGenerateMipmap(GL_TEXTURE_2D);
+        } else {
+            std::cerr << "Error: Failed to load texture: " << texturePath << "\n";
+        }
+
+        stbi_image_free(data);
+
+        subMesh.textureId = textureId;
+        subMesh.hasTexture = true;
+    } else {
+        subMesh.hasTexture = false;
     }
 
     return subMesh;

@@ -114,7 +114,7 @@ bool Client::init() {
 
     audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
     audioManager.playEvent(config::SWAMP_AMBIENCE_TRACK);
-    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 1.0f);
+    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 0.2f);
 
     return true;
 }
@@ -181,7 +181,6 @@ static glm::vec3 toVec3(json arr) {
 void Client::handleServerMessage(const std::string& message) {
     json parsed = json::parse(message);
     std::string type = parsed.value("type", "");
-
     if (type == "player_states") {
         updatePlayerStates(parsed);
     } else if (type == "time_left") {
@@ -195,7 +194,51 @@ void Client::handleServerMessage(const std::string& message) {
         auto id = parsed["id"];
 
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
+        scene->renderLilypadShadowPass(id);
+    } else if (type == "sfx") {
+        // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,
+        // "action": "jump"} client id that of the person triggering the sfx
+
+        std::string sfxIDStr = parsed["sfx_id"];
+        const char* sfxID = sfxIDStr.c_str();
+        int clientId = parsed["client_id"];
+        std::string action = parsed["action"];
+
+        audioManager.stopEvent(sfxID); // Stop the event if it's already playing
+        if (clientId == this->clientId) {
+            audioManager.loadFMODStudioEvent(sfxID);
+            audioManager.playEvent(sfxID);
+            audioManager.setEventVolume(sfxID, 1.0f);
+        }
+    } else if (type == "interactable_nearby") {
+        scene->canvas->setInteractHidden(false);
+    } else if (type == "interactable_not_nearby") {
+        scene->canvas->setInteractHidden(true);
+    } else if (type == "key_pickup") {
+        auto keyID = parsed["keyID"];
+        auto playerID = parsed["playerID"];
+        auto roomName = parsed["room"];
+        /*
+        TODO: update remove key from room logic to use keyID instead of 0.
+        NOTE: The current logic assumes that no room has more than one key.
+        We use '0' instead of 'keyID' in `scene->removeInstanceFromRoom(roomName, "key", 0)`
+        because in the scene, we go by room, so we are removing the only key in the room,
+        meaning it has id 0. When creating keys in the scene for a given room, they are
+        hardcoded as `SOME_ROOM->children["key"][0] = ...`. We aren't mapping them by id of all
+        keys created. Thus, we have to remove 0 rather than keyID.
+         */
+        std::cout << "removing key " << keyID << " from room " << roomName << std::endl;
+        scene->removeInstanceFromRoom(roomName, "key", 0);
+        std::cout << "key " << keyID << " removed from room " << roomName << std::endl;
+        if (playerID == this->clientId) {
+            scene->canvas->collectKey();
+        }
+
+        // Assumes there's only one key in the room for now.
+        // Will refactor if we add more interactable objects later.
+        scene->setInteractableShadowActive(roomName, 0, false);
     }
+    // Need to also udpate object states
 }
 
 void Client::updatePlayerStates(const json& parsed) {
@@ -227,7 +270,7 @@ void Client::updatePlayerStates(const json& parsed) {
 }
 
 void Client::updateGameTimer(const json& parsed) {
-    scene->updateTimer(parsed["minutes"], parsed["seconds"]);
+    scene->canvas->updateTimer(parsed["minutes"], parsed["seconds"]);
 }
 
 static std::string mapKeyToAction(int key) {
@@ -263,19 +306,18 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
     message["type"] = "keyboard_input";
     message["actions"] = json::array();
 
-    audioManager.loadFMODStudioEvent(config::footstepCarpet);
-
     for (const int& key : keysToCheck) {
         if (glfwGetKey(window, key) == GLFW_PRESS) {
             std::string action = mapKeyToAction(key);
 
             if (!action.empty()) {
                 message["actions"].push_back(action);
-                if (action != "jump" && !audioManager.eventIsPlaying(config::footstepCarpet)) {
+                if (action != "jump" && action != "interact" &&
+                    !audioManager.eventIsPlaying(config::FOOTSTEPCARPET)) {
                     // This is footstep sfx
-                    
-                    audioManager.setEventVolume(config::footstepCarpet, 0.1f);
-                    audioManager.playEvent(config::footstepCarpet);
+                    audioManager.loadFMODStudioEvent(config::FOOTSTEPCARPET);
+                    audioManager.setEventVolume(config::FOOTSTEPCARPET, 0.1f);
+                    audioManager.playEvent(config::FOOTSTEPCARPET);
                 }
             }
         }
@@ -292,7 +334,7 @@ void Client::handleMouseInput() {
 
     glm::vec3 direction = yawToDirection(yaw);
     if (scene)
-        scene->updateCompass(direction);
+        scene->canvas->updateCompass(direction);
     json message;
 
     message["type"] = "mouse_input";
@@ -359,7 +401,7 @@ void Client::initGL() {
 }
 
 void Client::initScene() {
-    scene = std::make_unique<Scene>();
+    scene = std::make_unique<Scene>(clientId);
     scene->init();
 
     glm::vec3 position = config::PLAYER_SPAWNS[clientId];

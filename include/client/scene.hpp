@@ -16,7 +16,9 @@
 #include "json.hpp"
 #include "model.hpp"
 #include "modelInstance.hpp"
+#include "pointLight.hpp"
 #include "shader.hpp"
+#include "shadowMap.hpp"
 
 /**
  * @brief Manages the 3D scene, including models and player entities.
@@ -28,8 +30,9 @@ class Scene {
   public:
     /**
      * @brief Constructs a Scene instance.
+     * @param playerID Player ID.
      */
-    Scene();
+    Scene(int playerID);
 
     /**
      * @brief Destroys the Scene instance.
@@ -71,6 +74,44 @@ class Scene {
     void removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id);
 
     /**
+     * @brief Renders shadow maps for static geometry.
+     *
+     * This is called only once when the scene initializes.
+     */
+    void renderStaticShadowPass();
+
+    /**
+     * @brief Renders shadow maps for interactable geometry.
+     *
+     * This is called only once when the scene initializes.
+     */
+    void renderInteractableShadowPass();
+
+    /**
+     * @brief Renders shadow maps for lilypad objects in the swamp room.
+     *
+     * If 'id' is -1 (default), renders all lilypads by splitting them across two shadow maps.
+     * Otherwise, renders only the shadow map responsible for the given lilypad ID.
+     *
+     * @param id Lilypad ID to render shadow map for, or -1 for all.
+     */
+    void renderLilypadShadowPass(int id = -1);
+
+    /**
+     * @brief Marks an interactable shadow map as active or inactive.
+     *
+     * This flag is passed to the fragment shader to skip sampling from unused shadow cubemaps,
+     * which helps avoid unnecessary texture lookups and improves performance.
+     *
+     * @param roomName Name of the room (e.g., "keyRoom").
+     * @param index Index of the shadow map to mark.
+     * @param isActive True to enable sampling; false to skip it in the shader.
+     */
+    void setInteractableShadowActive(std::string roomName, int index, bool isActive) {
+        interactableShadowActive[roomName][index] = isActive;
+    };
+
+    /**
      * @brief Renders the entire scene.
      *
      * Draws static models and dynamic player cubes.
@@ -80,13 +121,10 @@ class Scene {
      */
     void render(const Camera& camera, bool boundingBoxMode);
 
-    void updateTimer(int minutes, int seconds);
-
-    void updateCompass(glm::vec3 direction);
-
     void updateWindow();
 
     GLFWwindow* window;
+    std::unique_ptr<Canvas> canvas;
 
   private:
     /**
@@ -98,26 +136,38 @@ class Scene {
      */
     void initRooms();
 
-    std::unique_ptr<Animator> animator;
-    std::map<std::string, std::unique_ptr<Animation>> animations;
+    /**
+     * @brief Initializes point lights per room.
+     */
+    void initLights();
 
-    std::unique_ptr<AnimatedModel> character;
+    /**
+     * @brief Initializes shadow maps for all point lights.
+     */
+    void initShadowMaps();
 
-    std::unique_ptr<Shader> shader;
-    std::unique_ptr<Shader> characterShader;
+    int playerID;
+
+    std::unordered_map<std::string, std::vector<PointLight>> pointLights;
+    std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> staticShadowMaps;
+    std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> interactableShadowMaps;
+    std::unordered_map<std::string, std::vector<bool>> interactableShadowActive;
+
     std::map<std::string, std::unique_ptr<Shader>> shaders;
     std::unique_ptr<Shader> uiShader;
 
     std::unique_ptr<Model> hotelRoomAsset;
     std::unique_ptr<Model> tableAsset;
     std::unique_ptr<Model> doorAsset;
+    std::unique_ptr<Model> keyAsset;
 
     std::unique_ptr<Model> swampRoomAsset;
     std::unique_ptr<Model> lilypadAsset;
+    std::unique_ptr<Model> frogAsset;
 
-    std::unique_ptr<Canvas> canvas;
+    std::unique_ptr<Model> circusRoomAsset;
 
-    std::map<std::string, std::unique_ptr<ModelInstance>>
+    std::unordered_map<std::string, std::unique_ptr<ModelInstance>>
         modelInstances; // Top-level model instances with their child models.
 
     std::unordered_map<int, Player> players; // Active players in the scene.

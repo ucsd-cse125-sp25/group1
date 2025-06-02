@@ -139,13 +139,13 @@ void AudioEngine::stopEvent(const char* eventName, int instanceIndex) {
     if (eventInstances.count(eventName) > 0)
         ERRCHECK(eventInstances[eventName]->stop(FMOD_STUDIO_STOP_ALLOWFADEOUT));
     else {
-        std::cout << "AudioEngine: Event " << eventName
-                  << " was not in event instance cache, cannot stop \n";
+        // std::cout << "AudioEngine: Event " << eventName
+        //           << " was not in event instance cache, cannot stop \n";
     }
 }
 
 void AudioEngine::setEventVolume(const char* eventName, float volume0to1) {
-    //std::cout << "AudioEngine: Setting Event Volume\n";
+    // std::cout << "AudioEngine: Setting Event Volume\n";
     ERRCHECK(eventInstances[eventName]->setVolume(volume0to1));
 }
 
@@ -170,10 +170,10 @@ bool AudioEngine::isMuted() {
 }
 
 void ERRCHECK_fn(FMOD_RESULT result, const char* file, int line) {
-    if (result != FMOD_OK) {
-        std::cout << "FMOD ERROR: AudioEngine.cpp [Line " << line << "] " << result << "  - "
-                  << FMOD_ErrorString(result) << '\n';
-    }
+    // if (result != FMOD_OK) {
+    //     std::cout << "FMOD ERROR: AudioEngine.cpp [Line " << line << "] " << result << "  - "
+    //               << FMOD_ErrorString(result) << '\n';
+    // }
 }
 
 void AudioEngine::printEventInfo(FMOD::Studio::EventDescription* eventDescription) {

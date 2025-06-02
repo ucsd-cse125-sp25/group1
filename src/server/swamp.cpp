@@ -60,3 +60,7 @@ Water* Swamp::createWaterRespawn() {
     waterRespawnPlane = new Water(id);
     return waterRespawnPlane;
 }
+
+Server& Swamp::getServer() {
+    return server;
+}

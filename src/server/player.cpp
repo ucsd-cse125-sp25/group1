@@ -1,13 +1,13 @@
 #include "player.hpp"
 
-Player::Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction, World* world)
+Player::Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction)
     : id(playerID), curRoomID(roomID),
       body(glm::vec3(0.0f), glm::vec3(0.0f), config::PLAYER_WEIGHT,
            new Transform{position, direction},
            new BoxCollider{AABB, glm::vec3(-config::PLAYER_WIDTH / 2, 0, -config::PLAYER_DEPTH / 2),
                            glm::vec3(config::PLAYER_WIDTH / 2, config::PLAYER_HEIGHT,
                                      config::PLAYER_DEPTH / 2)},
-           this, world) {}
+           this) {}
 
 Player::~Player() {}
 

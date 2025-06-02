@@ -1,19 +1,17 @@
 #include "rigidBody.hpp"
-#include <iostream>
 
 RigidBody::RigidBody(const vec3& velocity, const vec3& force, float mass, Transform* transform,
-                     Collider* collider, ICustomPhysics* customPhysics, World* world, bool isStatic,
+                     Collider* collider, ICustomPhysics* customPhysics, bool isStatic,
                      const vec3& gravity)
     : velocity(velocity), force(force), mass(mass), transform(transform), collider(collider),
-      customPhysics(customPhysics), world(world), isStatic(isStatic),
+      customPhysics(customPhysics), isStatic(isStatic),
       gravity(isStatic ? glm::vec3(0.0f) : gravity) {
-
     BoxCollider* temp = static_cast<BoxCollider*>(collider);
+
     colliderOriginal = new BoxCollider{temp->type, temp->minCorner, temp->maxCorner};
 }
 
 RigidBody::~RigidBody() {
-    world->removeObject(this);
     delete transform;
     delete collider;
 }

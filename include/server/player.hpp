@@ -15,7 +15,6 @@
 #include "components/room.hpp"
 #include "config.hpp"
 #include "rigidBody.hpp"
-#include "world.hpp"
 #include <iostream>
 
 class Interactable;
@@ -35,7 +34,7 @@ class Player : public ICustomPhysics {
      * @param position Initial position of the player.
      * @param direction Initial facing direction of the player.
      */
-    Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction, World* world);
+    Player(int playerID, int roomID, glm::vec3 position, glm::vec3 direction);
     ~Player();
 
     /**

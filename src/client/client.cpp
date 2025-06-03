@@ -214,6 +214,12 @@ void Client::handleServerMessage(const std::string& message) {
         scene->canvas->setInteractHidden(false);
     } else if (type == "interactable_not_nearby") {
         scene->canvas->setInteractHidden(true);
+    } else if (type == "pause_circus_music") {
+        audioManager.stopEvent("circus_music");
+    } else if (type == "unpause_circus_music") {
+        // TODO: handle the first loading of the circus music
+        // - should hopefully be handled by Helen's code to get rooms to play their audio
+        audioManager.playEvent("circus_music");
     } else if (type == "key_pickup") {
         auto keyID = parsed["keyID"];
         auto playerID = parsed["playerID"];

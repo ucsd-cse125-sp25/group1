@@ -59,8 +59,8 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
         float offset =
             i * config::PLAYER_WIDTH / 2; // first room is always most negative side of the door
         vec3 zonePosition = doorPosition + (offset * facingDirection);
-        RigidBody* zone = new RigidBody(
-            vec3(0.0f), vec3(0.0f), 0.0f, new Transform{zonePosition, vec3(0.0f)},
+        RigidBody* zone =
+            new RigidBody(vec3(0.0f), vec3(0.0f), 0.0f, new Transform{zonePosition, vec3(0.0f)},
                           new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner},
                           object, world, true);
 
@@ -116,26 +116,27 @@ RigidBody* initWater(TransformData data, Swamp* swamp, World* world) {
     return body;
 }
 
-RigidBody* initCannonball(TransformData data, Circus* circus) {
+RigidBody* initCannonball(TransformData data, Circus* circus, World* world) {
     glm::vec3 absolutePosition = data.roomPosition + data.position + data.relativePosition;
     // TODO: is this bad? createCannonball expects cannon position, but we give cannonball position
     Cannonball* cannonball = circus->createCannonball(absolutePosition);
 
-    RigidBody* body = new RigidBody(
-        vec3(0.0f), vec3(0.0f), 0.0f, new Transform{absolutePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, cannonball, true);
+    RigidBody* body =
+        new RigidBody(vec3(0.0f), vec3(0.0f), 0.0f, new Transform{absolutePosition, vec3(0.0f)},
+                      new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner},
+                      cannonball, world, true);
 
     cannonball->setBody(body);
     return body;
 }
 
-RigidBody* initWall(TransformData data, Circus* circus) {
+RigidBody* initWall(TransformData data, Circus* circus, World* world) {
     Object* wall = circus->createWall();
 
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, wall, true);
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, wall, world, true);
 
     wall->setBody(body);
     return body;

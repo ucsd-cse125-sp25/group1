@@ -60,8 +60,9 @@ Cannonball* Circus::createCannonball(glm::vec3 cannonPosition) {
 
 void Circus::stopMusicMessage() {
     json message;
-    message["type"] = "stop_circus_music";
+    message["type"] = "pause_circus_music";
     server.broadcastMessage(message);
+    // TODO: start a timer (3-4 seconds?). Once it hits zero, shoot cannonballs.
 }
 
 void Circus::fireCannons() {

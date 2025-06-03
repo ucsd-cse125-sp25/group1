@@ -38,6 +38,9 @@ void Server::initRigidBodies() {
         if (roomName == "swamp_room") {
             swamp = new Swamp(rooms.size(), world, *this);
             room = static_cast<Room*>(swamp);
+        } else if (roomName == "circus_room") {
+            circus = new Circus(rooms.size(), world, *this);
+            room = static_cast<Room*>(circus);
         } else {
             room = new Room(rooms.size(), roomName);
         }
@@ -85,10 +88,10 @@ void Server::initRigidBodies() {
                 object = initWater(data, swamp, &world);
             } else if (modelName == "cannonball_00") {
                 // TODO: should it take in &objects like initFrog does?
-                object = initCannonball(data, circus);
+                object = initCannonball(data, circus, &world);
             } else if (modelName == "wall_00") {
                 // TODO: should it take in &objects like initFrog does?
-                object = initWall(data, circus);
+                object = initWall(data, circus, &world);
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
             } else {
@@ -104,11 +107,6 @@ void Server::initRigidBodies() {
 
 bool Server::init() {
     std::cout << "IP Address: " << config::SERVER_IP << "\nPort: " << config::SERVER_PORT << "\n";
-
-    swamp = new Swamp(1, world, *this);
-    circus = new Circus(2, world, *this);
-    rooms[1] = swamp;
-    rooms[2] = circus;
 
     initRigidBodies();
 

@@ -112,13 +112,14 @@ void Scene::initRooms() {
     swampRoom->children["frog"][0] =
         std::make_unique<ModelInstance>(frogAsset.get(), frogModel, swampRoom.get(), true);
 
-    // Add the key to the swamp room
+    // Swamp key room
     glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMPKEY_ROOM_POSITION);
     auto swampKeyRoom =
         std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel, nullptr, true);
-    glm::mat4 keyModel = glm::translate(I4, config::SWAMP_KEY_POSITION);
+    glm::mat4 swampKey = glm::translate(I4, config::SWAMP_KEY_POSITION);
+    swampKey = glm::rotate(swampKey, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     swampKeyRoom->children["key"][0] =
-        std::make_unique<ModelInstance>(keyAsset.get(), keyModel, swampKeyRoom.get(), false);
+        std::make_unique<ModelInstance>(keyAsset.get(), swampKey, swampKeyRoom.get(), false);
 
     // Circus room
     glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
@@ -133,15 +134,6 @@ void Scene::initRooms() {
     cannon1 = glm::rotate(cannon1, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     circusRoom->children["cannon"][0] =
         std::make_unique<ModelInstance>(cannonAsset.get(), cannon1, circusRoom.get());
-    // Swamp key room
-    glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMPKEY_ROOM_POSITION);
-    auto swampKeyRoom =
-        std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel, nullptr, true);
-
-    glm::mat4 swampKey = glm::translate(I4, config::SWAMP_KEY_POSITION);
-    swampKey = glm::rotate(swampKey, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    swampKeyRoom->children["key"][0] =
-        std::make_unique<ModelInstance>(keyAsset.get(), swampKey, swampKeyRoom.get(), false);
 
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);

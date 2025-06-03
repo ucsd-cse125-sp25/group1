@@ -27,7 +27,7 @@ class Door : public Interactable {
      * If the door is locked but the player doesn't have the key, the door remains locked.
      *
      */
-    void handleInteract(Player& player) override;
+    void handleInteract(Player& player);
 
   private:
     void openDoor(int playerId);

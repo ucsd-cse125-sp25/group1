@@ -40,6 +40,7 @@ void LilyPad::customCollision(ICustomPhysics* otherObject) {
         sfx["sfx_id"] = config::JUMPLILYPAD;
         sfx["client_id"] = playerPtr->getID();
         sfx["action"] = "jump";
+        sfx["volume"] = config::LILYPAD_VOL;
 
         std::string sfxPacket = sfx.dump() + "\n";
         server.broadcastMessage(sfxPacket);

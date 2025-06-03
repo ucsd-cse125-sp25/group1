@@ -36,6 +36,9 @@ void Scene::init() {
 
     keyAsset = std::make_unique<Model>("../src/client/models/key.obj");
 
+    hallwayAsset = std::make_unique<Model>("../src/client/models/1x1_hotel_hallway.obj");
+    lobbyAsset = std::make_unique<Model>("../src/client/models/lobby.obj");
+
     canvas = std::make_unique<Canvas>();
 
     initRooms();
@@ -56,7 +59,7 @@ void Scene::initRooms() {
     hotelRoom->children["table"][0] =
         std::make_unique<ModelInstance>(tableAsset.get(), tableModel, hotelRoom.get(), true);
 
-    std::array<float, 1> degrees = {90.0f}; // Add 0.0f, 180.0f 270.0f later
+    std::array<float, 1> degrees = {0.0f}; // Add 0.0f, 180.0f 270.0f later
 
     for (int i = 0; i < degrees.size(); ++i) {
         glm::mat4 doorModel =
@@ -122,11 +125,24 @@ void Scene::initRooms() {
     swampKeyRoom->children["key"][0] =
         std::make_unique<ModelInstance>(keyAsset.get(), swampKey, swampKeyRoom.get(), false);
 
+    // Hallway
+    glm::mat4 hallway1Model = glm::translate(I4, config::HALLWAY1_ROOM_POSITION);
+    hallway1Model = glm::rotate(hallway1Model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    auto hallway1 =
+        std::make_unique<ModelInstance>(hallwayAsset.get(), hallway1Model, nullptr, true);
+
+    // Lobby
+    glm::mat4 lobbyModel = glm::translate(I4, config::LOBBY_ROOM_POSITION);
+    lobbyModel = glm::rotate(lobbyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    auto lobbyRoom = std::make_unique<ModelInstance>(lobbyAsset.get(), lobbyModel, nullptr, true);
+
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);
     modelInstances["parkourRoom1"] = std::move(parkourRoom1);
     modelInstances["swampKeyRoom"] = std::move(swampKeyRoom);
     modelInstances["circusRoom"] = std::move(circusRoom);
+    modelInstances["hallway1"] = std::move(hallway1);
+    modelInstances["lobbyRoom"] = std::move(lobbyRoom);
 }
 
 void Scene::initLights() {
@@ -142,6 +158,10 @@ void Scene::initLights() {
                                               glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
     pointLights["parkourRoom1"] = {PointLight(glm::translate(I4, config::PARKOUR_ROOM_1_POSITION),
                                               glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["hallway1"] = {PointLight(glm::translate(I4, config::HALLWAY1_ROOM_POSITION),
+                                          glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["lobbyRoom"] = {PointLight(glm::translate(I4, config::LOBBY_ROOM_POSITION),
+                                           glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
 }
 
 void Scene::initShadowMaps() {
@@ -279,7 +299,8 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
         }
 
-        if (name == "hotelRoom" || name == "swampKeyRoom" || name == "parkourRoom1") {
+        if (name == "hotelRoom" || name == "swampKeyRoom" || name == "parkourRoom1" ||
+            name == "hallway1" || name == "lobbyRoom") {
             shader = shaders["model"].get();
             shader->use();
             shader->setBool("useFade", false);

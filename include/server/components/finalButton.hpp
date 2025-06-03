@@ -2,7 +2,7 @@
 #include "components/interactable.hpp"
 #include "finalDoor.hpp"
 
-class FinalButton {
+class FinalButton : public Interactable {
   public:
     FinalButton(int buttonID, int playerID, FinalDoor* door);
     ~FinalButton();
@@ -10,7 +10,10 @@ class FinalButton {
     // Check if the button is pressed
     bool isPressed() const;
 
-    void pressButton();
+    void handleInteract(const Player& player) override;
+
+
+    bool pressButton();
     /**
      * Buttonpressed()
      *
@@ -23,6 +26,7 @@ class FinalButton {
 
     // Let finalDoor know that the button was pressed
     void updateDoorState();
+
 
   private:
     int buttonID;    // ID of the button

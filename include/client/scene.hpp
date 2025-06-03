@@ -157,6 +157,9 @@ class Scene {
     std::unique_ptr<Shader> uiShader;
 
     std::unique_ptr<Model> hotelRoomAsset;
+    std::unique_ptr<Model> hallwayAsset;
+    std::unique_ptr<Model> lobbyAsset;
+
     std::unique_ptr<Model> tableAsset;
     std::unique_ptr<Model> doorAsset;
     std::unique_ptr<Model> keyAsset;

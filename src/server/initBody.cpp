@@ -60,6 +60,30 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp) {
     return body;
 }
 
+RigidBody* initButton(TransformData data, Lobby* lobby) {
+    FinalButton* button = lobby->createButton();
+
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, button, true);
+
+    button->setBody(body);
+    return body;
+}
+
+RigidBody* initFinalDoor(TransformData data, Lobby* lobby) {
+    FinalDoor* door = lobby->createFinalDoor();
+
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, door, true);
+
+    door->setBody(body);
+    return body;
+}
+
 RigidBody* initWater(TransformData data, Swamp* swamp) {
     Water* waterRespawnPlane = swamp->createWaterRespawn();
 

@@ -11,6 +11,9 @@
 #include "components/key.hpp"
 #include "rigidBody.hpp"
 #include "swamp.hpp"
+#include "components/finalButton.hpp"
+#include "components/finalDoor.hpp"
+#include "lobby.hpp"
 
 class Swamp;
 
@@ -94,3 +97,25 @@ RigidBody* initWater(TransformData data, Swamp* swamp);
  * @return Pointer to the initialized RigidBody associated with the Key.
  */
 RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef, const std::string& roomName, std::unordered_map<int, Key*>* keys);
+
+/**
+ * @brief Initializes a FinalButton object in the Lobby and attaches a RigidBody.
+ * 
+ * The button is created with a reference to the Lobby, allowing it to interact with the final door.
+ * 
+ * @param data Transform data including position and collider dimensions.
+ * @param lobby Pointer to the Lobby instance managing the button.
+ * @return Pointer to the initialized RigidBody associated with the FinalButton.
+ */
+RigidBody* initButton(TransformData data, Lobby* lobby);
+
+/**
+ * @brief Initializes a FinalDoor object in the Lobby and attaches a RigidBody.
+ * 
+ * The door is created with a reference to the Lobby, allowing it to be opened by the FinalButton.
+ * 
+ * @param data Transform data including position and collider dimensions.
+ * @param lobby Pointer to the Lobby instance managing the door.
+ * @return Pointer to the initialized RigidBody associated with the FinalDoor.
+ */
+RigidBody* initFinalDoor(TransformData data, Lobby* lobby);

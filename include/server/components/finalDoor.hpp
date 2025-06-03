@@ -52,6 +52,8 @@ class FinalDoor : public Interactable {
      */
     bool canUnlock();
 
+    void handleInteract(const Player& player) override;
+
     /**
      * @brief Check if the door can be opened
      * Door can be opened if all buttons are pressed

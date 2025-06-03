@@ -11,7 +11,7 @@
         "position": [
           0.0,
           0.0,
-          -10.0
+          10.0
         ],
         "rotated": true
       },
@@ -144,7 +144,11 @@
     ]
   },
   "parkourRoom1": {
-    "position": [0.0, 0.0, 20.0],
+    "position": [
+      0.0,
+      0.0,
+      20.0
+    ],
     "objects": [
       {
         "model": "key_00",
@@ -157,100 +161,175 @@
       },
       {
         "model": "small_table_00",
-        "position": [ 0.0, -1.5, 0.0 ],
+        "position": [
+          0.0,
+          -1.5,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "small_table_00",
-        "position": [ 2.5, -0.5, 0.0 ],
+        "position": [
+          2.5,
+          -0.5,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "small_table_00",
-        "position": [ 5.0, 0.5, 0.0 ],
+        "position": [
+          5.0,
+          0.5,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "door_00",
-        "position": [ -10.0, 0.0, 0.0 ],
+        "position": [
+          -10.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "door_00",
-        "position": [ 10.0, 0.0, 0.0 ],
+        "position": [
+          10.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "door_00",
-        "position": [ 0.0, 0.0, 10.0 ],
+        "position": [
+          0.0,
+          0.0,
+          10.0
+        ],
         "rotated": true
       },
       {
         "model": "1x1_hotel_room_00",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_01",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_02",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_03",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_04",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_05",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_06",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_07",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_08",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_09",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_10",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_11",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       },
       {
         "model": "1x1_hotel_room_12",
-        "position": [ 0.0, 0.0, 0.0 ],
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
         "rotated": false
       }
-
     ]
   },
   "swamp_room": {
@@ -1141,6 +1220,285 @@
           0.0
         ],
         "rotated": false
+      }
+    ]
+  },
+  "hallway1": {
+    "position": [
+      0.0,
+      0.0,
+      -30.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_hallway_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "1x1_hotel_hallway_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "1x1_hotel_hallway_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "1x1_hotel_hallway_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "1x1_hotel_hallway_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "1x1_hotel_hallway_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "1x1_hotel_hallway_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "1x1_hotel_hallway_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "1x1_hotel_hallway_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "1x1_hotel_hallway_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      }
+    ]
+  },
+  "lobby_room": {
+    "position": [
+      0.0,
+      0.0,
+      -70.0
+    ],
+    "objects": [
+      {
+        "model": "lobby_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_10",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_11",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_12",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_13",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_14",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_15",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_16",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_17",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
+        "model": "lobby_18",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
       }
     ]
   }

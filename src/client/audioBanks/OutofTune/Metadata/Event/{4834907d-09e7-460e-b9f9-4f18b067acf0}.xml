@@ -99,6 +99,9 @@
 	<object class="MixerBusPanner" id="{35c1645e-2117-4483-a76b-f127524c5df4}" />
 	<object class="MixerBusEffectChain" id="{7d0e8677-17b4-484d-a304-5c539a18f9e7}">
 		<relationship name="effects">
+			<destination>{156f33c5-5926-4bd9-b037-6024fffb5a5a}</destination>
+			<destination>{87711a32-9dbf-41c5-a6cf-fca83d04043b}</destination>
+			<destination>{3d1ed779-5bd9-4190-a7c2-ca117d700945}</destination>
 			<destination>{39a98627-f37f-42e9-ae01-e42f91da2cc3}</destination>
 			<destination>{103ea11b-4ba0-4dfc-b979-d0cc93ae711f}</destination>
 		</relationship>
@@ -113,6 +116,21 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{1728aa1a-e64c-4190-9d18-0dfba94173c6}" />
+	<object class="GainEffect" id="{156f33c5-5926-4bd9-b037-6024fffb5a5a}">
+		<property name="gain">
+			<value>10</value>
+		</property>
+	</object>
+	<object class="GainEffect" id="{87711a32-9dbf-41c5-a6cf-fca83d04043b}">
+		<property name="gain">
+			<value>10</value>
+		</property>
+	</object>
+	<object class="GainEffect" id="{3d1ed779-5bd9-4190-a7c2-ca117d700945}">
+		<property name="gain">
+			<value>8</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{39a98627-f37f-42e9-ae01-e42f91da2cc3}" />
 	<object class="SpatialiserEffect" id="{103ea11b-4ba0-4dfc-b979-d0cc93ae711f}">
 		<property name="distanceRolloffType">

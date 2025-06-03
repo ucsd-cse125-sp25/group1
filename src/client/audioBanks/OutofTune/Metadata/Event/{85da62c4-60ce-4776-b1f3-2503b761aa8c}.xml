@@ -110,6 +110,10 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{963a6a28-d667-4b75-91e8-e4d0869edbaf}">
 		<relationship name="effects">
+			<destination>{bf4cc0bc-0d97-40f6-953e-bcb116e092ec}</destination>
+			<destination>{04b5b2ee-d87e-4a3c-bf37-4a97368aa193}</destination>
+			<destination>{076e4661-c2e9-4cdd-b1c7-789e41c01f27}</destination>
+			<destination>{6329259e-f3c3-4b1f-b54e-273fe17ad549}</destination>
 			<destination>{7ba86548-e3a2-4ff7-9ff5-cc65045eb1ac}</destination>
 			<destination>{849bbda6-b3e9-45b5-b07c-7f021f0627ef}</destination>
 			<destination>{ae67d576-8410-4f73-8eaa-4851943fc9a5}</destination>
@@ -125,6 +129,26 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{91cd77ea-daf8-4624-8415-64e231d10ee7}" />
+	<object class="GainEffect" id="{bf4cc0bc-0d97-40f6-953e-bcb116e092ec}">
+		<property name="gain">
+			<value>10</value>
+		</property>
+	</object>
+	<object class="GainEffect" id="{04b5b2ee-d87e-4a3c-bf37-4a97368aa193}">
+		<property name="gain">
+			<value>10</value>
+		</property>
+	</object>
+	<object class="GainEffect" id="{076e4661-c2e9-4cdd-b1c7-789e41c01f27}">
+		<property name="gain">
+			<value>10</value>
+		</property>
+	</object>
+	<object class="GainEffect" id="{6329259e-f3c3-4b1f-b54e-273fe17ad549}">
+		<property name="gain">
+			<value>10</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{7ba86548-e3a2-4ff7-9ff5-cc65045eb1ac}" />
 	<object class="SFXReverbEffect" id="{849bbda6-b3e9-45b5-b07c-7f021f0627ef}">
 		<property name="lowShelfFrequency">

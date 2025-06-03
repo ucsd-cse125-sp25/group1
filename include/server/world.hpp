@@ -20,6 +20,8 @@
 
 using namespace std;
 
+class RigidBody;
+
 class World {
   public:
     // constructor/destructor

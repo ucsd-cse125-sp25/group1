@@ -11,6 +11,9 @@
 #include "collisionDetection.hpp"
 #include "rigidBody.hpp"
 
+class RigidBody;
+struct Collision;
+
 /**
  * @brief Resolves collision between two rigid bodies by correcting positions and adjusting
  * velocities.

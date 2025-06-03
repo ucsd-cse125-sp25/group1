@@ -12,10 +12,13 @@
 #include "collider.hpp"
 #include "config.hpp"
 #include "transform.hpp"
+#include "world.hpp"
 
 using namespace glm;
 
 constexpr auto ACCELERATION_GRAVITY = config::gravity;
+
+class World;
 
 /**
  * Interface for implementing custom collision handling for rigid bodies
@@ -49,7 +52,7 @@ class RigidBody {
      */
     RigidBody(const vec3& velocity = vec3(0.0f), const vec3& force = vec3(0.0f), float mass = 0.0f,
               Transform* transform = nullptr, Collider* collider = nullptr,
-              ICustomPhysics* customPhysics = nullptr, bool isStatic = false,
+              ICustomPhysics* customPhysics = nullptr, World* world = nullptr, bool isStatic = false,
               const vec3& gravity = vec3(0, ACCELERATION_GRAVITY, 0));
     ~RigidBody();
 
@@ -170,4 +173,6 @@ class RigidBody {
     ICustomPhysics* customPhysics;
     bool isStatic;
     Collider* colliderOriginal;
+
+    World* world;
 };

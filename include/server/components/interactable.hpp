@@ -12,7 +12,7 @@ class Interactable : public Object {
     Interactable(int id);
     Interactable(); // Default constructor, initializes with an invalid ID
     virtual ~Interactable() = default;
-    void interact(const Player& player); // calls the overriden handleInteract function.
+    void interact(Player& player); // calls the overriden handleInteract function.
     void addRoom(Room* room);            // Adds a room to the interactable's list of rooms
 
   protected:

@@ -15,15 +15,15 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
 }
 
 RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
-                    std::unordered_map<int, Room*>* rooms, World* world) {
+                    std::unordered_map<int, Room*>* rooms, World* world, Server& server) {
     int keyID = -1;
     int roomIDs[2] = {0, 4};
 
     Door* door;
     if (keyID != -1) {
-        door = new Door(doors->size(), roomIDs[0], roomIDs[1], keyID);
+        door = new Door(doors->size(), roomIDs[0], roomIDs[1], keyID, server);
     } else {
-        door = new Door(doors->size(), roomIDs[0], roomIDs[1]);
+        door = new Door(doors->size(), roomIDs[0], roomIDs[1], server);
     }
     (*doors)[door->getID()] = door;
 

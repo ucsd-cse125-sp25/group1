@@ -1,12 +1,18 @@
 #include "components/door.hpp"
+#include "server.hpp"
+#include "json.hpp"
+#include <iostream>
 
-Door::Door(int doorID, int room1, int room2, int keyID)
-    : Interactable(doorID), keyID(keyID), locked(keyID != -1), open(false) {
+using json = nlohmann::json;
+
+Door::Door(int doorID, int room1, int room2, int keyID, Server& serverRef)
+    : Interactable(doorID), keyID(keyID), locked(keyID != -1), open(false), server(serverRef) {
     rooms[0] = room1;
     rooms[1] = room2;
 }
 
-Door::Door(int doorID, int room1, int room2) : Door(doorID, room1, room2, -1) {
+Door::Door(int doorID, int room1, int room2, Server& serverRef)
+    : Door(doorID, room1, room2, -1, serverRef) {
     rooms[0] = room1;
     rooms[1] = room2;
 }
@@ -22,17 +28,17 @@ int Door::getRoomID(int index) const {
 
 void Door::handleInteract(const Player& player) {
     if (!locked) {
-        openDoor();
+        openDoor(player.getID());
     }
     // if the player has the key to unlock the door, unlock and open it.
     else if (player.getKeyIDs().count(keyID) > 0) {
         unlockDoor();
-        openDoor();
+        openDoor(player.getID());
     }
     // TODO: send message to client of whether the open worked.
 }
 
-void Door::openDoor() {
+void Door::openDoor(int playerId) {
     open = true;
     for (int i = 0; i < roomPtrs.size(); i++) {
         Room* room = roomPtrs[i];
@@ -40,6 +46,18 @@ void Door::openDoor() {
     }
     delete body;
     this->setBody(nullptr);
+
+    json sfx;
+    sfx["type"] = "sfx";
+    sfx["sfx_id"] = config::UNLOCKDOOR;
+    sfx["client_id"] = playerId;
+    sfx["action"] = "door_open";
+    sfx["volume"] = config::UNLOCKDOOR_VOL;
+
+    std::string sfxPacket = sfx.dump() + "\n";
+    server.broadcastMessage(sfxPacket);
+
+    std::cout << "open door called" << std::endl;
 }
 
 void Door::unlockDoor() {

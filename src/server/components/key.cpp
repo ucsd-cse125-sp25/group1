@@ -30,5 +30,15 @@ void Key::customCollision(ICustomPhysics* otherObject) {
     std::string packet = message.dump() + "\n";
     server.broadcastMessage(packet);
 
+    json sfx;
+    sfx["type"] = "sfx";
+    sfx["sfx_id"] = config::GRABKEY;
+    sfx["client_id"] = playerPtr->getID();
+    sfx["action"] = "key";
+    sfx["volume"] = config::GRABKEY_VOL;
+
+    std::string sfxPacket = sfx.dump() + "\n";
+    server.broadcastMessage(sfxPacket);
+
     world.removeObject(this->getBody());
 }

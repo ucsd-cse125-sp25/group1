@@ -8,7 +8,7 @@
 namespace config {
 inline constexpr const char* SERVER_IP = "127.0.0.1";
 inline constexpr int SERVER_PORT = 2399;
-inline constexpr bool BYPASS = true;
+inline constexpr bool BYPASS = false;
 
 inline constexpr float gravity = -15.0f;
 
@@ -107,5 +107,5 @@ inline constexpr int FOOTSTEP_COOLDOWN_RATE = 7;
 inline constexpr float SWAMP_AUDIO_FILE_VOL = 2.5f;
 inline constexpr float LILYPAD_VOL = 0.2f;
 inline constexpr float UNLOCKDOOR_VOL = 0.5f;
-inline constexpr float GRABKEY_VOL = 0.5f;
+inline constexpr float GRABKEY_VOL = 0.2f;
 } // namespace config

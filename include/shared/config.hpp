@@ -96,13 +96,14 @@ inline constexpr const char* UNLOCKDOOR = "{008e7455-ae30-40ce-a197-5e85b67035b8
 
 //Audio for Set Volume 
 
-//Client Side Control
+//Controlled by Client
 inline constexpr float SWAMP_AMBIENCE_VOL = 0.5f;
 inline constexpr float FOOTSTEPCARPET_VOL = 0.1f;
 
 inline constexpr int FOOTSTEP_COOLDOWN_RATE = 7;
 
-//Server Side Control
+//Controlled by Server
 inline constexpr float SWAMP_AUDIO_FILE_VOL = 2.5f;
 inline constexpr float LILYPAD_VOL = 0.2f;
+inline constexpr float UNLOCKDOOR_VOL = 1.0f;
 } // namespace config

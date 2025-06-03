@@ -58,16 +58,16 @@ float getShadowFactor(vec3 fragPosWorld, int index) {
     // PCF parameters
     float shadowStatic = 0.0;
     float shadowInteractable = 0.0;
-    float samples = 3.0;
+    float samples = 2.0;
     float offset = 0.05 * (1.0 - currentDepth / shadowFarClip);
 
     vec3 fragDir = normalize(fragToLight);
     vec3 N = normalize(normal);
     float bias = 0.1 + 0.01 * (1.0 - dot(fragDir, N));
 
-    for (float x = -1.0; x <= 1.0; x++) {
-        for (float y = -1.0; y <= 1.0; y++) {
-            for (float z = -1.0; z <= 1.0; z++) {
+    for (float x = -0.5; x <= 0.5; x++) {
+        for (float y = -0.5; y <= 0.5; y++) {
+            for (float z = -0.5; z <= 0.5; z++) {
                 vec3 sampleDir = normalize(fragToLight + vec3(x, y, z) * offset);
                 float closestDepthStatic = 0.0;
                 float closestDepthInteractable = 0.0;

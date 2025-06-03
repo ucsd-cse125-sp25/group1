@@ -63,6 +63,9 @@
 		<property name="dopplerEnabled">
 			<value>true</value>
 		</property>
+		<property name="maximumDistance">
+			<value>90</value>
+		</property>
 	</object>
 	<object class="MarkerTrack" id="{d795081d-78e5-46bf-906d-931ec7d4adcf}" />
 	<object class="Timeline" id="{86e0da40-86bd-4939-b6b8-330ae0dc73be}">
@@ -103,6 +106,7 @@
 			<destination>{87711a32-9dbf-41c5-a6cf-fca83d04043b}</destination>
 			<destination>{3d1ed779-5bd9-4190-a7c2-ca117d700945}</destination>
 			<destination>{39a98627-f37f-42e9-ae01-e42f91da2cc3}</destination>
+			<destination>{cafb9fcc-faa4-455f-b711-fe4dd8f0df9f}</destination>
 			<destination>{103ea11b-4ba0-4dfc-b979-d0cc93ae711f}</destination>
 		</relationship>
 	</object>
@@ -132,6 +136,11 @@
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{39a98627-f37f-42e9-ae01-e42f91da2cc3}" />
+	<object class="SFXReverbEffect" id="{cafb9fcc-faa4-455f-b711-fe4dd8f0df9f}">
+		<property name="wetLevel">
+			<value>-50</value>
+		</property>
+	</object>
 	<object class="SpatialiserEffect" id="{103ea11b-4ba0-4dfc-b979-d0cc93ae711f}">
 		<property name="distanceRolloffType">
 			<value>2</value>

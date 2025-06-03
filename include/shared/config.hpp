@@ -31,7 +31,8 @@ inline constexpr float MIN_PITCH = -60.0f;
 inline constexpr glm::vec3 CAMERA_OFFSET = {0.0f, 2.8f, 0.0f};
 
 // Shadows
-inline constexpr int SHADOW_MAP_RESOLUTION_STATIC = 1024;
+inline constexpr int SHADOW_MAP_RES_STATIC = 1024;
+inline constexpr int SHADOW_MAP_RES_INTERACTABLE = 1024;
 inline constexpr float SHADOW_NEAR_CLIP = 0.1f;
 inline constexpr float SHADOW_FAR_CLIP = 25.0f;
 inline constexpr int SHADOW_TEXTURE_UNIT = 3;
@@ -47,7 +48,7 @@ inline constexpr float PLAYER_WIDTH = 1.53f;
 inline constexpr float PLAYER_HEIGHT = 3.2f;
 inline constexpr float PLAYER_DEPTH = 2.3f;
 
-inline constexpr float PLAYER_INTERACT_RANGE = 10.0f;
+inline constexpr float PLAYER_INTERACT_RANGE = 5.0f;
 
 inline constexpr float MOUSE_SENSITIVITY = 0.1f;
 
@@ -61,8 +62,14 @@ inline constexpr glm::vec3 SWAMP_ROOM_POSITION = {20.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 FROG_POSITION = {7.0f, 0.0f, 4.0f};
 
 inline constexpr glm::vec3 CIRCUS_ROOM_POSITION = {-50.0f, 0.0f, 0.0f};
-inline constexpr glm::vec3 SWAMPKEY_ROOM_POSITION = {120.1f, 0.0f, 0.0f};
+inline constexpr glm::vec3 SWAMPKEY_ROOM_POSITION = {120.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 SWAMP_KEY_POSITION = {0.0f, 1.0f, 0.0f};
+
+inline constexpr glm::vec3 PARKOUR_ROOM_1_POSITION = {0.0f, 0.0f, 20.0f};
+inline constexpr glm::vec3 PARKOUR_1_KEY_POSITION = {-8.0f, 6.0f, 8.0f};
+inline constexpr glm::vec3 PARKOUR_1_TABLE_1_POSITION = {0.0f, -1.5f, 0.0f};
+inline constexpr glm::vec3 PARKOUR_1_TABLE_2_POSITION = {2.5f, -0.5f, 0.0f};
+inline constexpr glm::vec3 PARKOUR_1_TABLE_3_POSITION = {5.0f, 0.5f, 0.0f};
 
 // Swamp Related Configs
 inline constexpr glm::vec3 SWAMP_RESPAWN = {21.0f, 1.0f, 0.0f};
@@ -74,6 +81,8 @@ inline const std::vector<int> SWAMP_SOLUTION = {0, 1, 1, 1, 0, 1, 1, 0};
 inline constexpr const char* SWAMP_AUDIO_FILE = "{9b22e271-4a2c-47cd-8662-1a4f0ddee8de}";
 
 inline constexpr int SWAMP_NUM_FROGS = 3;
+
+inline constexpr int SWAMP_NUM_FIREFLIES = 150;
 
 // TODO: Adjust once rendered
 inline constexpr float SWAMP_LILYPAD_WIDTH = 1.0f;

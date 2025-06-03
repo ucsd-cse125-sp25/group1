@@ -17,21 +17,18 @@ std::string Room::getName() const {
     return roomName;
 }
 
-void Room::addInteractable(std::unique_ptr<Interactable> object) {
-    interactables.push_back(std::move(object));
+void Room::addInteractable(Interactable* object) {
+    this->interactables.push_back(object);
+    object->addRoom(this);
 }
 
 // return a vector of raw pointers for read-only access
 std::vector<Interactable*> Room::getInteractables() const {
-    std::vector<Interactable*> out;
-    out.reserve(interactables.size());
-    for (auto& uptr : interactables)
-        out.push_back(uptr.get());
-    return out;
+    return this->interactables;
 }
 
 void Room::removeInteractable(Interactable* object) {
-    auto it = std::remove_if(interactables.begin(), interactables.end(),
-                             [object](auto const& up) { return up.get() == object; });
-    interactables.erase(it, interactables.end());
+    auto it = std::remove_if(this->interactables.begin(), this->interactables.end(),
+                             [object](auto const& up) { return up == object; });
+    this->interactables.erase(it, this->interactables.end());
 }

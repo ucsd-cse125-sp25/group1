@@ -1,6 +1,4 @@
 #include <glm/glm.hpp>
-#include <string>
-#include <vector>
 
 /**
  * @brief Represents a point light with a position and color.

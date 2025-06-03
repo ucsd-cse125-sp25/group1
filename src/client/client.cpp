@@ -194,6 +194,7 @@ void Client::handleServerMessage(const std::string& message) {
         auto id = parsed["id"];
 
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
+        scene->renderLilypadShadowPass(id);
     } else if (type == "sfx") {
         // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,
         // "action": "jump"} client id that of the person triggering the sfx
@@ -217,10 +218,25 @@ void Client::handleServerMessage(const std::string& message) {
         auto keyID = parsed["keyID"];
         auto playerID = parsed["playerID"];
         auto roomName = parsed["room"];
-        scene->removeInstanceFromRoom(roomName, "key", keyID);
+        /*
+        TODO: update remove key from room logic to use keyID instead of 0.
+        NOTE: The current logic assumes that no room has more than one key.
+        We use '0' instead of 'keyID' in `scene->removeInstanceFromRoom(roomName, "key", 0)`
+        because in the scene, we go by room, so we are removing the only key in the room,
+        meaning it has id 0. When creating keys in the scene for a given room, they are
+        hardcoded as `SOME_ROOM->children["key"][0] = ...`. We aren't mapping them by id of all
+        keys created. Thus, we have to remove 0 rather than keyID.
+         */
+        std::cout << "removing key " << keyID << " from room " << roomName << std::endl;
+        scene->removeInstanceFromRoom(roomName, "key", 0);
+        std::cout << "key " << keyID << " removed from room " << roomName << std::endl;
         if (playerID == this->clientId) {
             scene->canvas->collectKey();
         }
+
+        // Assumes there's only one key in the room for now.
+        // Will refactor if we add more interactable objects later.
+        scene->setInteractableShadowActive(roomName, 0, false);
     }
     // Need to also udpate object states
 }
@@ -382,6 +398,7 @@ void Client::initGL() {
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
+    glEnable(GL_PROGRAM_POINT_SIZE);
 }
 
 void Client::initScene() {

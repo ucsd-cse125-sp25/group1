@@ -1,9 +1,12 @@
 #pragma once
 #include <glm/glm.hpp>
 #include "rigidBody.hpp"
+#include <functional>
 
 class Object : public ICustomPhysics {
   public:
+    using CollisionCallback = std::function<void(ICustomPhysics*)>;
+
     /**
      * @brief Constructs an object with a given id.
      *
@@ -12,6 +15,16 @@ class Object : public ICustomPhysics {
      * @param id ID of the object
      */
     Object(int id);
+
+    /**
+     * @brief Constructs an object with a given id and collision callback.
+     *
+     * Initializes an object with a given id and a callback function that is called when a collision occurs.
+     *
+     * @param id ID of the object
+     * @param func Callback function to be called on collision
+     */
+    Object(int id, CollisionCallback func);
 
     ~Object() = default;
 
@@ -36,7 +49,8 @@ class Object : public ICustomPhysics {
 
     void customCollision(ICustomPhysics* otherObject) override;
 
-  private:
+  protected:
     int objectID;
     RigidBody* body = nullptr;
+    CollisionCallback func;
 };

@@ -14,6 +14,7 @@ void Frog::handleInteract(const Player& player) {
     message["sfx_id"] = config::SWAMP_AUDIO_FILE;
     message["client_id"] = player.getID();
     message["action"] = "interact";
+    message["volume"] = config::SWAMP_AUDIO_FILE_VOL;
 
     std::string packet = message.dump() + "\n";
     swamp->getServer().broadcastMessage(packet);

@@ -80,8 +80,6 @@ inline constexpr int SWAMP_NUM_LILYPADS = 16; // Total
 inline const std::vector<int> SWAMP_SOLUTION = {0, 1, 1, 1, 0, 1, 1, 0};
 inline constexpr const char* SWAMP_AUDIO_FILE = "{9b22e271-4a2c-47cd-8662-1a4f0ddee8de}";
 
-inline constexpr int SWAMP_NUM_FROGS = 3;
-
 inline constexpr int SWAMP_NUM_FIREFLIES = 150;
 
 // TODO: Adjust once rendered
@@ -90,9 +88,24 @@ inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;
 
 // TODO: Convert GUID to event names
 inline constexpr const char* SWAMP_AMBIENCE_TRACK = "{25c216fb-36d9-42c9-bd0f-4662b826ff2a}";
-inline constexpr const char* FOOTSTEPCARPET = "{5a18903c-2b5f-4fd0-b153-63a502130d90}";
-inline constexpr const char* FOOTSTEPWOOD = "{4834907d-09e7-460e-b9f9-4f18b067acf0}";
+inline std::string FOOTSTEPCARPET = "{5a18903c-2b5f-4fd0-b153-63a502130d90}";
+inline std::string FOOTSTEPWOOD = "{4834907d-09e7-460e-b9f9-4f18b067acf0}";
 inline constexpr const char* JUMPLILYPAD = "{85da62c4-60ce-4776-b1f3-2503b761aa8c}";
 inline constexpr const char* UNLOCKDOOR = "{008e7455-ae30-40ce-a197-5e85b67035b8}";
+inline constexpr const char* GRABKEY = "{f811c9cc-fec0-4714-8a32-e645ad8a502b}";
 
+
+//Audio for Set Volume 
+
+//Controlled by Client
+inline constexpr float SWAMP_AMBIENCE_VOL = 0.5f;
+inline constexpr float FOOTSTEPCARPET_VOL = 0.1f;
+
+inline constexpr int FOOTSTEP_COOLDOWN_RATE = 7;
+
+//Controlled by Server
+inline constexpr float SWAMP_AUDIO_FILE_VOL = 2.5f;
+inline constexpr float LILYPAD_VOL = 0.2f;
+inline constexpr float UNLOCKDOOR_VOL = 0.5f;
+inline constexpr float GRABKEY_VOL = 0.2f;
 } // namespace config

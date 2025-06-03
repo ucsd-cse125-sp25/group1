@@ -10,7 +10,7 @@ class Room {
   public:
     Room(int id, const std::string& name = "Room");
     ~Room();
-    void addInteractable(std::unique_ptr<Interactable> object);
+    void addInteractable(Interactable* object);
     void removeInteractable(Interactable* object);
 
     int getID() const;
@@ -20,5 +20,5 @@ class Room {
   private:
     int roomID;
     std::string roomName;
-    std::vector<std::unique_ptr<Interactable>> interactables;
+    std::vector<Interactable*> interactables;
 };

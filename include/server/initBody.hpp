@@ -9,8 +9,10 @@
 #include "components/room.hpp"
 #include "components/water.hpp"
 #include "components/key.hpp"
+#include "config.hpp"
 #include "rigidBody.hpp"
 #include "swamp.hpp"
+#include "world.hpp"
 
 class Swamp;
 
@@ -32,7 +34,7 @@ struct TransformData {
  * @param objects Pointer to the server's map storing Object instances.
  * @return Pointer to the initialized RigidBody.
  */
-RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* objects);
+RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* objects, World* world);
 
 /**
  * @brief Initializes a Door with room and key IDs, and assigns it a default RigidBody.
@@ -44,7 +46,8 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
  * @param doors Pointer to the server's map storing Door instances.
  * @return Pointer to the initialized RigidBody.
  */
-RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors);
+RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
+                    std::unordered_map<int, Room*>* rooms, World* world, Server& server);
 
 /**
  * @brief Initializes a Frog object with a unique ID and default RigidBody.
@@ -57,7 +60,8 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors);
  * @param swamp Pointer to the Swamp environment managing the Frog.
  * @return Pointer to the initialized RigidBody.
  */
-RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* objects, Swamp* swamp);
+RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* objects, Swamp* swamp,
+                    World* world);
 
 /**
  * @brief Initializes a lily pad entity via the Swamp object and assigns it a RigidBody.
@@ -69,7 +73,7 @@ RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* object
  * @param swamp Pointer to the owning Swamp environment.
  * @return Pointer to the initialized RigidBody.
  */
-RigidBody* initLilyPad(TransformData data, Swamp* swamp);
+RigidBody* initLilyPad(TransformData data, Swamp* swamp, World* world);
 
 /**
  * @brief Initializes a water respawn plane from the Swamp and attaches a RigidBody.
@@ -80,7 +84,7 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp);
  * @param swamp Pointer to the Swamp environment managing the water entities.
  * @return Pointer to the initialized RigidBody.
  */
-RigidBody* initWater(TransformData data, Swamp* swamp);
+RigidBody* initWater(TransformData data, Swamp* swamp, World* world);
 
 /**
  * @brief Initializes a Key object with a unique ID and attaches a RigidBody.

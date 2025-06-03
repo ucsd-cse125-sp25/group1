@@ -77,9 +77,6 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{7e1859fa-135b-4aa5-9443-8f5bff83b1ee}">
-		<property name="volume">
-			<value>-14.5</value>
-		</property>
 		<relationship name="effectChain">
 			<destination>{2940e9e6-2c66-4e13-b3ce-a80fc6055622}</destination>
 		</relationship>
@@ -120,12 +117,51 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{2940e9e6-2c66-4e13-b3ce-a80fc6055622}">
 		<relationship name="effects">
+			<destination>{30c73125-de0f-4b86-b377-a82359e69509}</destination>
+			<destination>{e9cfa41f-e311-4d39-9066-dddc6edf7eb9}</destination>
 			<destination>{2947d234-1790-4f8e-9f34-989dfde50597}</destination>
 			<destination>{14e3156f-2a44-4d73-bf84-f76b475479c4}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{e50bb429-f9da-49c1-86e8-2c157bd110c9}" />
 	<object class="MixerBusFader" id="{1c1bf791-026b-4abb-9886-17bbf4bb64bd}" />
+	<object class="GainEffect" id="{30c73125-de0f-4b86-b377-a82359e69509}">
+		<property name="gain">
+			<value>6</value>
+		</property>
+	</object>
+	<object class="MultibandEqEffect" id="{e9cfa41f-e311-4d39-9066-dddc6edf7eb9}">
+		<property name="filterTypeC">
+			<value>9</value>
+		</property>
+		<property name="filterTypeD">
+			<value>4</value>
+		</property>
+		<property name="filterTypeE">
+			<value>7</value>
+		</property>
+		<property name="frequencyA">
+			<value>20250.2168</value>
+		</property>
+		<property name="frequencyC">
+			<value>395.158386</value>
+		</property>
+		<property name="frequencyD">
+			<value>23.1215782</value>
+		</property>
+		<property name="frequencyE">
+			<value>83.5422211</value>
+		</property>
+		<property name="qualityD">
+			<value>1.01910341</value>
+		</property>
+		<property name="gainC">
+			<value>-7.75862122</value>
+		</property>
+		<property name="gainE">
+			<value>-2.58620834</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{2947d234-1790-4f8e-9f34-989dfde50597}" />
 	<object class="SpatialiserEffect" id="{14e3156f-2a44-4d73-bf84-f76b475479c4}" />
 </objects>

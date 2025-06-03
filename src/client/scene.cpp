@@ -263,6 +263,16 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
     float deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
+    shaders["character"]->use();
+
+    for (auto& [id, player] : players) {
+        if (id == playerID)
+            continue;
+
+        player.updateTime(deltaTime);
+        player.draw(*shaders["character"]);
+    }
+
     for (auto& [name, shader] : shaders) {
         shader->use();
 
@@ -327,16 +337,6 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         }
 
         instance->drawRecursive(*shader, boundingBoxMode);
-    }
-
-    shaders["character"]->use();
-
-    for (auto& [id, player] : players) {
-        if (id == playerID)
-            continue;
-
-        player.updateTime(deltaTime);
-        player.draw(*shaders["character"]);
     }
 
     for (Firefly& firefly : fireflies) {

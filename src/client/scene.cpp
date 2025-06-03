@@ -155,6 +155,8 @@ void Scene::initLights() {
                                               glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
     pointLights["parkourRoom1"] = {PointLight(glm::translate(I4, config::PARKOUR_ROOM_1_POSITION),
                                               glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["circusRoom"] = {PointLight(glm::translate(I4, config::CIRCUS_ROOM_POSITION),
+                                            glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(2.0f))};
 }
 
 void Scene::initShadowMaps() {

@@ -126,14 +126,18 @@ void Scene::initRooms() {
     auto circusRoom =
         std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel, nullptr, true);
 
-    glm::mat4 cannonball1 = glm::translate(I4, config::CANNONBALL1_POSITION);
-    circusRoom->children["cannonball"][0] =
-        std::make_unique<ModelInstance>(cannonballAsset.get(), cannonball1, circusRoom.get());
-
-    glm::mat4 cannon1 = glm::translate(I4, config::CANNON1_POSITION);
-    cannon1 = glm::rotate(cannon1, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    circusRoom->children["cannon"][0] =
-        std::make_unique<ModelInstance>(cannonAsset.get(), cannon1, circusRoom.get());
+    for (int i = 0; i < config::NUM_CANNONBALLS; i++) {
+        // init cannon
+        glm::mat4 cannon = glm::translate(I4, config::CANNONBALL_POSITIONS[i]);
+        cannon = glm::rotate(cannon, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        cannon = glm::translate(cannon, {5.0f, 0.0f, 0.0f});
+        circusRoom->children["cannon"][i] =
+            std::make_unique<ModelInstance>(cannonAsset.get(), cannon, circusRoom.get());
+        // init cannonball
+        glm::mat4 cannonball = glm::translate(I4, config::CANNONBALL_POSITIONS[i]);
+        circusRoom->children["cannonball"][i] = std::make_unique<ModelInstance>(
+            cannonballAsset.get(), cannonball, circusRoom.get(), false);
+    }
 
     modelInstances["hotelRoom"] = std::move(hotelRoom);
     modelInstances["swampRoom"] = std::move(swampRoom);

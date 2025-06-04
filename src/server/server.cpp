@@ -94,6 +94,8 @@ void Server::initRigidBodies() {
                 object = initWall(data, circus, &world);
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
+            } else if (modelName == "circus_cannonball_00") {
+                object = initCannonball(data, circus, &world);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;

@@ -1141,6 +1141,87 @@
           0.0
         ],
         "rotated": false
+      },
+      {
+        "model": "circus_cannonball_00",
+        "position": [
+          -30.0,
+          13.0,
+          16.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "circus_cannonball_00",
+        "position": [
+          -30.0,
+          13.0,
+          12.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "circus_cannonball_00",
+        "position": [
+          -30.0,
+          13.0,
+          8.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "circus_cannonball_00",
+        "position": [
+          -30.0,
+          13.0,
+          4.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "circus_cannonball_00",
+        "position": [
+          -30.0,
+          13.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "circus_cannonball_00",
+        "position": [
+          -30.0,
+          13.0,
+          -4.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "circus_cannonball_00",
+        "position": [
+          -30.0,
+          13.0,
+          -8.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "circus_cannonball_00",
+        "position": [
+          -30.0,
+          13.0,
+          -12.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "circus_cannonball_00",
+        "position": [
+          -30.0,
+          13.0,
+          -16.0
+        ],
+        "rotated": false
       }
     ]
   }

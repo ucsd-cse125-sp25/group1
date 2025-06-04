@@ -1,15 +1,15 @@
-# Blender 4.4.3 MTL File: 'hotel rooms most recent sub 30.blend'
+# Blender 4.4.1 MTL File: 'hotel rooms most recent sub 30 (1) (1) (1).blend'
 # www.blender.org
 
 newmtl MAT_exit_door_frame
-Ns 250.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
+Ns 190.413284
+Ka 0.766709 0.766709 0.766709
+Kd 0.212229 0.177889 0.130137
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
-illum 2
+illum 3
 
 newmtl MAT_hotel_carpet
 Ns 3.550426

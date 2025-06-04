@@ -35,7 +35,7 @@ void Server::initRigidBodies() {
         const std::string& roomName = it.key();
         cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
         Room* room;
-        if (roomName == "swamp_room") {
+        if (roomName == "swampRoom") {
             swamp = new Swamp(rooms.size(), world, *this);
             room = static_cast<Room*>(swamp);
         } else if (roomName == "circus_room") {
@@ -48,6 +48,7 @@ void Server::initRigidBodies() {
     }
 
     // for (const auto& room : layout) {
+    int i = 0;
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
         const json& room = it.value();
@@ -79,7 +80,7 @@ void Server::initRigidBodies() {
                                   relativeMaxCorner};
 
             if (modelName == "door_00") {
-                object = initDoor(data, &doors, &rooms, &world);
+                object = initDoor(data, &doors, &rooms, &world, *this);
             } else if (modelName == "frog_00") {
                 object = initFrog(data, &objects, swamp, &world);
             } else if (modelName == "lilypad_00") {
@@ -96,6 +97,8 @@ void Server::initRigidBodies() {
                 object = initKey(data, *this, world, roomName, &keys);
             } else if (modelName == "circus_cannonball_00") {
                 object = initCannonball(data, circus, &world);
+            } else if (modelName.starts_with("zone_")) {
+                object = initZone(data, &objects, &world, i);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;
@@ -104,6 +107,7 @@ void Server::initRigidBodies() {
 
             world.addObject(object);
         }
+        i++;
     }
 }
 

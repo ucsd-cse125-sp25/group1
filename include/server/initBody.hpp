@@ -49,7 +49,7 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
  * @return Pointer to the initialized RigidBody.
  */
 RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
-                    std::unordered_map<int, Room*>* rooms, World* world);
+                    std::unordered_map<int, Room*>* rooms, World* world, Server& server);
 
 /**
  * @brief Initializes a Frog object with a unique ID and default RigidBody.
@@ -87,6 +87,9 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp, World* world);
  * @return Pointer to the initialized RigidBody.
  */
 RigidBody* initWater(TransformData data, Swamp* swamp, World* world);
+
+RigidBody* initZone(TransformData data, std::unordered_map<int, Object*>* objects, World* world,
+                    int roomID);
 
 /**
  * @brief Initializes a cannonball entity via the Circus pointer and assigns it a RigidBody.

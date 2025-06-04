@@ -1,4 +1,5 @@
 #include "initBody.hpp"
+#include <iostream>
 
 RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* objects, World* world) {
     Object* object = new Object(objects->size());
@@ -15,34 +16,24 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
 }
 
 RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
-                    std::unordered_map<int, Room*>* rooms, World* world) {
+                    std::unordered_map<int, Room*>* rooms, World* world, Server& server) {
     int keyID = -1;
     int roomIDs[2] = {0, 4};
 
     Door* door;
     if (keyID != -1) {
-        door = new Door(doors->size(), roomIDs[0], roomIDs[1], keyID);
+        door = new Door(doors->size(), roomIDs[0], roomIDs[1], keyID, server);
     } else {
-        door = new Door(doors->size(), roomIDs[0], roomIDs[1]);
+        door = new Door(doors->size(), roomIDs[0], roomIDs[1], server);
     }
     (*doors)[door->getID()] = door;
 
     (*rooms)[roomIDs[0]]->addInteractable(door);
     (*rooms)[roomIDs[1]]->addInteractable(door);
 
-    vec3 doorPosition = data.roomPosition + data.position + data.relativePosition;
-    vec3 facingDirection;
-    vec3 relativeDifference = data.relativeMaxCorner - data.relativeMinCorner;
-    if (relativeDifference.x < relativeDifference.z) {
-        // Door's normal is parallel to the x-axis
-        facingDirection = vec3(1.0f, 0.0f, 0.0f);
-    } else {
-        // Door's normal is parallel to the z-axis
-        facingDirection = vec3(0.0f, 0.0f, 1.0f);
-    }
-
     RigidBody* body = new RigidBody(
-        vec3(0.0f), vec3(0.0f), 0.0f, new Transform{doorPosition, vec3(0.0f)},
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
         new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, door, world, true);
 
     RigidBody* roomZones[2];
@@ -70,7 +61,6 @@ RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
 
     door->setRoomZones(roomZones[0], roomZones[1]);
     door->setBody(body);
-
     return body;
 }
 
@@ -113,6 +103,29 @@ RigidBody* initWater(TransformData data, Swamp* swamp, World* world) {
         world, true);
 
     waterRespawnPlane->setBody(body);
+    return body;
+}
+
+RigidBody* initZone(TransformData data, std::unordered_map<int, Object*>* objects, World* world,
+                    int roomID) {
+
+    // Shouldn't be a referenceable object
+    Object* object = new Object(-1, [roomID](ICustomPhysics* otherObject) {
+        // If the other object is a player, change their roomID
+        if (Player* player = dynamic_cast<Player*>(otherObject)) {
+            if (player->getCurRoomID() != roomID) {
+                player->setCurRoomID(roomID);
+                std::cout << "Player entered zone for room ID: " << roomID << std::endl;
+            }
+        }
+    });
+
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, object, world, true);
+
+    object->setBody(body);
     return body;
 }
 

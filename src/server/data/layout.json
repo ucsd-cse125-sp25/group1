@@ -7,6 +7,15 @@
     ],
     "objects": [
       {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "door_00",
         "position": [
           0.0,
@@ -147,6 +156,15 @@
     "position": [0.0, 0.0, 20.0],
     "objects": [
       {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "key_00",
         "position": [
           -8.0,
@@ -260,6 +278,15 @@
       0.0
     ],
     "objects": [
+      {
+        "model": "zone_swamp_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "swamp_00",
         "position": [

@@ -86,6 +86,9 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp, World* world);
  */
 RigidBody* initWater(TransformData data, Swamp* swamp, World* world);
 
+RigidBody* initZone(TransformData data, std::unordered_map<int, Object*>* objects, World* world,
+                    int roomID);
+
 /**
  * @brief Initializes a Key object with a unique ID and attaches a RigidBody.
  * 

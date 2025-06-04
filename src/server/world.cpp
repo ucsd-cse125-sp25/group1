@@ -19,6 +19,9 @@ void World::removeObject(RigidBody* object) {
 
 void World::step(float dt) {
     for (RigidBody* obj : objects) {
+        if (obj == nullptr)
+            continue;
+
         // apply kinematics
         obj->updateVelocity(dt);
         obj->updatePosition(dt);

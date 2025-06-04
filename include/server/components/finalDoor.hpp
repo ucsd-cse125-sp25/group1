@@ -5,6 +5,8 @@
 #include <vector>
 #include "components/interactable.hpp"
 
+class Lobby; // Forward declaration of Lobby class
+
 /**
  * Server Side FinalDoor Class
  * The server should be the one to determine if the door is locked or not
@@ -18,7 +20,7 @@ class FinalDoor : public Interactable {
      * Does it also need param for rigid body?
      * @param numKeys Number of keys required to unlock the door
      */
-    FinalDoor(int numKeys);
+    FinalDoor(int numKeys, int objectID, Lobby* lobbyRef);
 
     // Destructor
     ~FinalDoor();
@@ -52,7 +54,7 @@ class FinalDoor : public Interactable {
      */
     bool canUnlock();
 
-    void handleInteract(const Player& player) override;
+    void handleInteract(Player& player) override;
 
     /**
      * @brief Check if the door can be opened
@@ -61,6 +63,8 @@ class FinalDoor : public Interactable {
      * @return true if the door can be opened, false otherwise
      */
     bool canOpen();
+
+    Lobby* getLobby();
 
   private:
     int numKeys; // Number of keys required to unlock the door
@@ -76,4 +80,5 @@ class FinalDoor : public Interactable {
     bool buttonStates[4] = {false}; // Button states (pressed or not pressed) - 4 buttons
     std::vector<bool> keyStates;    // This will be initiated with the number of keys
                                     // int array
+    Lobby* lobby; // Reference to the lobby where the door is located
 };

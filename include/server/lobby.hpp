@@ -5,12 +5,12 @@
 #include <utility>
 #include <vector>
 #include "collider.hpp"
+#include "components/finalButton.hpp"
+#include "components/finalDoor.hpp"
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "rigidBody.hpp"
 #include "world.hpp"
-#include "components/finalDoor.hpp"
-#include "components/finalButton.hpp"
 
 class Server;
 
@@ -47,11 +47,11 @@ class Lobby : public Room {
      */
     Server& getServer();
 
-    FinalDoor* createFinalDoor(int numKeys);
+    FinalDoor* createFinalDoor(int objectID);
 
-    FinalButton* createFinalButton(int buttonID, int playerID, FinalDoor* door);
+    FinalButton* createFinalButton(int objectID);
 
-
+    int playerID; // Unique ID for the player in the lobby
 
     /**
      * @brief Audio file for the lobby
@@ -59,7 +59,6 @@ class Lobby : public Room {
      * The audio file to be played for when they are in the lobby
      */
     std::string audioFile;
-
 
     /**
      * @brief Reference to the world object
@@ -70,13 +69,11 @@ class Lobby : public Room {
     Server& server;
 
     /**
-     * @brief List of buttons 
+     * @brief List of buttons
      *
      * A vector of pointers to lilypad. Lilypadd ordering goes right, left, right, left...
      */
     std::vector<FinalButton*> buttons;
 
     FinalDoor* finalDoor; // Pointer to the final door in the lobby
-
-
 };

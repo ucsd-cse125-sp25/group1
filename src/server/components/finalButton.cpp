@@ -2,9 +2,11 @@
 #include "json.hpp"
 #include "server.hpp"
 
+using json = nlohmann::json;
+
 // Constructor
 FinalButton::FinalButton(int buttonID, int playerID, FinalDoor* door)
-    : buttonID(buttonID), playerID(playerID), door(door) {
+    : Interactable(buttonID), buttonID(buttonID), playerID(playerID), door(door) {
     // Initialize any member variables if needed
 }
 
@@ -17,7 +19,7 @@ bool FinalButton::isPressed() const {
     return pressed;
 }
 
-void FinalButton::handleInteract(const Player& player) {
+void FinalButton::handleInteract(Player& player) {
     // Define behavior here
     if (player.getID() != playerID) {
         // If the player ID does not match, do not allow interaction
@@ -33,7 +35,7 @@ void FinalButton::handleInteract(const Player& player) {
     message["action"] = "interact";
 
     std::string packet = message.dump() + "\n";
-    lobby->getServer().broadcastMessage(packet);
+    door->getLobby()->getServer().broadcastMessage(packet);
 }
 
 /**

@@ -10,7 +10,7 @@ class FinalButton : public Interactable {
     // Check if the button is pressed
     bool isPressed() const;
 
-    void handleInteract(const Player& player) override;
+    void handleInteract(Player& player) override;
 
 
     bool pressButton();
@@ -26,7 +26,6 @@ class FinalButton : public Interactable {
 
     // Let finalDoor know that the button was pressed
     void updateDoorState();
-
 
   private:
     int buttonID;    // ID of the button

@@ -114,7 +114,7 @@ bool Client::init() {
 
     audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
     audioManager.playEvent(config::SWAMP_AMBIENCE_TRACK);
-    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, 0.2f);
+    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, config::SWAMP_AMBIENCE_VOL);
 
     return true;
 }
@@ -197,18 +197,19 @@ void Client::handleServerMessage(const std::string& message) {
         scene->renderLilypadShadowPass(id);
     } else if (type == "sfx") {
         // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,
-        // "action": "jump"} client id that of the person triggering the sfx
+        // "action": "jump", "volume": 1.0f (optional), "stopID": "eventID" (optional)} client id that of the person triggering the sfx
 
         std::string sfxIDStr = parsed["sfx_id"];
         const char* sfxID = sfxIDStr.c_str();
         int clientId = parsed["client_id"];
         std::string action = parsed["action"];
+        float volume = parsed.value("volume", 1.0f);
 
         audioManager.stopEvent(sfxID); // Stop the event if it's already playing
         if (clientId == this->clientId) {
             audioManager.loadFMODStudioEvent(sfxID);
             audioManager.playEvent(sfxID);
-            audioManager.setEventVolume(sfxID, 1.0f);
+            audioManager.setEventVolume(sfxID, volume);
         }
     } else if (type == "interactable_nearby") {
         scene->canvas->setInteractHidden(false);
@@ -324,12 +325,18 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
 
             if (!action.empty()) {
                 message["actions"].push_back(action);
-                if (action != "jump" && action != "interact" &&
-                    !audioManager.eventIsPlaying(config::FOOTSTEPCARPET)) {
+                if (action != "jump" && action != "interact" ) {
                     // This is footstep sfx
-                    audioManager.loadFMODStudioEvent(config::FOOTSTEPCARPET);
-                    audioManager.setEventVolume(config::FOOTSTEPCARPET, 0.1f);
-                    audioManager.playEvent(config::FOOTSTEPCARPET);
+
+                    if (footstepCooldown == config::FOOTSTEP_COOLDOWN_RATE) {
+                        audioManager.loadFMODStudioEvent(footstepSfxId);
+                        audioManager.setEventVolume(footstepSfxId, footstepVol);
+                        audioManager.playEvent(footstepSfxId);
+
+                        footstepCooldown = 0;
+                    }
+
+                    footstepCooldown++;
                 }
             }
         }
@@ -410,6 +417,7 @@ void Client::initGL() {
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
     glFrontFace(GL_CCW);
+    glEnable(GL_PROGRAM_POINT_SIZE);
 }
 
 void Client::initScene() {

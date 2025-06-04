@@ -1,5 +1,6 @@
 #include "scene.hpp"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/random.hpp>
 #include <array>
 #include <cmath>
 #include <glad/glad.h>
@@ -47,6 +48,8 @@ void Scene::init() {
 
     renderStaticShadowPass();
     renderInteractableShadowPass();
+
+    spawnFireflies(config::SWAMP_NUM_FIREFLIES);
 }
 
 void Scene::initRooms() {
@@ -237,6 +240,19 @@ void Scene::renderInteractableShadowPass() {
     }
 }
 
+void Scene::spawnFireflies(int count) {
+    glm::vec3 center = config::SWAMP_ROOM_POSITION + glm::vec3(50.0f, 5.0f, 0.0f);
+    glm::vec3 half = glm::vec3(35.0f, 5.0f, 30.0f);
+
+    for (int i = 0; i < count; ++i) {
+        glm::vec3 position = center + glm::linearRand(-half, half);
+        glm::vec3 direction = glm::sphericalRand(1.0f);
+        float speed = glm::linearRand(0.5f, 1.5f);
+
+        fireflies.emplace_back(position, direction, speed, center, half);
+    }
+}
+
 void Scene::renderLilypadShadowPass(int id) {
     auto& shadowMaps = interactableShadowMaps["swampRoom"];
 
@@ -263,6 +279,20 @@ void Scene::renderLilypadShadowPass(int id) {
 }
 
 void Scene::render(const Camera& camera, bool boundingBoxMode) {
+    float currentFrame = glfwGetTime();
+    float deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+
+    shaders["character"]->use();
+
+    for (auto& [id, player] : players) {
+        if (id == playerID)
+            continue;
+
+        player.updateTime(deltaTime);
+        player.draw(*shaders["character"]);
+    }
+
     for (auto& [name, shader] : shaders) {
         shader->use();
 
@@ -307,6 +337,10 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         } else if (name == "swampRoom") {
             shader = shaders["swamp"].get();
             shader->use();
+            shader->setBool("useFog", true);
+            shader->setVec3("fogColor", glm::vec3(0.05f, 0.07f, 0.1f));
+            shader->setFloat("fogStart", 10.0f);
+            shader->setFloat("fogEnd", 60.0f);
         } else if (name == "circusRoom") {
             shader = shaders["model"].get();
             shader->use();
@@ -326,14 +360,11 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         instance->drawRecursive(*shader, boundingBoxMode);
     }
 
-    shaders["character"]->use();
-
-    for (auto& [id, player] : players) {
-        if (id == playerID)
-            continue;
-
-        player.draw(*shaders["character"]);
+    for (Firefly& firefly : fireflies) {
+        firefly.update(deltaTime);
     }
+
+    fireflyRenderer.draw(fireflies, camera.getViewMatrix(), camera.getProjectionMatrix());
 
     // UI
     updateWindow();

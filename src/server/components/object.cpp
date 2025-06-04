@@ -1,6 +1,8 @@
 #include "components/object.hpp"
 
-Object::Object(int id) : objectID(id) {}
+Object::Object(int id) : Object(id, nullptr) {}
+
+Object::Object(int id, CollisionCallback func) : objectID(id), func(func) {}
 
 int Object::getID() const {
     return objectID;
@@ -16,4 +18,8 @@ void Object::setBody(RigidBody* newBody) {
     body = newBody;
 }
 
-void Object::customCollision(ICustomPhysics* otherObject) {}
+void Object::customCollision(ICustomPhysics* otherObject) {
+    if (func) {
+        func(otherObject);
+    }
+}

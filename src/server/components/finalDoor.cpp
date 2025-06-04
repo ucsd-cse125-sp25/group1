@@ -1,7 +1,12 @@
 #include "components/finalDoor.hpp"
+#include "lobby.hpp"
+#include "server.hpp"
+#include "json.hpp"
 
+using json = nlohmann::json;
 // Constructor
-FinalDoor::FinalDoor(int numKeys) : Interactable(), numKeys(numKeys), keyStates(numKeys, false) {
+FinalDoor::FinalDoor(int numKeys, int objectID, Lobby* lobbyRef)
+    : Interactable(objectID), numKeys(numKeys), keyStates(numKeys, false), lobby(lobbyRef) {
     // Initialize any member variables if needed
 }
 
@@ -16,26 +21,31 @@ void FinalDoor::unlockAndOpen() {
     // Broadcast message to all clients
     json message;
 
-    message["type"] = "final_door_open";//This is game ending
+    message["type"] = "final_door_open"; // This is game ending
 
-    //How can we broadcast this message to all clients?
+    // How can we broadcast this message to all clients?
     std::string packet = message.dump() + "\n";
     lobby->getServer().broadcastMessage(packet);
-
 }
 
 void FinalDoor::handleInteract(Player& player) {
     // Add keys from player to the door
     std::set<int> playersKeys = player.getKeyIDs();
+    if (playersKeys.empty()) {
+        // If the player has no keys, do nothing
+        // Or do no key sound effect?
+        return;
+    }
     for (int val : playersKeys) {
-        addKey(val); // Add keys from player to the door
+        addKey(val);           // Add keys from player to the door
         player.removeKey(val); // Remove keys from player
-        // Or should each interact only add one key? 
+        // Or should each interact only add one key?
+        break; // Assuming we only want to add one key at a time
     }
 
     json message;
     message["type"] = "final_door_interact";
-    //message["sfx_id"] = config::Some sound effect ID;
+    // message["sfx_id"] = config::Some sound effect ID;
     message["client_id"] = player.getID();
     message["action"] = "interact";
 
@@ -54,8 +64,6 @@ void FinalDoor::addKey(int keyID) {
     }
     keyCount++;
     keyStates[keyID] = true; // Mark the key as present
-
-
 }
 
 bool FinalDoor::canUnlock() {
@@ -82,4 +90,8 @@ bool FinalDoor::canOpen() {
         return true; // All buttons are pressed and all keys are present
     }
     return false;
+}
+
+Lobby* FinalDoor::getLobby() {
+    return lobby;
 }

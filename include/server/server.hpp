@@ -12,8 +12,10 @@
 #include "swamp.hpp"
 #include "world.hpp"
 #include "components/interactable.hpp"
+#include "lobby.hpp"
 
 class Swamp;
+class Lobby;
 
 /**
  * @brief Handles server-side networking and world updates for a multiplayer game.

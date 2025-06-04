@@ -44,6 +44,15 @@ class Player {
     void init();
 
     /**
+     * @brief Updates the current animation time.
+     *
+     * @param deltaTime Time since the last frame.
+     */
+    void updateTime(float deltaTime) {
+        animator->update(deltaTime);
+    }
+
+    /**
      * @brief Draws the player.
      *
      * Applies translation and rotation based on position and facing direction,

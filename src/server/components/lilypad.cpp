@@ -40,6 +40,7 @@ void LilyPad::customCollision(ICustomPhysics* otherObject) {
         sfx["sfx_id"] = config::JUMPLILYPAD;
         sfx["client_id"] = playerPtr->getID();
         sfx["action"] = "jump";
+        sfx["volume"] = config::LILYPAD_VOL;
 
         std::string sfxPacket = sfx.dump() + "\n";
         server.broadcastMessage(sfxPacket);
@@ -51,6 +52,9 @@ void LilyPad::customCollision(ICustomPhysics* otherObject) {
     if (isGood) {
         return;
     }
+
+    delete body;
+    this->setBody(nullptr);
 
     // Send Message to client to drop lily pad
     json message;

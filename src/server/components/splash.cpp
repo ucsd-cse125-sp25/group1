@@ -14,14 +14,18 @@ void Splash::customCollision(ICustomPhysics* otherObject) {
     if (!playerPtr) {
         return;
     }
-    
-    json sfx;
-    sfx["type"] = "sfx";
-    sfx["sfx_id"] = config::WATERSPLASH;
-    sfx["client_id"] = playerPtr->getID();
-    sfx["action"] = "jump";
-    sfx["volume"] = config::WATERSPLASH_VOL;
 
-    std::string sfxPacket = sfx.dump() + "\n";
-    server.broadcastMessage(sfxPacket);
+    if (!playerPtr->getJumpSfxCooldown()) {
+        json sfx;
+        sfx["type"] = "sfx";
+        sfx["sfx_id"] = config::WATERSPLASH;
+        sfx["client_id"] = playerPtr->getID();
+        sfx["action"] = "jump";
+        sfx["volume"] = config::WATERSPLASH_VOL;
+
+        std::string sfxPacket = sfx.dump() + "\n";
+        server.broadcastMessage(sfxPacket);
+
+        playerPtr->setJumpSfxCooldown(true);
+    }
 }

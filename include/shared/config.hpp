@@ -87,7 +87,7 @@ inline constexpr glm::vec3 PARKOUR_OBJECT_POSITIONS[3] = {
 inline constexpr glm::vec3 PARKOUR_KEY_POSITION = {-8.0f, 6.0f, 8.0f};
 
 // Swamp Related Configs
-inline constexpr glm::vec3 SWAMP_RESPAWN = {21.0f, 1.0f, 0.0f};
+inline constexpr glm::vec3 SWAMP_RESPAWN = {1.0f, 1.0f, 0.0f};
 inline constexpr int SWAMP_NUM_ROWS = 8;
 
 inline constexpr int SWAMP_NUM_LILYPADS = 16; // Total
@@ -110,15 +110,15 @@ inline constexpr const char* UNLOCKDOOR = "{008e7455-ae30-40ce-a197-5e85b67035b8
 inline constexpr const char* GRABKEY = "{f811c9cc-fec0-4714-8a32-e645ad8a502b}";
 inline constexpr const char* WATERSPLASH = "{907b8e60-bc68-4a05-b2dc-394c92c13343}";
 
-//Audio for Set Volume 
+// Audio for Set Volume
 
-//Controlled by Client
+// Controlled by Client
 inline constexpr float SWAMP_AMBIENCE_VOL = 0.5f;
 inline constexpr float FOOTSTEPCARPET_VOL = 0.1f;
 
 inline constexpr int FOOTSTEP_COOLDOWN_RATE = 7;
 
-//Controlled by Server
+// Controlled by Server
 inline constexpr float SWAMP_AUDIO_FILE_VOL = 2.5f;
 inline constexpr float LILYPAD_VOL = 0.2f;
 inline constexpr float UNLOCKDOOR_VOL = 0.5f;

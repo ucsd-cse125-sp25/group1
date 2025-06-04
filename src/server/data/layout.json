@@ -179,7 +179,7 @@
       }
     ]
   },
-  "swamp_room": {
+  "swampRoom": {
     "position": [
       -130.0,
       0.0,
@@ -845,7 +845,7 @@
       }
     ]
   },
-  "swamp_key_room": {
+  "swampKeyRoom": {
     "position": [
       -30.0,
       0.0,
@@ -953,7 +953,7 @@
       }
     ]
   },
-  "circus_room": {
+  "circusRoom": {
     "position": [
       100.0,
       0.0,
@@ -1052,7 +1052,7 @@
       }
     ]
   },
-  "circus_key_room": {
+  "circusKeyRoom": {
     "position": [
       150.0,
       0.0,
@@ -1151,7 +1151,7 @@
       }
     ]
   },
-  "piano_room": {
+  "pianoRoom": {
     "position": [
       150.0,
       0.0,
@@ -1159,7 +1159,7 @@
     ],
     "objects": []
   },
-  "parkour_room": {
+  "parkourRoom": {
     "position": [
       -130.0,
       0.0,
@@ -1303,7 +1303,7 @@
       }
     ]
   },
-  "hotel_room_0": {
+  "hotelRoom0": {
     "position": [
       -150.0,
       0.0,
@@ -1420,7 +1420,7 @@
       }
     ]
   },
-  "hotel_room_1": {
+  "hotelRoom1": {
     "position": [
       -150.0,
       0.0,
@@ -1519,7 +1519,7 @@
       }
     ]
   },
-  "hotel_room_2": {
+  "hotelRoom2": {
     "position": [
       -130.0,
       0.0,
@@ -1618,7 +1618,7 @@
       }
     ]
   },
-  "hotel_room_3": {
+  "hotelRoom3": {
     "position": [
       -30.0,
       0.0,
@@ -1735,7 +1735,7 @@
       }
     ]
   },
-  "hotel_room_4": {
+  "hotelRoom4": {
     "position": [
       -30.0,
       0.0,
@@ -1834,7 +1834,7 @@
       }
     ]
   },
-  "hotel_room_5": {
+  "hotelRoom5": {
     "position": [
       30.0,
       0.0,
@@ -1933,7 +1933,7 @@
       }
     ]
   },
-  "hotel_room_6": {
+  "hotelRoom6": {
     "position": [
       30.0,
       0.0,
@@ -2050,7 +2050,7 @@
       }
     ]
   },
-  "hotel_room_7": {
+  "hotelRoom7": {
     "position": [
       30.0,
       0.0,
@@ -2149,7 +2149,7 @@
       }
     ]
   },
-  "hotel_room_8": {
+  "hotelRoom8": {
     "position": [
       50.0,
       0.0,
@@ -2248,7 +2248,7 @@
       }
     ]
   },
-  "hotel_room_9": {
+  "hotelRoom9": {
     "position": [
       50.0,
       0.0,
@@ -2347,7 +2347,7 @@
       }
     ]
   },
-  "hotel_room_10": {
+  "hotelRoom10": {
     "position": [
       50.0,
       0.0,
@@ -2446,7 +2446,7 @@
       }
     ]
   },
-  "hotel_room_11": {
+  "hotelRoom11": {
     "position": [
       110.0,
       0.0,
@@ -2545,7 +2545,7 @@
       }
     ]
   },
-  "hotel_room_12": {
+  "hotelRoom12": {
     "position": [
       110.0,
       0.0,
@@ -2644,7 +2644,7 @@
       }
     ]
   },
-  "hotel_room_13": {
+  "hotelRoom13": {
     "position": [
       130.0,
       0.0,
@@ -2743,7 +2743,7 @@
       }
     ]
   },
-  "hotel_room_14": {
+  "hotelRoom14": {
     "position": [
       150.0,
       0.0,
@@ -2860,7 +2860,7 @@
       }
     ]
   },
-  "hallway_0": {
+  "hallway0": {
     "position": [
       -150.0,
       0.0,
@@ -2959,7 +2959,7 @@
       }
     ]
   },
-  "hallway_1": {
+  "hallway1": {
     "position": [
       -100.0,
       0.0,
@@ -3058,7 +3058,7 @@
       }
     ]
   },
-  "hallway_2": {
+  "hallway2": {
     "position": [
       -60.0,
       0.0,
@@ -3157,7 +3157,7 @@
       }
     ]
   },
-  "hallway_3": {
+  "hallway3": {
     "position": [
       -30.0,
       0.0,
@@ -3256,7 +3256,7 @@
       }
     ]
   },
-  "hallway_4": {
+  "hallway4": {
     "position": [
       30.0,
       0.0,
@@ -3355,7 +3355,7 @@
       }
     ]
   },
-  "hallway_5": {
+  "hallway5": {
     "position": [
       80.0,
       0.0,
@@ -3454,7 +3454,7 @@
       }
     ]
   },
-  "hallway_6": {
+  "hallway6": {
     "position": [
       150.0,
       0.0,

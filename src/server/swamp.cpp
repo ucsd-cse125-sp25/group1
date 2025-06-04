@@ -14,7 +14,7 @@ Swamp::Swamp(int roomID, World& worldRef, Server& serverRef)
     solution = config::SWAMP_SOLUTION;
     audioFile = config::SWAMP_AUDIO_FILE;
 
-    respawnPoint = config::SWAMP_RESPAWN;
+    respawnPoint = config::SWAMP_RESPAWN + config::SWAMP_ROOM_POSITION;
 }
 
 Swamp::~Swamp() {

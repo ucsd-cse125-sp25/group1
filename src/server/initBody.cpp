@@ -1,5 +1,8 @@
 #include "initBody.hpp"
+#include "json.hpp"
 #include <iostream>
+
+using json = nlohmann::json;
 
 RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* objects, World* world) {
     Object* object = new Object(objects->size());
@@ -82,11 +85,12 @@ RigidBody* initWater(TransformData data, Swamp* swamp, World* world) {
     return body;
 }
 
-RigidBody* initZone(TransformData data, std::unordered_map<int, Object*>* objects, World* world,
+RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, Object*>* objects,
+                    World* world,
                     int roomID) {
 
     // Shouldn't be a referenceable object
-    Object* object = new Object(-1, [roomID](ICustomPhysics* otherObject) {
+    Object* object = new Object(-1, [server, roomID](ICustomPhysics* otherObject) {
         // If the other object is a player, change their roomID
         if (Player* player = dynamic_cast<Player*>(otherObject)) {
             if (player->getCurRoomID() != roomID) {
@@ -100,7 +104,7 @@ RigidBody* initZone(TransformData data, std::unordered_map<int, Object*>* object
                 message["id"] = roomID;
 
                 std::string packet = message.dump() + "\n";
-                server.broadcastMessage(packet);
+                server->broadcastMessage(packet);
             }
         }
     });

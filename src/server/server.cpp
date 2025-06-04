@@ -86,7 +86,7 @@ void Server::initRigidBodies() {
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
             } else if (modelName.starts_with("zone_")) {
-                object = initZone(data, &objects, &world, i);
+                object = initZone(data, this, &objects, &world, i);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;

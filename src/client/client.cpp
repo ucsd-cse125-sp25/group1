@@ -197,7 +197,8 @@ void Client::handleServerMessage(const std::string& message) {
         scene->renderLilypadShadowPass(id);
     } else if (type == "sfx") {
         // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,
-        // "action": "jump", "volume": 1.0f (optional), "stopID": "eventID" (optional)} client id that of the person triggering the sfx
+        // "action": "jump", "volume": 1.0f (optional), "stopID": "eventID" (optional)} client id
+        // that of the person triggering the sfx
 
         std::string sfxIDStr = parsed["sfx_id"];
         const char* sfxID = sfxIDStr.c_str();
@@ -238,15 +239,12 @@ void Client::handleServerMessage(const std::string& message) {
         // Assumes there's only one key in the room for now.
         // Will refactor if we add more interactable objects later.
         scene->setInteractableShadowActive(roomName, 0, false);
-    }
-    else if (type == "final_door_interact") {
-        //Need to have some sort of animation or graphics where the key is added to the door
-    }
-    else if (type == "final_door_open") {
+    } else if (type == "final_door_interact") {
+        // Need to have some sort of animation or graphics where the key is added to the door
+    } else if (type == "final_door_open") {
         // This is the final door opening, so we need to update the scene
         // and show the end screen.
-    }
-    else if (type == "final_button_pressed") {
+    } else if (type == "final_button_pressed") {
         // Could just be sfx only
     } else {
         std::cerr << "Unknown message type: " << type << "\n";
@@ -325,7 +323,7 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
 
             if (!action.empty()) {
                 message["actions"].push_back(action);
-                if (action != "jump" && action != "interact" ) {
+                if (action != "jump" && action != "interact") {
                     // This is footstep sfx
 
                     if (footstepCooldown == config::FOOTSTEP_COOLDOWN_RATE) {

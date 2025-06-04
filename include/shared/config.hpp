@@ -71,9 +71,6 @@ inline constexpr glm::vec3 PARKOUR_1_TABLE_1_POSITION = {0.0f, -1.5f, 0.0f};
 inline constexpr glm::vec3 PARKOUR_1_TABLE_2_POSITION = {2.5f, -0.5f, 0.0f};
 inline constexpr glm::vec3 PARKOUR_1_TABLE_3_POSITION = {5.0f, 0.5f, 0.0f};
 
-inline constexpr glm::vec3 HALLWAY1_ROOM_POSITION = {0.0f, 0.0f, -30.0f};
-inline constexpr glm::vec3 LOBBY_ROOM_POSITION = {0.0f, 0.0f, -70.0f};
-
 //Finaldoor keys
 inline constexpr glm::vec3 FINALDOOR_KEY_SLOT0 = {0.0f, 1.0f, 0.0f};
 

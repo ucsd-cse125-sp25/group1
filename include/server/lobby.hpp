@@ -47,8 +47,16 @@ class Lobby : public Room {
      */
     Server& getServer();
 
+    /**
+     * Used for initBodies 
+     * @brief instantiates a FinalDoor object
+     */
     FinalDoor* createFinalDoor(int objectID);
 
+    /**
+     * Used for initBodies
+     * @brief instantiates a FinalButton object
+     */
     FinalButton* createFinalButton(int objectID);
 
     int playerID; // Unique ID for the player in the lobby
@@ -66,6 +74,9 @@ class Lobby : public Room {
      */
     World& world;
 
+    /**
+     * @brief Reference to the server object
+     */
     Server& server;
 
     /**

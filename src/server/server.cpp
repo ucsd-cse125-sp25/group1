@@ -39,7 +39,7 @@ void Server::initRigidBodies() {
             room = static_cast<Room*>(swamp);
         } else if (roomName == "lobby_room") {
             Lobby* lobby = new Lobby(rooms.size(), world, *this);
-            room - static_cast<Room*>(lobby);
+            room = static_cast<Room*>(lobby);
         } else {
             room = new Room(rooms.size(), roomName);
         }

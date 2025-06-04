@@ -123,5 +123,5 @@ inline constexpr float SWAMP_AUDIO_FILE_VOL = 2.5f;
 inline constexpr float LILYPAD_VOL = 0.2f;
 inline constexpr float UNLOCKDOOR_VOL = 0.5f;
 inline constexpr float GRABKEY_VOL = 0.2f;
-inline constexpr float WATERSPLASH_VOL = 0.5f;
+inline constexpr float WATERSPLASH_VOL = 0.3f;
 } // namespace config

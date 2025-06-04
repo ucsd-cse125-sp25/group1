@@ -82,6 +82,8 @@ void Server::initRigidBodies() {
                 object = initLilyPad(data, swamp, &world);
             } else if (modelName == "water_00") {
                 object = initWater(data, swamp, &world);
+            } else if (modelName == "zone_00") {
+                object = initSplash(data, swamp, &world);
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
             } else {

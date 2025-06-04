@@ -23,6 +23,7 @@ Swamp::~Swamp() {
         delete pads[i];
     }
     delete waterRespawnPlane;
+    delete splashPlane;
 }
 
 std::string Swamp::getInitInfo() {
@@ -63,4 +64,10 @@ Water* Swamp::createWaterRespawn() {
 
 Server& Swamp::getServer() {
     return server;
+}
+
+Splash* Swamp::createSplashPlane() {
+    int id = 0;
+    Splash* splashPlane = new Splash(id, server);
+    return splashPlane;
 }

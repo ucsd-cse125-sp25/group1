@@ -26,7 +26,7 @@ int Door::getRoomID(int index) const {
     return rooms[index];
 }
 
-void Door::handleInteract(const Player& player) {
+void Door::handleInteract(Player& player) {
     if (!locked) {
         openDoor(player.getID());
     }

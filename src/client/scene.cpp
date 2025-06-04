@@ -2,9 +2,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/random.hpp>
 #include <array>
+#include <cctype>
 #include <cmath>
 #include <glad/glad.h>
 #include <iostream>
+#include <string>
 #include <vector>
 
 static const glm::mat4 I4{1.0f};
@@ -25,9 +27,31 @@ void Scene::init() {
     uiShader =
         std::make_unique<Shader>("../src/client/shaders/ui.vert", "../src/client/shaders/ui.frag");
 
-    hotelRoomAsset = std::make_unique<Model>("../src/client/models/1x1_hotel_room.obj");
+    lobbyAsset = std::make_unique<Model>("../src/client/models/lobby.obj");
+
+    hotelRoomStraightX =
+        std::make_unique<Model>("../src/client/models/1x1_hotel_room_straight_x.obj");
+    hotelRoomStraightZ =
+        std::make_unique<Model>("../src/client/models/1x1_hotel_room_straight_z.obj");
+
+    hotelRoomTPosX = std::make_unique<Model>("../src/client/models/1x1_hotel_room_T_pos_x.obj");
+    hotelRoomTNegX = std::make_unique<Model>("../src/client/models/1x1_hotel_room_T_neg_x.obj");
+
+    hotelRoomBendPosXPosZ =
+        std::make_unique<Model>("../src/client/models/1x1_hotel_room_bend_pos_x_pos_z.obj");
+    hotelRoomBendPosXNegZ =
+        std::make_unique<Model>("../src/client/models/1x1_hotel_room_bend_pos_x_neg_z.obj");
+    hotelRoomBendNegXPosZ =
+        std::make_unique<Model>("../src/client/models/1x1_hotel_room_bend_neg_x_pos_z.obj");
+    hotelRoomBendNegXNegZ =
+        std::make_unique<Model>("../src/client/models/1x1_hotel_room_bend_neg_x_neg_z.obj");
+
+    hallwayX = std::make_unique<Model>("../src/client/models/1x1_hotel_hallway_x.obj");
+    hallwayZ = std::make_unique<Model>("../src/client/models/1x1_hotel_hallway_z.obj");
+
     tableAsset = std::make_unique<Model>("../src/client/models/table.obj");
     doorAsset = std::make_unique<Model>("../src/client/models/door.obj");
+    keyAsset = std::make_unique<Model>("../src/client/models/key.obj");
 
     swampRoomAsset = std::make_unique<Model>("../src/client/models/swamp_room.obj");
     lilypadAsset = std::make_unique<Model>("../src/client/models/lilypad.obj");
@@ -35,7 +59,7 @@ void Scene::init() {
 
     circusRoomAsset = std::make_unique<Model>("../src/client/models/tent.obj");
 
-    keyAsset = std::make_unique<Model>("../src/client/models/key.obj");
+    pianoRoomAsset = std::make_unique<Model>("../src/client/models/piano_room.obj");
 
     canvas = std::make_unique<Canvas>();
 
@@ -50,50 +74,16 @@ void Scene::init() {
 }
 
 void Scene::initRooms() {
-    // Hotel room
-    glm::mat4 hotelRoomModel = glm::translate(I4, config::HOTEL_ROOM_POSITION);
-    auto hotelRoom =
-        std::make_unique<ModelInstance>(hotelRoomAsset.get(), hotelRoomModel, nullptr, true);
+    // Lobby (Room ID: 0)
+    glm::mat4 lobbyModel = glm::translate(I4, config::LOBBY_POSITION);
+    auto lobby = std::make_unique<ModelInstance>(lobbyAsset.get(), lobbyModel, nullptr, true);
 
-    glm::mat4 tableModel = glm::translate(I4, config::TABLE_POSITION);
-    hotelRoom->children["table"][0] =
-        std::make_unique<ModelInstance>(tableAsset.get(), tableModel, hotelRoom.get(), true);
-
-    std::array<float, 1> degrees = {90.0f}; // Add 0.0f, 180.0f 270.0f later
-
-    for (int i = 0; i < degrees.size(); ++i) {
-        glm::mat4 doorModel =
-            glm::rotate(I4, glm::radians(degrees[i]), glm::vec3(0.0f, 1.0f, 0.0f));
-        doorModel = glm::translate(doorModel, glm::vec3(10.0f, 0.0f, 0.0f));
-        hotelRoom->children["door"][i] =
-            std::make_unique<ModelInstance>(doorAsset.get(), doorModel, hotelRoom.get(), false);
-    }
-
-    // Parkour rooms
-    glm::mat4 parkourRoom1Model = glm::translate(I4, config::PARKOUR_ROOM_1_POSITION);
-    auto parkourRoom1 = std::make_unique<ModelInstance>(hotelRoomAsset.get(), parkourRoom1Model);
-    glm::mat4 parkour1Key = glm::translate(I4, config::PARKOUR_1_KEY_POSITION);
-    parkourRoom1->children["key"][0] =
-        std::make_unique<ModelInstance>(keyAsset.get(), parkour1Key, parkourRoom1.get(), false);
-
-    glm::mat4 parkour1Table1 = glm::translate(I4, config::PARKOUR_1_TABLE_1_POSITION);
-    parkourRoom1->children["table"][0] =
-        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table1, parkourRoom1.get());
-
-    glm::mat4 parkour1Table2 = glm::translate(I4, config::PARKOUR_1_TABLE_2_POSITION);
-    parkourRoom1->children["table"][1] =
-        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table2, parkourRoom1.get());
-
-    glm::mat4 parkour1Table3 = glm::translate(I4, config::PARKOUR_1_TABLE_3_POSITION);
-    parkourRoom1->children["table"][2] =
-        std::make_unique<ModelInstance>(tableAsset.get(), parkour1Table3, parkourRoom1.get());
-
-    // Swamp room
+    // Swamp room (Room ID: 1)
     glm::mat4 swampRoomModel = glm::translate(I4, config::SWAMP_ROOM_POSITION);
     auto swampRoom =
         std::make_unique<ModelInstance>(swampRoomAsset.get(), swampRoomModel, nullptr, true);
 
-    for (int i = 0; i < config::SWAMP_NUM_LILYPADS; i++) {
+    for (int i = 0; i < config::SWAMP_NUM_LILYPADS; ++i) {
         glm::mat4 lilypadModel =
             glm::translate(I4, glm::vec3(22.0f + (i / 2) * 8.0f, 0.0f, ((i % 2) * -2 + 1) * 3.0f));
 
@@ -110,41 +100,139 @@ void Scene::initRooms() {
     swampRoom->children["frog"][0] =
         std::make_unique<ModelInstance>(frogAsset.get(), frogModel, swampRoom.get(), true);
 
-    // Circus room
-    glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
-    auto circusRoom =
-        std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel, nullptr, true);
-
-    // Swamp key room
-    glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMPKEY_ROOM_POSITION);
-    auto swampKeyRoom =
-        std::make_unique<ModelInstance>(hotelRoomAsset.get(), swampKeyRoomModel, nullptr, true);
+    // Swamp key room (Room ID: 2)
+    glm::mat4 swampKeyRoomModel = glm::translate(I4, config::SWAMP_KEY_ROOM_POSITION);
+    auto swampKeyRoom = std::make_unique<ModelInstance>(hotelRoomBendNegXPosZ.get(),
+                                                        swampKeyRoomModel, nullptr, true);
 
     glm::mat4 swampKey = glm::translate(I4, config::SWAMP_KEY_POSITION);
     swampKey = glm::rotate(swampKey, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     swampKeyRoom->children["key"][0] =
         std::make_unique<ModelInstance>(keyAsset.get(), swampKey, swampKeyRoom.get(), false);
 
-    modelInstances["hotelRoom"] = std::move(hotelRoom);
+    // Circus room (Room ID: 3)
+    glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
+    auto circusRoom =
+        std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel, nullptr, true);
+
+    // Circus key room (Room ID: 4)
+    glm::mat4 circusKeyRoomModel = glm::translate(I4, config::CIRCUS_KEY_ROOM_POSITION);
+    auto circusKeyRoom = std::make_unique<ModelInstance>(hotelRoomBendNegXPosZ.get(),
+                                                         circusKeyRoomModel, nullptr, true);
+
+    // Piano room (Room ID: 5)
+    glm::mat4 pianoRoomModel = glm::translate(I4, config::PIANO_ROOM_POSITION);
+    auto pianoRoom =
+        std::make_unique<ModelInstance>(pianoRoomAsset.get(), pianoRoomModel, nullptr, true);
+
+    // Parkour room (Room ID: 6)
+    glm::mat4 parkourKeyRoomModel = glm::translate(I4, config::PARKOUR_ROOM_POSITION);
+    auto parkourKeyRoom =
+        std::make_unique<ModelInstance>(hotelRoomBendNegXPosZ.get(), parkourKeyRoomModel);
+    glm::mat4 parkourKey = glm::translate(I4, config::PARKOUR_KEY_POSITION);
+    parkourKeyRoom->children["key"][0] =
+        std::make_unique<ModelInstance>(keyAsset.get(), parkourKey, parkourKeyRoom.get(), false);
+
+    std::array<Model*, 3> parkourObjects = {tableAsset.get(), tableAsset.get(), tableAsset.get()};
+
+    for (int i = 0; i < 3; ++i) {
+        glm::mat4 parkourObject = glm::translate(I4, config::PARKOUR_OBJECT_POSITIONS[i]);
+        parkourKeyRoom->children["objects"][i] =
+            std::make_unique<ModelInstance>(parkourObjects[i], parkourObject, parkourKeyRoom.get());
+    }
+
+    // Hotel rooms (Room IDs: 7 - 21)
+    std::array<glm::mat4, 15> hotelRoomModels;
+    std::array<std::unique_ptr<ModelInstance>, 15> hotelRooms;
+
+    std::array<Model*, 15> hotelRoomVariants = {
+        hotelRoomBendPosXPosZ.get(), hotelRoomBendPosXNegZ.get(), hotelRoomBendPosXNegZ.get(),
+        hotelRoomTNegX.get(),        hotelRoomBendNegXNegZ.get(), hotelRoomBendPosXPosZ.get(),
+        hotelRoomTPosX.get(),        hotelRoomBendPosXNegZ.get(), hotelRoomBendPosXPosZ.get(),
+        hotelRoomStraightZ.get(),    hotelRoomBendNegXNegZ.get(), hotelRoomBendNegXPosZ.get(),
+        hotelRoomBendPosXNegZ.get(), hotelRoomStraightX.get(),    hotelRoomTPosX.get()};
+
+    for (int i = 0; i < 15; ++i) {
+        hotelRoomModels[i] = glm::translate(I4, config::HOTEL_ROOM_POSITIONS[i]);
+        hotelRooms[i] = std::make_unique<ModelInstance>(hotelRoomVariants[i], hotelRoomModels[i],
+                                                        nullptr, true);
+    }
+
+    // Hotel room 1 (Room ID: 7)
+    glm::mat4 tableModel = glm::translate(I4, config::TABLE_POSITION);
+    hotelRooms[0]->children["table"][0] =
+        std::make_unique<ModelInstance>(tableAsset.get(), tableModel, hotelRooms[0].get(), true);
+
+    // std::array<float, 4> degrees = {0.0f, 90.0f, 180.0f, 270.f};
+
+    // for (int i = 0; i < degrees.size(); ++i) {
+    //     glm::mat4 doorModel =
+    //         glm::rotate(I4, glm::radians(degrees[i]), glm::vec3(0.0f, 1.0f, 0.0f));
+    //     doorModel = glm::translate(doorModel, glm::vec3(10.0f, 0.0f, 0.0f));
+    //     hotelRoom->children["door"][i] =
+    //         std::make_unique<ModelInstance>(doorAsset.get(), doorModel, hotelRoom.get(), false);
+    // }
+
+    // Hallways (Room IDs: 22 - 28)
+    std::array<glm::mat4, 7> hallwayModels;
+    std::array<std::unique_ptr<ModelInstance>, 7> hallways;
+
+    std::array<Model*, 7> hallwayVariants = {hallwayZ.get(), hallwayX.get(), hallwayX.get(),
+                                             hallwayZ.get(), hallwayZ.get(), hallwayX.get(),
+                                             hallwayZ.get()};
+
+    for (int i = 0; i < 7; ++i) {
+        hallwayModels[i] = glm::translate(I4, config::HOTEL_HALLWAY_POSITIONS[i]);
+        hallways[i] =
+            std::make_unique<ModelInstance>(hallwayVariants[i], hallwayModels[i], nullptr, true);
+    }
+
+    modelInstances["lobby"] = std::move(lobby);
     modelInstances["swampRoom"] = std::move(swampRoom);
-    modelInstances["parkourRoom1"] = std::move(parkourRoom1);
     modelInstances["swampKeyRoom"] = std::move(swampKeyRoom);
     modelInstances["circusRoom"] = std::move(circusRoom);
+    modelInstances["circusKeyRoom"] = std::move(circusKeyRoom);
+    modelInstances["pianoRoom"] = std::move(pianoRoom);
+    modelInstances["parkourKeyRoom"] = std::move(parkourKeyRoom);
+
+    for (int i = 0; i < 15; ++i) {
+        modelInstances["hotelRoom" + std::to_string(i)] = std::move(hotelRooms[i]);
+    }
+
+    for (int i = 0; i < 7; ++i) {
+        modelInstances["hallway" + std::to_string(i)] = std::move(hallways[i]);
+    }
 }
 
 void Scene::initLights() {
-    pointLights["hotelRoom"] = {PointLight(glm::translate(I4, config::HOTEL_ROOM_POSITION),
-                                           glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["lobby"] = {PointLight(glm::translate(I4, config::LOBBY_POSITION),
+                                       glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
     pointLights["swampRoom"] = {PointLight(glm::translate(I4, config::SWAMP_ROOM_POSITION),
                                            glm::vec3(30.0f, 7.0f, 0.0f), glm::vec3(0.7f)),
                                 PointLight(glm::translate(I4, config::SWAMP_ROOM_POSITION),
                                            glm::vec3(70.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["swampKeyRoom"] = {PointLight(glm::translate(I4, config::SWAMP_KEY_ROOM_POSITION),
+                                              glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
     pointLights["circusRoom"] = {PointLight(glm::translate(I4, config::CIRCUS_ROOM_POSITION),
                                             glm::vec3(0.0f, 30.0f, 0.0f), glm::vec3(1.0f))};
-    pointLights["swampKeyRoom"] = {PointLight(glm::translate(I4, config::SWAMPKEY_ROOM_POSITION),
-                                              glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
-    pointLights["parkourRoom1"] = {PointLight(glm::translate(I4, config::PARKOUR_ROOM_1_POSITION),
-                                              glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["circusKeyRoom"] = {PointLight(glm::translate(I4, config::CIRCUS_KEY_ROOM_POSITION),
+                                               glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["pianoRoom"] = {PointLight(glm::translate(I4, config::PIANO_ROOM_POSITION),
+                                           glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    pointLights["parkourKeyRoom"] = {PointLight(glm::translate(I4, config::PARKOUR_ROOM_POSITION),
+                                                glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+
+    for (int i = 0; i < 15; ++i) {
+        pointLights["hotelRoom" + std::to_string(i)] = {
+            PointLight(glm::translate(I4, config::HOTEL_ROOM_POSITIONS[i]),
+                       glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    }
+
+    for (int i = 0; i < 7; ++i) {
+        pointLights["hallway" + std::to_string(i)] = {
+            PointLight(glm::translate(I4, config::HOTEL_HALLWAY_POSITIONS[i]),
+                       glm::vec3(0.0f, 7.0f, 0.0f), glm::vec3(1.0f))};
+    }
 }
 
 void Scene::initShadowMaps() {
@@ -206,7 +294,7 @@ void Scene::renderInteractableShadowPass() {
     renderLilypadShadowPass();
 
     // Will refactor this if more interactable things (other than a key) are added
-    std::vector<std::string> keyRooms = {"swampKeyRoom", "parkourRoom1"};
+    std::vector<std::string> keyRooms = {"swampKeyRoom", "parkourKeyRoom"};
     for (const std::string& roomName : keyRooms) {
         auto& shadowMaps = interactableShadowMaps[roomName];
         shadowMaps[0]->begin();
@@ -309,7 +397,8 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
         }
 
-        if (name == "hotelRoom" || name == "swampKeyRoom" || name == "parkourRoom1") {
+        if (name.starts_with("hotelRoom") || name.ends_with("KeyRoom") ||
+            name.starts_with("hallway")) {
             shader = shaders["model"].get();
             shader->use();
             shader->setBool("useFade", false);
@@ -320,7 +409,7 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             shader->setVec3("fogColor", glm::vec3(0.05f, 0.07f, 0.1f));
             shader->setFloat("fogStart", 10.0f);
             shader->setFloat("fogEnd", 60.0f);
-        } else if (name == "circusRoom") {
+        } else if (name == "lobby" || name == "circusRoom" || name == "pianoRoom") {
             shader = shaders["model"].get();
             shader->use();
             shader->setBool("useFade", true);

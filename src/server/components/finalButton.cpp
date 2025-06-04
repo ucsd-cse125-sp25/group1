@@ -39,9 +39,7 @@ void FinalButton::handleInteract(Player& player) {
 }
 
 /**
- * should be called when button is pressed
- * Is this called when client side button is pressed?
- * Client side will broadcast message to server
+ * should be called when button is interacted with
  */
 bool FinalButton::pressButton() {
     // Can only press button when all keys are present

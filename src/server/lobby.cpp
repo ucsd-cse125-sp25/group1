@@ -8,12 +8,10 @@ using json = nlohmann::json;
 
 Lobby::Lobby(int roomID, World& worldRef, Server& serverRef)
     : Room(roomID, "Lobby"), world(worldRef), server(serverRef) {
-        playerID = 0; // Initialize playerID to 0, this will increment as players join
+    playerID = 0; // Initialize playerID to 0, this will increment as players join
 }
 
-Lobby::~Lobby() {
-  
-}
+Lobby::~Lobby() {}
 
 std::string Lobby::getInitInfo() {
     // Return the initial information for the swamp game
@@ -36,10 +34,11 @@ FinalDoor* Lobby::createFinalDoor(int objectID) {
 
 FinalButton* Lobby::createFinalButton(int buttonID) {
     FinalButton* button = new FinalButton(buttonID, playerID, finalDoor);
+    playerID++; // Increment playerID for the next button
+    buttons.push_back(button);
     addInteractable(std::move(button));
     return button;
 }
-
 
 Server& Lobby::getServer() {
     return server;

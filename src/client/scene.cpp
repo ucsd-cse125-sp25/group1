@@ -112,7 +112,7 @@ void Scene::initRooms() {
     swampKeyRoom->children["key"][0] =
         std::make_unique<ModelInstance>(keyAsset.get(), swampKey, swampKeyRoom.get(), false);
 
-    // Circus room
+    // Circus room (Room ID: 3)
     glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
     auto circusRoom =
         std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel, nullptr, true);
@@ -129,11 +129,6 @@ void Scene::initRooms() {
         circusRoom->children["cannonball"][i] = std::make_unique<ModelInstance>(
             cannonballAsset.get(), cannonball, circusRoom.get(), false);
     }
-
-    // Circus room (Room ID: 3)
-    glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
-    auto circusRoom =
-        std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel, nullptr, true);
 
     // Circus key room (Room ID: 4)
     glm::mat4 circusKeyRoomModel = glm::translate(I4, config::CIRCUS_KEY_ROOM_POSITION);

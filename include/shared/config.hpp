@@ -10,7 +10,7 @@ inline constexpr const char* SERVER_IP = "127.0.0.1";
 inline constexpr int SERVER_PORT = 2399;
 inline constexpr bool BYPASS = false;
 
-inline constexpr float gravity = -15.0f;
+inline constexpr float gravity = -20.0f;
 
 inline constexpr int MAX_PLAYERS = 4;
 inline constexpr int TICK_RATE = 30;
@@ -123,5 +123,5 @@ inline constexpr float SWAMP_AUDIO_FILE_VOL = 2.5f;
 inline constexpr float LILYPAD_VOL = 0.2f;
 inline constexpr float UNLOCKDOOR_VOL = 0.5f;
 inline constexpr float GRABKEY_VOL = 0.2f;
-inline constexpr float WATERSPLASH_VOL = 0.3f;
+inline constexpr float WATERSPLASH_VOL = 0.05f;
 } // namespace config

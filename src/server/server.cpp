@@ -44,6 +44,7 @@ void Server::initRigidBodies() {
     }
 
     // for (const auto& room : layout) {
+    int i = 0;
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
         const json& room = it.value();
@@ -86,6 +87,8 @@ void Server::initRigidBodies() {
                 object = initSplash(data, swamp, &world);
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
+            } else if (modelName.starts_with("zone_")) {
+                object = initZone(data, &objects, &world, i);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;
@@ -94,6 +97,7 @@ void Server::initRigidBodies() {
 
             world.addObject(object);
         }
+        i++;
     }
 }
 

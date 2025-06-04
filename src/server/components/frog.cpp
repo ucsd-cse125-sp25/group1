@@ -7,7 +7,7 @@ using json = nlohmann::json;
 
 Frog::Frog(int id, Swamp* swampRef) : Interactable(id), swamp(swampRef) {}
 
-void Frog::handleInteract(const Player& player) {
+void Frog::handleInteract(Player& player) {
     // Define behavior here
     json message;
     message["type"] = "sfx";

@@ -155,13 +155,13 @@
 			<value>8</value>
 		</property>
 		<property name="frequencyA">
-			<value>363.729401</value>
+			<value>1090.64429</value>
 		</property>
 		<property name="qualityA">
 			<value>0.183724135</value>
 		</property>
 		<property name="gainA">
-			<value>-13.965517</value>
+			<value>-9.82758713</value>
 		</property>
 	</object>
 	<object class="MixerBusFader" id="{7ba86548-e3a2-4ff7-9ff5-cc65045eb1ac}" />

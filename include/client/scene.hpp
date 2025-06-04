@@ -166,7 +166,22 @@ class Scene {
     std::map<std::string, std::unique_ptr<Shader>> shaders;
     std::unique_ptr<Shader> uiShader;
 
-    std::unique_ptr<Model> hotelRoomAsset;
+    std::unique_ptr<Model> lobbyAsset;
+
+    std::unique_ptr<Model> hotelRoomStraightX; // Doors face +X and -X directions
+    std::unique_ptr<Model> hotelRoomStraightZ; // Doors face +Z and -Z directions
+
+    std::unique_ptr<Model> hotelRoomBendPosXPosZ; // Doors face +X and +Z directions
+    std::unique_ptr<Model> hotelRoomBendPosXNegZ; // Doors face +X and -Z directions
+    std::unique_ptr<Model> hotelRoomBendNegXPosZ; // Doors face -X and +Z directions
+    std::unique_ptr<Model> hotelRoomBendNegXNegZ; // Doors face -X and -Z directions
+
+    std::unique_ptr<Model> hotelRoomTPosX; // Blocking wall faces +X
+    std::unique_ptr<Model> hotelRoomTNegX; // Blocking wall faces -X
+
+    std::unique_ptr<Model> hallwayX; // Hallway extending along the X axis
+    std::unique_ptr<Model> hallwayZ; // Hallway extending along the Z axis
+
     std::unique_ptr<Model> tableAsset;
     std::unique_ptr<Model> doorAsset;
     std::unique_ptr<Model> keyAsset;
@@ -176,6 +191,8 @@ class Scene {
     std::unique_ptr<Model> frogAsset;
 
     std::unique_ptr<Model> circusRoomAsset;
+
+    std::unique_ptr<Model> pianoRoomAsset;
 
     std::unordered_map<std::string, std::unique_ptr<ModelInstance>>
         modelInstances; // Top-level model instances with their child models.

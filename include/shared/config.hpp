@@ -55,21 +55,36 @@ inline constexpr float MOUSE_SENSITIVITY = 0.1f;
 inline constexpr float CANNONBALL_SPEED = 20.0f;
 
 // Model positions
-inline constexpr glm::vec3 HOTEL_ROOM_POSITION = {0.0f, 0.0f, 0.0f};
+inline constexpr glm::vec3 LOBBY_POSITION = {0.0f, 0.0f, 0.0f};
+
+inline constexpr glm::vec3 HOTEL_ROOM_POSITIONS[15] = {
+    {-150.0f, 0.0f, -50.0f}, {-150.0f, 0.0f, 10.0f}, {-130.0f, 0.0f, 30.0f}, {-30.0f, 0.0f, 10.0f},
+    {-30.0f, 0.0f, 30.0f},   {30.0f, 0.0f, -50.0f},  {30.0f, 0.0f, 10.0f},   {30.0f, 0.0f, 30.0f},
+    {50.0f, 0.0f, -10.0f},   {50.0f, 0.0f, 10.0f},   {50.0f, 0.0f, 30.0f},   {110.0f, 0.0f, -10.0f},
+    {110.0f, 0.0f, 10.0f},   {130.0f, 0.0f, 10.0f},  {150.0f, 0.0f, 10.0f}};
+
+inline constexpr glm::vec3 HOTEL_HALLWAY_POSITIONS[7] = {
+    {-150.0f, 0.0f, -20.0f}, {-100.0f, 0.0f, 30.0f}, {-60.0f, 0.0f, 30.0f}, {-30.0f, 0.0f, -20.0f},
+    {30.0f, 0.0f, -20.0f},   {80.0f, 0.0f, -10.0f},  {150.0f, 0.0f, -20.0f}};
+
 inline constexpr glm::vec3 TABLE_POSITION = {5.0f, 0.0f, -5.0f};
 
-inline constexpr glm::vec3 SWAMP_ROOM_POSITION = {20.0f, 0.0f, 0.0f};
+inline constexpr glm::vec3 SWAMP_ROOM_POSITION = {-130.0f, 0.0f, -50.0f};
 inline constexpr glm::vec3 FROG_POSITION = {7.0f, 0.0f, 4.0f};
 
-inline constexpr glm::vec3 CIRCUS_ROOM_POSITION = {-50.0f, 0.0f, 0.0f};
-inline constexpr glm::vec3 SWAMPKEY_ROOM_POSITION = {120.0f, 0.0f, 0.0f};
+inline constexpr glm::vec3 SWAMP_KEY_ROOM_POSITION = {-30.0f, 0.0f, -50.0f};
 inline constexpr glm::vec3 SWAMP_KEY_POSITION = {0.0f, 1.0f, 0.0f};
 
-inline constexpr glm::vec3 PARKOUR_ROOM_1_POSITION = {0.0f, 0.0f, 20.0f};
-inline constexpr glm::vec3 PARKOUR_1_KEY_POSITION = {-8.0f, 6.0f, 8.0f};
-inline constexpr glm::vec3 PARKOUR_1_TABLE_1_POSITION = {0.0f, -1.5f, 0.0f};
-inline constexpr glm::vec3 PARKOUR_1_TABLE_2_POSITION = {2.5f, -0.5f, 0.0f};
-inline constexpr glm::vec3 PARKOUR_1_TABLE_3_POSITION = {5.0f, 0.5f, 0.0f};
+inline constexpr glm::vec3 CIRCUS_ROOM_POSITION = {100.0f, 0.0f, -50.0f};
+
+inline constexpr glm::vec3 CIRCUS_KEY_ROOM_POSITION = {150.0f, 0.0f, -50.0f};
+
+inline constexpr glm::vec3 PIANO_ROOM_POSITION = {150.0f, 0.0f, 50.0f};
+
+inline constexpr glm::vec3 PARKOUR_ROOM_POSITION = {-130.0f, 0.0f, 10.0f};
+inline constexpr glm::vec3 PARKOUR_OBJECT_POSITIONS[3] = {
+    {0.0f, -1.5f, 0.0f}, {2.5f, -0.5f, 0.0f}, {5.0f, 0.5f, 0.0f}};
+inline constexpr glm::vec3 PARKOUR_KEY_POSITION = {-8.0f, 6.0f, 8.0f};
 
 // Swamp Related Configs
 inline constexpr glm::vec3 SWAMP_RESPAWN = {21.0f, 1.0f, 0.0f};

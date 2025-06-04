@@ -61,9 +61,10 @@ inline constexpr glm::vec3 TABLE_POSITION = {5.0f, 0.0f, -5.0f};
 inline constexpr glm::vec3 SWAMP_ROOM_POSITION = {20.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 FROG_POSITION = {7.0f, 0.0f, 4.0f};
 
-inline constexpr glm::vec3 CIRCUS_ROOM_POSITION = {-50.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 SWAMPKEY_ROOM_POSITION = {120.0f, 0.0f, 0.0f};
 inline constexpr glm::vec3 SWAMP_KEY_POSITION = {0.0f, 1.0f, 0.0f};
+
+inline constexpr glm::vec3 CIRCUS_ROOM_POSITION = {-50.0f, 0.0f, 0.0f};
 
 inline constexpr glm::vec3 PARKOUR_ROOM_1_POSITION = {0.0f, 0.0f, 20.0f};
 inline constexpr glm::vec3 PARKOUR_1_KEY_POSITION = {-8.0f, 6.0f, 8.0f};
@@ -89,7 +90,7 @@ inline constexpr float SWAMP_LILYPAD_WIDTH = 1.0f;
 inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;
 
 // Circus Related Configs
-inline constexpr glm::vec3 CIRCUS_RESPAWN = {-51.0f, 1.0f, 0.0f};
+inline constexpr glm::vec3 CIRCUS_RESPAWN = {38.0f, 1.0f, 0.0f};
 inline constexpr glm::vec3 CANNONBALL1_POSITION = {-25.0f, 12.0f, 16.0f};
 inline constexpr glm::vec3 CANNON1_POSITION = {-35.0f, 13.0f, 16.0f};
 

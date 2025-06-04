@@ -6,13 +6,13 @@
 #include <memory>
 #include <mutex>
 #include <unordered_map>
+#include "components/interactable.hpp"
 #include "initBody.hpp"
+#include "lobby.hpp"
 #include "player.hpp"
 #include "string"
 #include "swamp.hpp"
 #include "world.hpp"
-#include "components/interactable.hpp"
-#include "lobby.hpp"
 
 class Swamp;
 class Lobby;
@@ -177,5 +177,7 @@ class Server {
     std::unordered_map<int, std::deque<std::string>> clientMessages;
 
     Swamp* swamp;
+    Lobby* lobby;
+
     Interactable* interactableTracked = nullptr;
 };

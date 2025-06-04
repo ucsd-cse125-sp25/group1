@@ -33,12 +33,12 @@ void Server::initRigidBodies() {
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
         cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
-        Room* room; 
+        Room* room;
         if (roomName == "swamp_room") {
             swamp = new Swamp(rooms.size(), world, *this);
             room = static_cast<Room*>(swamp);
-        } else if (roomName == "lobby_room") {
-            Lobby* lobby = new Lobby(rooms.size(), world, *this);
+        } else if (roomName == "lobby") {
+            lobby = new Lobby(rooms.size(), world, *this);
             room = static_cast<Room*>(lobby);
         } else {
             room = new Room(rooms.size(), roomName);
@@ -47,6 +47,7 @@ void Server::initRigidBodies() {
     }
 
     // for (const auto& room : layout) {
+    int i = 0;
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
         const json& room = it.value();
@@ -87,6 +88,12 @@ void Server::initRigidBodies() {
                 object = initWater(data, swamp, &world);
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
+            } else if (modelName.starts_with("zone_")) {
+                object = initZone(data, &objects, &world, i);
+            } else if (modelName == "door_left") {
+                object = initFinalDoor(data, &objects, lobby, &world);
+            } else if (modelName.starts_with("button")) {
+                object = initButton(data, &objects, lobby, &world);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;
@@ -95,6 +102,7 @@ void Server::initRigidBodies() {
 
             world.addObject(object);
         }
+        i++;
     }
 }
 

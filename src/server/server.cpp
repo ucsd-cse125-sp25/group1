@@ -8,7 +8,7 @@
 #include "json.hpp"
 
 using tcp = boost::asio::ip::tcp;
-using json = nlohmann::json;
+using json = nlohmann::ordered_json;
 using Clock = std::chrono::steady_clock;
 
 Server::Server()

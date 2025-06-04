@@ -41,7 +41,7 @@ inline constexpr int SHADOW_TEXTURE_UNIT = 3;
 inline constexpr glm::vec3 PLAYER_SPAWNS[4] = {
     {-3.0f, 0.0f, 3.0f}, {3.0f, 0.0f, 3.0f}, {-3.0f, 0.0f, -3.0f}, {3.0f, 0.0f, -3.0f}};
 
-inline constexpr float PLAYER_SPEED = 10.0f;
+inline constexpr float PLAYER_SPEED = 15.0f;
 inline constexpr float PLAYER_WEIGHT = 10.0f;
 
 inline constexpr float PLAYER_WIDTH = 1.53f;

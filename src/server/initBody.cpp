@@ -91,7 +91,16 @@ RigidBody* initZone(TransformData data, std::unordered_map<int, Object*>* object
         if (Player* player = dynamic_cast<Player*>(otherObject)) {
             if (player->getCurRoomID() != roomID) {
                 player->setCurRoomID(roomID);
-                std::cout << "Player entered zone for room ID: " << roomID << std::endl;
+
+                std::cout << "Player" << player->getID() << "entered zone for room ID: " << roomID << std::endl;
+
+                // Send Message to client to acknowledge room change
+                json message;
+                message["type"] = "room_id";
+                message["id"] = roomID;
+
+                std::string packet = message.dump() + "\n";
+                server.broadcastMessage(packet);
             }
         }
     });

@@ -1,5 +1,5 @@
 {
-  "1x1_hotel_room": {
+  "lobby": {
     "position": [
       0.0,
       0.0,
@@ -7,7 +7,7 @@
     ],
     "objects": [
       {
-        "model": "zone_00",
+        "model": "lobby_00",
         "position": [
           0.0,
           0.0,
@@ -16,25 +16,7 @@
         "rotated": false
       },
       {
-        "model": "door_00",
-        "position": [
-          0.0,
-          0.0,
-          -10.0
-        ],
-        "rotated": true
-      },
-      {
-        "model": "small_table_00",
-        "position": [
-          5.0,
-          0.0,
-          -5.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_00",
+        "model": "lobby_01",
         "position": [
           0.0,
           0.0,
@@ -43,7 +25,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_01",
+        "model": "lobby_02",
         "position": [
           0.0,
           0.0,
@@ -52,7 +34,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_02",
+        "model": "lobby_03",
         "position": [
           0.0,
           0.0,
@@ -61,7 +43,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_03",
+        "model": "lobby_04",
         "position": [
           0.0,
           0.0,
@@ -70,7 +52,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_04",
+        "model": "lobby_05",
         "position": [
           0.0,
           0.0,
@@ -79,7 +61,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_05",
+        "model": "lobby_06",
         "position": [
           0.0,
           0.0,
@@ -88,7 +70,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_06",
+        "model": "lobby_07",
         "position": [
           0.0,
           0.0,
@@ -97,7 +79,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_07",
+        "model": "lobby_08",
         "position": [
           0.0,
           0.0,
@@ -106,7 +88,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_08",
+        "model": "lobby_09",
         "position": [
           0.0,
           0.0,
@@ -115,7 +97,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_09",
+        "model": "lobby_10",
         "position": [
           0.0,
           0.0,
@@ -124,7 +106,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_10",
+        "model": "lobby_11",
         "position": [
           0.0,
           0.0,
@@ -133,7 +115,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_11",
+        "model": "lobby_12",
         "position": [
           0.0,
           0.0,
@@ -142,7 +124,52 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_12",
+        "model": "lobby_13",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "lobby_14",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "lobby_15",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "lobby_16",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "lobby_17",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "lobby_18",
         "position": [
           0.0,
           0.0,
@@ -150,132 +177,13 @@
         ],
         "rotated": false
       }
-    ]
-  },
-  "parkourRoom1": {
-    "position": [0.0, 0.0, 20.0],
-    "objects": [
-      {
-        "model": "zone_00",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "key_00",
-        "position": [
-          -8.0,
-          6.0,
-          8.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "small_table_00",
-        "position": [ 0.0, -1.5, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "small_table_00",
-        "position": [ 2.5, -0.5, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "small_table_00",
-        "position": [ 5.0, 0.5, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "door_00",
-        "position": [ -10.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "door_00",
-        "position": [ 10.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "door_00",
-        "position": [ 0.0, 0.0, 10.0 ],
-        "rotated": true
-      },
-      {
-        "model": "1x1_hotel_room_00",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_01",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_02",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_03",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_04",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_05",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_06",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_07",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_08",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_09",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_10",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_11",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_12",
-        "position": [ 0.0, 0.0, 0.0 ],
-        "rotated": false
-      }
-
     ]
   },
   "swamp_room": {
     "position": [
-      20.0,
+      -130.0,
       0.0,
-      0.0
+      -50.0
     ],
     "objects": [
       {
@@ -937,11 +845,11 @@
       }
     ]
   },
-  "swampKeyRoom": {
+  "swamp_key_room": {
     "position": [
-      120.1,
+      -30.0,
       0.0,
-      0.0
+      -50.0
     ],
     "objects": [
       {
@@ -954,7 +862,7 @@
         "rotated": true
       },
       {
-        "model": "1x1_hotel_room_00",
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_00",
         "position": [
           0.0,
           0.0,
@@ -963,7 +871,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_01",
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_01",
         "position": [
           0.0,
           0.0,
@@ -972,7 +880,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_02",
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_02",
         "position": [
           0.0,
           0.0,
@@ -981,7 +889,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_03",
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_03",
         "position": [
           0.0,
           0.0,
@@ -990,7 +898,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_04",
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_04",
         "position": [
           0.0,
           0.0,
@@ -999,7 +907,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_05",
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_05",
         "position": [
           0.0,
           0.0,
@@ -1008,7 +916,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_06",
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_06",
         "position": [
           0.0,
           0.0,
@@ -1017,7 +925,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_07",
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_07",
         "position": [
           0.0,
           0.0,
@@ -1026,7 +934,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_08",
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_08",
         "position": [
           0.0,
           0.0,
@@ -1035,34 +943,7 @@
         "rotated": false
       },
       {
-        "model": "1x1_hotel_room_09",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_10",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_11",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "1x1_hotel_room_12",
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_09",
         "position": [
           0.0,
           0.0,
@@ -1074,9 +955,9 @@
   },
   "circus_room": {
     "position": [
-      -50.0,
+      100.0,
       0.0,
-      0.0
+      -50.0
     ],
     "objects": [
       {
@@ -1162,6 +1043,2507 @@
       },
       {
         "model": "circus_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "circus_key_room": {
+    "position": [
+      150.0,
+      0.0,
+      -50.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "piano_room": {
+    "position": [
+      150.0,
+      0.0,
+      50.0
+    ],
+    "objects": []
+  },
+  "parkour_room": {
+    "position": [
+      -130.0,
+      0.0,
+      10.0
+    ],
+    "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "key_00",
+        "position": [
+          -8.0,
+          6.0,
+          8.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "small_table_00",
+        "position": [
+          0.0,
+          -1.5,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "small_table_00",
+        "position": [
+          2.5,
+          -0.5,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "small_table_00",
+        "position": [
+          5.0,
+          0.5,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_0": {
+    "position": [
+      -150.0,
+      0.0,
+      -50.0
+    ],
+    "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "small_table_00",
+        "position": [
+          5.0,
+          0.0,
+          -5.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_1": {
+    "position": [
+      -150.0,
+      0.0,
+      10.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_2": {
+    "position": [
+      -130.0,
+      0.0,
+      30.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_3": {
+    "position": [
+      -30.0,
+      0.0,
+      10.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_T_neg_x_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_neg_x_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_neg_x_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_neg_x_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_neg_x_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_neg_x_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_neg_x_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_neg_x_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_neg_x_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_neg_x_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_neg_x_10",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_neg_x_11",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_4": {
+    "position": [
+      -30.0,
+      0.0,
+      30.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_5": {
+    "position": [
+      30.0,
+      0.0,
+      -50.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_6": {
+    "position": [
+      30.0,
+      0.0,
+      10.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_T_pos_x_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_10",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_11",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_7": {
+    "position": [
+      30.0,
+      0.0,
+      30.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_8": {
+    "position": [
+      50.0,
+      0.0,
+      -10.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_pos_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_9": {
+    "position": [
+      50.0,
+      0.0,
+      10.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_straight_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_z_10",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_10": {
+    "position": [
+      50.0,
+      0.0,
+      30.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_neg_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_11": {
+    "position": [
+      110.0,
+      0.0,
+      -10.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_neg_x_pos_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_12": {
+    "position": [
+      110.0,
+      0.0,
+      10.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_bend_pos_x_neg_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_13": {
+    "position": [
+      130.0,
+      0.0,
+      10.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_straight_x_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_x_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_x_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_x_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_x_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_x_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_x_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_x_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_x_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_straight_x_10",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hotel_room_14": {
+    "position": [
+      150.0,
+      0.0,
+      10.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_room_T_pos_x_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_10",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_room_T_pos_x_11",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hallway_0": {
+    "position": [
+      -150.0,
+      0.0,
+      -20.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_hallway_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hallway_1": {
+    "position": [
+      -100.0,
+      0.0,
+      30.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_hallway_x_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hallway_2": {
+    "position": [
+      -60.0,
+      0.0,
+      30.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_hallway_x_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hallway_3": {
+    "position": [
+      -30.0,
+      0.0,
+      -20.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_hallway_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hallway_4": {
+    "position": [
+      30.0,
+      0.0,
+      -20.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_hallway_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hallway_5": {
+    "position": [
+      80.0,
+      0.0,
+      -10.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_hallway_x_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_x_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
+  },
+  "hallway_6": {
+    "position": [
+      150.0,
+      0.0,
+      -20.0
+    ],
+    "objects": [
+      {
+        "model": "1x1_hotel_hallway_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "1x1_hotel_hallway_z_09",
         "position": [
           0.0,
           0.0,

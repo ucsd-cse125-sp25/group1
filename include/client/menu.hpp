@@ -18,12 +18,14 @@ class Menu {
     void render();
     void changeCharacter(int val);
     void joinQueue();
-    void queuePlayer(int id);
+    bool queuePlayer(int id);
     void dequeuePlayer(int id);
   public:
     GLFWwindow* window;
+
     unsigned int selectedCharacter = 0;
-    unsigned bool availableCharacters[4] = {true, true, true, true};
+    bool availableCharacters[4] = {true, true, true, true};
+    bool ready = false; 
   private:
     int playerId;
     unsigned int queuedPlayers = 0;

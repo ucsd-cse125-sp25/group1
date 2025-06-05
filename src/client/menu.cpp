@@ -117,26 +117,54 @@ void Menu::joinQueue() {
     p3Status->setHidden(false);
     p4Status->setHidden(false);
 
-    queuePlayer(playerId);
+    ready = queuePlayer(playerId);
+
+    for (unsigned int i = 0; i < 4; i++) {
+        if (!allPlayerStatus[i])
+            continue;
+        switch (i) {
+        case 0:
+            p1Status->changeSprite(glm::vec2(322.0f, 0.0f));
+            break;
+        case 1:
+            p2Status->changeSprite(glm::vec2(322.0f, 0.0f));
+            break;
+        case 2:
+            p3Status->changeSprite(glm::vec2(322.0f, 0.0f));
+            break;
+        case 3:
+            p4Status->changeSprite(glm::vec2(322.0f, 0.0f));
+            break;
+        }
+    }
+
+    //switch (playerId) {
+    //case 0:
+    //    p1Status->changeSprite(glm::vec2(322.0f, 0.0f));
+    //    break;
+    //case 1:
+    //    p2Status->changeSprite(glm::vec2(322.0f, 0.0f));
+    //    break;
+    //case 2:
+    //    p3Status->changeSprite(glm::vec2(322.0f, 0.0f));
+    //    break;
+    //case 3:
+    //    p4Status->changeSprite(glm::vec2(322.0f, 0.0f));
+    //    break;
+    //}
 }
 
-void Menu::queuePlayer(int id) {
-    allPlayerStatus[id] = true;
-    switch (id) { 
-    case 0:
-        p1Status->changeSprite(glm::vec2(322.0f, 0.0f));
-        break;
-    case 1:
-        p2Status->changeSprite(glm::vec2(322.0f, 0.0f));
-        break;
-    case 2:
-        p3Status->changeSprite(glm::vec2(322.0f, 0.0f));
-        break;
-    case 3:
-        p4Status->changeSprite(glm::vec2(322.0f, 0.0f));
-        break;
+bool Menu::queuePlayer(int id) {
+    if (!allPlayerStatus[id]) {
+        allPlayerStatus[id] = true;
+        queuedPlayers++;
+        std::cout << "Q" << queuedPlayers << std::endl;
     }
-    queuedPlayers++;
+    
+    if (queuedPlayers == 4) {
+        return true;
+    }
+    return false;
 }
 
 void Menu::dequeuePlayer(int id) {
@@ -156,6 +184,7 @@ void Menu::dequeuePlayer(int id) {
         break;
     }
     queuedPlayers--;
+    std::cout << "Deq: " << queuedPlayers << std::endl;
 }
 
 void Menu::changeCharacter(int val) {

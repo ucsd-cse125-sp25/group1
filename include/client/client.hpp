@@ -72,6 +72,8 @@ class Client {
 
     const char* footstepSfxId = config::FOOTSTEPCARPET.c_str();             // Set to the necessary type of footstep sfx
     float footstepVol = config::FOOTSTEPCARPET_VOL; // corresponding vol adjustment if needed.
+    int gameState = 0;
+
   private:
     /**
      * @brief Establishes connection to the server and receives client ID.

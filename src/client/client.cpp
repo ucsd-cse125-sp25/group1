@@ -249,7 +249,7 @@ void Client::updatePlayerStates(const json& parsed) {
     for (const auto& player : players) {
         int id = player["id"];
         connectedIds.insert(id);
-        mainmenu->queuePlayer(id);
+        
         glm::vec3 position = toVec3(player["position"]);
         glm::vec3 direction = toVec3(player["direction"]);
 
@@ -258,6 +258,12 @@ void Client::updatePlayerStates(const json& parsed) {
 
         if (id == clientId) {
             camera.setPosition(position + config::CAMERA_OFFSET);
+        }
+        mainmenu->queuePlayer(id);
+        //if (mainmenu->queuePlayer(id))
+        //    gameState = 1;
+        if (mainmenu->ready) {
+            gameState = 1;
         }
     }
 
@@ -445,9 +451,11 @@ void Client::gameLoop(GLFWwindow* window) {
             scene->removePlayer(id);
         }
         disconnectedIds.clear();
-
-        mainmenu->run();
-        //scene->render(camera, boundingBoxMode);
+        
+        if (gameState == 0)
+            mainmenu->run();
+        else
+            scene->render(camera, boundingBoxMode);
 
         audioManager.update();
 

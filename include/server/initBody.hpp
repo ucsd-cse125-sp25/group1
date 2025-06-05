@@ -4,16 +4,16 @@
 #include <unordered_map>
 #include "components/door.hpp"
 #include "components/frog.hpp"
+#include "components/key.hpp"
 #include "components/lilypad.hpp"
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "components/water.hpp"
-#include "components/key.hpp"
 #include "config.hpp"
 #include "rigidBody.hpp"
+#include "server.hpp"
 #include "swamp.hpp"
 #include "world.hpp"
-#include "server.hpp"
 
 class Swamp;
 class Server;
@@ -49,7 +49,8 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
  * @return Pointer to the initialized RigidBody.
  */
 RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
-                    std::unordered_map<int, Room*>* rooms, World* world, Server& server);
+                    std::unordered_map<int, Room*>* rooms, World* world, Server& server, int id1,
+                    int id2, int keyID);
 
 /**
  * @brief Initializes a Frog object with a unique ID and default RigidBody.
@@ -89,18 +90,19 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp, World* world);
 RigidBody* initWater(TransformData data, Swamp* swamp, World* world);
 
 RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, Object*>* objects,
-                    World* world,
-                    int roomID);
+                    World* world, int roomID);
 
 /**
  * @brief Initializes a Key object with a unique ID and attaches a RigidBody.
- * 
- * The Key is created with a reference to the Server and World, allowing it to broadcast pickup events.
- * 
+ *
+ * The Key is created with a reference to the Server and World, allowing it to broadcast pickup
+ * events.
+ *
  * @param data Transform data including position and collider dimensions.
  * @param serverRef Reference to the Server instance for broadcasting messages.
  * @param worldRef Reference to the World instance for managing physics.
  * @param roomName The name of the room where the key is located.
  * @return Pointer to the initialized RigidBody associated with the Key.
  */
-RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef, const std::string& roomName, std::unordered_map<int, Key*>* keys);
+RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef,
+                   const std::string& roomName, std::unordered_map<int, Key*>* keys);

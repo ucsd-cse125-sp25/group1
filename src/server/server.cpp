@@ -53,6 +53,7 @@ void Server::initRigidBodies() {
 
         for (const auto& obj : room["objects"]) {
             string modelName = obj["model"];
+            std::cout << modelName << std::endl;
             vec3 position = toVec3(obj["position"]);
             vec3 minCorner = toVec3(dimensions[modelName]["min"]);
             vec3 maxCorner = toVec3(dimensions[modelName]["max"]);
@@ -76,7 +77,7 @@ void Server::initRigidBodies() {
                                   relativeMaxCorner};
 
             if (modelName == "door_00") {
-                object = initDoor(data, &doors, &rooms, &world, *this);
+                object = initDoor(data, &doors, &rooms, &world, *this, i, obj["connects_to"], -1);
             } else if (modelName == "frog_00") {
                 object = initFrog(data, &objects, swamp, &world);
             } else if (modelName == "lilypad_00") {

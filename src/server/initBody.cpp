@@ -1,6 +1,6 @@
 #include "initBody.hpp"
-#include "json.hpp"
 #include <iostream>
+#include "json.hpp"
 
 using json = nlohmann::json;
 
@@ -19,9 +19,9 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
 }
 
 RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
-                    std::unordered_map<int, Room*>* rooms, World* world, Server& server) {
-    int keyID = -1;
-    int roomIDs[2] = {0, 4};
+                    std::unordered_map<int, Room*>* rooms, World* world, Server& server, int id1,
+                    int id2, int keyID) {
+    int roomIDs[2] = {id1, id2};
 
     Door* door;
     if (keyID != -1) {
@@ -86,8 +86,7 @@ RigidBody* initWater(TransformData data, Swamp* swamp, World* world) {
 }
 
 RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, Object*>* objects,
-                    World* world,
-                    int roomID) {
+                    World* world, int roomID) {
 
     // Shouldn't be a referenceable object
     Object* object = new Object(-1, [server, roomID](ICustomPhysics* otherObject) {
@@ -96,7 +95,8 @@ RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, 
             if (player->getCurRoomID() != roomID) {
                 player->setCurRoomID(roomID);
 
-                std::cout << "Player" << player->getID() << "entered zone for room ID: " << roomID << std::endl;
+                std::cout << "Player " << player->getID() << " entered zone for room ID: " << roomID
+                          << std::endl;
 
                 // Send Message to client to acknowledge room change
                 json message;

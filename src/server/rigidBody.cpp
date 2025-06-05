@@ -38,6 +38,12 @@ void RigidBody::updatePosition(float dt) {
 
     // x = x_0 + v*dt
     transform->position += velocity * dt;
+
+    if (transform->position.y < -50) {
+        // reset if too low
+        transform->position = glm::vec3(0.0f, 5.0f, 0.0f);
+        velocity.y = 0.0f; // reset vertical velocity
+    }
 }
 
 const vec3 RigidBody::getVelocity() const {

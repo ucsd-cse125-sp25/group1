@@ -418,6 +418,32 @@ void Scene::renderLilypadShadowPass(int id) {
     }
 }
 
+/**
+ * Takes in an array of NUM_CANNONBALLS cannonball positions.
+ * For each position, sets the ith cannonball to the ith position.
+ */
+void Scene::updateCannonballPositions(glm::vec3 positions[]) {
+    auto it = modelInstances.find("circusRoom");
+    if (it == modelInstances.end())
+        return;
+    ModelInstance* circusRoomInstance = it->second.get();
+
+    glm::vec3 roomOffset = config::CIRCUS_ROOM_POSITION;
+    static const glm::mat4 I4{1.0f};
+
+    auto& cannonBalls = circusRoomInstance->children["cannonball"];
+    for (int i = 0; i < config::NUM_CANNONBALLS; ++i) {
+        if (i >= static_cast<int>(cannonBalls.size()) || !cannonBalls[i])
+            continue;
+        ModelInstance* ballInst = cannonBalls[i].get();
+
+        // Convert server’s “absolute” position into a room‐local offset:
+        glm::vec3 localPos = positions[i] - roomOffset;
+        glm::mat4 newLocal = glm::translate(I4, localPos);
+        ballInst->localTransform = newLocal;
+    }
+}
+
 void Scene::render(const Camera& camera, bool boundingBoxMode) {
     float currentFrame = glfwGetTime();
     float deltaTime = currentFrame - lastFrame;

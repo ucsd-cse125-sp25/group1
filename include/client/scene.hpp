@@ -145,6 +145,14 @@ class Scene {
      */
     int getPlayerRoomID(int clientID);
 
+    /**
+     * Creates and stores a given number of fireflies with random positions, directions,
+     * speeds, and sizes inside a defined bounding area.
+     *
+     * @param count Number of fireflies to spawn.
+     */
+    void updateCannonballPositions(glm::vec3 positions[]);
+
   private:
     /**
      * @brief Sets up rooms and the objects they contain.

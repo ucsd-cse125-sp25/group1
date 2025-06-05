@@ -88,6 +88,9 @@ void Circus::broadcastCannonballPositions() {
         entry["position"] = {position.x, position.y, position.z};
         message["cannonballs"].push_back(entry);
     }
+    std::string packet = message.dump() + "\n";
+    server.broadcastMessage(packet);
+
     // potentially update cannonsFiring to false
     cannonsFiring = false;
     for (Cannonball* cannonball : cannonballs) {

@@ -1,4 +1,5 @@
 #include "menu.hpp"
+#include <algorithm>
 
 Menu::Menu(int playerId) {
     this->playerId = playerId;
@@ -12,14 +13,20 @@ Menu::Menu(int playerId) {
     logo = new CanvasImage(glm::vec3(-1.0f, 1.0f, 0.0f), glm::vec2(1.0f, 1.2f),
                            glm::vec2(0.0f, 0.0f), logoTexture);
 
-    portrait = new CanvasImage(glm::vec3(0.1f, 0.9f, 0.0f), glm::vec2(0.85f, 1.8f),
-                               glm::vec2(0.0f, 0.0f), portraitTexture);
+    portrait = new CanvasImage(glm::vec3(0.1f, 0.9f, 0.0f), glm::vec2(0.85f, 1.8f), spriteMap[selectedCharacter],
+                               portraitTexture);
     //elements.push_back(logo);
     playButton = new PlayButton(glm::vec2(-.75f, -.2f));
     buttons.push_back(playButton);
 
-    quitButton = new QuitButton(glm::vec2(-.75f, -.5f));
+    quitButton = new QuitButton(glm::vec2(-.75f, -.55f));
     buttons.push_back(quitButton);
+
+    leftButton = new LeftPortraitButton(glm::vec2(0.1f, 0.9f));
+    buttons.push_back(leftButton);
+
+    rightButton = new RightPortraitButton(glm::vec2(0.1f, 0.9f));
+    buttons.push_back(rightButton);
 }
 Menu::~Menu() {
     delete background;
@@ -51,14 +58,26 @@ void Menu::run() {
         hoveredButton = -1;
     }
     if (hoveredButton > -1) {
-        if (state == GLFW_PRESS) {
+        if (state == GLFW_PRESS && !buttons[hoveredButton]->pressed) {
             buttons[hoveredButton]->onClick();
+            if (hoveredButton == 2) // Left Arrow
+                changeCharacter(-1);
+            else if (hoveredButton == 3)
+                changeCharacter(1); // Right Arrow
         } else if (state == GLFW_RELEASE) {
             buttons[hoveredButton]->pressed = false;
         } 
     }
 
     render();
+}
+
+void Menu::changeCharacter(int val) {
+    int res = selectedCharacter + val;
+    int lowerBound = 0;
+    int upperBound = 3;
+    selectedCharacter = std::clamp(res, lowerBound, upperBound);
+    portrait->changeSprite(spriteMap[selectedCharacter]);
 }
 
 void Menu::render() {

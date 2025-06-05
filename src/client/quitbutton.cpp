@@ -3,7 +3,7 @@
 
 QuitButton::QuitButton(glm::vec2 spritePos) : Button() {
     this->spritePos = spritePos;
-    rectPos = glm::vec2(360.0f, 825.0f);
+    rectPos = glm::vec2(360.0f, 860.0f);
     rect = glm::vec2(240.0f, 90.0f);
 
     scale = glm::vec2(.5f, .5f);

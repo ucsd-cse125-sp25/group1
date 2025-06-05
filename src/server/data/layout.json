@@ -1658,6 +1658,15 @@
         "connects_to": 28
       },
       {
+        "model": "key_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "1x1_hotel_room_bend_neg_x_pos_z_00",
         "position": [
           0.0,

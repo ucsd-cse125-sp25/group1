@@ -128,4 +128,8 @@ struct ModelInstance {
             children.erase(type);
         }
     }
+
+    void translateLocal(const glm::vec3& delta) {
+        localTransform = glm::translate(localTransform, delta);
+    }
 };

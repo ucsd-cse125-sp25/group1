@@ -147,6 +147,8 @@ RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef,
  */
 RigidBody* initSplash(TransformData data, Swamp* swamp, World* world);
 
+RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world);
+
 /**
  * @brief Initializes a FinalButton object in the Lobby and attaches a RigidBody.
  *

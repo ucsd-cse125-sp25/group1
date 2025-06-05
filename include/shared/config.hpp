@@ -100,6 +100,12 @@ inline constexpr glm::vec3 FINALDOOR_KEY_SLOTS[4] = {
 inline constexpr glm::vec3 FINALDOOR_LEFT_POSITION = {0.0f, 0.0f, 20.0f};
 inline constexpr glm::vec3 FINALDOOR_RIGHT_POSITION = {0.0f, 0.0f, 20.0f};
 inline constexpr glm::vec3 FINALDOOR_POSITION = {0.0f, 0.0f, 20.0f};
+inline constexpr glm::vec3 BUTTON_BLUE_POSITION = {7.0f, 3.5f, 19.4f};
+inline constexpr glm::vec3 BUTTON_PINK_POSITION = {-7.0f, 3.5f, 19.4f};
+inline constexpr glm::vec3 BUTTON_GREEN_POSITION = {12.0f, 3.5f, 19.4f};
+inline constexpr glm::vec3 BUTTON_YELLOW_POSITION = {-12.0f, 3.5f, 19.4f};
+inline constexpr glm::vec3 BACK_PLATE_POSITIONS[4] = {{7.0f, 3.5f, 19.4f}, {-7.0f, 3.5f, 19.4f},
+                                                      {12.0f, 3.5f, 19.4f}, {-12.0f, 3.5f, 19.4f}};
 
 // Swamp Related Configs
 inline constexpr glm::vec3 SWAMP_RESPAWN = {1.0f, 1.0f, 0.0f};

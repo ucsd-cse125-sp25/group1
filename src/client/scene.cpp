@@ -65,6 +65,11 @@ void Scene::init() {
 
     lobbyAsset = std::make_unique<Model>("../src/client/models/lobby.obj");
     finalDoorAsset = std::make_unique<Model>("../src/client/models/final_door.obj");
+    buttonBlueAsset = std::make_unique<Model>("../src/client/models/blue_button.obj");
+    buttonPinkAsset = std::make_unique<Model>("../src/client/models/pink_button.obj");
+    buttonYellowAsset = std::make_unique<Model>("../src/client/models/yellow_button.obj");
+    buttonGreenAsset = std::make_unique<Model>("../src/client/models/green_button.obj");
+    backPlateAsset = std::make_unique<Model>("../src/client/models/button_backplate.obj");
 
     canvas = std::make_unique<Canvas>();
 
@@ -94,6 +99,35 @@ void Scene::initRooms() {
 
     lobby->children["finalDoor"][0] =
         std::make_unique<ModelInstance>(finalDoorAsset.get(), finalDoorModel, lobby.get(), true);
+
+    glm::mat4 blueButtonModel = glm::translate(I4, config::BUTTON_BLUE_POSITION);
+    blueButtonModel =
+        glm::rotate(blueButtonModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 pinkButtonModel = glm::translate(I4, config::BUTTON_PINK_POSITION);
+    pinkButtonModel =
+        glm::rotate(pinkButtonModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 yellowButtonModel = glm::translate(I4, config::BUTTON_YELLOW_POSITION);
+    yellowButtonModel =
+        glm::rotate(yellowButtonModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 greenButtonModel = glm::translate(I4, config::BUTTON_GREEN_POSITION);
+    greenButtonModel =
+        glm::rotate(greenButtonModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    lobby->children["final_button"][0] =
+        std::make_unique<ModelInstance>(buttonBlueAsset.get(), blueButtonModel, lobby.get(), true);
+    lobby->children["final_button"][1] =
+        std::make_unique<ModelInstance>(buttonPinkAsset.get(), pinkButtonModel, lobby.get(), true);
+    lobby->children["final_button"][2] = std::make_unique<ModelInstance>(
+        buttonYellowAsset.get(), yellowButtonModel, lobby.get(), true);
+    lobby->children["final_button"][3] = std::make_unique<ModelInstance>(
+        buttonGreenAsset.get(), greenButtonModel, lobby.get(), true);
+
+    for (int i = 0; i < 4; ++i) {
+        glm::mat4 backPlateModel = glm::translate(I4, config::BACK_PLATE_POSITIONS[i]);
+        backPlateModel =
+            glm::rotate(backPlateModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        lobby->children["backPlate"][i] = std::make_unique<ModelInstance>(
+            backPlateAsset.get(), backPlateModel, lobby.get(), true);
+    }
     // for (int i = 0; i < 4; i++) {
     //     glm::mat4 finalKeyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[i]);
     //     finalKeyModel =
@@ -407,6 +441,18 @@ void Scene::addKeyToSlot(const std::string& roomName, const std::string& type, i
 
     modelInstances[roomName]->children[type][id] = std::make_unique<ModelInstance>(
         keyAsset.get(), keyModel, modelInstances[roomName].get(), true);
+}
+
+void Scene::moveChildTransform(const std::string& roomName, const std::string& type, int id,
+                               const glm::vec3& offset) {
+    
+    auto& room = modelInstances[roomName];
+    // if (!room || !room->children.contains(type) || !room->children[type].contains(id))
+    //     return;
+   
+    auto& child = room->children[type][id];
+    // Apply translation to the existing localTransform
+    child->translateLocal(offset);
 }
 
 void Scene::renderStaticShadowPass() {

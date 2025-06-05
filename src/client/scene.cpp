@@ -61,6 +61,9 @@ void Scene::init() {
 
     pianoRoomAsset = std::make_unique<Model>("../src/client/models/piano_room.obj");
 
+    lobbyAsset = std::make_unique<Model>("../src/client/models/lobby.obj");
+    finalDoorAsset = std::make_unique<Model>("../src/client/models/final_door.obj");
+
     canvas = std::make_unique<Canvas>();
 
     initRooms();
@@ -77,6 +80,25 @@ void Scene::initRooms() {
     // Lobby (Room ID: 0)
     glm::mat4 lobbyModel = glm::translate(I4, config::LOBBY_POSITION);
     auto lobby = std::make_unique<ModelInstance>(lobbyAsset.get(), lobbyModel, nullptr, true);
+
+    // glm::mat4 finalDoorLeftModel = glm::translate(I4, config::FINALDOOR_LEFT_POSITION);
+    // finalDoorLeftModel =
+    //     glm::rotate(finalDoorLeftModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // glm::mat4 finalDoorRightModel = glm::translate(I4, config::FINALDOOR_RIGHT_POSITION);
+    // finalDoorRightModel =
+    //     glm::rotate(finalDoorRightModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 finalDoorModel = glm::translate(I4, config::FINALDOOR_POSITION);
+    finalDoorModel = glm::rotate(finalDoorModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    lobby->children["finalDoor"][0] =
+        std::make_unique<ModelInstance>(finalDoorAsset.get(), finalDoorModel, lobby.get(), true);
+    // for (int i = 0; i < 4; i++) {
+    //     glm::mat4 finalKeyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[i]);
+    //     finalKeyModel =
+    //         glm::rotate(finalKeyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    //     lobby->children["keys"][i] =
+    //         std::make_unique<ModelInstance>(keyAsset.get(), finalKeyModel, lobby.get(), true);
+    // }
 
     // Swamp room (Room ID: 1)
     glm::mat4 swampRoomModel = glm::translate(I4, config::SWAMP_ROOM_POSITION);
@@ -202,6 +224,64 @@ void Scene::initRooms() {
     for (int i = 0; i < 7; ++i) {
         modelInstances["hallway" + std::to_string(i)] = std::move(hallways[i]);
     }
+
+    roomNames = {"lobby",         "swampRoom", "swampKeyRoom",  "circusRoom",
+                 "circusKeyRoom", "pianoRoom", "parkourKeyRoom"};
+
+    for (int i = 0; i < 15; ++i) {
+        roomNames.push_back("hotelRoom" + std::to_string(i));
+    }
+
+    for (int i = 0; i < 7; ++i) {
+        roomNames.push_back("hallway" + std::to_string(i));
+    }
+
+    connectedRooms["lobby"] = {"hotelRoom3",  "hotelRoom4", "hotelRoom6", "hotelRoom7",
+                               "hotelRoom10", "hallway2",   "hallway3",   "hallway4"};
+    connectedRooms["swampRoom"] = {"swampKeyRoom", "hotelRoom0", "hallway0", "hallway3"};
+    connectedRooms["swampKeyRoom"] = {"swampRoom", "hotelRoom0", "hotelRoom3", "hotelRoom4",
+                                      "hallway3"};
+    connectedRooms["circusRoom"] = {"circusKeyRoom", "hotelRoom5", "hallway4", "hallway6"};
+    connectedRooms["circusKeyRoom"] = {"circusRoom", "pianoRoom", "hotelRoom5", "hotelRoom14",
+                                       "hallway6"};
+    connectedRooms["pianoRoom"] = {"circusKeyRoom", "hotelRoom13", "hotelRoom14", "hallway6"};
+    connectedRooms["parkourKeyRoom"] = {"hotelRoom1", "hotelRoom2", "hallway0", "hallway1"};
+    connectedRooms["hotelRoom0"] = {"swampRoom", "swampKeyRoom", "hotelRoom1", "hallway0"};
+    connectedRooms["hotelRoom1"] = {"parkourKeyRoom", "hotelRoom0", "hotelRoom2", "hallway0",
+                                    "hallway1"};
+    connectedRooms["hotelRoom2"] = {"parkourKeyRoom", "hotelRoom1", "hotelRoom4",
+                                    "hallway0",       "hallway1",   "hallway2"};
+    connectedRooms["hotelRoom3"] = {"lobby",      "swampKeyRoom", "hotelRoom4",
+                                    "hotelRoom6", "hallway2",     "hallway3"};
+    connectedRooms["hotelRoom4"] = {"lobby",    "swampKeyRoom", "hotelRoom2", "hotelRoom3",
+                                    "hallway1", "hallway2",     "hallway3"};
+    connectedRooms["hotelRoom5"] = {"circusRoom", "circusKeyRoom", "hotelRoom6", "hotelRoom7",
+                                    "hallway4"};
+    connectedRooms["hotelRoom6"] = {"lobby",      "hotelRoom3",  "hotelRoom5",
+                                    "hotelRoom7", "hotelRoom10", "hallway4"};
+    connectedRooms["hotelRoom7"] = {"lobby",      "hotelRoom5",  "hotelRoom6",
+                                    "hotelRoom9", "hotelRoom10", "hallway4"};
+    connectedRooms["hotelRoom8"] = {"hotelRoom9", "hotelRoom10", "hotelRoom11", "hallway5"};
+    connectedRooms["hotelRoom9"] = {"hotelRoom7", "hotelRoom8", "hotelRoom10", "hallway5"};
+    connectedRooms["hotelRoom10"] = {"lobby", "hotelRoom6", "hotelRoom7", "hotelRoom8",
+                                     "hotelRoom9"};
+    connectedRooms["hotelRoom11"] = {"hotelRoom8", "hotelRoom12", "hotelRoom13", "hallway5"};
+    connectedRooms["hotelRoom12"] = {"hotelRoom11", "hotelRoom13", "hotelRoom14", "hallway5"};
+    connectedRooms["hotelRoom13"] = {"pianoRoom",   "hotelRoom11", "hotelRoom12",
+                                     "hotelRoom14", "hallway5",    "hallway6"};
+    connectedRooms["hotelRoom14"] = {"circusKeyRoom", "pianoRoom", "hotelRoom12", "hotelRoom13",
+                                     "hallway6"};
+    connectedRooms["hallway0"] = {"swampRoom",  "parkourKeyRoom", "hotelRoom0",
+                                  "hotelRoom1", "hotelRoom2",     "hallway1"};
+    connectedRooms["hallway1"] = {"parkourKeyRoom", "hotelRoom1", "hotelRoom2",
+                                  "hotelRoom4",     "hallway0",   "hallway2"};
+    connectedRooms["hallway2"] = {"lobby", "hotelRoom2", "hotelRoom3", "hotelRoom4", "hallway1"};
+    connectedRooms["hallway3"] = {"lobby", "swampRoom", "swampKeyRoom", "hotelRoom3", "hotelRoom4"};
+    connectedRooms["hallway4"] = {"lobby", "circusRoom", "hotelRoom5", "hotelRoom6", "hotelRoom7"};
+    connectedRooms["hallway5"] = {"hotelRoom8", "hotelRoom9", "hotelRoom11", "hotelRoom12",
+                                  "hotelRoom13"};
+    connectedRooms["hallway6"] = {"circusRoom", "circusKeyRoom", "pianoRoom", "hotelRoom13",
+                                  "hotelRoom14"};
 }
 
 void Scene::initLights() {
@@ -274,6 +354,14 @@ void Scene::removePlayer(int id) {
 
 void Scene::removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id) {
     modelInstances[roomName]->deleteChild(type, id);
+}
+
+void Scene::addKeyToSlot(const std::string& roomName, const std::string& type, int id) {
+    glm::mat4 keyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[id]);
+    keyModel = glm::rotate(keyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    modelInstances[roomName]->children[type][id] = std::make_unique<ModelInstance>(
+        keyAsset.get(), keyModel, modelInstances[roomName].get(), true);
 }
 
 void Scene::renderStaticShadowPass() {
@@ -380,8 +468,17 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         shader->setFloat("shadowFarClip", config::SHADOW_FAR_CLIP);
     }
 
-    // Draw all model instances in the scene
+    // Draw all visible rooms in the scene
     for (const auto& [name, instance] : modelInstances) {
+        if (players.contains(playerID)) {
+            int currentRoomID = players.at(playerID).getCurrRoomID();
+
+            if (!connectedRooms[roomNames[currentRoomID]].contains(name) &&
+                name != roomNames[currentRoomID]) {
+                continue;
+            }
+        }
+
         Shader* shader = nullptr;
         const auto& lights = pointLights[name];
 
@@ -425,7 +522,18 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
                             interactableShadowActive[name][i]);
         }
 
-        instance->drawRecursive(*shader, boundingBoxMode);
+        if (name == "lobby") {
+            // glEnable(GL_BLEND);
+            // glDepthMask(GL_FALSE);
+            // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+            instance->drawRecursive(*shader, boundingBoxMode);
+
+            // glDepthMask(GL_TRUE);
+            // glDisable(GL_BLEND);
+        } else {
+            instance->drawRecursive(*shader, boundingBoxMode);
+        }
     }
 
     for (Firefly& firefly : fireflies) {
@@ -442,7 +550,7 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
 void Scene::setPlayerRoomID(int clientID, int roomID) {
     auto it = players.find(clientID);
     if (it != players.end()) {
-        it->second.setCurrRoomID(clientID);
+        it->second.setCurrRoomID(roomID);
     }
 }
 

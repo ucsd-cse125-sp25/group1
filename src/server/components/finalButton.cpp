@@ -1,8 +1,12 @@
 #include "components/finalButton.hpp"
+#include "json.hpp"
+#include "server.hpp"
+
+using json = nlohmann::json;
 
 // Constructor
 FinalButton::FinalButton(int buttonID, int playerID, FinalDoor* door)
-    : buttonID(buttonID), playerID(playerID), door(door) {
+    : Interactable(buttonID), buttonID(buttonID), playerID(playerID), door(door) {
     // Initialize any member variables if needed
 }
 
@@ -15,18 +19,36 @@ bool FinalButton::isPressed() const {
     return pressed;
 }
 
+void FinalButton::handleInteract(Player& player) {
+    // Define behavior here
+    if (player.getID() != playerID) {
+        // If the player ID does not match, do not allow interaction
+        return;
+    }
+    if (!pressButton())
+        return;
+    json message;
+    // message["type"] = "sfx";
+    // message["sfx_id"] = config::SWAMP_AUDIO_FILE;
+    message["type"] = "final_button_pressed";
+    message["client_id"] = player.getID();
+    message["action"] = "interact";
+
+    std::string packet = message.dump() + "\n";
+    door->getLobby()->getServer().broadcastMessage(packet);
+}
+
 /**
- * should be called when button is pressed
- * Is this called when client side button is pressed?
- * Client side will broadcast message to server
+ * should be called when button is interacted with
  */
-void FinalButton::pressButton() {
+bool FinalButton::pressButton() {
     // Can only press button when all keys are present
     if (!door->canUnlock()) {
-        return; // Cannot press the button if the door is not unlockable
+        return false; // Cannot press the button if the door is not unlockable
     }
     pressed = true;
     updateDoorState();
+    return true; // Button pressed successfully
 }
 
 void FinalButton::updateDoorState() {

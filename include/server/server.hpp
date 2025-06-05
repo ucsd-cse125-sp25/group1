@@ -6,14 +6,18 @@
 #include <memory>
 #include <mutex>
 #include <unordered_map>
+#include "components/interactable.hpp"
 #include "initBody.hpp"
+#include "lobby.hpp"
+#include "piano.hpp"
 #include "player.hpp"
 #include "string"
 #include "swamp.hpp"
 #include "world.hpp"
-#include "components/interactable.hpp"
 
 class Swamp;
+class Lobby;
+class Piano;
 
 /**
  * @brief Handles server-side networking and world updates for a multiplayer game.
@@ -175,5 +179,8 @@ class Server {
     std::unordered_map<int, std::deque<std::string>> clientMessages;
 
     Swamp* swamp;
+    Lobby* lobby;
+    Piano* piano;
+
     Interactable* interactableTracked = nullptr;
 };

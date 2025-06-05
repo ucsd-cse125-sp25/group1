@@ -8,6 +8,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <algorithm>
+#include <iostream>
 #include <set>
 #include <string>
 #include <vector>
@@ -16,7 +17,6 @@
 #include "config.hpp"
 #include "rigidBody.hpp"
 #include "world.hpp"
-#include <iostream>
 
 class Interactable;
 class Room;
@@ -175,7 +175,7 @@ class Player : public ICustomPhysics {
   private:
     int id;
     std::string name;
-    int curRoomID;
+    int curRoomID = 0;
     RigidBody body;
     std::set<int> keyIDs; // Keys (by ID) the player has collected
     bool jumpSfxCooldown = false;

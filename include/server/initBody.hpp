@@ -3,13 +3,18 @@
 #include <glm/glm.hpp>
 #include <unordered_map>
 #include "components/door.hpp"
+#include "components/finalButton.hpp"
+#include "components/finalDoor.hpp"
 #include "components/frog.hpp"
 #include "components/key.hpp"
 #include "components/lilypad.hpp"
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "components/water.hpp"
+#include "components/pianoRespawn.hpp"
 #include "config.hpp"
+#include "piano.hpp"
+#include "lobby.hpp"
 #include "rigidBody.hpp"
 #include "server.hpp"
 #include "swamp.hpp"
@@ -104,15 +109,41 @@ RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, 
  * @param roomName The name of the room where the key is located.
  * @return Pointer to the initialized RigidBody associated with the Key.
  */
-RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef, const std::string& roomName, std::unordered_map<int, Key*>* keys);
+RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef,
+                   const std::string& roomName, std::unordered_map<int, Key*>* keys);
 
 /**
  * @brief Initializes a Splash Object.
  *
  * A Splash object is created through the Swamp, and a non-collidable RigidBody is created with it.
- * 
+ *
  * @param data Transform data including position and collider dimensions.
  * @param serverRef Reference to the Server instance for managing game state.
  * @return Pointer to the initialized RigidBody associated with the Splash.
  */
 RigidBody* initSplash(TransformData data, Swamp* swamp, World* world);
+
+/**
+ * @brief Initializes a FinalButton object in the Lobby and attaches a RigidBody.
+ *
+ * The button is created with a reference to the Lobby, allowing it to interact with the final door.
+ *
+ * @param data Transform data including position and collider dimensions.
+ * @param lobby Pointer to the Lobby instance managing the button.
+ * @return Pointer to the initialized RigidBody associated with the FinalButton.
+ */
+RigidBody* initButton(TransformData data, std::unordered_map<int, Object*>* objects, Lobby* lobby,
+                      World* world);
+/**
+ * @brief Initializes a FinalDoor object in the Lobby and attaches a RigidBody.
+ *
+ * The door is created with a reference to the Lobby, allowing it to be opened by the FinalButton.
+ *
+ * @param data Transform data including position and collider dimensions.
+ * @param lobby Pointer to the Lobby instance managing the door.
+ * @return Pointer to the initialized RigidBody associated with the FinalDoor.
+ */
+RigidBody* initFinalDoor(TransformData data, std::unordered_map<int, Object*>* objects,
+                         Lobby* lobby, World* world);
+
+RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world);

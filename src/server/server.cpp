@@ -37,6 +37,12 @@ void Server::initRigidBodies() {
         if (roomName == "swampRoom") {
             swamp = new Swamp(rooms.size(), world, *this);
             room = static_cast<Room*>(swamp);
+        } else if (roomName == "lobby") {
+            lobby = new Lobby(rooms.size(), world, *this);
+            room = static_cast<Room*>(lobby);
+        } else if (roomName == "pianoRoom") {
+            piano = new Piano(rooms.size(), world, *this);
+            room = static_cast<Room*>(piano);
         } else {
             room = new Room(rooms.size(), roomName);
         }
@@ -53,7 +59,7 @@ void Server::initRigidBodies() {
 
         for (const auto& obj : room["objects"]) {
             string modelName = obj["model"];
-            std::cout << modelName << std::endl;
+            // std::cout << modelName << std::endl;
             vec3 position = toVec3(obj["position"]);
             vec3 minCorner = toVec3(dimensions[modelName]["min"]);
             vec3 maxCorner = toVec3(dimensions[modelName]["max"]);
@@ -90,6 +96,12 @@ void Server::initRigidBodies() {
                 object = initKey(data, *this, world, roomName, &keys);
             } else if (modelName.starts_with("zone_")) {
                 object = initZone(data, this, &objects, &world, i);
+            } else if (modelName == "door") {
+                object = initFinalDoor(data, &objects, lobby, &world);
+            } else if (modelName.starts_with("button")) {
+                object = initButton(data, &objects, lobby, &world);
+            } else if (modelName == "piano_floor_00") {
+                object = initPianoRespawn(data, piano, &world);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;
@@ -255,6 +267,7 @@ void Server::handleClientMessages() {
                 players[clientId]->handleMovementInput(actions);
 
                 int roomID = players[clientId]->getCurRoomID();
+                std::cout << "Player " << clientId << " is in room " << roomID << "\n";
                 Interactable* interactable =
                     players[clientId]->getNearestInteractable(rooms[roomID]);
 

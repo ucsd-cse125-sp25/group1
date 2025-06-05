@@ -75,6 +75,8 @@ class Scene {
      */
     void removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id);
 
+    void addKeyToSlot(const std::string& roomName, const std::string& type, int id);
+
     /**
      * @brief Renders shadow maps for static geometry.
      *
@@ -129,20 +131,20 @@ class Scene {
     std::unique_ptr<Canvas> canvas;
 
     /**
-    * @brief Sets roomID of the given client ID
-    *
-    * @param clientID The ID of the client.
-    * @param roomID to be set
-    *
-    */
+     * @brief Sets roomID of the given client ID
+     *
+     * @param clientID The ID of the client.
+     * @param roomID to be set
+     *
+     */
     void setPlayerRoomID(int clientID, int roomID);
 
     /**
-    * @brief Gets roomID of the given client ID
-    *
-    * @param clientID The ID of the client.
-    * @return int The player ID.
-    */
+     * @brief Gets roomID of the given client ID
+     *
+     * @param clientID The ID of the client.
+     * @return int The player ID.
+     */
     int getPlayerRoomID(int clientID);
 
   private:
@@ -175,6 +177,9 @@ class Scene {
 
     int playerID;
 
+    std::vector<std::string> roomNames;
+    std::unordered_map<std::string, std::unordered_set<std::string>> connectedRooms;
+
     std::unordered_map<std::string, std::vector<PointLight>> pointLights;
     std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> staticShadowMaps;
     std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> interactableShadowMaps;
@@ -184,6 +189,7 @@ class Scene {
     std::unique_ptr<Shader> uiShader;
 
     std::unique_ptr<Model> lobbyAsset;
+    std::unique_ptr<Model> finalDoorAsset; // Left door of the final door
 
     std::unique_ptr<Model> hotelRoomStraightX; // Doors face +X and -X directions
     std::unique_ptr<Model> hotelRoomStraightZ; // Doors face +Z and -Z directions

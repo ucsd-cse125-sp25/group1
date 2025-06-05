@@ -101,9 +101,18 @@ float getShadowFactor(vec3 fragPosWorld, int index) {
 }
 
 void main() {
+    vec4 sampleColor;
+    
+    if (hasTexture) {
+        sampleColor = texture(modelTexture, texCoords);
+        // 2 Discard fragments whose alpha is essentially zero
+        //if (sampleColor.a < 0.01) {discard;}
+    } else {
+        sampleColor = vec4(color, 1.0);
+    }
     vec3 viewDir = normalize(viewPos - fragPos);
-    vec3 baseColor = hasTexture ? texture(modelTexture, texCoords).rgb : color;
-
+    //vec3 baseColor = hasTexture ? texture(modelTexture, texCoords).rgb : color;
+    vec3 baseColor = sampleColor.rgb;
     vec3 result = vec3(0.0);
 
     // Directional lights
@@ -132,6 +141,6 @@ void main() {
 
         result += lighting * baseColor * shadow;
     }
-
-    fragColor = vec4(result, 1.0);
+    fragColor = vec4(result, sampleColor.a);
+    //fragColor = vec4(result, 1.0);
 }

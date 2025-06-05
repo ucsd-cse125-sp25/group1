@@ -635,14 +635,14 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         }
 
         if (name == "lobby") {
-            // glEnable(GL_BLEND);
+            glEnable(GL_BLEND);
             // glDepthMask(GL_FALSE);
-            // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
             instance->drawRecursive(*shader, boundingBoxMode);
 
             // glDepthMask(GL_TRUE);
-            // glDisable(GL_BLEND);
+            glDisable(GL_BLEND);
         } else {
             instance->drawRecursive(*shader, boundingBoxMode);
         }

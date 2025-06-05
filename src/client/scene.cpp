@@ -265,6 +265,11 @@ void Scene::updatePlayerState(int id, const glm::vec3& position, const glm::vec3
 void Scene::updateWindow() {
     int width, height;
     glfwGetWindowSize(this->window, &width, &height);
+    if (width == currWindowWidth && height == currWindowHeight)
+        return;
+
+    currWindowWidth = width;
+    currWindowHeight = height;
     canvas->updateWindow(width, height);
 }
 

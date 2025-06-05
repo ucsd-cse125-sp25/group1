@@ -157,6 +157,7 @@ class Scene {
     void spawnFireflies(int count);
 
     int playerID;
+    int currWindowWidth, currWindowHeight = 0;
 
     std::unordered_map<std::string, std::vector<PointLight>> pointLights;
     std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> staticShadowMaps;

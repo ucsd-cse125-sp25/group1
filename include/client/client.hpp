@@ -15,6 +15,7 @@
 #include "cube.hpp"
 #include "json.hpp"
 #include "scene.hpp"
+#include "menu.hpp"
 #include "shader.hpp"
 #include "swamp.hpp"
 
@@ -160,6 +161,8 @@ class Client {
      */
     void initScene();
 
+    void initMainMenu();
+
     /**
      * @brief Main game loop for updates and rendering.
      */
@@ -183,6 +186,7 @@ class Client {
     std::unordered_set<int> disconnectedIds;
 
     std::unique_ptr<Scene> scene;
+    std::unique_ptr<Menu> mainmenu;
 
     /**
      * @brief Reference to instance for client-side swamp minigame

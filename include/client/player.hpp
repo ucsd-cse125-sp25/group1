@@ -182,7 +182,7 @@ class Player {
 
     std::unique_ptr<AnimatedModel> character;
 
-    int currRoomID;       // Room the player is currently in
+    int currRoomID = 0;   // Room the player is currently in
     std::string name;     // Name chosen by the player
     std::set<int> keyIDs; // Keys (by ID) the player has collected
 };

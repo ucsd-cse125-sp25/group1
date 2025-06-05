@@ -59,7 +59,8 @@ bool FinalButton::pressButton() {
 
 void FinalButton::updateDoorState() {
     // Let finalDoor know that the button was pressed
-    door->updateButtonState(buttonID, true);
+    // PlayerID corresponds with the button index
+    door->updateButtonState(playerID, true);
     if (door->canOpen()) {
         door->unlockAndOpen();
     }

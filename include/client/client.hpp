@@ -161,7 +161,7 @@ class Client {
      */
     void initScene();
 
-    void initMainMenu();
+    void initMainMenu(GLFWwindow* window);
 
     /**
      * @brief Main game loop for updates and rendering.

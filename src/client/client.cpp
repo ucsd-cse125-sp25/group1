@@ -421,8 +421,9 @@ void Client::initScene() {
     yaw = directionToYaw(direction);
 }
 
-void Client::initMainMenu() {
+void Client::initMainMenu(GLFWwindow* window) {
     mainmenu = std::make_unique<Menu>(clientId);
+    mainmenu->init(window);
 }
 
 void Client::gameLoop(GLFWwindow* window) {
@@ -444,7 +445,7 @@ void Client::gameLoop(GLFWwindow* window) {
         }
         disconnectedIds.clear();
 
-        mainmenu->render();
+        mainmenu->run();
         //scene->render(camera, boundingBoxMode);
 
         audioManager.update();
@@ -467,9 +468,8 @@ void Client::run() {
 
     initGL();
     initScene();
-    initMainMenu();
     scene->window = window;
-    //mainmenu->window = window;
+    initMainMenu(window);
     gameLoop(window);
     cleanup(window);
 }

@@ -168,10 +168,23 @@ RigidBody* initSplash(TransformData data, Swamp* swamp, World* world) {
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, splashPlane,
-        world, true);
+        new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, splashPlane, world,
+        true);
 
     splashPlane->setBody(body);
     return body;
 }
 
+RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world) {
+    PianoRespawn* respawn = piano->createRespawn();
+
+    // TODO: add the position/relative position in the json dimensions file
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, respawn, world,
+        true);
+
+    respawn->setBody(body);
+    return body;
+}

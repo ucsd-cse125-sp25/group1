@@ -7,14 +7,17 @@
 #include <mutex>
 #include <unordered_map>
 #include "components/interactable.hpp"
+#include "components/interactable.hpp"
 #include "initBody.hpp"
 #include "lobby.hpp"
+#include "piano.hpp"
 #include "player.hpp"
 #include "string"
 #include "swamp.hpp"
 #include "world.hpp"
 
 class Swamp;
+class Piano;
 class Lobby;
 
 /**
@@ -178,6 +181,8 @@ class Server {
 
     Swamp* swamp;
     Lobby* lobby;
+
+    Piano* piano;
 
     Interactable* interactableTracked = nullptr;
 };

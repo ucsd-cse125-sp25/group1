@@ -131,20 +131,20 @@ class Scene {
     std::unique_ptr<Canvas> canvas;
 
     /**
-    * @brief Sets roomID of the given client ID
-    *
-    * @param clientID The ID of the client.
-    * @param roomID to be set
-    *
-    */
+     * @brief Sets roomID of the given client ID
+     *
+     * @param clientID The ID of the client.
+     * @param roomID to be set
+     *
+     */
     void setPlayerRoomID(int clientID, int roomID);
 
     /**
-    * @brief Gets roomID of the given client ID
-    *
-    * @param clientID The ID of the client.
-    * @return int The player ID.
-    */
+     * @brief Gets roomID of the given client ID
+     *
+     * @param clientID The ID of the client.
+     * @return int The player ID.
+     */
     int getPlayerRoomID(int clientID);
 
   private:
@@ -176,6 +176,9 @@ class Scene {
     void spawnFireflies(int count);
 
     int playerID;
+
+    std::vector<std::string> roomNames;
+    std::unordered_map<std::string, std::unordered_set<std::string>> connectedRooms;
 
     std::unordered_map<std::string, std::vector<PointLight>> pointLights;
     std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> staticShadowMaps;

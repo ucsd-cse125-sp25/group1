@@ -52,7 +52,7 @@ inline constexpr float PLAYER_INTERACT_RANGE = 5.0f;
 
 inline constexpr float MOUSE_SENSITIVITY = 0.1f;
 
-inline constexpr float CANNONBALL_SPEED = 20.0f;
+inline constexpr float CANNONBALL_SPEED = 100.0f;
 
 // Model positions
 inline constexpr glm::vec3 LOBBY_POSITION = {0.0f, 0.0f, 0.0f};

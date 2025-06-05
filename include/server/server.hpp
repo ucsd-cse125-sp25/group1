@@ -10,6 +10,7 @@
 #include "components/interactable.hpp"
 #include "components/key.hpp"
 #include "initBody.hpp"
+#include "lobby.hpp"
 #include "piano.hpp"
 #include "player.hpp"
 #include "string"
@@ -18,6 +19,7 @@
 
 class Swamp;
 class Circus;
+class Lobby;
 class Piano;
 
 /**
@@ -181,6 +183,7 @@ class Server {
 
     Swamp* swamp;
     Circus* circus;
+    Lobby* lobby;
     Piano* piano;
 
     Interactable* interactableTracked = nullptr;

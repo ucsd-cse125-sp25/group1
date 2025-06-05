@@ -88,6 +88,7 @@ Interactable* Player::getNearestInteractable(Room* room) {
         return nullptr;
 
     std::vector<Interactable*> interactables = room->getInteractables();
+    std::cout << interactables.size() << " interactables in room " << room->getID() << std::endl;
     RigidBody* playerBody = &this->getBody();
 
     // Find closest interactable
@@ -102,6 +103,7 @@ Interactable* Player::getNearestInteractable(Room* room) {
 
         // Compare to minimum distance
         float currentDistance = glm::distance(playerBody->getPosition(), objBody->getPosition());
+
         if (currentDistance < closestDistance) {
             closestInteractable = obj;
             closestDistance = currentDistance;

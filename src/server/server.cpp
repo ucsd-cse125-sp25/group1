@@ -41,6 +41,9 @@ void Server::initRigidBodies() {
         } else if (roomName == "circusRoom") {
             circus = new Circus(rooms.size(), world, *this);
             room = static_cast<Room*>(circus);
+        } else if (roomName == "lobby") {
+            lobby = new Lobby(rooms.size(), world, *this);
+            room = static_cast<Room*>(lobby);
         } else if (roomName == "pianoRoom") {
             piano = new Piano(rooms.size(), world, *this);
             room = static_cast<Room*>(piano);
@@ -99,6 +102,10 @@ void Server::initRigidBodies() {
                 object = initCannonball(data, circus, &world);
             } else if (modelName.starts_with("zone_")) {
                 object = initZone(data, this, &objects, &world, i);
+            } else if (modelName == "door") {
+                object = initFinalDoor(data, &objects, lobby, &world);
+            } else if (modelName.starts_with("button")) {
+                object = initButton(data, &objects, lobby, &world);
             } else if (modelName == "piano_floor_00") {
                 object = initPianoRespawn(data, piano, &world);
             } else {
@@ -267,6 +274,7 @@ void Server::handleClientMessages() {
                 players[clientId]->handleMovementInput(actions);
 
                 int roomID = players[clientId]->getCurRoomID();
+                std::cout << "Player " << clientId << " is in room " << roomID << "\n";
                 Interactable* interactable =
                     players[clientId]->getNearestInteractable(rooms[roomID]);
 

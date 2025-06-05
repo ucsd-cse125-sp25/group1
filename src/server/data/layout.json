@@ -16,6 +16,15 @@
         "rotated": false
       },
       {
+        "model": "door",
+        "position": [
+          0.0,
+          0.0,
+          18.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "lobby_00",
         "position": [
           0.0,
@@ -836,13 +845,22 @@
         "rotated": false
       },
       {
-          "model": "water_01",
-          "position": [
-              0.0,
-              0.0,
-              0.0
-          ],
-          "rotated": false
+        "model": "water_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "water_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
       },
       {
         "model": "water_00",

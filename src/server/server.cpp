@@ -92,7 +92,7 @@ void Server::initRigidBodies() {
                 object = initSplash(data, swamp, &world);
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
-            } else if (modelName == "circus_cannonball_00") {
+            } else if (modelName == "cannonball_00") {
                 object = initCannonball(data, circus, &world);
             } else if (modelName.starts_with("zone_")) {
                 object = initZone(data, this, &objects, &world, i);

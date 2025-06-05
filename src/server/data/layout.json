@@ -1055,15 +1055,6 @@
         "rotated": false
       },
       {
-        "model": "circus_exit_00",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
         "model": "ticket_queue_00",
         "position": [
           0.0,

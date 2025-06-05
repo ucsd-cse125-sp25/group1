@@ -1,0 +1,22 @@
+# Blender 4.4.3 MTL File: 'book.blend'
+# www.blender.org
+
+newmtl MAT_luggage
+Ns 43.319736
+Ka 0.354067 0.354067 0.354067
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd TEX_luggage.png
+
+newmtl MAT_luggage2
+Ns 43.319736
+Ka 0.354067 0.354067 0.354067
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd TEX_luggage.png

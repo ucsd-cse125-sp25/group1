@@ -87,7 +87,14 @@ void Server::initRigidBodies() {
                                   relativeMaxCorner};
 
             if (modelName == "door_00") {
-                object = initDoor(data, &doors, &rooms, &world, *this, i, obj["connects_to"], -1);
+                int keyID = -1;
+                if (roomName == "swampKeyRoom") {
+                    keyID = 0;
+                } else if (roomName == "circusKeyRoom") {
+                    keyID = 1;
+                }
+                object =
+                    initDoor(data, &doors, &rooms, &world, *this, i, obj["connects_to"], keyID);
             } else if (modelName == "frog_00") {
                 object = initFrog(data, &objects, swamp, &world);
             } else if (modelName == "lilypad_00") {

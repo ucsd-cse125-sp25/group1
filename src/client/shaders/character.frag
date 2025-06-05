@@ -1,5 +1,12 @@
 #version 330 core
 
+#define MAX_LIGHTS 2
+
+struct PointLight {
+    vec3 position;
+    vec3 color;
+};
+
 in vec3 fragPos;
 in vec3 normal;
 in vec2 texCoords;

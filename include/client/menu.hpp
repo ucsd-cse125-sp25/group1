@@ -33,7 +33,7 @@ class Menu {
     bool allPlayerStatus[4] = {false, false, false, false};
 
     glm::vec2 spriteMap[4] = {glm::vec2(0.0f, 0.0f), glm::vec2(644.0f, 0.0f),
-                               glm::vec2(0.0f, 826.0f), glm::vec2(644.0f, 826.0f)};
+                              glm::vec2(644.0f, 826.0f), glm::vec2(0.0f, 826.0f)};
 
     std::unique_ptr<Shader> uiShader;
     UITexture backgroundTexture = {"../src/client/ui/lobby_wallpaper.png",

@@ -14,7 +14,7 @@ Menu::Menu(int playerId) {
                            glm::vec2(0.0f, 0.0f), logoTexture);
     elements.push_back(logo);
     
-    portrait = new CanvasImage(glm::vec3(0.1f, 0.9f, 0.0f), glm::vec2(0.85f, 1.8f), spriteMap[selectedCharacter],
+    portrait = new CanvasImage(glm::vec3(0.1f, 0.9f, 0.0f), glm::vec2(0.85f, 1.8f), spriteMap[playerId],
                                portraitTexture);
     elements.push_back(portrait);
     
@@ -44,11 +44,11 @@ Menu::Menu(int playerId) {
     quitButton = new QuitButton(glm::vec2(-.75f, -.55f));
     buttons.push_back(quitButton);
 
-    leftButton = new LeftPortraitButton(glm::vec2(0.1f, 0.9f));
-    buttons.push_back(leftButton);
+    //leftButton = new LeftPortraitButton(glm::vec2(0.1f, 0.9f));
+    //buttons.push_back(leftButton);
 
-    rightButton = new RightPortraitButton(glm::vec2(0.1f, 0.9f));
-    buttons.push_back(rightButton);
+    //rightButton = new RightPortraitButton(glm::vec2(0.1f, 0.9f));
+    //buttons.push_back(rightButton);
 }
 Menu::~Menu() {
     for (unsigned int i = 0; i < elements.size(); i++)
@@ -89,10 +89,10 @@ void Menu::run() {
                 joinQueue();
                 break;
             case 2:
-                changeCharacter(-1);
+//                changeCharacter(-1);
                 break;
             case 3:
-                changeCharacter(1);
+//                changeCharacter(1);
                 break;
             }
         } else if (state == GLFW_RELEASE) {
@@ -108,8 +108,8 @@ void Menu::joinQueue() {
     playButton->active = false;
     playButton->hovered = false;
     quitButton->active = false;
-    leftButton->active = false;
-    rightButton->active = false;
+    //leftButton->active = false;
+    //rightButton->active = false;
     hoveredButton = -1;
 
     p1Status->setHidden(false);

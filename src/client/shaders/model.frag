@@ -16,11 +16,14 @@ out vec4 fragColor;
 uniform int numLights;
 uniform PointLight pointLights[MAX_LIGHTS];
 uniform bool interactableShadowActive[MAX_LIGHTS];
+uniform bool playerShadowActive[MAX_LIGHTS];
 
 uniform samplerCube shadowDepthCubemap0;
 uniform samplerCube shadowDepthCubemap1;
 uniform samplerCube shadowDepthCubemap2;
 uniform samplerCube shadowDepthCubemap3;
+uniform samplerCube shadowDepthCubemap4;
+uniform samplerCube shadowDepthCubemap5;
 
 uniform float shadowFarClip;
 uniform bool useFade;
@@ -52,19 +55,21 @@ float getShadowFactor(vec3 fragPosWorld, int index) {
     // PCF parameters
     float shadowStatic = 0.0;
     float shadowInteractable = 0.0;
-    float samples = 3.0;
+    float shadowPlayer = 0.0;
+    float samples = 2.0;
     float offset = 0.05 * (1.0 - currentDepth / shadowFarClip);
 
     vec3 fragDir = normalize(fragToLight);
     vec3 N = normalize(normal);
     float bias = 0.1 + 0.01 * (1.0 - dot(fragDir, N));
 
-    for (float x = -1.0; x <= 1.0; x++) {
-        for (float y = -1.0; y <= 1.0; y++) {
-            for (float z = -1.0; z <= 1.0; z++) {
+    for (float x = -0.5; x <= 0.5; x++) {
+        for (float y = -0.5; y <= 0.5; y++) {
+            for (float z = -0.5; z <= 0.5; z++) {
                 vec3 sampleDir = normalize(fragToLight + vec3(x, y, z) * offset);
                 float closestDepthStatic = 0.0;
                 float closestDepthInteractable = 0.0;
+                float closestDepthPlayer = 0.0;
 
                 if (index == 0) {
                     closestDepthStatic = texture(shadowDepthCubemap0, sampleDir).r * shadowFarClip;
@@ -73,12 +78,22 @@ float getShadowFactor(vec3 fragPosWorld, int index) {
                         closestDepthInteractable =
                             texture(shadowDepthCubemap2, sampleDir).r * shadowFarClip;
                     }
+
+                    if (playerShadowActive[0]) {
+                        closestDepthPlayer =
+                            texture(shadowDepthCubemap4, sampleDir).r * shadowFarClip;
+                    }
                 } else if (index == 1) {
                     closestDepthStatic = texture(shadowDepthCubemap1, sampleDir).r * shadowFarClip;
 
                     if (interactableShadowActive[1]) {
                         closestDepthInteractable =
                             texture(shadowDepthCubemap3, sampleDir).r * shadowFarClip;
+                    }
+
+                    if (playerShadowActive[1]) {
+                        closestDepthPlayer =
+                            texture(shadowDepthCubemap5, sampleDir).r * shadowFarClip;
                     }
                 }
 
@@ -90,14 +105,19 @@ float getShadowFactor(vec3 fragPosWorld, int index) {
                     currentDepth - bias > closestDepthInteractable) {
                     shadowInteractable += 1.0;
                 }
+
+                if (playerShadowActive[index] && currentDepth - bias > closestDepthPlayer) {
+                    shadowPlayer += 1.0;
+                }
             }
         }
     }
 
     shadowStatic /= (samples * samples * samples);
     shadowInteractable /= (samples * samples * samples);
+    shadowPlayer /= (samples * samples * samples);
 
-    return 1.0 - max(shadowStatic, shadowInteractable);
+    return 1.0 - max(max(shadowStatic, shadowInteractable), shadowPlayer);
 }
 
 void main() {

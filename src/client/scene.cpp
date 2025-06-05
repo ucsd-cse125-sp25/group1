@@ -123,13 +123,13 @@ void Scene::initRooms() {
             backPlateAsset.get(), backPlateModel, lobby.get(), true);
     }
     // Need this for testing key slot positions
-    for (int i = 0; i < 4; i++) {
-        glm::mat4 finalKeyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[i]);
-        finalKeyModel =
-            glm::rotate(finalKeyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        lobby->children["keys"][i] =
-            std::make_unique<ModelInstance>(keyAsset.get(), finalKeyModel, lobby.get(), true);
-    }
+    // for (int i = 0; i < 4; i++) {
+    //     glm::mat4 finalKeyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[i]);
+    //     finalKeyModel =
+    //         glm::rotate(finalKeyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    //     lobby->children["keys"][i] =
+    //         std::make_unique<ModelInstance>(keyAsset.get(), finalKeyModel, lobby.get(), true);
+    // }
 
     // Swamp room (Room ID: 1)
     glm::mat4 swampRoomModel = glm::translate(I4, config::SWAMP_ROOM_POSITION);

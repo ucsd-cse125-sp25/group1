@@ -33,7 +33,7 @@ void Server::initRigidBodies() {
 
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
-        // cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
+        cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
         Room* room;
         if (roomName == "swampRoom") {
             swamp = new Swamp(rooms.size(), world, *this);
@@ -58,7 +58,7 @@ void Server::initRigidBodies() {
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
         const json& room = it.value();
-        // cout << "Initializing room: " << roomName << endl;
+        cout << "Initializing room: " << roomName << endl;
         vec3 roomPosition = toVec3(room["position"]);
 
         for (const auto& obj : room["objects"]) {
@@ -282,7 +282,7 @@ void Server::handleClientMessages() {
                 players[clientId]->handleMovementInput(actions);
 
                 int roomID = players[clientId]->getCurRoomID();
-                // std::cout << "Player " << clientId << " is in room " << roomID << "\n";
+                std::cout << "Player " << clientId << " is in room " << roomID << "\n";
                 Interactable* interactable =
                     players[clientId]->getNearestInteractable(rooms[roomID]);
 
@@ -344,31 +344,26 @@ void Server::handlePhysics() {
 }
 
 void Server::broadcastPlayerStates() {
-    json message;
-    message["type"] = "player_states";
-
-    for (const auto& [id, player] : players) {
-        vec3 position = player->getBody().getPosition();
-        vec3 direction = player->getBody().getDirection();
-        glm::vec3 velocity = player->getBody().getVelocity();
-
-        int state = (glm::vec2(velocity.x, velocity.z) == glm::vec2(0.0f)) ? 0 : 1;
-
-        // WARNING: Completely deletes all horizontal motion
-        player->getBody().setVelocity(vec3(0.0f, player->getBody().getVelocity().y, 0.0f));
-
-        json entry;
-        entry["id"] = id;
-        entry["position"] = {position.x, position.y, position.z};
-        entry["direction"] = {direction.x, direction.y, direction.z};
-        entry["state"] = state;
-
-        message["players"].push_back(entry);
-    }
-
-    std::string packet = message.dump() + "\n";
-
     for (const auto& [clientId, socket] : clients) {
+        json message;
+        message["type"] = "player_states";
+
+        for (const auto& [id, player] : players) {
+            vec3 position = player->getBody().getPosition();
+            vec3 direction = player->getBody().getDirection();
+            // WARNING: Completely deletes all horizontal motion
+            player->getBody().setVelocity(vec3(0.0f, player->getBody().getVelocity().y, 0.0f));
+
+            json entry;
+            entry["id"] = id;
+            entry["position"] = {position.x, position.y, position.z};
+            entry["direction"] = {direction.x, direction.y, direction.z};
+
+            message["players"].push_back(entry);
+        }
+
+        std::string packet = message.dump() + "\n";
+
         try {
             boost::asio::write(*socket, boost::asio::buffer(packet));
         } catch (const std::exception& e) {

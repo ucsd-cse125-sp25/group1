@@ -1,7 +1,6 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include <array>
 #include <memory>
 #include <set>
 #include <string>
@@ -50,7 +49,7 @@ class Player {
      * @param deltaTime Time since the last frame.
      */
     void updateTime(float deltaTime) {
-        animators[state]->update(deltaTime);
+        animator->update(deltaTime);
     }
 
     /**
@@ -173,37 +172,17 @@ class Player {
         name = playerName;
     }
 
-    /**
-     * @brief Sets player's animation state.
-     *
-     * @param state 0: idle, 1: run
-     */
-    void setState(int state) {
-        this->state = state;
-    }
-
-    /**
-     * @brief Gets player's animation state.
-     *
-     * @return 0: idle, 1: run
-     */
-    int getState() const {
-        return state;
-    }
-
   private:
     int id;              // Player ID.
     glm::vec3 position;  // Current position of the player.
     glm::vec3 direction; // Current facing direction of the player.
 
-    int characterID; // Player character
+    std::unique_ptr<Animator> animator;
+    std::map<std::string, std::unique_ptr<Animation>> animations;
 
-    std::array<std::unique_ptr<Animator>, 2> animators;
-    std::array<std::unique_ptr<Animation>, 2> animations;
-    std::array<std::unique_ptr<AnimatedModel>, 2> characters;
-    int state = 0;
+    std::unique_ptr<AnimatedModel> character;
 
-    int currRoomID = 0;    // Room the player is currently in
-    std::string name = ""; // Name chosen by the player
-    std::set<int> keyIDs;  // Keys (by ID) the player has collected
+    int currRoomID = 0;   // Room the player is currently in
+    std::string name;     // Name chosen by the player
+    std::set<int> keyIDs; // Keys (by ID) the player has collected
 };

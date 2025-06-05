@@ -720,21 +720,16 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
 }
 
 void Scene::setPlayerRoomID(int clientID, int roomID) {
-    if (players.contains(clientID)) {
-        players.at(clientID).setCurrRoomID(roomID);
+    auto it = players.find(clientID);
+    if (it != players.end()) {
+        it->second.setCurrRoomID(roomID);
     }
 }
 
 int Scene::getPlayerRoomID(int clientID) {
-    if (players.contains(clientID)) {
-        return players.at(clientID).getCurrRoomID();
+    auto it = players.find(clientID);
+    if (it != players.end()) {
+        return it->second.getCurrRoomID();
     }
-
     return -1;
-}
-
-void Scene::setPlayerState(int clientID, int state) {
-    if (players.contains(clientID)) {
-        players.at(clientID).setState(state);
-    }
 }

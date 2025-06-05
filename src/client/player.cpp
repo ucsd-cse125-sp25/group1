@@ -13,7 +13,7 @@ void Player::init() {
     } else if (id == 1) {
         path = "../src/client/characters/dog_idle.fbx";
     } else if (id == 2) {
-        path = "../src/client/characters/bunny_idle.fbx";
+        path = "../src/client/characters/frog_idle.fbx";
     } else {
         path = "../src/client/characters/frog_idle.fbx";
     }

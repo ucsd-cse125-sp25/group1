@@ -293,8 +293,11 @@ void Client::handleServerMessage(const std::string& message) {
         scene->setInteractableShadowActive(roomName, 0, false);
     } else if (type == "final_door_interact") {
         // Need to have some sort of animation or graphics where the key is added to the door
-        auto keySlot = parsed["slot_id"];
+        int keySlot = parsed["slot_id"];
         auto roomName = parsed["room"];
+        std::cout << "Checking keySlot and roomName" << roomName << keySlot << std::endl;
+        std::cout << "interacted with final door" << roomName << keySlot << std::endl;
+        
         scene->addKeyToSlot(roomName, "final_door_key", keySlot);
         scene->canvas->removeKey();
 

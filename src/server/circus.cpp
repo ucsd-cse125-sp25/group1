@@ -81,6 +81,15 @@ void Circus::stopMusicMessage() {
     cannonTicksRemaining = config::SECONDS_CANNON_DELAY * (1000 / config::TICK_RATE);
 }
 
+void Circus::cannonLoop() {
+    if (!cannonTimerActive && !cannonsFiring) {
+        cannonTimerActive = true;
+        cannonTicksRemaining = config::SECONDS_CANNON_DELAY * (1000 / config::TICK_RATE);
+    }
+    // If cannons are firing, broadcast positions. Otherwise, count down timer
+    broadcastCannonballPositions();
+}
+
 void Circus::fireCannons() {
     for (Cannonball* cannonball : cannonballs) {
         cannonball->fire();

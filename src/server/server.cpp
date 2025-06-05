@@ -251,8 +251,7 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
-            circus->broadcastCannonballPositions();
-
+            circus->cannonLoop();
             startTick();
         }
     });
@@ -317,9 +316,9 @@ void Server::handleClientMessages() {
                 }
                 // TODO: remove this
                 // Temporary for testing: when the user types 'n', circus cannons fire
-                if (std::find(actions.begin(), actions.end(), "n") != actions.end()) {
-                    circus->stopMusicMessage();
-                }
+                // if (std::find(actions.begin(), actions.end(), "n") != actions.end()) {
+                //     circus->stopMusicMessage();
+                // }
                 // handle misc inputs, such as interacting with environment
                 players[clientId]->handleGeneralInput(actions, interactable);
             } else if (type == "mouse_input") {

@@ -33,6 +33,7 @@ inline constexpr glm::vec3 CAMERA_OFFSET = {0.0f, 2.8f, 0.0f};
 // Shadows
 inline constexpr int SHADOW_MAP_RES_STATIC = 1024;
 inline constexpr int SHADOW_MAP_RES_INTERACTABLE = 1024;
+inline constexpr int SHADOW_MAP_RES_PLAYER = 1024;
 inline constexpr float SHADOW_NEAR_CLIP = 0.1f;
 inline constexpr float SHADOW_FAR_CLIP = 25.0f;
 inline constexpr int SHADOW_TEXTURE_UNIT = 3;
@@ -104,8 +105,8 @@ inline constexpr glm::vec3 BUTTON_BLUE_POSITION = {7.0f, 3.5f, 19.4f};
 inline constexpr glm::vec3 BUTTON_PINK_POSITION = {-7.0f, 3.5f, 19.4f};
 inline constexpr glm::vec3 BUTTON_GREEN_POSITION = {12.0f, 3.5f, 19.4f};
 inline constexpr glm::vec3 BUTTON_YELLOW_POSITION = {-12.0f, 3.5f, 19.4f};
-inline constexpr glm::vec3 BACK_PLATE_POSITIONS[4] = {{7.0f, 3.5f, 19.4f}, {-7.0f, 3.5f, 19.4f},
-                                                      {12.0f, 3.5f, 19.4f}, {-12.0f, 3.5f, 19.4f}};
+inline constexpr glm::vec3 BACK_PLATE_POSITIONS[4] = {
+    {7.0f, 3.5f, 19.4f}, {-7.0f, 3.5f, 19.4f}, {12.0f, 3.5f, 19.4f}, {-12.0f, 3.5f, 19.4f}};
 
 // Swamp Related Configs
 inline constexpr glm::vec3 SWAMP_RESPAWN = {1.0f, 1.0f, 0.0f};
@@ -126,12 +127,16 @@ inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;
 
 // Circus Related Configs
 inline constexpr glm::vec3 CIRCUS_RESPAWN = {-35.0f, 1.0f, 0.0f};
-inline constexpr int NUM_CANNONBALLS = 9;
-inline constexpr glm::vec3 CANNONBALL_POSITIONS[NUM_CANNONBALLS] = {
-    {30.0f, 3.0f, 16.0f}, {30.0f, 3.0f, 12.0f},  {30.0f, 3.0f, 8.0f},
-    {30.0f, 3.0f, 4.0f},  {30.0f, 3.0f, 0.0f},   {30.0f, 3.0f, -4.0f},
-    {30.0f, 3.0f, -8.0f}, {30.0f, 3.0f, -12.0f}, {30.0f, 3.0f, -16.0f},
-};
+inline constexpr int NUM_CANNONBALLS = 8;
+inline constexpr glm::vec3 CANNONBALL_POSITIONS[NUM_CANNONBALLS] = {{30.0f, 3.0f, 16.0f},
+                                                                    {30.0f, 3.0f, 12.0f},
+                                                                    {30.0f, 3.0f, 8.0f},
+                                                                    {30.0f, 3.0f, 4.0f},
+                                                                    // {30.0f, 3.0f, 0.0f},
+                                                                    {30.0f, 3.0f, -4.0f},
+                                                                    {30.0f, 3.0f, -8.0f},
+                                                                    {30.0f, 3.0f, -12.0f},
+                                                                    {30.0f, 3.0f, -16.0f}};
 // how long to wait before firing cannons after music stops
 inline constexpr int SECONDS_CANNON_DELAY = 3;
 

@@ -7,9 +7,9 @@
 #include "components/key.hpp"
 #include "components/lilypad.hpp"
 #include "components/object.hpp"
+#include "components/pianoRespawn.hpp"
 #include "components/room.hpp"
 #include "components/water.hpp"
-#include "components/pianoRespawn.hpp"
 #include "config.hpp"
 #include "piano.hpp"
 #include "rigidBody.hpp"
@@ -121,3 +121,5 @@ RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef,
 RigidBody* initSplash(TransformData data, Swamp* swamp, World* world);
 
 RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world);
+
+RigidBody* initPianoKey(TransformData data, Piano* piano, World* world);

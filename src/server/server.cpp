@@ -3,6 +3,7 @@
 #include <chrono>
 #include <fstream>
 #include <iostream>
+#include <string>
 #include <thread>
 #include "config.hpp"
 #include "json.hpp"
@@ -95,6 +96,8 @@ void Server::initRigidBodies() {
                 object = initZone(data, this, &objects, &world, i);
             } else if (modelName == "piano_floor_00") {
                 object = initPianoRespawn(data, piano, &world);
+            } else if (modelName.starts_with("piano_key_")) {
+                  object = initPianoKey(data, piano, &world);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;

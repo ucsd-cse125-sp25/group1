@@ -160,3 +160,15 @@ RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world) {
     respawn->setBody(body);
     return body;
 }
+
+RigidBody* initPianoKey(TransformData data, Piano* piano, World* world) {
+    PianoKey* key = piano->createPianoKey();
+
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, key, world, true);
+
+    key->setBody(body);
+    return body;
+}

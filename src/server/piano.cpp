@@ -14,6 +14,9 @@ Piano::Piano(int roomID, World& worldRef, Server& serverRef)
 
 Piano::~Piano() {
     // Destructor
+    for (auto& key : keys) {
+        delete key;
+    }
     delete respawn;
 }
 
@@ -25,4 +28,12 @@ PianoRespawn* Piano::createRespawn() {
 
 Server& Piano::getServer() {
     return server;
+}
+
+PianoKey* Piano::createPianoKey() {
+    PianoKey* newKey = new PianoKey(numKeys, config::K_CONSTANT, config::DAMP_FACTOR,
+                                    glm::vec3(0.0f), glm::vec3(0.0f, -1.0f, 0.0f), server, this);
+
+    numKeys++;
+    return newKey;
 }

@@ -11,6 +11,8 @@ inline constexpr int SERVER_PORT = 2399;
 inline constexpr bool BYPASS = false;
 
 inline constexpr float gravity = -20.0f;
+inline constexpr float K_CONSTANT = 10.0f;
+inline constexpr float DAMP_FACTOR = 0.5f;
 
 inline constexpr int MAX_PLAYERS = 4;
 inline constexpr int TICK_RATE = 30;
@@ -117,7 +119,7 @@ inline constexpr const char* CANNONBALL = "{bbd1e66c-d614-40e5-8dde-442db1d6442e
 inline constexpr const char* HOTEL_LOBBY = "{8a1c1842-ac41-470c-a060-8c5b909bc6e2}";
 inline constexpr const char* BAD_ENDING = "{00396995-e033-4760-939d-4c59492538cd}";
 
-inline constexpr std::array<const char*, 15> NOTES_SFX = {
+inline constexpr std::array<const char*, 15> PIANO_KEY_SFX = {
     "{493fcf1e-c2ed-4f98-944e-7823f802d2a7}",  // C3
     "{7aa9c7e4-59ba-4661-b2a5-34e51a65638a}",  // D3
     "{29e7dd89-2c8b-4f23-bce0-a6acb95c9932}",  // E3
@@ -152,4 +154,5 @@ inline constexpr float LILYPAD_VOL = 0.2f;
 inline constexpr float UNLOCKDOOR_VOL = 0.4f; // 0.5
 inline constexpr float GRABKEY_VOL = 0.2f;
 inline constexpr float WATERSPLASH_VOL = 0.05f;
+inline constexpr float PIANO_KEY_VOL = 0.5f;
 } // namespace config

@@ -117,7 +117,7 @@ void Menu::joinQueue() {
     p3Status->setHidden(false);
     p4Status->setHidden(false);
 
-    ready = queuePlayer(playerId);
+    ready = true;
 
     for (unsigned int i = 0; i < 4; i++) {
         if (!allPlayerStatus[i])

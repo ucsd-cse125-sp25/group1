@@ -308,7 +308,10 @@ void Client::handleServerMessage(const std::string& message) {
         // and show the end screen.
     } else if (type == "final_button_pressed") {
         // Could just be sfx only
-    } else {
+    } else if (type == "start_game") {
+        gameState = 1;
+    } 
+    else {
         std::cerr << "Unknown message type: " << type << "\n";
     }
     // Need to also udpate object states
@@ -333,12 +336,12 @@ void Client::updatePlayerStates(const json& parsed) {
         if (id == clientId) {
             camera.setPosition(position + config::CAMERA_OFFSET);
         }
-        mainmenu->queuePlayer(id);
+        // mainmenu->queuePlayer(id);
         //if (mainmenu->queuePlayer(id))
         //    gameState = 1;
-        if (mainmenu->ready) {
-            gameState = 1;
-        }
+        //if (mainmenu->ready) {
+        //    gameState = 1;
+        //}
     }
 
     for (int i = 0; i < config::MAX_PLAYERS; ++i) {
@@ -427,7 +430,6 @@ void Client::handleMouseInput() {
 
     message["type"] = "mouse_input";
     message["direction"] = {direction.x, direction.y, direction.z};
-
     sendMessageToServer(message);
 }
 
@@ -526,8 +528,17 @@ void Client::gameLoop(GLFWwindow* window) {
         }
         disconnectedIds.clear();
         
-        if (gameState == 0)
+        if (gameState == 0){
+            json message;
+
             mainmenu->run();
+            if (mainmenu->ready) {
+                message["type"] = "ready_status";
+                message["id"] = {clientId};
+                message["status"] = {true};
+                sendMessageToServer(message);
+            }
+        }
         else
             scene->render(camera, boundingBoxMode);
 

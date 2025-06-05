@@ -201,6 +201,12 @@ void Server::handleClientDisconnect(int clientId) {
         players.erase(clientId);
 
         std::cout << "Client #" << clientId << " disconnected.\n";
+
+        if (readyPlayers[clientId]) {
+            readyPlayers[clientId] = false;
+            queuedPlayers--;
+            std::cout << queuedPlayers << std::endl;
+        }
     }
 
     if (hasTimerStarted && clients.size() == 0) {
@@ -311,6 +317,22 @@ void Server::handleClientMessages() {
             } else if (type == "mouse_input") {
                 glm::vec3 direction = toGlmVec3(parsed["direction"]);
                 players[clientId]->handleMouseInput(direction);
+            } else if (type == "ready_status") { /* ADDED FOR MENU */
+
+                if (!readyPlayers[parsed["id"][0]]) {
+                    readyPlayers[parsed["id"][0]] = true;
+                    std::cout << parsed["id"][0] << ": " << parsed["status"][0] << " - "<< queuedPlayers << std::endl;
+                    queuedPlayers++;
+                }
+
+                if (queuedPlayers == 4 && !gameStarted) {
+                    json message;
+                    message["type"] = "start_game";
+                    message["status"] = "ready";
+                    std::string packet = message.dump() + "\n";
+                    broadcastMessage(packet);
+                    gameStarted = true;
+                }
             }
         }
 

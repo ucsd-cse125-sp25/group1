@@ -130,6 +130,7 @@ RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, 
                 json message;
                 message["type"] = "room_id";
                 message["id"] = roomID;
+                message["client_id"] = player->getID();
 
                 std::string packet = message.dump() + "\n";
                 server->broadcastMessage(packet);

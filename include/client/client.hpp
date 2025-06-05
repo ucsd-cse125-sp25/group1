@@ -69,8 +69,12 @@ class Client {
     float yaw;   // Left-right rotation of the camera.
     float pitch; // Up-down rotation of the camera.
 
-    const char* footstepSfxId = config::FOOTSTEPCARPET.c_str();             // Set to the necessary type of footstep sfx
+    const char* footstepSfxId = config::FOOTSTEPCARPET;             // Set to the necessary type of footstep sfx
     float footstepVol = config::FOOTSTEPCARPET_VOL; // corresponding vol adjustment if needed.
+
+    const char* ambianceId = "";                 // Set to the necessary type of footstep sfx
+    float ambianceVol = 1.0f; // corresponding vol adjustment if needed.
+
   private:
     /**
      * @brief Establishes connection to the server and receives client ID.

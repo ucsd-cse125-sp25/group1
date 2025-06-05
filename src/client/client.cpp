@@ -109,13 +109,6 @@ bool Client::init() {
     audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/BGM.bank");
     audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/SFX.bank");
 
-    // To play audio, first load in the name of the event, then play the event. Can use
-    // setEventVolume to adjust the volume
-
-    audioManager.loadFMODStudioEvent(config::SWAMP_AMBIENCE_TRACK);
-    audioManager.playEvent(config::SWAMP_AMBIENCE_TRACK);
-    audioManager.setEventVolume(config::SWAMP_AMBIENCE_TRACK, config::SWAMP_AMBIENCE_VOL);
-
     return true;
 }
 
@@ -196,7 +189,57 @@ void Client::handleServerMessage(const std::string& message) {
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
         scene->renderLilypadShadowPass(id);
     } else if (type == "room_id") {
-        // TODO : handle room ID assignment
+        auto roomID = parsed["id"];
+        auto clientId = parsed["client_id"];
+
+        scene->setPlayerRoomID(clientId, roomID);
+
+        // Audio logic
+
+        if (clientId == this->clientId) {
+            if (this->ambianceId != "") {
+                audioManager.stopEvent(this->ambianceId);
+            }
+
+            if (roomID == 1) {
+                // Swamp room
+                this->ambianceId = config::SWAMP_AMBIENCE_TRACK;
+                this->ambianceVol = config::SWAMP_AMBIENCE_VOL;
+
+                this->footstepSfxId = config::FOOTSTEPWOOD;
+                this->footstepVol = config::FOOTSTEPWOOD_VOL;
+
+                audioManager.loadFMODStudioEvent(this->ambianceId);
+                audioManager.playEvent(this->ambianceId);
+                audioManager.setEventVolume(this->ambianceId, this->ambianceVol);
+            } else if (roomID == 3) {
+                // Carnival room
+                this->ambianceId = config::CARNIVAL_AMBIENCE_TRACK;
+                this->ambianceVol = config::CARNIVAL_AMBIENCE_VOL;
+
+                this->footstepSfxId = config::FOOTSTEPWOOD;
+                this->footstepVol = config::FOOTSTEPWOOD_VOL;
+
+                audioManager.loadFMODStudioEvent(this->ambianceId);
+                audioManager.playEvent(this->ambianceId);
+                audioManager.setEventVolume(this->ambianceId, this->ambianceVol);
+            } else if (roomID == 5) {
+                // Piano room
+
+                this->ambianceId = config::PIANO_AMBIENCE_TRACK;
+                this->ambianceVol = config::PIANO_AMBIENCE_VOL;
+                audioManager.loadFMODStudioEvent(this->ambianceId);
+                audioManager.playEvent(this->ambianceId);
+
+                this->footstepSfxId = config::FOOTSTEPWOOD;
+                this->footstepVol = config::FOOTSTEPWOOD_VOL;
+            } else {
+                this->ambianceId = "";
+
+                this->footstepSfxId = config::FOOTSTEPCARPET;
+                this->footstepVol = config::FOOTSTEPCARPET_VOL;
+            }
+        }
 
     } else if (type == "sfx") {
         // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,

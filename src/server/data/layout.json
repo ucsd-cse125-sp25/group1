@@ -1171,6 +1171,87 @@
         "rotated": false
       },
       {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          16.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          12.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          8.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          4.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          -4.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          -8.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          -12.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          -16.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "circus_10",
         "position": [
           0.0,

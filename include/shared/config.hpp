@@ -60,7 +60,7 @@ inline constexpr float PLAYER_INTERACT_RANGE = 5.0f;
 
 inline constexpr float MOUSE_SENSITIVITY = 0.1f;
 
-inline constexpr float CANNONBALL_SPEED = 20.0f;
+inline constexpr float CANNONBALL_SPEED = 100.0f;
 
 // Model positions
 inline constexpr glm::vec3 LOBBY_POSITION = {0.0f, 0.0f, 0.0f};
@@ -118,6 +118,18 @@ inline constexpr int SWAMP_NUM_FIREFLIES = 150;
 inline constexpr float SWAMP_LILYPAD_WIDTH = 1.0f;
 inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;
 
+// Circus Related Configs
+inline constexpr glm::vec3 CIRCUS_RESPAWN = {-35.0f, 1.0f, 0.0f};
+inline constexpr int NUM_CANNONBALLS = 9;
+inline constexpr glm::vec3 CANNONBALL_POSITIONS[NUM_CANNONBALLS] = {
+    {30.0f, 3.0f, 16.0f}, {30.0f, 3.0f, 12.0f},  {30.0f, 3.0f, 8.0f},
+    {30.0f, 3.0f, 4.0f},  {30.0f, 3.0f, 0.0f},   {30.0f, 3.0f, -4.0f},
+    {30.0f, 3.0f, -8.0f}, {30.0f, 3.0f, -12.0f}, {30.0f, 3.0f, -16.0f},
+};
+// how long to wait before firing cannons after music stops
+inline constexpr int SECONDS_CANNON_DELAY = 3;
+
+// Sound effects
 inline constexpr glm::vec3 PIANO_RESPAWN = {0.0f, 0.0f, -27.0f};
 
 // TODO: Convert GUID to event names

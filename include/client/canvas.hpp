@@ -6,6 +6,7 @@
 #include "interactdisplay.hpp"
 #include "keydisplay.hpp"
 #include "timerdisplay.hpp"
+#include "victoryscreen.hpp"
 
 class Canvas {
   public:
@@ -18,6 +19,7 @@ class Canvas {
     void setInteractHidden(bool val);
     void updateTimer(int minutes, int seconds);
     void updateCompass(glm::vec3 direction);
+    void enableVictoryScreen();
     CanvasElement* findElement(const std::string name);
 
   private:
@@ -37,4 +39,7 @@ class Canvas {
 
     InteractDisplay* interactdisplay;
     glm::vec2 interactPos = glm::vec2(-0.3f, -.6f);
+
+    VictoryScreen* victoryscreen;
+    glm::vec2 victoryPos = glm::vec2(-1.0f, 1.0f);
 };

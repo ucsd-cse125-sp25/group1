@@ -16,6 +16,9 @@ Canvas::Canvas() {
 
     interactdisplay = new InteractDisplay(interactPos);
     elements.insert({interactdisplay->getName(), interactdisplay});
+
+    victoryscreen = new VictoryScreen(victoryPos);
+    elements.insert({victoryscreen->getName(), victoryscreen});
 }
 
 Canvas::~Canvas() {
@@ -52,6 +55,10 @@ void Canvas::updateTimer(int minutes, int seconds) {
 
 void Canvas::updateCompass(glm::vec3 direction) {
     compass->rotate(direction);
+}
+
+void Canvas::enableVictoryScreen() {
+    victoryscreen->setHidden(false);
 }
 
 CanvasElement* Canvas::findElement(const std::string name) {

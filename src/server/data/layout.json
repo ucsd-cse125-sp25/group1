@@ -223,6 +223,16 @@
         "rotated": false
       },
       {
+        "model": "door_00",
+        "position": [
+          -10.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false,
+        "connects_to": 7
+      },
+      {
         "model": "swamp_00",
         "position": [
           0.0,
@@ -907,6 +917,16 @@
         "rotated": false
       },
       {
+        "model": "door_00",
+        "position": [
+          0.0,
+          0.0,
+          10.0
+        ],
+        "rotated": true,
+        "connects_to": 25
+      },
+      {
         "model": "key_00",
         "position": [
           0.0,
@@ -1024,6 +1044,26 @@
         "rotated": false
       },
       {
+        "model": "door_00",
+        "position": [
+          -40.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false,
+        "connects_to": 3
+      },
+      {
+        "model": "door_00",
+        "position": [
+          -60.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false,
+        "connects_to": 12
+      },
+      {
         "model": "circus_00",
         "position": [
           0.0,
@@ -1132,6 +1172,16 @@
         "rotated": false
       },
       {
+        "model": "door_00",
+        "position": [
+          0.0,
+          0.0,
+          10.0
+        ],
+        "rotated": true,
+        "connects_to": 28
+      },
+      {
         "model": "1x1_hotel_room_bend_neg_x_pos_z_00",
         "position": [
           0.0,
@@ -1238,6 +1288,16 @@
           0.0
         ],
         "rotated": false
+      },
+      {
+        "model": "door_00",
+        "position": [
+          0.0,
+          0.0,
+          -30.0
+        ],
+        "rotated": true,
+        "connects_to": 21
       },
       {
         "model": "piano_room_00",

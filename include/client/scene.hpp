@@ -147,6 +147,14 @@ class Scene {
      */
     int getPlayerRoomID(int clientID);
 
+    /**
+     * @brief Sets player character's animation state
+     *
+     * @param clientID client ID.
+     * @param state 0: idle, 1: run
+     */
+    void setPlayerState(int clientID, int state);
+
   private:
     /**
      * @brief Sets up rooms and the objects they contain.

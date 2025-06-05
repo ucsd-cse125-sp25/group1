@@ -553,16 +553,21 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
 }
 
 void Scene::setPlayerRoomID(int clientID, int roomID) {
-    auto it = players.find(clientID);
-    if (it != players.end()) {
-        it->second.setCurrRoomID(roomID);
+    if (players.contains(clientID)) {
+        players.at(clientID).setCurrRoomID(roomID);
     }
 }
 
 int Scene::getPlayerRoomID(int clientID) {
-    auto it = players.find(clientID);
-    if (it != players.end()) {
-        return it->second.getCurrRoomID();
+    if (players.contains(clientID)) {
+        return players.at(clientID).getCurrRoomID();
     }
+
     return -1;
+}
+
+void Scene::setPlayerState(int clientID, int state) {
+    if (players.contains(clientID)) {
+        players.at(clientID).setState(state);
+    }
 }

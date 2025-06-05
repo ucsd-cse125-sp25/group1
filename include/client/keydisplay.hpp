@@ -9,6 +9,7 @@ class KeyDisplay : public CanvasImage {
     KeyDisplay(glm::vec2 pos);
     ~KeyDisplay();
     void onCollectKey();
+    void onRemoveKey();
 
   private:
     unsigned int collectedKeys = 0;

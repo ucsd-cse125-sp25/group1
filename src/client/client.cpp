@@ -188,6 +188,17 @@ void Client::handleServerMessage(const std::string& message) {
 
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
         scene->renderLilypadShadowPass(id);
+    } else if (type == "cannonball_positions") {
+        glm::vec3 positions[config::NUM_CANNONBALLS];
+        const auto& cannonballs = parsed["cannonballs"];
+        for (const auto& cannonball : cannonballs) {
+            int id = cannonball["id"];
+            glm::vec3 position = toVec3(cannonball["position"]);
+            if (id >= 0 && id < config::NUM_CANNONBALLS) {
+                positions[id] = position;
+            }
+        }
+        scene->updateCannonballPositions(positions);
     } else if (type == "room_id") {
         auto roomID = parsed["id"];
         auto clientId = parsed["client_id"];
@@ -268,6 +279,12 @@ void Client::handleServerMessage(const std::string& message) {
         scene->canvas->setInteractHidden(false);
     } else if (type == "interactable_not_nearby") {
         scene->canvas->setInteractHidden(true);
+    } else if (type == "pause_circus_music") {
+        audioManager.stopEvent("circus_music");
+    } else if (type == "unpause_circus_music") {
+        // TODO: handle the first loading of the circus music
+        // - should hopefully be handled by Helen's code to get rooms to play their audio
+        audioManager.playEvent("circus_music");
     } else if (type == "key_pickup") {
         auto keyID = parsed["keyID"];
         auto playerID = parsed["playerID"];
@@ -291,6 +308,25 @@ void Client::handleServerMessage(const std::string& message) {
         // Assumes there's only one key in the room for now.
         // Will refactor if we add more interactable objects later.
         scene->setInteractableShadowActive(roomName, 0, false);
+    } else if (type == "final_door_interact") {
+        // Need to have some sort of animation or graphics where the key is added to the door
+        int keySlot = parsed["slot_id"];
+        auto roomName = parsed["room"];
+        std::cout << "Checking keySlot and roomName" << roomName << keySlot << std::endl;
+        std::cout << "interacted with final door" << roomName << keySlot << std::endl;
+
+        scene->addKeyToSlot(roomName, "final_door_key", keySlot);
+        scene->canvas->removeKey();
+
+        // Make the key appear at the correct positions
+        // Positions are set in the config file
+    } else if (type == "final_door_open") {
+        // This is the final door opening, so we need to update the scene
+        // and show the end screen.
+    } else if (type == "final_button_pressed") {
+        // Could just be sfx only
+    } else {
+        std::cerr << "Unknown message type: " << type << "\n";
     }
     // Need to also udpate object states
 }
@@ -308,6 +344,8 @@ void Client::updatePlayerStates(const json& parsed) {
 
         playerPositions[id] = position;
         playerDirections[id] = direction;
+
+        scene->setPlayerState(id, player["state"]);
 
         if (id == clientId) {
             camera.setPosition(position + config::CAMERA_OFFSET);
@@ -345,6 +383,8 @@ static std::string mapKeyToAction(int key) {
         return "jump";
     case GLFW_KEY_E:
         return "interact";
+    case GLFW_KEY_N:
+        return "n";
     default:
         return "";
     }
@@ -352,8 +392,8 @@ static std::string mapKeyToAction(int key) {
 
 void Client::handleKeyboardInput(GLFWwindow* window) {
     static const std::vector<int> keysToCheck = {
-        GLFW_KEY_W,    GLFW_KEY_UP, GLFW_KEY_S,     GLFW_KEY_DOWN,  GLFW_KEY_A,
-        GLFW_KEY_LEFT, GLFW_KEY_D,  GLFW_KEY_RIGHT, GLFW_KEY_SPACE, GLFW_KEY_E};
+        GLFW_KEY_W, GLFW_KEY_UP,    GLFW_KEY_S,     GLFW_KEY_DOWN, GLFW_KEY_A, GLFW_KEY_LEFT,
+        GLFW_KEY_D, GLFW_KEY_RIGHT, GLFW_KEY_SPACE, GLFW_KEY_E,    GLFW_KEY_N};
 
     json message;
 

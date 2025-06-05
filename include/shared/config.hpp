@@ -43,6 +43,14 @@ inline constexpr int SHADOW_TEXTURE_UNIT = 3;
 inline constexpr glm::vec3 PLAYER_SPAWNS[4] = {
     {-3.0f, 0.0f, 3.0f}, {3.0f, 0.0f, 3.0f}, {-3.0f, 0.0f, -3.0f}, {3.0f, 0.0f, -3.0f}};
 
+inline constexpr const char* PLAYER_CHARACTERS_IDLE[4] = {
+    "../src/client/characters/cat_idle.fbx", "../src/client/characters/dog_idle.fbx",
+    "../src/client/characters/bunny_idle.fbx", "../src/client/characters/frog_idle.fbx"};
+
+inline constexpr const char* PLAYER_CHARACTERS_RUN[4] = {
+    "../src/client/characters/cat_run.fbx", "../src/client/characters/dog_run.fbx",
+    "../src/client/characters/bunny_run.fbx", "../src/client/characters/frog_run.fbx"};
+
 inline constexpr float PLAYER_SPEED = 15.0f;
 inline constexpr float PLAYER_WEIGHT = 10.0f;
 
@@ -54,7 +62,7 @@ inline constexpr float PLAYER_INTERACT_RANGE = 5.0f;
 
 inline constexpr float MOUSE_SENSITIVITY = 0.1f;
 
-inline constexpr float CANNONBALL_SPEED = 20.0f;
+inline constexpr float CANNONBALL_SPEED = 100.0f;
 
 // Model positions
 inline constexpr glm::vec3 LOBBY_POSITION = {0.0f, 0.0f, 0.0f};
@@ -88,6 +96,13 @@ inline constexpr glm::vec3 PARKOUR_OBJECT_POSITIONS[3] = {
     {0.0f, -1.5f, 0.0f}, {2.5f, -0.5f, 0.0f}, {5.0f, 0.5f, 0.0f}};
 inline constexpr glm::vec3 PARKOUR_KEY_POSITION = {-8.0f, 6.0f, 8.0f};
 
+// Finaldoor
+inline constexpr glm::vec3 FINALDOOR_KEY_SLOTS[4] = {
+    {1.8f, 4.4f, 19.7f}, {0.3f, 4.3f, 19.5f}, {-1.2f, 4.4f, 19.7f}, {-2.7f, 4.4f, 19.7f}};
+inline constexpr glm::vec3 FINALDOOR_LEFT_POSITION = {0.0f, 0.0f, 20.0f};
+inline constexpr glm::vec3 FINALDOOR_RIGHT_POSITION = {0.0f, 0.0f, 20.0f};
+inline constexpr glm::vec3 FINALDOOR_POSITION = {0.0f, 0.0f, 20.0f};
+
 // Swamp Related Configs
 inline constexpr glm::vec3 SWAMP_RESPAWN = {1.0f, 1.0f, 0.0f};
 inline constexpr int SWAMP_NUM_ROWS = 8;
@@ -99,10 +114,24 @@ inline constexpr const char* SWAMP_AUDIO_FILE = "{9b22e271-4a2c-47cd-8662-1a4f0d
 
 inline constexpr int SWAMP_NUM_FIREFLIES = 150;
 
+// Lobby related
+
 // TODO: Adjust once rendered
 inline constexpr float SWAMP_LILYPAD_WIDTH = 1.0f;
 inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;
 
+// Circus Related Configs
+inline constexpr glm::vec3 CIRCUS_RESPAWN = {-35.0f, 1.0f, 0.0f};
+inline constexpr int NUM_CANNONBALLS = 9;
+inline constexpr glm::vec3 CANNONBALL_POSITIONS[NUM_CANNONBALLS] = {
+    {30.0f, 3.0f, 16.0f}, {30.0f, 3.0f, 12.0f},  {30.0f, 3.0f, 8.0f},
+    {30.0f, 3.0f, 4.0f},  {30.0f, 3.0f, 0.0f},   {30.0f, 3.0f, -4.0f},
+    {30.0f, 3.0f, -8.0f}, {30.0f, 3.0f, -12.0f}, {30.0f, 3.0f, -16.0f},
+};
+// how long to wait before firing cannons after music stops
+inline constexpr int SECONDS_CANNON_DELAY = 3;
+
+// Sound effects
 inline constexpr glm::vec3 PIANO_RESPAWN = {0.0f, 0.0f, -27.0f};
 
 // TODO: Convert GUID to event names

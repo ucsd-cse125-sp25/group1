@@ -1,7 +1,13 @@
 #include "components/finalDoor.hpp"
+#include "lobby.hpp"
+#include "server.hpp"
+#include "json.hpp"
 
+using json = nlohmann::json;
 // Constructor
-FinalDoor::FinalDoor(int numKeys) : Interactable(), numKeys(numKeys), keyStates(numKeys, false) {
+FinalDoor::FinalDoor(int numKeys, int objectID, Lobby* lobbyRef)
+    : Interactable(objectID), numKeys(numKeys), keyStates(numKeys, false), lobby(lobbyRef) {
+    keyCount = 0;
     // Initialize any member variables if needed
 }
 
@@ -14,6 +20,42 @@ FinalDoor::~FinalDoor() {
 void FinalDoor::unlockAndOpen() {
     // Open handled by final buttons
     // Broadcast message to all clients
+    json message;
+
+    message["type"] = "final_door_open"; // This is game ending
+
+    // How can we broadcast this message to all clients?
+    std::string packet = message.dump() + "\n";
+    lobby->getServer().broadcastMessage(packet);
+}
+
+void FinalDoor::handleInteract(Player& player) {
+    // Add keys from player to the door
+    std::set<int> playersKeys = player.getKeyIDs();
+    if (playersKeys.empty()) {
+        // If the player has no keys, do nothing
+        // Or do no key sound effect?
+        return;
+    }
+    for (int val : playersKeys) {
+        addKey(val);           // Add keys from player to the door
+        player.removeKey(val); // Remove keys from player
+        // Or should each interact only add one key?
+        break; // Assuming we only want to add one key at a time
+    }
+
+    json message;
+    message["type"] = "final_door_interact";
+    // message["sfx_id"] = config::Some sound effect ID;
+    message["client_id"] = player.getID();
+    message["action"] = "interact";
+    int slotID = keyCount - 1;
+    std::cout << "slotID " << slotID << std::endl;
+    message["slot_id"] = slotID; // Include the current key count
+    message["room"] = "lobby"; // Include the room name
+
+    std::string packet = message.dump() + "\n";
+    lobby->getServer().broadcastMessage(packet);
 }
 
 int FinalDoor::getKeyCount() const {
@@ -21,6 +63,10 @@ int FinalDoor::getKeyCount() const {
 }
 
 void FinalDoor::addKey(int keyID) {
+    if (keyID < 0 || keyID >= numKeys || keyStates[keyID]) {
+        // If the key ID is invalid or the key is already present, do nothing
+        return; // Invalid key ID
+    }
     keyCount++;
     keyStates[keyID] = true; // Mark the key as present
 }
@@ -49,4 +95,8 @@ bool FinalDoor::canOpen() {
         return true; // All buttons are pressed and all keys are present
     }
     return false;
+}
+
+Lobby* FinalDoor::getLobby() {
+    return lobby;
 }

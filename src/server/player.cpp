@@ -102,6 +102,7 @@ Interactable* Player::getNearestInteractable(Room* room) {
 
         // Compare to minimum distance
         float currentDistance = glm::distance(playerBody->getPosition(), objBody->getPosition());
+
         if (currentDistance < closestDistance) {
             closestInteractable = obj;
             closestDistance = currentDistance;

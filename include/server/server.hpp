@@ -6,8 +6,11 @@
 #include <memory>
 #include <mutex>
 #include <unordered_map>
+#include "components/door.hpp"
 #include "components/interactable.hpp"
+#include "components/key.hpp"
 #include "initBody.hpp"
+#include "lobby.hpp"
 #include "piano.hpp"
 #include "player.hpp"
 #include "string"
@@ -15,6 +18,8 @@
 #include "world.hpp"
 
 class Swamp;
+class Circus;
+class Lobby;
 class Piano;
 
 /**
@@ -177,6 +182,8 @@ class Server {
     std::unordered_map<int, std::deque<std::string>> clientMessages;
 
     Swamp* swamp;
+    Circus* circus;
+    Lobby* lobby;
     Piano* piano;
 
     Interactable* interactableTracked = nullptr;

@@ -49,6 +49,9 @@ RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* object
 
     swamp->addInteractable(frog);
 
+    (*objects)[frog->getID()] =
+        frog; // Add the frog to the objects map - I didn't see where this was done
+
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
@@ -68,6 +71,31 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp, World* world) {
         world, true);
 
     lilyPad->setBody(body);
+    return body;
+}
+
+RigidBody* initButton(TransformData data, std::unordered_map<int, Object*>* objects, Lobby* lobby,
+                      World* world) {
+    FinalButton* button = lobby->createFinalButton(objects->size());
+    (*objects)[button->getID()] = button;
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, button, world, true);
+    button->setBody(body);
+    return body;
+}
+
+RigidBody* initFinalDoor(TransformData data, std::unordered_map<int, Object*>* objects,
+                         Lobby* lobby, World* world) {
+    FinalDoor* door = lobby->createFinalDoor(objects->size());
+    (*objects)[door->getID()] = door;
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, door, world, true);
+
+    door->setBody(body);
     return body;
 }
 
@@ -116,6 +144,32 @@ RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, 
         new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, object, world, true);
 
     object->setBody(body);
+    return body;
+}
+
+RigidBody* initCannonball(TransformData data, Circus* circus, World* world) {
+    glm::vec3 absolutePosition = data.roomPosition + data.position + data.relativePosition;
+    // TODO: is this bad? createCannonball expects cannon position, but we give cannonball position
+    Cannonball* cannonball = circus->createCannonball(absolutePosition);
+
+    RigidBody* body =
+        new RigidBody(vec3(0.0f), vec3(0.0f), 10.0f, new Transform{absolutePosition, vec3(0.0f)},
+                      new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner},
+                      cannonball, world, false, vec3(0.0f, 0.0f, 0.0f));
+
+    cannonball->setBody(body);
+    return body;
+}
+
+RigidBody* initWall(TransformData data, Circus* circus, World* world) {
+    Object* wall = circus->createWall();
+
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, wall, world, true);
+
+    wall->setBody(body);
     return body;
 }
 

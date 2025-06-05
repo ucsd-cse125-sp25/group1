@@ -58,8 +58,13 @@ void Scene::init() {
     frogAsset = std::make_unique<Model>("../src/client/models/froggie.obj");
 
     circusRoomAsset = std::make_unique<Model>("../src/client/models/tent.obj");
+    cannonballAsset = std::make_unique<Model>("../src/client/models/cannonball.obj");
+    cannonAsset = std::make_unique<Model>("../src/client/models/cannon.obj");
 
     pianoRoomAsset = std::make_unique<Model>("../src/client/models/piano_room.obj");
+
+    lobbyAsset = std::make_unique<Model>("../src/client/models/lobby.obj");
+    finalDoorAsset = std::make_unique<Model>("../src/client/models/final_door.obj");
 
     canvas = std::make_unique<Canvas>();
 
@@ -77,6 +82,25 @@ void Scene::initRooms() {
     // Lobby (Room ID: 0)
     glm::mat4 lobbyModel = glm::translate(I4, config::LOBBY_POSITION);
     auto lobby = std::make_unique<ModelInstance>(lobbyAsset.get(), lobbyModel, nullptr, true);
+
+    // glm::mat4 finalDoorLeftModel = glm::translate(I4, config::FINALDOOR_LEFT_POSITION);
+    // finalDoorLeftModel =
+    //     glm::rotate(finalDoorLeftModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    // glm::mat4 finalDoorRightModel = glm::translate(I4, config::FINALDOOR_RIGHT_POSITION);
+    // finalDoorRightModel =
+    //     glm::rotate(finalDoorRightModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    glm::mat4 finalDoorModel = glm::translate(I4, config::FINALDOOR_POSITION);
+    finalDoorModel = glm::rotate(finalDoorModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    lobby->children["finalDoor"][0] =
+        std::make_unique<ModelInstance>(finalDoorAsset.get(), finalDoorModel, lobby.get(), true);
+    // for (int i = 0; i < 4; i++) {
+    //     glm::mat4 finalKeyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[i]);
+    //     finalKeyModel =
+    //         glm::rotate(finalKeyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    //     lobby->children["keys"][i] =
+    //         std::make_unique<ModelInstance>(keyAsset.get(), finalKeyModel, lobby.get(), true);
+    // }
 
     // Swamp room (Room ID: 1)
     glm::mat4 swampRoomModel = glm::translate(I4, config::SWAMP_ROOM_POSITION);
@@ -114,6 +138,18 @@ void Scene::initRooms() {
     glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
     auto circusRoom =
         std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel, nullptr, true);
+
+    for (int i = 0; i < config::NUM_CANNONBALLS; i++) {
+        // init cannon
+        glm::mat4 cannon = glm::translate(I4, config::CANNONBALL_POSITIONS[i]);
+        cannon = glm::translate(cannon, {5.0f, 0.0f, 0.0f});
+        circusRoom->children["cannon"][i] =
+            std::make_unique<ModelInstance>(cannonAsset.get(), cannon, circusRoom.get());
+        // init cannonball
+        glm::mat4 cannonball = glm::translate(I4, config::CANNONBALL_POSITIONS[i]);
+        circusRoom->children["cannonball"][i] = std::make_unique<ModelInstance>(
+            cannonballAsset.get(), cannonball, circusRoom.get(), false);
+    }
 
     // Circus key room (Room ID: 4)
     glm::mat4 circusKeyRoomModel = glm::translate(I4, config::CIRCUS_KEY_ROOM_POSITION);
@@ -334,6 +370,14 @@ void Scene::removeInstanceFromRoom(const std::string& roomName, const std::strin
     modelInstances[roomName]->deleteChild(type, id);
 }
 
+void Scene::addKeyToSlot(const std::string& roomName, const std::string& type, int id) {
+    glm::mat4 keyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[id]);
+    keyModel = glm::rotate(keyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+    modelInstances[roomName]->children[type][id] = std::make_unique<ModelInstance>(
+        keyAsset.get(), keyModel, modelInstances[roomName].get(), true);
+}
+
 void Scene::renderStaticShadowPass() {
     for (auto& [name, shadowMaps] : staticShadowMaps) {
         for (const auto& shadowMap : shadowMaps) {
@@ -401,6 +445,32 @@ void Scene::renderLilypadShadowPass(int id) {
         }
     } else {
         renderForIndex((id < 8) ? 0 : 1);
+    }
+}
+
+/**
+ * Takes in an array of NUM_CANNONBALLS cannonball positions.
+ * For each position, sets the ith cannonball to the ith position.
+ */
+void Scene::updateCannonballPositions(glm::vec3 positions[]) {
+    auto it = modelInstances.find("circusRoom");
+    if (it == modelInstances.end())
+        return;
+    ModelInstance* circusRoomInstance = it->second.get();
+
+    glm::vec3 roomOffset = config::CIRCUS_ROOM_POSITION;
+    static const glm::mat4 I4{1.0f};
+
+    auto& cannonBalls = circusRoomInstance->children["cannonball"];
+    for (int i = 0; i < config::NUM_CANNONBALLS; ++i) {
+        if (i >= static_cast<int>(cannonBalls.size()) || !cannonBalls[i])
+            continue;
+        ModelInstance* ballInst = cannonBalls[i].get();
+
+        // Convert server’s “absolute” position into a room‐local offset:
+        glm::vec3 localPos = positions[i] - roomOffset;
+        glm::mat4 newLocal = glm::translate(I4, localPos);
+        ballInst->localTransform = newLocal;
     }
 }
 
@@ -492,7 +562,18 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
                             interactableShadowActive[name][i]);
         }
 
-        instance->drawRecursive(*shader, boundingBoxMode);
+        if (name == "lobby") {
+            // glEnable(GL_BLEND);
+            // glDepthMask(GL_FALSE);
+            // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+            instance->drawRecursive(*shader, boundingBoxMode);
+
+            // glDepthMask(GL_TRUE);
+            // glDisable(GL_BLEND);
+        } else {
+            instance->drawRecursive(*shader, boundingBoxMode);
+        }
     }
 
     for (Firefly& firefly : fireflies) {
@@ -507,16 +588,21 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
 }
 
 void Scene::setPlayerRoomID(int clientID, int roomID) {
-    auto it = players.find(clientID);
-    if (it != players.end()) {
-        it->second.setCurrRoomID(roomID);
+    if (players.contains(clientID)) {
+        players.at(clientID).setCurrRoomID(roomID);
     }
 }
 
 int Scene::getPlayerRoomID(int clientID) {
-    auto it = players.find(clientID);
-    if (it != players.end()) {
-        return it->second.getCurrRoomID();
+    if (players.contains(clientID)) {
+        return players.at(clientID).getCurrRoomID();
     }
+
     return -1;
+}
+
+void Scene::setPlayerState(int clientID, int state) {
+    if (players.contains(clientID)) {
+        players.at(clientID).setState(state);
+    }
 }

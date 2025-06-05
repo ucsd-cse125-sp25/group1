@@ -176,6 +176,7 @@ class Scene {
     void spawnFireflies(int count);
 
     int playerID;
+    int currWindowWidth, currWindowHeight = 0;
 
     std::vector<std::string> roomNames;
     std::unordered_map<std::string, std::unordered_set<std::string>> connectedRooms;

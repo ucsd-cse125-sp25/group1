@@ -1019,16 +1019,6 @@
       {
         "model": "door_00",
         "position": [
-          -40.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false,
-        "connects_to": 3
-      },
-      {
-        "model": "door_00",
-        "position": [
           -60.0,
           0.0,
           0.0
@@ -1037,16 +1027,16 @@
         "connects_to": 12
       },
       {
-        "model": "ticket_entry_00",
+        "model": "metal_grate",
         "position": [
           0.0,
-          0.0,
+          10.0,
           0.0
         ],
         "rotated": false
       },
       {
-        "model": "circus_entry_00",
+        "model": "circus_blocker",
         "position": [
           0.0,
           0.0,

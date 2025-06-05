@@ -18,6 +18,7 @@
 class Swamp;
 class Piano;
 class Lobby;
+class Piano;
 
 /**
  * @brief Handles server-side networking and world updates for a multiplayer game.

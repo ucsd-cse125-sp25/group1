@@ -147,3 +147,5 @@ RigidBody* initButton(TransformData data, std::unordered_map<int, Object*>* obje
  */
 RigidBody* initFinalDoor(TransformData data, std::unordered_map<int, Object*>* objects,
                          Lobby* lobby, World* world);
+
+RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world);

@@ -7,6 +7,7 @@ using json = nlohmann::json;
 // Constructor
 FinalDoor::FinalDoor(int numKeys, int objectID, Lobby* lobbyRef)
     : Interactable(objectID), numKeys(numKeys), keyStates(numKeys, false), lobby(lobbyRef) {
+    keyCount = 0;
     // Initialize any member variables if needed
 }
 
@@ -48,7 +49,9 @@ void FinalDoor::handleInteract(Player& player) {
     // message["sfx_id"] = config::Some sound effect ID;
     message["client_id"] = player.getID();
     message["action"] = "interact";
-    message["slot_id"] = getKeyCount() - 1; // Include the current key count
+    int slotID = keyCount - 1;
+    std::cout << "slotID " << slotID << std::endl;
+    message["slot_id"] = slotID; // Include the current key count
     message["room"] = "lobby"; // Include the room name
 
     std::string packet = message.dump() + "\n";

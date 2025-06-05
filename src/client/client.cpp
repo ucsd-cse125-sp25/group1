@@ -214,6 +214,12 @@ void Client::handleServerMessage(const std::string& message) {
             audioManager.playEvent(sfxID);
             audioManager.setEventVolume(sfxID, volume);
         }
+
+        if (action == "door_open") {
+            auto doorID = parsed["door_id"];
+            // TODO: remove rendering of door
+        }
+
     } else if (type == "interactable_nearby") {
         scene->canvas->setInteractHidden(false);
     } else if (type == "interactable_not_nearby") {

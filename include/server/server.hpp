@@ -10,6 +10,7 @@
 #include "components/interactable.hpp"
 #include "components/key.hpp"
 #include "initBody.hpp"
+#include "piano.hpp"
 #include "player.hpp"
 #include "string"
 #include "swamp.hpp"
@@ -17,6 +18,7 @@
 
 class Swamp;
 class Circus;
+class Piano;
 
 /**
  * @brief Handles server-side networking and world updates for a multiplayer game.
@@ -179,5 +181,7 @@ class Server {
 
     Swamp* swamp;
     Circus* circus;
+    Piano* piano;
+
     Interactable* interactableTracked = nullptr;
 };

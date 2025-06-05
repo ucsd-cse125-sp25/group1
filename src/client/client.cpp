@@ -204,7 +204,7 @@ void Client::handleServerMessage(const std::string& message) {
         // Audio logic
 
         if (clientId == this->clientId) {
-            if (this->ambianceId != "") {
+            if (ambianceId && ambianceId[0] != '\0') {
                 audioManager.stopEvent(this->ambianceId);
             }
 

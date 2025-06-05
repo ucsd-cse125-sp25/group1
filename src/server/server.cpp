@@ -41,6 +41,9 @@ void Server::initRigidBodies() {
         } else if (roomName == "circusRoom") {
             circus = new Circus(rooms.size(), world, *this);
             room = static_cast<Room*>(circus);
+        } else if (roomName == "pianoRoom") {
+            piano = new Piano(rooms.size(), world, *this);
+            room = static_cast<Room*>(piano);
         } else {
             room = new Room(rooms.size(), roomName);
         }
@@ -57,7 +60,7 @@ void Server::initRigidBodies() {
 
         for (const auto& obj : room["objects"]) {
             string modelName = obj["model"];
-            std::cout << modelName << std::endl;
+            // std::cout << modelName << std::endl;
             vec3 position = toVec3(obj["position"]);
             vec3 minCorner = toVec3(dimensions[modelName]["min"]);
             vec3 maxCorner = toVec3(dimensions[modelName]["max"]);
@@ -96,6 +99,8 @@ void Server::initRigidBodies() {
                 object = initCannonball(data, circus, &world);
             } else if (modelName.starts_with("zone_")) {
                 object = initZone(data, this, &objects, &world, i);
+            } else if (modelName == "piano_floor_00") {
+                object = initPianoRespawn(data, piano, &world);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;

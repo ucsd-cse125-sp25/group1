@@ -10,7 +10,9 @@
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "components/water.hpp"
+#include "components/pianoRespawn.hpp"
 #include "config.hpp"
+#include "piano.hpp"
 #include "rigidBody.hpp"
 #include "server.hpp"
 #include "swamp.hpp"
@@ -141,3 +143,5 @@ RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef,
  * @return Pointer to the initialized RigidBody associated with the Splash.
  */
 RigidBody* initSplash(TransformData data, Swamp* swamp, World* world);
+
+RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world);

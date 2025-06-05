@@ -216,6 +216,64 @@ void Scene::initRooms() {
     for (int i = 0; i < 7; ++i) {
         modelInstances["hallway" + std::to_string(i)] = std::move(hallways[i]);
     }
+
+    roomNames = {"lobby",         "swampRoom", "swampKeyRoom",  "circusRoom",
+                 "circusKeyRoom", "pianoRoom", "parkourKeyRoom"};
+
+    for (int i = 0; i < 15; ++i) {
+        roomNames.push_back("hotelRoom" + std::to_string(i));
+    }
+
+    for (int i = 0; i < 7; ++i) {
+        roomNames.push_back("hallway" + std::to_string(i));
+    }
+
+    connectedRooms["lobby"] = {"hotelRoom3",  "hotelRoom4", "hotelRoom6", "hotelRoom7",
+                               "hotelRoom10", "hallway2",   "hallway3",   "hallway4"};
+    connectedRooms["swampRoom"] = {"swampKeyRoom", "hotelRoom0", "hallway0", "hallway3"};
+    connectedRooms["swampKeyRoom"] = {"swampRoom", "hotelRoom0", "hotelRoom3", "hotelRoom4",
+                                      "hallway3"};
+    connectedRooms["circusRoom"] = {"circusKeyRoom", "hotelRoom5", "hallway4", "hallway6"};
+    connectedRooms["circusKeyRoom"] = {"circusRoom", "pianoRoom", "hotelRoom5", "hotelRoom14",
+                                       "hallway6"};
+    connectedRooms["pianoRoom"] = {"circusKeyRoom", "hotelRoom13", "hotelRoom14", "hallway6"};
+    connectedRooms["parkourKeyRoom"] = {"hotelRoom1", "hotelRoom2", "hallway0", "hallway1"};
+    connectedRooms["hotelRoom0"] = {"swampRoom", "swampKeyRoom", "hotelRoom1", "hallway0"};
+    connectedRooms["hotelRoom1"] = {"parkourKeyRoom", "hotelRoom0", "hotelRoom2", "hallway0",
+                                    "hallway1"};
+    connectedRooms["hotelRoom2"] = {"parkourKeyRoom", "hotelRoom1", "hotelRoom4",
+                                    "hallway0",       "hallway1",   "hallway2"};
+    connectedRooms["hotelRoom3"] = {"lobby",      "swampKeyRoom", "hotelRoom4",
+                                    "hotelRoom6", "hallway2",     "hallway3"};
+    connectedRooms["hotelRoom4"] = {"lobby",    "swampKeyRoom", "hotelRoom2", "hotelRoom3",
+                                    "hallway1", "hallway2",     "hallway3"};
+    connectedRooms["hotelRoom5"] = {"circusRoom", "circusKeyRoom", "hotelRoom6", "hotelRoom7",
+                                    "hallway4"};
+    connectedRooms["hotelRoom6"] = {"lobby",      "hotelRoom3",  "hotelRoom5",
+                                    "hotelRoom7", "hotelRoom10", "hallway4"};
+    connectedRooms["hotelRoom7"] = {"lobby",      "hotelRoom5",  "hotelRoom6",
+                                    "hotelRoom9", "hotelRoom10", "hallway4"};
+    connectedRooms["hotelRoom8"] = {"hotelRoom9", "hotelRoom10", "hotelRoom11", "hallway5"};
+    connectedRooms["hotelRoom9"] = {"hotelRoom7", "hotelRoom8", "hotelRoom10", "hallway5"};
+    connectedRooms["hotelRoom10"] = {"lobby", "hotelRoom6", "hotelRoom7", "hotelRoom8",
+                                     "hotelRoom9"};
+    connectedRooms["hotelRoom11"] = {"hotelRoom8", "hotelRoom12", "hotelRoom13", "hallway5"};
+    connectedRooms["hotelRoom12"] = {"hotelRoom11", "hotelRoom13", "hotelRoom14", "hallway5"};
+    connectedRooms["hotelRoom13"] = {"pianoRoom",   "hotelRoom11", "hotelRoom12",
+                                     "hotelRoom14", "hallway5",    "hallway6"};
+    connectedRooms["hotelRoom14"] = {"circusKeyRoom", "pianoRoom", "hotelRoom12", "hotelRoom13",
+                                     "hallway6"};
+    connectedRooms["hallway0"] = {"swampRoom",  "parkourKeyRoom", "hotelRoom0",
+                                  "hotelRoom1", "hotelRoom2",     "hallway1"};
+    connectedRooms["hallway1"] = {"parkourKeyRoom", "hotelRoom1", "hotelRoom2",
+                                  "hotelRoom4",     "hallway0",   "hallway2"};
+    connectedRooms["hallway2"] = {"lobby", "hotelRoom2", "hotelRoom3", "hotelRoom4", "hallway1"};
+    connectedRooms["hallway3"] = {"lobby", "swampRoom", "swampKeyRoom", "hotelRoom3", "hotelRoom4"};
+    connectedRooms["hallway4"] = {"lobby", "circusRoom", "hotelRoom5", "hotelRoom6", "hotelRoom7"};
+    connectedRooms["hallway5"] = {"hotelRoom8", "hotelRoom9", "hotelRoom11", "hotelRoom12",
+                                  "hotelRoom13"};
+    connectedRooms["hallway6"] = {"circusRoom", "circusKeyRoom", "pianoRoom", "hotelRoom13",
+                                  "hotelRoom14"};
 }
 
 void Scene::initLights() {
@@ -394,8 +452,17 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         shader->setFloat("shadowFarClip", config::SHADOW_FAR_CLIP);
     }
 
-    // Draw all model instances in the scene
+    // Draw all visible rooms in the scene
     for (const auto& [name, instance] : modelInstances) {
+        if (players.contains(playerID)) {
+            int currentRoomID = players.at(playerID).getCurrRoomID();
+
+            if (!connectedRooms[roomNames[currentRoomID]].contains(name) &&
+                name != roomNames[currentRoomID]) {
+                continue;
+            }
+        }
+
         Shader* shader = nullptr;
         const auto& lights = pointLights[name];
 
@@ -456,7 +523,7 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
 void Scene::setPlayerRoomID(int clientID, int roomID) {
     auto it = players.find(clientID);
     if (it != players.end()) {
-        it->second.setCurrRoomID(clientID);
+        it->second.setCurrRoomID(roomID);
     }
 }
 

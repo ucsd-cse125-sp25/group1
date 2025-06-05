@@ -593,6 +593,18 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         if (id == playerID)
             continue;
 
+        int roomID = player.getCurrRoomID();
+        std::string roomName = roomNames[roomID];
+        int numLights = pointLights[roomName].size();
+
+        shaders["character"]->setInt("numLights", numLights);
+        for (int i = 0; i < numLights; ++i) {
+            shaders["character"]->setVec3("pointLights[" + std::to_string(i) + "].position",
+                                          pointLights[roomName][i].worldPosition);
+            shaders["character"]->setVec3("pointLights[" + std::to_string(i) + "].color",
+                                          pointLights[roomName][i].color);
+        }
+
         player.updateTime(deltaTime);
         player.draw(*shaders["character"]);
     }

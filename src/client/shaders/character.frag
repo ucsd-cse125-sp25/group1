@@ -13,6 +13,9 @@ in vec2 texCoords;
 
 out vec4 fragColor;
 
+uniform int numLights;
+uniform PointLight pointLights[MAX_LIGHTS];
+
 uniform vec3 viewPos;
 
 uniform vec3 color;
@@ -27,8 +30,8 @@ vec3 computeLighting(vec3 lightDir, vec3 lightColor, vec3 normal, vec3 viewDir) 
     float diff = max(dot(normal, lightDir), 0.0);
     float spec = pow(max(dot(normal, halfwayDir), 0.0), max(shininess, 1));
 
-    vec3 ambient = 0.5 * lightColor;
-    vec3 diffuse = 0.5 * diff * lightColor;
+    vec3 ambient = 0.3 * lightColor;
+    vec3 diffuse = 0.4 * diff * lightColor;
     vec3 specularComponent = 0.1 * specular * spec * lightColor;
 
     return ambient + diffuse + specularComponent;
@@ -43,10 +46,19 @@ void main() {
 
     vec3 dirLightDir1 = normalize(-vec3(0.0, -0.5, -1.0));
     vec3 dirLightDir2 = normalize(-vec3(0.0, -0.5, 1.0));
-    vec3 dirLightColor = vec3(1.0) * 0.6;
+    vec3 dirLightColor = vec3(1.0) * 0.3;
 
     result += computeLighting(dirLightDir1, dirLightColor, N, viewDir) * baseColor;
     result += computeLighting(dirLightDir2, dirLightColor, N, viewDir) * baseColor;
+
+    // Point lights
+    for (int i = 0; i < numLights; ++i) {
+        vec3 lightDir = normalize(pointLights[i].position - fragPos);
+        vec3 lightColor = pointLights[i].color;
+
+        vec3 lighting = computeLighting(lightDir, lightColor, normal, viewDir);
+        result += lighting * baseColor;
+    }
 
     fragColor = vec4(result, 1.0);
 }

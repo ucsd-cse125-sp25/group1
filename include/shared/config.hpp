@@ -154,7 +154,7 @@ inline constexpr std::array<const char*, 14> PIANO_KEY_SFX = {
     "{493fcf1e-c2ed-4f98-944e-7823f802d2a7}",  // C3
     "{7aa9c7e4-59ba-4661-b2a5-34e51a65638a}",  // D3
     "{29e7dd89-2c8b-4f23-bce0-a6acb95c9932}",  // E3
-    "{663182e8-12cc-474b-930f-b16bc6114ef5} ", // F3
+    "{663182e8-12cc-474b-930f-b16bc6114ef5}", // F3
     "{adf2cfea-4a8d-4ff7-998a-e1aba0974e47}",  // G3
     "{a68f5274-dabe-48c1-b133-cf25104e891e}",  // A3
     "{36c7d695-0c76-4ea2-a2a9-b6c243fe6c25}",  // B3

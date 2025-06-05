@@ -37,6 +37,9 @@ void Server::initRigidBodies() {
         if (roomName == "swampRoom") {
             swamp = new Swamp(rooms.size(), world, *this);
             room = static_cast<Room*>(swamp);
+        } else if (roomName == "pianoRoom") {
+            piano = new Piano(rooms.size(), world, *this);
+            room = static_cast<Room*>(piano);
         } else {
             room = new Room(rooms.size(), roomName);
         }
@@ -90,6 +93,8 @@ void Server::initRigidBodies() {
                 object = initKey(data, *this, world, roomName, &keys);
             } else if (modelName.starts_with("zone_")) {
                 object = initZone(data, this, &objects, &world, i);
+            } else if (modelName == "piano_floor_00") {
+                object = initPianoRespawn(data, piano, &world);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;

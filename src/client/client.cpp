@@ -189,13 +189,12 @@ void Client::handleServerMessage(const std::string& message) {
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
         scene->renderLilypadShadowPass(id);
     } else if (type == "room_id") {
-        // TODO : handle room ID assignment
         auto roomID = parsed["id"];
         auto clientId = parsed["client_id"];
 
         scene->setPlayerRoomID(clientId, roomID);
 
-        //Audio logic
+        // Audio logic
 
         if (clientId == this->clientId) {
             if (this->ambianceId != "") {
@@ -227,11 +226,10 @@ void Client::handleServerMessage(const std::string& message) {
             } else if (roomID == 5) {
                 // Piano room
 
-                //TODO uncomment if we have
-                //this->ambianceId = config::PIANO_AMBIENCE_TRACK;
-                //this->ambianceVol = config::PIANO_AMBIENCE_VOL;
-                // audioManager.loadFMODStudioEvent(this->ambianceId);
-                // audioManager.playEvent(this->ambianceId);
+                this->ambianceId = config::PIANO_AMBIENCE_TRACK;
+                this->ambianceVol = config::PIANO_AMBIENCE_VOL;
+                audioManager.loadFMODStudioEvent(this->ambianceId);
+                audioManager.playEvent(this->ambianceId);
 
                 this->footstepSfxId = config::FOOTSTEPWOOD;
                 this->footstepVol = config::FOOTSTEPWOOD_VOL;
@@ -245,7 +243,8 @@ void Client::handleServerMessage(const std::string& message) {
 
     } else if (type == "sfx") {
         // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,
-        // "action": "jump", "volume": 1.0f (optional), "stopID": "eventID" (optional)} client id that of the person triggering the sfx
+        // "action": "jump", "volume": 1.0f (optional), "stopID": "eventID" (optional)} client id
+        // that of the person triggering the sfx
 
         std::string sfxIDStr = parsed["sfx_id"];
         const char* sfxID = sfxIDStr.c_str();
@@ -367,7 +366,7 @@ void Client::handleKeyboardInput(GLFWwindow* window) {
 
             if (!action.empty()) {
                 message["actions"].push_back(action);
-                if (action != "jump" && action != "interact" ) {
+                if (action != "jump" && action != "interact") {
                     // This is footstep sfx
 
                     if (footstepCooldown == config::FOOTSTEP_COOLDOWN_RATE) {

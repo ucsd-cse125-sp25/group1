@@ -213,33 +213,29 @@ void Client::handleServerMessage(const std::string& message) {
                 audioManager.loadFMODStudioEvent(this->ambianceId);
                 audioManager.playEvent(this->ambianceId);
                 audioManager.setEventVolume(this->ambianceId, this->ambianceVol);
-            } 
-            // TODO: Uncomment When Present
-            //else if (roomID == 3) {
-            //    // Carnival room
-            //    this->ambianceId = config::CARNIVAL_AMBIENCE_TRACK;
-            //    this->ambianceVol = config::CARNIVAL_AMBIENCE_VOL;
+            } else if (roomID == 3) {
+                // Carnival room
+                this->ambianceId = config::CARNIVAL_AMBIENCE_TRACK;
+                this->ambianceVol = config::CARNIVAL_AMBIENCE_VOL;
 
-            //    this->footstepSfxId = config::FOOTSTEPWOOD;
-            //    this->footstepVol = config::FOOTSTEPWOOD_VOL;
+                this->footstepSfxId = config::FOOTSTEPWOOD;
+                this->footstepVol = config::FOOTSTEPWOOD_VOL;
 
-            //    audioManager.loadFMODStudioEvent(this->ambianceId);
-            //    audioManager.playEvent(this->ambianceId);
-            //    audioManager.setEventVolume(this->ambianceId, this->ambianceVol);
-            //} 
-            // TODO: Uncomment When Present
-            //else if (roomID == 5) {
-            //    // Piano room
-            //    this->ambianceId = config::PIANO_AMBIENCE_TRACK;
-            //    this->ambianceVol = config::PIANO_AMBIENCE_VOL;
+                audioManager.loadFMODStudioEvent(this->ambianceId);
+                audioManager.playEvent(this->ambianceId);
+                audioManager.setEventVolume(this->ambianceId, this->ambianceVol);
+            } else if (roomID == 5) {
+                // Piano room
 
-            //    this->footstepSfxId = config::FOOTSTEPWOOD;
-            //    this->footstepVol = config::FOOTSTEPWOOD_VOL;
+                //TODO uncomment if we have
+                //this->ambianceId = config::PIANO_AMBIENCE_TRACK;
+                //this->ambianceVol = config::PIANO_AMBIENCE_VOL;
+                // audioManager.loadFMODStudioEvent(this->ambianceId);
+                // audioManager.playEvent(this->ambianceId);
 
-            //    audioManager.loadFMODStudioEvent(this->ambianceId);
-            //    audioManager.playEvent(this->ambianceId);
-            //}
-            else {
+                this->footstepSfxId = config::FOOTSTEPWOOD;
+                this->footstepVol = config::FOOTSTEPWOOD_VOL;
+            } else {
                 this->ambianceId = "";
 
                 this->footstepSfxId = config::FOOTSTEPCARPET;

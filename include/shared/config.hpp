@@ -109,17 +109,17 @@ inline constexpr const char* JUMPLILYPAD = "{85da62c4-60ce-4776-b1f3-2503b761aa8
 inline constexpr const char* UNLOCKDOOR = "{008e7455-ae30-40ce-a197-5e85b67035b8}";
 inline constexpr const char* GRABKEY = "{f811c9cc-fec0-4714-8a32-e645ad8a502b}";
 inline constexpr const char* WATERSPLASH = "{907b8e60-bc68-4a05-b2dc-394c92c13343}";
-inline constexpr const char* CARNIVAL_AMBIENCE_TRACK = "";
+inline constexpr const char* CARNIVAL_AMBIENCE_TRACK = "{7251ffff-27b9-48ac-a1a8-da14ea95facb}";
 inline constexpr const char* PIANO_AMBIENCE_TRACK = "";
 // Audio for Set Volume
 
 // Controlled by Client
 inline constexpr float SWAMP_AMBIENCE_VOL = 0.5f;
-inline constexpr float CARNIVAL_AMBIENCE_VOL = 0.5f;
+inline constexpr float CARNIVAL_AMBIENCE_VOL = 0.15f;
 inline constexpr float PIANO_AMBIENCE_VOL = 0.5f;
 
 inline constexpr float FOOTSTEPCARPET_VOL = 0.1f;
-inline constexpr float FOOTSTEPWOOD_VOL = 0.05f;
+inline constexpr float FOOTSTEPWOOD_VOL = 0.02f;
 
 inline constexpr int FOOTSTEP_COOLDOWN_RATE = 7;
 

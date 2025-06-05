@@ -95,7 +95,7 @@ void Scene::initRooms() {
     glm::mat4 finalDoorModel = glm::translate(I4, config::FINALDOOR_POSITION);
     finalDoorModel = glm::rotate(finalDoorModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-    lobby->children["finalDoor"][0] =
+    lobby->children["final_door"][0] =
         std::make_unique<ModelInstance>(finalDoorAsset.get(), finalDoorModel, lobby.get(), true);
 
     glm::mat4 blueButtonModel = glm::translate(I4, config::BUTTON_BLUE_POSITION);

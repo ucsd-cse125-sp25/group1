@@ -306,6 +306,9 @@ void Client::handleServerMessage(const std::string& message) {
     } else if (type == "final_door_open") {
         // This is the final door opening, so we need to update the scene
         // and show the end screen.
+        std::cout << "End of the Game!" << std::endl;
+
+        scene->removeInstanceFromRoom("lobby", "final_door", 0);
     } else if (type == "final_button_pressed") {
         // Could just be sfx only
         int playerID = parsed["player_id"];

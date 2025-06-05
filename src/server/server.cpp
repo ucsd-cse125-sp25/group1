@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <thread>
+#include <unordered_set>
 #include "config.hpp"
 #include "json.hpp"
 
@@ -340,8 +341,10 @@ void Server::handlePhysics() {
 void Server::broadcastPlayerStates() {
     json message;
     message["type"] = "player_states";
+    std::unordered_set<int> ids;
 
     for (const auto& [id, player] : players) {
+        ids.insert(id);
         vec3 position = player->getBody().getPosition();
         vec3 direction = player->getBody().getDirection();
         glm::vec3 velocity = player->getBody().getVelocity();
@@ -363,10 +366,12 @@ void Server::broadcastPlayerStates() {
     std::string packet = message.dump() + "\n";
 
     for (const auto& [clientId, socket] : clients) {
-        try {
-            boost::asio::write(*socket, boost::asio::buffer(packet));
-        } catch (const std::exception& e) {
-            handleClientDisconnect(clientId);
+        if (ids.contains(clientId)) {
+            try {
+                boost::asio::write(*socket, boost::asio::buffer(packet));
+            } catch (const std::exception& e) {
+                handleClientDisconnect(clientId);
+            }
         }
     }
 }

@@ -9,6 +9,7 @@
 #include "components/interactable.hpp"
 #include "initBody.hpp"
 #include "lobby.hpp"
+#include "piano.hpp"
 #include "player.hpp"
 #include "string"
 #include "swamp.hpp"
@@ -16,6 +17,7 @@
 
 class Swamp;
 class Lobby;
+class Piano;
 
 /**
  * @brief Handles server-side networking and world updates for a multiplayer game.
@@ -178,6 +180,7 @@ class Server {
 
     Swamp* swamp;
     Lobby* lobby;
+    Piano* piano;
 
     Interactable* interactableTracked = nullptr;
 };

@@ -11,7 +11,9 @@
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "components/water.hpp"
+#include "components/pianoRespawn.hpp"
 #include "config.hpp"
+#include "piano.hpp"
 #include "lobby.hpp"
 #include "rigidBody.hpp"
 #include "server.hpp"
@@ -114,7 +116,7 @@ RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef,
  * @brief Initializes a Splash Object.
  *
  * A Splash object is created through the Swamp, and a non-collidable RigidBody is created with it.
- * 
+ *
  * @param data Transform data including position and collider dimensions.
  * @param serverRef Reference to the Server instance for managing game state.
  * @return Pointer to the initialized RigidBody associated with the Splash.
@@ -143,3 +145,5 @@ RigidBody* initButton(TransformData data, std::unordered_map<int, Object*>* obje
  */
 RigidBody* initFinalDoor(TransformData data, std::unordered_map<int, Object*>* objects,
                          Lobby* lobby, World* world);
+
+RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world);

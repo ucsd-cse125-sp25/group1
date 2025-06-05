@@ -128,13 +128,6 @@ void Scene::initRooms() {
         lobby->children["backPlate"][i] = std::make_unique<ModelInstance>(
             backPlateAsset.get(), backPlateModel, lobby.get(), true);
     }
-    // for (int i = 0; i < 4; i++) {
-    //     glm::mat4 finalKeyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[i]);
-    //     finalKeyModel =
-    //         glm::rotate(finalKeyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    //     lobby->children["keys"][i] =
-    //         std::make_unique<ModelInstance>(keyAsset.get(), finalKeyModel, lobby.get(), true);
-    // }
 
     // Swamp room (Room ID: 1)
     glm::mat4 swampRoomModel = glm::translate(I4, config::SWAMP_ROOM_POSITION);
@@ -391,6 +384,11 @@ void Scene::initShadowMaps() {
                 light.worldPosition, config::SHADOW_MAP_RES_INTERACTABLE);
             interactableShadowMaps[name].emplace_back(std::move(interactableShadowMap));
             interactableShadowActive[name].emplace_back(false);
+
+            auto playerShadowMap =
+                std::make_unique<ShadowMap>(light.worldPosition, config::SHADOW_MAP_RES_PLAYER);
+            playerShadowMaps[name].emplace_back(std::move(playerShadowMap));
+            playerShadowActive[name].emplace_back(false);
         }
     }
 }
@@ -445,11 +443,11 @@ void Scene::addKeyToSlot(const std::string& roomName, const std::string& type, i
 
 void Scene::moveChildTransform(const std::string& roomName, const std::string& type, int id,
                                const glm::vec3& offset) {
-    
+
     auto& room = modelInstances[roomName];
     // if (!room || !room->children.contains(type) || !room->children[type].contains(id))
     //     return;
-   
+
     auto& child = room->children[type][id];
     // Apply translation to the existing localTransform
     child->translateLocal(offset);
@@ -472,7 +470,7 @@ void Scene::renderStaticShadowPass() {
 void Scene::renderInteractableShadowPass() {
     renderLilypadShadowPass();
 
-    // Will refactor this if more interactable things (other than a key) are added
+    // Add "circusKeyRoom", "pianoKeyRoom" later
     std::vector<std::string> keyRooms = {"swampKeyRoom", "parkourKeyRoom"};
     for (const std::string& roomName : keyRooms) {
         auto& shadowMaps = interactableShadowMaps[roomName];
@@ -484,6 +482,37 @@ void Scene::renderInteractableShadowPass() {
 
         shadowMaps[0]->end();
         interactableShadowActive[roomName][0] = true;
+    }
+}
+
+void Scene::renderPlayerShadowPass() {
+    std::unordered_map<std::string, std::vector<Player*>> playersByRoom;
+
+    for (auto& [id, player] : players) {
+        int roomID = player.getCurrRoomID();
+        std::string roomName = roomNames[roomID];
+        playersByRoom[roomName].push_back(&player);
+    }
+
+    for (auto& [roomName, playersInRoom] : playersByRoom) {
+        auto& shadowMaps = playerShadowMaps[roomName];
+        shadowMaps[0]->begin();
+
+        Shader& shader = shadowMaps[0]->getShader();
+        shader.setBool("isSkinned", true);
+
+        for (Player* player : playersInRoom) {
+            player->draw(shader);
+        }
+
+        shadowMaps[0]->end();
+        playerShadowActive[roomName][0] = true;
+    }
+
+    for (const std::string& roomName : roomNames) {
+        if (!playersByRoom.contains(roomName)) {
+            playerShadowActive[roomName][0] = false;
+        }
     }
 }
 
@@ -556,11 +585,25 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
     float deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
+    renderPlayerShadowPass();
+
     shaders["character"]->use();
 
     for (auto& [id, player] : players) {
         if (id == playerID)
             continue;
+
+        int roomID = player.getCurrRoomID();
+        std::string roomName = roomNames[roomID];
+        int numLights = pointLights[roomName].size();
+
+        shaders["character"]->setInt("numLights", numLights);
+        for (int i = 0; i < numLights; ++i) {
+            shaders["character"]->setVec3("pointLights[" + std::to_string(i) + "].position",
+                                          pointLights[roomName][i].worldPosition);
+            shaders["character"]->setVec3("pointLights[" + std::to_string(i) + "].color",
+                                          pointLights[roomName][i].color);
+        }
 
         player.updateTime(deltaTime);
         player.draw(*shaders["character"]);
@@ -577,7 +620,7 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             continue;
         }
 
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 6; ++i) {
             shader->setInt("shadowDepthCubemap" + std::to_string(i),
                            config::SHADOW_TEXTURE_UNIT + i);
         }
@@ -609,6 +652,11 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             tex = i < (lights.size()) ? interactableShadowMaps[name][i]->getDepthCubemap()
                                       : getDummyCubemap();
             glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
+
+            glActiveTexture(GL_TEXTURE0 + config::SHADOW_TEXTURE_UNIT + i + 4);
+            tex = i < (lights.size()) ? playerShadowMaps[name][i]->getDepthCubemap()
+                                      : getDummyCubemap();
+            glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
         }
 
         if (name.starts_with("hotelRoom") || name.ends_with("KeyRoom") ||
@@ -637,6 +685,8 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             shader->setVec3("pointLights[" + std::to_string(i) + "].color", lights[i].color);
             shader->setBool("interactableShadowActive[" + std::to_string(i) + "]",
                             interactableShadowActive[name][i]);
+            shader->setBool("playerShadowActive[" + std::to_string(i) + "]",
+                            playerShadowActive[name][i]);
         }
 
         if (name == "lobby") {

@@ -214,3 +214,17 @@ RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world) {
     respawn->setBody(body);
     return body;
 }
+
+RigidBody* initCircusRespawn(TransformData data, Circus* circus, World* world) {
+    CircusRespawn* respawn = circus->createRespawn();
+
+    // TODO: add the position/relative position in the json dimensions file
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, respawn, world,
+        true);
+
+    respawn->setBody(body);
+    return body;
+}

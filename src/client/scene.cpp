@@ -168,6 +168,11 @@ void Scene::initRooms() {
     swampKeyRoom->children["key"][0] =
         std::make_unique<ModelInstance>(keyAsset.get(), swampKey, swampKeyRoom.get(), false);
 
+    glm::mat4 door1 = glm::rotate(I4, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    door1 = glm::translate(door1, glm::vec3(10.0f, 0.0f, 0.0f));
+    swampKeyRoom->children["door"][0] =
+        std::make_unique<ModelInstance>(doorAsset.get(), door1, swampKeyRoom.get(), false);
+
     // Circus room (Room ID: 3)
     glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
     auto circusRoom =
@@ -189,6 +194,11 @@ void Scene::initRooms() {
     glm::mat4 circusKeyRoomModel = glm::translate(I4, config::CIRCUS_KEY_ROOM_POSITION);
     auto circusKeyRoom = std::make_unique<ModelInstance>(hotelRoomBendNegXPosZ.get(),
                                                          circusKeyRoomModel, nullptr, true);
+
+    glm::mat4 door3 = glm::rotate(I4, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    door3 = glm::translate(door3, glm::vec3(10.0f, 0.0f, 0.0f));
+    circusKeyRoom->children["door"][0] =
+        std::make_unique<ModelInstance>(doorAsset.get(), door3, circusKeyRoom.get(), false);
 
     // Piano room (Room ID: 5)
     glm::mat4 pianoRoomModel = glm::translate(I4, config::PIANO_ROOM_POSITION);
@@ -228,20 +238,27 @@ void Scene::initRooms() {
                                                         nullptr, true);
     }
 
-    // Hotel room 1 (Room ID: 7)
+    // Hotel room 0 (Room ID: 7)
     glm::mat4 tableModel = glm::translate(I4, config::TABLE_POSITION);
     hotelRooms[0]->children["table"][0] =
         std::make_unique<ModelInstance>(tableAsset.get(), tableModel, hotelRooms[0].get(), true);
 
-    // std::array<float, 4> degrees = {0.0f, 90.0f, 180.0f, 270.f};
+    glm::mat4 door0 = glm::rotate(I4, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    door0 = glm::translate(door0, glm::vec3(10.0f, 0.0f, 0.0f));
+    hotelRooms[0]->children["door"][0] =
+        std::make_unique<ModelInstance>(doorAsset.get(), door0, hotelRooms[0].get(), false);
 
-    // for (int i = 0; i < degrees.size(); ++i) {
-    //     glm::mat4 doorModel =
-    //         glm::rotate(I4, glm::radians(degrees[i]), glm::vec3(0.0f, 1.0f, 0.0f));
-    //     doorModel = glm::translate(doorModel, glm::vec3(10.0f, 0.0f, 0.0f));
-    //     hotelRoom->children["door"][i] =
-    //         std::make_unique<ModelInstance>(doorAsset.get(), doorModel, hotelRoom.get(), false);
-    // }
+    // Hotel room 5 (Room ID: 12)
+    glm::mat4 door2 = glm::rotate(I4, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    door2 = glm::translate(door2, glm::vec3(10.0f, 0.0f, 0.0f));
+    hotelRooms[5]->children["door"][0] =
+        std::make_unique<ModelInstance>(doorAsset.get(), door2, hotelRooms[5].get(), false);
+
+    // Hotel room 14 (Room ID: 21)
+    glm::mat4 door4 = glm::rotate(I4, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    door4 = glm::translate(door4, glm::vec3(10.0f, 0.0f, 0.0f));
+    hotelRooms[14]->children["door"][0] =
+        std::make_unique<ModelInstance>(doorAsset.get(), door4, hotelRooms[14].get(), false);
 
     // Hallways (Room IDs: 22 - 28)
     std::array<glm::mat4, 7> hallwayModels;
@@ -402,6 +419,20 @@ void Scene::removePlayer(int id) {
 
 void Scene::removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id) {
     modelInstances[roomName]->deleteChild(type, id);
+}
+
+void Scene::removeDoor(int id) {
+    if (id == 0) {
+        removeInstanceFromRoom("hotelRoom0", "door", 0);
+    } else if (id == 1) {
+        removeInstanceFromRoom("swampKeyRoom", "door", 0);
+    } else if (id == 2) {
+        removeInstanceFromRoom("hotelRoom5", "door", 0);
+    } else if (id == 3) {
+        removeInstanceFromRoom("circusKeyRoom", "door", 0);
+    } else if (id == 4) {
+        removeInstanceFromRoom("hotelRoom14", "door", 0);
+    }
 }
 
 void Scene::addKeyToSlot(const std::string& roomName, const std::string& type, int id) {

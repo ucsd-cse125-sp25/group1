@@ -20,7 +20,8 @@ std::string Room::getName() const {
 void Room::addInteractable(Interactable* object) {
     this->interactables.push_back(object);
     object->addRoom(this);
-    std::cout << "Added interactable with ID: " << object->getID() << " to room: " << roomName << std::endl;
+    std::cout << "Added interactable with ID: " << object->getID() << " to room: " << roomName
+              << std::endl;
 }
 
 // return a vector of raw pointers for read-only access

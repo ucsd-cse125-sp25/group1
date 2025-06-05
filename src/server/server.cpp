@@ -344,26 +344,31 @@ void Server::handlePhysics() {
 }
 
 void Server::broadcastPlayerStates() {
+    json message;
+    message["type"] = "player_states";
+
+    for (const auto& [id, player] : players) {
+        vec3 position = player->getBody().getPosition();
+        vec3 direction = player->getBody().getDirection();
+        glm::vec3 velocity = player->getBody().getVelocity();
+
+        int state = (glm::vec2(velocity.x, velocity.z) == glm::vec2(0.0f)) ? 0 : 1;
+
+        // WARNING: Completely deletes all horizontal motion
+        player->getBody().setVelocity(vec3(0.0f, player->getBody().getVelocity().y, 0.0f));
+
+        json entry;
+        entry["id"] = id;
+        entry["position"] = {position.x, position.y, position.z};
+        entry["direction"] = {direction.x, direction.y, direction.z};
+        entry["state"] = state;
+
+        message["players"].push_back(entry);
+    }
+
+    std::string packet = message.dump() + "\n";
+
     for (const auto& [clientId, socket] : clients) {
-        json message;
-        message["type"] = "player_states";
-
-        for (const auto& [id, player] : players) {
-            vec3 position = player->getBody().getPosition();
-            vec3 direction = player->getBody().getDirection();
-            // WARNING: Completely deletes all horizontal motion
-            player->getBody().setVelocity(vec3(0.0f, player->getBody().getVelocity().y, 0.0f));
-
-            json entry;
-            entry["id"] = id;
-            entry["position"] = {position.x, position.y, position.z};
-            entry["direction"] = {direction.x, direction.y, direction.z};
-
-            message["players"].push_back(entry);
-        }
-
-        std::string packet = message.dump() + "\n";
-
         try {
             boost::asio::write(*socket, boost::asio::buffer(packet));
         } catch (const std::exception& e) {

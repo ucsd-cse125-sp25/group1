@@ -314,7 +314,7 @@ void Client::handleServerMessage(const std::string& message) {
         auto roomName = parsed["room"];
         std::cout << "Checking keySlot and roomName" << roomName << keySlot << std::endl;
         std::cout << "interacted with final door" << roomName << keySlot << std::endl;
-        
+
         scene->addKeyToSlot(roomName, "final_door_key", keySlot);
         scene->canvas->removeKey();
 
@@ -348,6 +348,8 @@ void Client::updatePlayerStates(const json& parsed) {
 
         playerPositions[id] = position;
         playerDirections[id] = direction;
+
+        scene->setPlayerState(id, player["state"]);
 
         if (id == clientId) {
             camera.setPosition(position + config::CAMERA_OFFSET);

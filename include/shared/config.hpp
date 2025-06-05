@@ -23,7 +23,7 @@ inline constexpr float WORLD_HEIGHT = 900.0f;
 // Camera
 inline constexpr float FOVY = 45.0f;
 inline constexpr float NEAR_CLIP = 0.1f;
-inline constexpr float FAR_CLIP = 120.0f;
+inline constexpr float FAR_CLIP = 150.0f;
 
 inline constexpr float MAX_PITCH = 89.0f;
 inline constexpr float MIN_PITCH = -60.0f;

@@ -41,6 +41,14 @@ inline constexpr int SHADOW_TEXTURE_UNIT = 3;
 inline constexpr glm::vec3 PLAYER_SPAWNS[4] = {
     {-3.0f, 0.0f, 3.0f}, {3.0f, 0.0f, 3.0f}, {-3.0f, 0.0f, -3.0f}, {3.0f, 0.0f, -3.0f}};
 
+inline constexpr const char* PLAYER_CHARACTERS_IDLE[4] = {
+    "../src/client/characters/cat_idle.fbx", "../src/client/characters/dog_idle.fbx",
+    "../src/client/characters/bunny_idle.fbx", "../src/client/characters/frog_idle.fbx"};
+
+inline constexpr const char* PLAYER_CHARACTERS_RUN[4] = {
+    "../src/client/characters/cat_run.fbx", "../src/client/characters/dog_run.fbx",
+    "../src/client/characters/bunny_run.fbx", "../src/client/characters/frog_run.fbx"};
+
 inline constexpr float PLAYER_SPEED = 15.0f;
 inline constexpr float PLAYER_WEIGHT = 10.0f;
 

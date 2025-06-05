@@ -41,12 +41,17 @@ void PianoKey::customCollision(ICustomPhysics* otherObject) {
             std::string sfxPacket = sfx.dump() + "\n";
             server.broadcastMessage(sfxPacket);
 
-
+            player->setPianoNote(pianoKeyID);
             int index = piano->getPlayedIndex();
 
-            std::cout << "played index " << index << std::endl;
+            // std::cout << "played index " << index << " setting " << pianoKeyID << std::endl;
+
+            if (index >= config::PIANO_SOL_LEN) {
+                return;            
+            }
+
             if (pianoKeyID == piano->getSolutionNote(index)) {
-                if (index < 14) {
+                if (index < config::PIANO_SOL_LEN) {
                     piano->setPlayedIndex(index + 1);
                 }
                 // TODO : Send a good note message

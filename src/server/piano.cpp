@@ -22,7 +22,7 @@ Piano::~Piano() {
 
 PianoRespawn* Piano::createRespawn() {
     int id = 0;
-    respawn = new PianoRespawn(id);
+    respawn = new PianoRespawn(id, this);
     return respawn;
 }
 

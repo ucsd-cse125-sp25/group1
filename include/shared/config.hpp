@@ -151,24 +151,25 @@ inline constexpr const char* HAPPY_ENDING = "{be3a2574-5efe-4157-a567-4322138cfa
 inline constexpr const char* UI_CLICK = "{6b6e3d35-5661-4e2f-b38d-513eb36e836e}";
 
 inline constexpr std::array<const char*, 14> PIANO_KEY_SFX = {
-    "{493fcf1e-c2ed-4f98-944e-7823f802d2a7}",  // C3
-    "{7aa9c7e4-59ba-4661-b2a5-34e51a65638a}",  // D3
-    "{29e7dd89-2c8b-4f23-bce0-a6acb95c9932}",  // E3
-    "{663182e8-12cc-474b-930f-b16bc6114ef5} ", // F3
-    "{adf2cfea-4a8d-4ff7-998a-e1aba0974e47}",  // G3
-    "{a68f5274-dabe-48c1-b133-cf25104e891e}",  // A3
-    "{36c7d695-0c76-4ea2-a2a9-b6c243fe6c25}",  // B3
-    "{9d9c93a1-ef9f-4e51-aa92-64757936eff4}",  // C4
-    "{3e761269-3b71-4942-8142-1d24a4c9b988}",  // D4
-    "{28d69961-ddd2-4bcb-85e3-a6e77a7fd690}",  // E4
-    "{3af033b4-84be-4f45-9390-019cc27b9685}",  // F4
-    "{9c8cfd16-498d-49de-b271-7a3fdd03527e}",  // G4
-    "{8cdcb7c5-8f37-438b-a697-03c541bbafd8}",  // A4
-    "{2d6e76a3-f7d5-43fc-9fe2-1997556a5bad}",  // B4
+    "{493fcf1e-c2ed-4f98-944e-7823f802d2a7}",  // C3 0
+    "{7aa9c7e4-59ba-4661-b2a5-34e51a65638a}",  // D3 1
+    "{29e7dd89-2c8b-4f23-bce0-a6acb95c9932}",  // E3 2
+    "{663182e8-12cc-474b-930f-b16bc6114ef5}",  // F3 3
+    "{adf2cfea-4a8d-4ff7-998a-e1aba0974e47}",  // G3 4
+    "{a68f5274-dabe-48c1-b133-cf25104e891e}",  // A3 5
+    "{36c7d695-0c76-4ea2-a2a9-b6c243fe6c25}",  // B3 6
+    "{9d9c93a1-ef9f-4e51-aa92-64757936eff4}",  // C4 7
+    "{3e761269-3b71-4942-8142-1d24a4c9b988}",  // D4 8
+    "{28d69961-ddd2-4bcb-85e3-a6e77a7fd690}",  // E4 9
+    "{3af033b4-84be-4f45-9390-019cc27b9685}",  // F4 10
+    "{9c8cfd16-498d-49de-b271-7a3fdd03527e}",  // G4 11
+    "{8cdcb7c5-8f37-438b-a697-03c541bbafd8}",  // A4 12
+    "{2d6e76a3-f7d5-43fc-9fe2-1997556a5bad}",  // B4 13
 };
 
-inline constexpr std::array<int, 14> PIANO_SOLUTION = {0, 1, 2, 3,  4,  5,  6,
-                                                       7, 8, 9, 10, 11, 12, 13};
+inline constexpr std::array<int, 14> PIANO_SOLUTION = {13, 12, 9, 10, 8, 7};
+
+inline constexpr int PIANO_SOL_LEN = 8;
 
 inline constexpr std::array<glm::vec3, 4> PIANO_OFFSET = {
     {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, -1.0f}, {0.0f, 0.0f, -2.0f}, {0.0f, 0.0f, -3.0f}}};
@@ -180,6 +181,7 @@ inline constexpr std::array<glm::vec3, 4> PIANO_OFFSET = {
 inline constexpr float SWAMP_AMBIENCE_VOL = 0.5f;
 inline constexpr float CARNIVAL_AMBIENCE_VOL = 0.3f;
 inline constexpr float PIANO_AMBIENCE_VOL = 0.3f;
+inline constexpr float HOTEL_LOBBY_VOL = 0.3f;
 
 inline constexpr float FOOTSTEPCARPET_VOL = 0.05f;
 inline constexpr float FOOTSTEPWOOD_VOL = 0.05f;
@@ -187,10 +189,10 @@ inline constexpr float FOOTSTEPWOOD_VOL = 0.05f;
 inline constexpr int FOOTSTEP_COOLDOWN_RATE = 7;
 
 // Controlled by Server
-inline constexpr float SWAMP_AUDIO_FILE_VOL = 1.0f; // 2.5
+inline constexpr float SWAMP_AUDIO_FILE_VOL = 2.0f; // 2.5
 inline constexpr float LILYPAD_VOL = 0.2f;
 inline constexpr float UNLOCKDOOR_VOL = 0.4f; // 0.5
 inline constexpr float GRABKEY_VOL = 0.2f;
 inline constexpr float WATERSPLASH_VOL = 0.05f;
-inline constexpr float PIANO_KEY_VOL = 0.5f;
+inline constexpr float PIANO_KEY_VOL = 0.8f;
 } // namespace config

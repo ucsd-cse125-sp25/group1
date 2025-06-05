@@ -327,7 +327,7 @@ void Client::handleServerMessage(const std::string& message) {
     } else if (type == "final_button_pressed") {
         // Could just be sfx only
         int playerID = parsed["player_id"];
-        scene->moveChildTransform("lobby", "final_button", playerID, glm::vec3(0.0f, 0.0f, -0.02f));
+        scene->moveChildTransform("lobby", "final_button", playerID, glm::vec3(0.0f, 0.0f, -0.03f));
 
     } else {
         std::cerr << "Unknown message type: " << type << "\n";

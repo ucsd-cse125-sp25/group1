@@ -12,11 +12,13 @@
 #include "components/water.hpp"
 #include "config.hpp"
 #include "rigidBody.hpp"
+#include "server.hpp"
 #include "swamp.hpp"
 #include "world.hpp"
 
 class Swamp;
 class Circus;
+class Server;
 
 struct TransformData {
     glm::vec3 roomPosition;
@@ -49,7 +51,8 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
  * @return Pointer to the initialized RigidBody.
  */
 RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
-                    std::unordered_map<int, Room*>* rooms, World* world, Server& server);
+                    std::unordered_map<int, Room*>* rooms, World* world, Server& server, int id1,
+                    int id2, int keyID);
 
 /**
  * @brief Initializes a Frog object with a unique ID and default RigidBody.
@@ -88,8 +91,8 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp, World* world);
  */
 RigidBody* initWater(TransformData data, Swamp* swamp, World* world);
 
-RigidBody* initZone(TransformData data, std::unordered_map<int, Object*>* objects, World* world,
-                    int roomID);
+RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, Object*>* objects,
+                    World* world, int roomID);
 
 /**
  * @brief Initializes a cannonball entity via the Circus pointer and assigns it a RigidBody.
@@ -127,3 +130,14 @@ RigidBody* initWall(TransformData data, Circus* circus, World* world);
  */
 RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef,
                    const std::string& roomName, std::unordered_map<int, Key*>* keys);
+
+/**
+ * @brief Initializes a Splash Object.
+ *
+ * A Splash object is created through the Swamp, and a non-collidable RigidBody is created with it.
+ *
+ * @param data Transform data including position and collider dimensions.
+ * @param serverRef Reference to the Server instance for managing game state.
+ * @return Pointer to the initialized RigidBody associated with the Splash.
+ */
+RigidBody* initSplash(TransformData data, Swamp* swamp, World* world);

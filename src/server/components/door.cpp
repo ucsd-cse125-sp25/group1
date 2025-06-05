@@ -52,12 +52,13 @@ void Door::openDoor(int playerId) {
     sfx["sfx_id"] = config::UNLOCKDOOR;
     sfx["client_id"] = playerId;
     sfx["action"] = "door_open";
+    sfx["door_id"] = this->getID();
     sfx["volume"] = config::UNLOCKDOOR_VOL;
 
     std::string sfxPacket = sfx.dump() + "\n";
     server.broadcastMessage(sfxPacket);
 
-    std::cout << "open door called" << std::endl;
+    std::cout << "open door called on " << this->getID() << std::endl;
 }
 
 void Door::unlockDoor() {

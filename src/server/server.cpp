@@ -8,7 +8,7 @@
 #include "json.hpp"
 
 using tcp = boost::asio::ip::tcp;
-using json = nlohmann::json;
+using json = nlohmann::ordered_json;
 using Clock = std::chrono::steady_clock;
 
 Server::Server()
@@ -57,6 +57,7 @@ void Server::initRigidBodies() {
 
         for (const auto& obj : room["objects"]) {
             string modelName = obj["model"];
+            std::cout << modelName << std::endl;
             vec3 position = toVec3(obj["position"]);
             vec3 minCorner = toVec3(dimensions[modelName]["min"]);
             vec3 maxCorner = toVec3(dimensions[modelName]["max"]);
@@ -80,22 +81,21 @@ void Server::initRigidBodies() {
                                   relativeMaxCorner};
 
             if (modelName == "door_00") {
-                object = initDoor(data, &doors, &rooms, &world, *this);
+                object = initDoor(data, &doors, &rooms, &world, *this, i, obj["connects_to"], -1);
             } else if (modelName == "frog_00") {
                 object = initFrog(data, &objects, swamp, &world);
             } else if (modelName == "lilypad_00") {
                 object = initLilyPad(data, swamp, &world);
             } else if (modelName == "water_00") {
                 object = initWater(data, swamp, &world);
-            } else if (modelName == "wall_00") {
-                // TODO: should it take in &objects like initFrog does?
-                object = initWall(data, circus, &world);
+            } else if (modelName == "water_01") {
+                object = initSplash(data, swamp, &world);
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
             } else if (modelName == "circus_cannonball_00") {
                 object = initCannonball(data, circus, &world);
             } else if (modelName.starts_with("zone_")) {
-                object = initZone(data, &objects, &world, i);
+                object = initZone(data, this, &objects, &world, i);
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;

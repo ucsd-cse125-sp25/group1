@@ -8,6 +8,7 @@
 #include "components/lilypad.hpp"
 #include "components/object.hpp"
 #include "components/room.hpp"
+#include "components/splash.hpp"
 #include "components/water.hpp"
 #include "rigidBody.hpp"
 #include "world.hpp"
@@ -57,6 +58,14 @@ class Swamp : public Room {
     Water* createWaterRespawn();
 
     /**
+     * @brief Initializes the splash plane that triggers the splash sfx.
+     *
+     * Note: the setBody() method must be called on the returned Splash instance.
+     *
+     */
+    Splash* createSplashPlane();
+
+    /**
      * @brief Returns references  to the server
      * @return Server&
      */
@@ -100,6 +109,13 @@ class Swamp : public Room {
      * altogether, and then respawn once they fall through the water.
      */
     Water* waterRespawnPlane;
+
+    /**
+     * @brief Plane that triggers the splash sound effect when player hits it
+     *
+     * The plane that triggers the splash sound effect when the player jumps into the water.
+     */
+    Splash* splashPlane;
 
     /**
      * @brief Respawn Point in Swamp Game when player dies

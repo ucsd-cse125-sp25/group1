@@ -1,4 +1,5 @@
 #include "keydisplay.hpp"
+#include <iostream>
 
 KeyDisplay::KeyDisplay(glm::vec2 pos) {
     name = "keydisplay";
@@ -29,6 +30,7 @@ void KeyDisplay::onRemoveKey() {
     if (collectedKeys == 0)
         return;
     collectedKeys--;
+    std::cout << "Collected keys: " << collectedKeys << std::endl;
     if (collectedKeys == 0) {
         hidden = true;
     }

@@ -190,6 +190,11 @@ class Scene {
 
     std::unique_ptr<Model> lobbyAsset;
     std::unique_ptr<Model> finalDoorAsset; // Left door of the final door
+    std::unique_ptr<Model> buttonBlueAsset; // Blue button
+    std::unique_ptr<Model> buttonPinkAsset; // Pink button
+    std::unique_ptr<Model> buttonYellowAsset; // Yellow button
+    std::unique_ptr<Model> buttonGreenAsset; // Green button
+    std::unique_ptr<Model> backPlateAsset; // Backplate for the buttons
 
     std::unique_ptr<Model> hotelRoomStraightX; // Doors face +X and -X directions
     std::unique_ptr<Model> hotelRoomStraightZ; // Doors face +Z and -Z directions

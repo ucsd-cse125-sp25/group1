@@ -8,6 +8,7 @@ using json = nlohmann::json;
 FinalButton::FinalButton(int buttonID, int playerID, FinalDoor* door)
     : Interactable(buttonID), buttonID(buttonID), playerID(playerID), door(door) {
     // Initialize any member variables if needed
+    pressed = false; // Initially the button is not pressed
 }
 
 // Destructor

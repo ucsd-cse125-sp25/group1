@@ -1072,33 +1072,6 @@
         "connects_to": 12
       },
       {
-        "model": "metal_grate",
-        "position": [
-          0.0,
-          10.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "circus_blocker",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "ticket_queue_00",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
         "model": "circus_floor_00",
         "position": [
           0.0,

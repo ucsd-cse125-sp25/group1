@@ -6,7 +6,7 @@
 #include <vector>
 
 namespace config {
-inline constexpr const char* SERVER_IP = "127.0.0.1";
+inline constexpr const char* SERVER_IP = "128.54.69.180";
 inline constexpr int SERVER_PORT = 2399;
 inline constexpr bool BYPASS = false;
 
@@ -50,7 +50,7 @@ inline constexpr const char* PLAYER_CHARACTERS_RUN[4] = {
     "../src/client/characters/cat_run.fbx", "../src/client/characters/dog_run.fbx",
     "../src/client/characters/bunny_run.fbx", "../src/client/characters/frog_run.fbx"};
 
-inline constexpr float PLAYER_SPEED = 15.0f;
+inline constexpr float PLAYER_SPEED = 10.0f;
 inline constexpr float PLAYER_WEIGHT = 10.0f;
 
 inline constexpr float PLAYER_WIDTH = 1.53f;

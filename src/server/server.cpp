@@ -274,7 +274,7 @@ void Server::handleClientMessages() {
                 players[clientId]->handleMovementInput(actions);
 
                 int roomID = players[clientId]->getCurRoomID();
-                std::cout << "Player " << clientId << " is in room " << roomID << "\n";
+                // std::cout << "Player " << clientId << " is in room " << roomID << "\n";
                 Interactable* interactable =
                     players[clientId]->getNearestInteractable(rooms[roomID]);
 
@@ -316,7 +316,7 @@ void Server::handleClientMessages() {
                 // TODO: remove this
                 // Temporary for testing: when the user types 'n', circus cannons fire
                 if (std::find(actions.begin(), actions.end(), "n") != actions.end()) {
-                    circus->fireCannons();
+                    circus->stopMusicMessage();
                 }
                 // handle misc inputs, such as interacting with environment
                 players[clientId]->handleGeneralInput(actions, interactable);

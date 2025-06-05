@@ -7,10 +7,12 @@
 using json = nlohmann::json;
 
 Circus::Circus(int roomID, World& worldRef, Server& serverRef)
-    : Room(roomID, "Circus"), world(worldRef), server(serverRef),
-      respawnPoint(config::CIRCUS_RESPAWN) {
+    : Room(roomID, "Circus"), world(worldRef), server(serverRef) {
+    respawnPoint = config::CIRCUS_RESPAWN + config::CIRCUS_ROOM_POSITION;
     numWalls = 0;       // numWalls is incremented as createWall is called
     numCannonballs = 0; // numCannonballs is incremented as createCannonball is called
+    cannonTimerActive = false;
+    cannonTicksRemaining = 0;
 }
 
 Circus::~Circus() {
@@ -61,8 +63,12 @@ Cannonball* Circus::createCannonball(glm::vec3 cannonPosition) {
 void Circus::stopMusicMessage() {
     json message;
     message["type"] = "pause_circus_music";
-    server.broadcastMessage(message);
-    // TODO: start a timer (3-4 seconds?). Once it hits zero, shoot cannonballs.
+
+    std::string packet = message.dump() + "\n";
+    server.broadcastMessage(packet);
+    // start a timer (3 seconds). Once it hits zero, shoot cannonballs.
+    cannonTimerActive = true;
+    cannonTicksRemaining = config::SECONDS_CANNON_DELAY * (1000 / config::TICK_RATE);
 }
 
 void Circus::fireCannons() {
@@ -73,6 +79,14 @@ void Circus::fireCannons() {
 }
 
 void Circus::broadcastCannonballPositions() {
+    if (cannonTimerActive) {
+        if (cannonTicksRemaining <= 0) {
+            fireCannons();
+            cannonTimerActive = false;
+        } else {
+            cannonTicksRemaining--;
+        }
+    }
     // Don't do anything if cannons aren't firing
     if (!cannonsFiring) {
         return;

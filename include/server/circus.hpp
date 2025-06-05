@@ -109,7 +109,18 @@ class Circus : public Room {
     Server& server;
 
     /**
-     * @brief whether or not the cannons are actively firing.
+     * @brief Whether or not the cannons are actively firing.
      */
     bool cannonsFiring;
+
+    /**
+     * @brief true if the music has stopped and cannons are counting down to fire.
+     */
+    bool cannonTimerActive;
+
+    /**
+     * @brief the number of ticks left after music stopped before cannons fire
+     * stops
+     */
+    int cannonTicksRemaining;
 };

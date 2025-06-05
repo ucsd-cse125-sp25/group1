@@ -126,6 +126,8 @@ inline constexpr glm::vec3 CANNONBALL_POSITIONS[NUM_CANNONBALLS] = {
     {30.0f, 3.0f, 4.0f},  {30.0f, 3.0f, 0.0f},   {30.0f, 3.0f, -4.0f},
     {30.0f, 3.0f, -8.0f}, {30.0f, 3.0f, -12.0f}, {30.0f, 3.0f, -16.0f},
 };
+// how long to wait before firing cannons after music stops
+inline constexpr int SECONDS_CANNON_DELAY = 3;
 
 // Sound effects
 inline constexpr glm::vec3 PIANO_RESPAWN = {0.0f, 0.0f, -27.0f};

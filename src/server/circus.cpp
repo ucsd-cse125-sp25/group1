@@ -7,7 +7,7 @@
 using json = nlohmann::json;
 
 Circus::Circus(int roomID, World& worldRef, Server& serverRef)
-    : Room(roomID, "Circus"), world(worldRef), server(serverRef) {
+    : Room(roomID, "Circus"), world(worldRef), server(serverRef), respawnCreated(false) {
     respawnPoint = config::CIRCUS_RESPAWN + config::CIRCUS_ROOM_POSITION;
     numWalls = 0;       // numWalls is incremented as createWall is called
     numCannonballs = 0; // numCannonballs is incremented as createCannonball is called
@@ -58,6 +58,16 @@ Cannonball* Circus::createCannonball(glm::vec3 cannonPosition) {
     numCannonballs++;
 
     return newCannonball;
+}
+
+CircusRespawn* Circus::createRespawn() {
+    respawnCreated = true;
+    CircusRespawn* respawn = new CircusRespawn(0, server);
+    return respawn;
+}
+
+bool Circus::isRespawnCreated() const {
+    return respawnCreated;
 }
 
 void Circus::stopMusicMessage() {

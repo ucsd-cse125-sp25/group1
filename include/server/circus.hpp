@@ -6,6 +6,7 @@
 #include <vector>
 #include "collider.hpp"
 #include "components/cannonball.hpp"
+#include "components/circusRespawn.hpp"
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "rigidBody.hpp"
@@ -60,6 +61,18 @@ class Circus : public Room {
      * Broadcasts cannonball positions if they are moving
      */
     void broadcastCannonballPositions();
+
+    /**
+     * Creates respawn plane
+     */
+    CircusRespawn* createRespawn();
+
+    /**
+     * Tells whether respawn plane created yet.
+     * Used in server.cpp to init rigid body since circus floor
+     * and circus respawn plane use same dimensions model name
+     */
+    bool isRespawnCreated() const;
 
   private:
     /**
@@ -123,4 +136,6 @@ class Circus : public Room {
      * stops
      */
     int cannonTicksRemaining;
+
+    bool respawnCreated;
 };

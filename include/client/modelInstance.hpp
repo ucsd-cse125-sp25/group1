@@ -69,7 +69,16 @@ struct ModelInstance {
 
         for (const auto& [type, idMap] : children) {
             for (const auto& [id, child] : idMap) {
-                child->drawRecursive(shader, boundingBoxMode, staticOnly);
+                if (type == "finalDoor") {
+                    glEnable(GL_BLEND);
+                    // glDepthMask(GL_FALSE);
+                    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+                    child->drawRecursive(shader, boundingBoxMode, staticOnly);
+                    glDisable(GL_BLEND);
+                } else {
+                    child->drawRecursive(shader, boundingBoxMode, staticOnly);
+                }
             }
         }
     }

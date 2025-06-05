@@ -88,16 +88,10 @@ void Scene::initRooms() {
     glm::mat4 lobbyModel = glm::translate(I4, config::LOBBY_POSITION);
     auto lobby = std::make_unique<ModelInstance>(lobbyAsset.get(), lobbyModel, nullptr, true);
 
-    // glm::mat4 finalDoorLeftModel = glm::translate(I4, config::FINALDOOR_LEFT_POSITION);
-    // finalDoorLeftModel =
-    //     glm::rotate(finalDoorLeftModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    // glm::mat4 finalDoorRightModel = glm::translate(I4, config::FINALDOOR_RIGHT_POSITION);
-    // finalDoorRightModel =
-    //     glm::rotate(finalDoorRightModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 finalDoorModel = glm::translate(I4, config::FINALDOOR_POSITION);
     finalDoorModel = glm::rotate(finalDoorModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-    lobby->children["finalDoor"][0] =
+    lobby->children["final_door"][0] =
         std::make_unique<ModelInstance>(finalDoorAsset.get(), finalDoorModel, lobby.get(), true);
 
     glm::mat4 blueButtonModel = glm::translate(I4, config::BUTTON_BLUE_POSITION);
@@ -128,6 +122,14 @@ void Scene::initRooms() {
         lobby->children["backPlate"][i] = std::make_unique<ModelInstance>(
             backPlateAsset.get(), backPlateModel, lobby.get(), true);
     }
+    // Need this for testing key slot positions
+    // for (int i = 0; i < 4; i++) {
+    //     glm::mat4 finalKeyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[i]);
+    //     finalKeyModel =
+    //         glm::rotate(finalKeyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    //     lobby->children["keys"][i] =
+    //         std::make_unique<ModelInstance>(keyAsset.get(), finalKeyModel, lobby.get(), true);
+    // }
 
     // Swamp room (Room ID: 1)
     glm::mat4 swampRoomModel = glm::translate(I4, config::SWAMP_ROOM_POSITION);
@@ -695,14 +697,10 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
         }
 
         if (name == "lobby") {
-            // glEnable(GL_BLEND);
-            // glDepthMask(GL_FALSE);
-            // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            
 
             instance->drawRecursive(*shader, boundingBoxMode);
 
-            // glDepthMask(GL_TRUE);
-            // glDisable(GL_BLEND);
         } else {
             instance->drawRecursive(*shader, boundingBoxMode);
         }

@@ -97,7 +97,7 @@ inline constexpr glm::vec3 PARKOUR_KEY_POSITION = {-8.0f, 6.0f, 8.0f};
 
 // Finaldoor
 inline constexpr glm::vec3 FINALDOOR_KEY_SLOTS[4] = {
-    {1.8f, 4.4f, 19.7f}, {0.3f, 4.3f, 19.5f}, {-1.2f, 4.4f, 19.7f}, {-2.7f, 4.4f, 19.7f}};
+    {1.8f, 4.4f, 19.7f}, {0.4f, 4.1f, 19.5f}, {-1.05f, 3.4f, 19.7f}, {-2.45f, 3.6f, 19.7f}};
 inline constexpr glm::vec3 FINALDOOR_LEFT_POSITION = {0.0f, 0.0f, 20.0f};
 inline constexpr glm::vec3 FINALDOOR_RIGHT_POSITION = {0.0f, 0.0f, 20.0f};
 inline constexpr glm::vec3 FINALDOOR_POSITION = {0.0f, 0.0f, 20.0f};

@@ -33,6 +33,7 @@ void FinalButton::handleInteract(Player& player) {
     json message;
     // message["type"] = "sfx";
     // message["sfx_id"] = config::SWAMP_AUDIO_FILE;
+    //d::cout << "Player ID in handleInteract" << player.getID() << std::endl;
     message["type"] = "final_button_pressed";
     message["player_id"] = player.getID();
     message["action"] = "interact";
@@ -52,6 +53,7 @@ bool FinalButton::pressButton() {
     if (!door->canUnlock()) {
         return false; // Cannot press the button if the door is not unlockable
     }
+    std::cout << "Button Pressed Successfully" << std::endl;
     pressed = true;
     updateDoorState();
     return true; // Button pressed successfully

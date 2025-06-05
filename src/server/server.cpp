@@ -267,7 +267,7 @@ void Server::handleClientMessages() {
                 players[clientId]->handleMovementInput(actions);
 
                 int roomID = players[clientId]->getCurRoomID();
-                std::cout << "Player " << clientId << " is in room " << roomID << "\n";
+                // std::cout << "Player " << clientId << " is in room " << roomID << "\n";
                 Interactable* interactable =
                     players[clientId]->getNearestInteractable(rooms[roomID]);
 

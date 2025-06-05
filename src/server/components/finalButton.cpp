@@ -24,6 +24,8 @@ void FinalButton::handleInteract(Player& player) {
     // Define behavior here
     if (player.getID() != playerID) {
         // If the player ID does not match, do not allow interaction
+        std::cout << "Player " << player.getID() << " tried to press button " << playerID
+                  << ", but it is not their button." << std::endl;
         return;
     }
     if (!pressButton())
@@ -32,7 +34,7 @@ void FinalButton::handleInteract(Player& player) {
     // message["type"] = "sfx";
     // message["sfx_id"] = config::SWAMP_AUDIO_FILE;
     message["type"] = "final_button_pressed";
-    message["client_id"] = player.getID();
+    message["player_id"] = player.getID();
     message["action"] = "interact";
 
     std::string packet = message.dump() + "\n";
@@ -44,6 +46,9 @@ void FinalButton::handleInteract(Player& player) {
  */
 bool FinalButton::pressButton() {
     // Can only press button when all keys are present
+    if (pressed) {
+        return false; // Button is already pressed
+    }
     if (!door->canUnlock()) {
         return false; // Cannot press the button if the door is not unlockable
     }

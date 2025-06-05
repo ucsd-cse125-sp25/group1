@@ -25,6 +25,42 @@
         "rotated": false
       },
       {
+        "model": "button",
+        "position": [
+          7.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
+        "model": "button",
+        "position": [
+          -7.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
+        "model": "button",
+        "position": [
+          12.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
+        "model": "button",
+        "position": [
+          -12.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
         "model": "lobby_00",
         "position": [
           0.0,

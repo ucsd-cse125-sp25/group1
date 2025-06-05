@@ -77,6 +77,9 @@ class Scene {
 
     void addKeyToSlot(const std::string& roomName, const std::string& type, int id);
 
+    void moveChildTransform(const std::string& roomName, const std::string& type, int id,
+                               const glm::vec3& offset);
+
     /**
      * @brief Renders shadow maps for static geometry.
      *

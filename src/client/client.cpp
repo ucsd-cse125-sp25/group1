@@ -297,7 +297,7 @@ void Client::handleServerMessage(const std::string& message) {
         auto roomName = parsed["room"];
         std::cout << "Checking keySlot and roomName" << roomName << keySlot << std::endl;
         std::cout << "interacted with final door" << roomName << keySlot << std::endl;
-        
+
         scene->addKeyToSlot(roomName, "final_door_key", keySlot);
         scene->canvas->removeKey();
 
@@ -308,6 +308,9 @@ void Client::handleServerMessage(const std::string& message) {
         // and show the end screen.
     } else if (type == "final_button_pressed") {
         // Could just be sfx only
+        int playerID = parsed["player_id"];
+        scene->moveChildTransform("lobby", "final_button", playerID, glm::vec3(0.0f, 0.0f, -0.02f));
+
     } else {
         std::cerr << "Unknown message type: " << type << "\n";
     }

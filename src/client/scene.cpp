@@ -110,13 +110,13 @@ void Scene::initRooms() {
     glm::mat4 greenButtonModel = glm::translate(I4, config::BUTTON_GREEN_POSITION);
     greenButtonModel =
         glm::rotate(greenButtonModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    lobby->children["buttonBlue"][0] =
+    lobby->children["final_button"][0] =
         std::make_unique<ModelInstance>(buttonBlueAsset.get(), blueButtonModel, lobby.get(), true);
-    lobby->children["buttonPink"][0] =
+    lobby->children["final_button"][1] =
         std::make_unique<ModelInstance>(buttonPinkAsset.get(), pinkButtonModel, lobby.get(), true);
-    lobby->children["buttonYellow"][0] = std::make_unique<ModelInstance>(
+    lobby->children["final_button"][2] = std::make_unique<ModelInstance>(
         buttonYellowAsset.get(), yellowButtonModel, lobby.get(), true);
-    lobby->children["buttonGreen"][0] = std::make_unique<ModelInstance>(
+    lobby->children["final_button"][3] = std::make_unique<ModelInstance>(
         buttonGreenAsset.get(), greenButtonModel, lobby.get(), true);
 
     for (int i = 0; i < 4; ++i) {
@@ -396,6 +396,18 @@ void Scene::addKeyToSlot(const std::string& roomName, const std::string& type, i
 
     modelInstances[roomName]->children[type][id] = std::make_unique<ModelInstance>(
         keyAsset.get(), keyModel, modelInstances[roomName].get(), true);
+}
+
+void Scene::moveChildTransform(const std::string& roomName, const std::string& type, int id,
+                               const glm::vec3& offset) {
+    
+    auto& room = modelInstances[roomName];
+    // if (!room || !room->children.contains(type) || !room->children[type].contains(id))
+    //     return;
+   
+    auto& child = room->children[type][id];
+    // Apply translation to the existing localTransform
+    child->translateLocal(offset);
 }
 
 void Scene::renderStaticShadowPass() {

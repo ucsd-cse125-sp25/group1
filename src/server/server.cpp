@@ -100,6 +100,8 @@ void Server::initRigidBodies() {
                 object = initKey(data, *this, world, roomName, &keys);
             } else if (modelName == "cannonball_00") {
                 object = initCannonball(data, circus, &world);
+            } else if (modelName == "circus_floor_00" && !circus->isRespawnCreated()) {
+                object = initCircusRespawn(data, circus, &world);
             } else if (modelName.starts_with("zone_")) {
                 object = initZone(data, this, &objects, &world, i);
             } else if (modelName == "door") {

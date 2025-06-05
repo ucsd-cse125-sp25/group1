@@ -1,4 +1,4 @@
-# Blender 4.4.0 MTL File: 'crunch time.blend'
+# Blender 4.4.3 MTL File: 'good luck.blend'
 # www.blender.org
 
 newmtl MAT_black
@@ -69,7 +69,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd TEX_circus_safe.png
+map_Kd circus_sign.png
 
 newmtl MAT_circus_wall
 Ns 71.921478
@@ -80,6 +80,56 @@ Ni 1.500000
 d 1.000000
 illum 2
 map_Kd TEX_circus_walls.png
+
+newmtl MAT_counter0
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd zero_four.png
+
+newmtl MAT_counter1
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd one_four.png
+
+newmtl MAT_counter2
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd two_four.png
+
+newmtl MAT_counter3
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd three_four.png
+
+newmtl MAT_counter4
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd four_four.png
 
 newmtl MAT_furniture_wood
 Ns 250.000000
@@ -94,12 +144,12 @@ map_Kd TEX_furniture_wood.png
 newmtl MAT_gold
 Ns 250.000000
 Ka 0.582996 0.582996 0.582996
-Kd 0.140991 0.095464 0.005009
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 3
+map_Kd TEX_gold.png
 
 newmtl MAT_hotel_carpet
 Ns 3.550426
@@ -112,6 +162,26 @@ illum 2
 map_Kd TEX_hotel_carpet.png
 
 newmtl MAT_hotel_ceiling
+Ns 35.766056
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TEX_hotel_wall.png
+
+newmtl MAT_hotel_ceiling.001
+Ns 35.766056
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TEX_hotel_wall.png
+
+newmtl MAT_hotel_ceiling.002
 Ns 35.766056
 Ka 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
@@ -161,6 +231,16 @@ d 1.000000
 illum 2
 map_Kd TEX_rope.png
 
+newmtl MAT_silver_metal
+Ns 250.000000
+Ka 0.896429 0.896429 0.896429
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd TEX_gray.png
+
 newmtl MAT_white
 Ns 250.000000
 Ka 1.000000 1.000000 1.000000
@@ -180,3 +260,23 @@ Ni 1.500000
 d 1.000000
 illum 2
 map_Kd TEX_yellow.png
+
+newmtl Material.001
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1
+
+newmtl Material.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 1

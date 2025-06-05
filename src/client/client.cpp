@@ -291,6 +291,25 @@ void Client::handleServerMessage(const std::string& message) {
         // Assumes there's only one key in the room for now.
         // Will refactor if we add more interactable objects later.
         scene->setInteractableShadowActive(roomName, 0, false);
+    } else if (type == "final_door_interact") {
+        // Need to have some sort of animation or graphics where the key is added to the door
+        int keySlot = parsed["slot_id"];
+        auto roomName = parsed["room"];
+        std::cout << "Checking keySlot and roomName" << roomName << keySlot << std::endl;
+        std::cout << "interacted with final door" << roomName << keySlot << std::endl;
+        
+        scene->addKeyToSlot(roomName, "final_door_key", keySlot);
+        scene->canvas->removeKey();
+
+        // Make the key appear at the correct positions
+        // Positions are set in the config file
+    } else if (type == "final_door_open") {
+        // This is the final door opening, so we need to update the scene
+        // and show the end screen.
+    } else if (type == "final_button_pressed") {
+        // Could just be sfx only
+    } else {
+        std::cerr << "Unknown message type: " << type << "\n";
     }
     // Need to also udpate object states
 }

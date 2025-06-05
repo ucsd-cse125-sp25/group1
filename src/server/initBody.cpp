@@ -49,6 +49,9 @@ RigidBody* initFrog(TransformData data, std::unordered_map<int, Object*>* object
 
     swamp->addInteractable(frog);
 
+    (*objects)[frog->getID()] =
+        frog; // Add the frog to the objects map - I didn't see where this was done
+
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
@@ -68,6 +71,31 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp, World* world) {
         world, true);
 
     lilyPad->setBody(body);
+    return body;
+}
+
+RigidBody* initButton(TransformData data, std::unordered_map<int, Object*>* objects, Lobby* lobby,
+                      World* world) {
+    FinalButton* button = lobby->createFinalButton(objects->size());
+    (*objects)[button->getID()] = button;
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, button, world, true);
+    button->setBody(body);
+    return body;
+}
+
+RigidBody* initFinalDoor(TransformData data, std::unordered_map<int, Object*>* objects,
+                         Lobby* lobby, World* world) {
+    FinalDoor* door = lobby->createFinalDoor(objects->size());
+    (*objects)[door->getID()] = door;
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, door, world, true);
+
+    door->setBody(body);
     return body;
 }
 

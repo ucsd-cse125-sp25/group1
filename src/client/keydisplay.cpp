@@ -19,6 +19,20 @@ void KeyDisplay::onCollectKey() {
         hidden = false;
     uiELement->changeSprite(spriteMap[collectedKeys]);
     collectedKeys++;
+    
+}
+
+void KeyDisplay::onRemoveKey() {
+    //collectedKeys--;
+    //if(collectedKeys == 0){hidden = true;}
+    //uiElement->changeSprite(spriteMap[collectedKeys]);
+    if (collectedKeys == 0)
+        return;
+    collectedKeys--;
+    if (collectedKeys == 0) {
+        hidden = true;
+    }
+    uiELement->changeSprite(spriteMap[collectedKeys]);
 }
 
 KeyDisplay::~KeyDisplay() {

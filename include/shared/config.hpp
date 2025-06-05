@@ -86,6 +86,13 @@ inline constexpr glm::vec3 PARKOUR_OBJECT_POSITIONS[3] = {
     {0.0f, -1.5f, 0.0f}, {2.5f, -0.5f, 0.0f}, {5.0f, 0.5f, 0.0f}};
 inline constexpr glm::vec3 PARKOUR_KEY_POSITION = {-8.0f, 6.0f, 8.0f};
 
+// Finaldoor
+inline constexpr glm::vec3 FINALDOOR_KEY_SLOTS[4] = {
+    {1.8f, 4.4f, 19.7f}, {0.3f, 4.3f, 19.5f}, {-1.2f, 4.4f, 19.7f}, {-2.7f, 4.4f, 19.7f}};
+inline constexpr glm::vec3 FINALDOOR_LEFT_POSITION = {0.0f, 0.0f, 20.0f};
+inline constexpr glm::vec3 FINALDOOR_RIGHT_POSITION = {0.0f, 0.0f, 20.0f};
+inline constexpr glm::vec3 FINALDOOR_POSITION = {0.0f, 0.0f, 20.0f};
+
 // Swamp Related Configs
 inline constexpr glm::vec3 SWAMP_RESPAWN = {1.0f, 1.0f, 0.0f};
 inline constexpr int SWAMP_NUM_ROWS = 8;
@@ -96,6 +103,8 @@ inline const std::vector<int> SWAMP_SOLUTION = {0, 1, 1, 1, 0, 1, 1, 0};
 inline constexpr const char* SWAMP_AUDIO_FILE = "{9b22e271-4a2c-47cd-8662-1a4f0ddee8de}";
 
 inline constexpr int SWAMP_NUM_FIREFLIES = 150;
+
+// Lobby related
 
 // TODO: Adjust once rendered
 inline constexpr float SWAMP_LILYPAD_WIDTH = 1.0f;

@@ -261,7 +261,7 @@ void Client::handleServerMessage(const std::string& message) {
 
         if (action == "door_open") {
             auto doorID = parsed["door_id"];
-            // TODO: remove rendering of door
+            scene->removeDoor(doorID);
         }
 
     } else if (type == "interactable_nearby") {

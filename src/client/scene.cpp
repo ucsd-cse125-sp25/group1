@@ -373,6 +373,20 @@ void Scene::removeInstanceFromRoom(const std::string& roomName, const std::strin
     modelInstances[roomName]->deleteChild(type, id);
 }
 
+void Scene::removeDoor(int id) {
+    if (id == 0) {
+        removeInstanceFromRoom("hotelRoom0", "door", 0);
+    } else if (id == 1) {
+        removeInstanceFromRoom("swampKeyRoom", "door", 0);
+    } else if (id == 2) {
+        removeInstanceFromRoom("hotelRoom5", "door", 0);
+    } else if (id == 3) {
+        removeInstanceFromRoom("circusKeyRoom", "door", 0);
+    } else if (id == 4) {
+        removeInstanceFromRoom("hotelRoom14", "door", 0);
+    }
+}
+
 void Scene::addKeyToSlot(const std::string& roomName, const std::string& type, int id) {
     glm::mat4 keyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[id]);
     keyModel = glm::rotate(keyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));

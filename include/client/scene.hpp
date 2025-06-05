@@ -75,6 +75,13 @@ class Scene {
      */
     void removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id);
 
+    /**
+     * @brief Removes a door from using a global ID.
+
+     * @param id Global door ID.
+     */
+    void removeDoor(int id);
+
     void addKeyToSlot(const std::string& roomName, const std::string& type, int id);
 
     /**

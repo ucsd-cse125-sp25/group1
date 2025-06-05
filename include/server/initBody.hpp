@@ -13,8 +13,10 @@
 #include "rigidBody.hpp"
 #include "swamp.hpp"
 #include "world.hpp"
+#include "server.hpp"
 
 class Swamp;
+class Server;
 
 struct TransformData {
     glm::vec3 roomPosition;
@@ -86,7 +88,8 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp, World* world);
  */
 RigidBody* initWater(TransformData data, Swamp* swamp, World* world);
 
-RigidBody* initZone(TransformData data, std::unordered_map<int, Object*>* objects, World* world,
+RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, Object*>* objects,
+                    World* world,
                     int roomID);
 
 /**

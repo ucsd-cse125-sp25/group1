@@ -88,7 +88,6 @@ Interactable* Player::getNearestInteractable(Room* room) {
         return nullptr;
 
     std::vector<Interactable*> interactables = room->getInteractables();
-
     RigidBody* playerBody = &this->getBody();
 
     // Find closest interactable

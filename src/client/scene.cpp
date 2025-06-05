@@ -58,6 +58,8 @@ void Scene::init() {
     frogAsset = std::make_unique<Model>("../src/client/models/froggie.obj");
 
     circusRoomAsset = std::make_unique<Model>("../src/client/models/tent.obj");
+    cannonballAsset = std::make_unique<Model>("../src/client/models/cannonball.obj");
+    cannonAsset = std::make_unique<Model>("../src/client/models/cannon.obj");
 
     pianoRoomAsset = std::make_unique<Model>("../src/client/models/piano_room.obj");
 
@@ -170,6 +172,18 @@ void Scene::initRooms() {
     glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
     auto circusRoom =
         std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel, nullptr, true);
+
+    for (int i = 0; i < config::NUM_CANNONBALLS; i++) {
+        // init cannon
+        glm::mat4 cannon = glm::translate(I4, config::CANNONBALL_POSITIONS[i]);
+        cannon = glm::translate(cannon, {5.0f, 0.0f, 0.0f});
+        circusRoom->children["cannon"][i] =
+            std::make_unique<ModelInstance>(cannonAsset.get(), cannon, circusRoom.get());
+        // init cannonball
+        glm::mat4 cannonball = glm::translate(I4, config::CANNONBALL_POSITIONS[i]);
+        circusRoom->children["cannonball"][i] = std::make_unique<ModelInstance>(
+            cannonballAsset.get(), cannonball, circusRoom.get(), false);
+    }
 
     // Circus key room (Room ID: 4)
     glm::mat4 circusKeyRoomModel = glm::translate(I4, config::CIRCUS_KEY_ROOM_POSITION);
@@ -477,6 +491,32 @@ void Scene::renderLilypadShadowPass(int id) {
         }
     } else {
         renderForIndex((id < 8) ? 0 : 1);
+    }
+}
+
+/**
+ * Takes in an array of NUM_CANNONBALLS cannonball positions.
+ * For each position, sets the ith cannonball to the ith position.
+ */
+void Scene::updateCannonballPositions(glm::vec3 positions[]) {
+    auto it = modelInstances.find("circusRoom");
+    if (it == modelInstances.end())
+        return;
+    ModelInstance* circusRoomInstance = it->second.get();
+
+    glm::vec3 roomOffset = config::CIRCUS_ROOM_POSITION;
+    static const glm::mat4 I4{1.0f};
+
+    auto& cannonBalls = circusRoomInstance->children["cannonball"];
+    for (int i = 0; i < config::NUM_CANNONBALLS; ++i) {
+        if (i >= static_cast<int>(cannonBalls.size()) || !cannonBalls[i])
+            continue;
+        ModelInstance* ballInst = cannonBalls[i].get();
+
+        // Convert server’s “absolute” position into a room‐local offset:
+        glm::vec3 localPos = positions[i] - roomOffset;
+        glm::mat4 newLocal = glm::translate(I4, localPos);
+        ballInst->localTransform = newLocal;
     }
 }
 

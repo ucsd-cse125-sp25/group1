@@ -9,7 +9,7 @@ using json = nlohmann::json;
 Piano::Piano(int roomID, World& worldRef, Server& serverRef)
     : Room(roomID, "pianoRoom"), world(worldRef), server(serverRef) {
 
-    // solution = config::PIANO_SOLUTION;
+    solution = config::PIANO_SOLUTION;
 }
 
 Piano::~Piano() {
@@ -36,4 +36,16 @@ PianoKey* Piano::createPianoKey() {
 
     numKeys++;
     return newKey;
+}
+
+int Piano::getPlayedIndex() {
+    return playedIndex;
+}
+
+void Piano::setPlayedIndex(int index) {
+    playedIndex = index;
+}
+
+int Piano::getSolutionNote(int index) {
+    return solution[index];
 }

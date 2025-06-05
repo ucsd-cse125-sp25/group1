@@ -20,6 +20,7 @@ void PianoRespawn::customCollision(ICustomPhysics* otherObject) {
     playerBody.setForce(glm::vec3{0.0f, 0.0f, 0.0f});
     playerBody.setVelocity(glm::vec3{0.0f, 0.0f, 0.0f});
     // TODO: add offset for the individual player, so 2 players don't spawn into the same spot.
-    playerBody.setPosition(config::PIANO_RESPAWN + config::PIANO_ROOM_POSITION);
+    playerBody.setPosition(config::PIANO_RESPAWN + config::PIANO_ROOM_POSITION +
+                           config::PIANO_OFFSET[playerPtr->getID()]);
     playerPtr->setJumpSfxCooldown(false);
 }

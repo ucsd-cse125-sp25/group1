@@ -147,8 +147,10 @@ inline constexpr const char* PIANO_AMBIENCE_TRACK = "{b77419f3-b86e-48af-bd48-94
 inline constexpr const char* CANNONBALL = "{bbd1e66c-d614-40e5-8dde-442db1d6442e}";
 inline constexpr const char* HOTEL_LOBBY = "{8a1c1842-ac41-470c-a060-8c5b909bc6e2}";
 inline constexpr const char* BAD_ENDING = "{00396995-e033-4760-939d-4c59492538cd}";
+inline constexpr const char* HAPPY_ENDING = "{be3a2574-5efe-4157-a567-4322138cfae2}";
+inline constexpr const char* UI_CLICK = "{6b6e3d35-5661-4e2f-b38d-513eb36e836e}";
 
-inline constexpr std::array<const char*, 15> PIANO_KEY_SFX = {
+inline constexpr std::array<const char*, 14> PIANO_KEY_SFX = {
     "{493fcf1e-c2ed-4f98-944e-7823f802d2a7}",  // C3
     "{7aa9c7e4-59ba-4661-b2a5-34e51a65638a}",  // D3
     "{29e7dd89-2c8b-4f23-bce0-a6acb95c9932}",  // E3
@@ -164,6 +166,13 @@ inline constexpr std::array<const char*, 15> PIANO_KEY_SFX = {
     "{8cdcb7c5-8f37-438b-a697-03c541bbafd8}",  // A4
     "{2d6e76a3-f7d5-43fc-9fe2-1997556a5bad}",  // B4
 };
+
+inline constexpr std::array<int, 14> PIANO_SOLUTION = {0, 1, 2, 3,  4,  5,  6,
+                                                       7, 8, 9, 10, 11, 12, 13};
+
+inline constexpr std::array<glm::vec3, 4> PIANO_OFFSET = {
+    {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, -1.0f}, {0.0f, 0.0f, -2.0f}, {0.0f, 0.0f, -3.0f}}};
+
 
 // Audio for Set Volume
 

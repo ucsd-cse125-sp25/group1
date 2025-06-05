@@ -86,12 +86,6 @@ void Scene::initRooms() {
     glm::mat4 lobbyModel = glm::translate(I4, config::LOBBY_POSITION);
     auto lobby = std::make_unique<ModelInstance>(lobbyAsset.get(), lobbyModel, nullptr, true);
 
-    // glm::mat4 finalDoorLeftModel = glm::translate(I4, config::FINALDOOR_LEFT_POSITION);
-    // finalDoorLeftModel =
-    //     glm::rotate(finalDoorLeftModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    // glm::mat4 finalDoorRightModel = glm::translate(I4, config::FINALDOOR_RIGHT_POSITION);
-    // finalDoorRightModel =
-    //     glm::rotate(finalDoorRightModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 finalDoorModel = glm::translate(I4, config::FINALDOOR_POSITION);
     finalDoorModel = glm::rotate(finalDoorModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -126,6 +120,7 @@ void Scene::initRooms() {
         lobby->children["backPlate"][i] = std::make_unique<ModelInstance>(
             backPlateAsset.get(), backPlateModel, lobby.get(), true);
     }
+    // Need this for testing key slot positions
     // for (int i = 0; i < 4; i++) {
     //     glm::mat4 finalKeyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[i]);
     //     finalKeyModel =

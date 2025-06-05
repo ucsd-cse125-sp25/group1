@@ -3,6 +3,11 @@
 Cannonball::Cannonball(int id, glm::vec3 cannonPosition)
     : Object(id), cannonPosition(cannonPosition) {}
 
+void Cannonball::fire() {
+    glm::vec3 fireDirection = {-1.0, 0.0, 0.0};
+    this->getBody()->setVelocity(fireDirection * config::CANNONBALL_SPEED);
+}
+
 void Cannonball::fire(Player* player) {
     glm::vec3 fireDirection = glm::normalize(cannonPosition - player->getBody().getPosition());
     this->getBody()->setVelocity(fireDirection * config::CANNONBALL_SPEED);

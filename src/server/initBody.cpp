@@ -111,9 +111,9 @@ RigidBody* initCannonball(TransformData data, Circus* circus, World* world) {
     Cannonball* cannonball = circus->createCannonball(absolutePosition);
 
     RigidBody* body =
-        new RigidBody(vec3(0.0f), vec3(0.0f), 0.0f, new Transform{absolutePosition, vec3(0.0f)},
-                      new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner},
-                      cannonball, world, true);
+        new RigidBody(vec3(0.0f), vec3(0.0f), 10.0f, new Transform{absolutePosition, vec3(0.0f)},
+                      new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner},
+                      cannonball, world, false, vec3(0.0f, 0.0f, 0.0f));
 
     cannonball->setBody(body);
     return body;

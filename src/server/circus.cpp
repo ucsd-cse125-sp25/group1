@@ -67,7 +67,6 @@ void Circus::stopMusicMessage() {
 
 void Circus::fireCannons() {
     for (Cannonball* cannonball : cannonballs) {
-        // TODO: think about how to hit all (or closest) players
-        // cannonball->fire(server.getPlayers()[i]);
+        cannonball->fire();
     }
 }

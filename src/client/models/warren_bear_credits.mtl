@@ -1,0 +1,22 @@
+# Blender 4.4.0 MTL File: 'crunch time.blend'
+# www.blender.org
+
+newmtl MAT_credits
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd C:/Users/jasmine/Documents/Adobe/Photoshop/out of tune credits.png
+
+newmtl MAT_warren_bear
+Ns 4.813310
+Ka 0.358852 0.358852 0.358852
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 3
+map_Kd TEX_warren_bear_gray.png

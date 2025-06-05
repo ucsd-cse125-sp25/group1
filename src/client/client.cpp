@@ -332,6 +332,8 @@ void Client::updatePlayerStates(const json& parsed) {
         playerPositions[id] = position;
         playerDirections[id] = direction;
 
+        scene->setPlayerState(id, player["state"]);
+
         if (id == clientId) {
             camera.setPosition(position + config::CAMERA_OFFSET);
         }

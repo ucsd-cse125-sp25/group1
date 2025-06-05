@@ -87,9 +87,6 @@ void Server::initRigidBodies() {
                 object = initLilyPad(data, swamp, &world);
             } else if (modelName == "water_00") {
                 object = initWater(data, swamp, &world);
-            } else if (modelName == "cannonball_00") {
-                // TODO: should it take in &objects like initFrog does?
-                object = initCannonball(data, circus, &world);
             } else if (modelName == "wall_00") {
                 // TODO: should it take in &objects like initFrog does?
                 object = initWall(data, circus, &world);
@@ -301,6 +298,11 @@ void Server::handleClientMessages() {
                             continue; // skip further processing for this client
                         }
                     }
+                }
+                // TODO: remove this
+                // Temporary for testing: when the user types 'n', circus cannons fire
+                if (std::find(actions.begin(), actions.end(), "n") != actions.end()) {
+                    circus->fireCannons();
                 }
                 // handle misc inputs, such as interacting with environment
                 players[clientId]->handleGeneralInput(actions, interactable);

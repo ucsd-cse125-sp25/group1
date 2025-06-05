@@ -120,7 +120,6 @@ void Scene::initRooms() {
     for (int i = 0; i < config::NUM_CANNONBALLS; i++) {
         // init cannon
         glm::mat4 cannon = glm::translate(I4, config::CANNONBALL_POSITIONS[i]);
-        cannon = glm::rotate(cannon, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
         cannon = glm::translate(cannon, {5.0f, 0.0f, 0.0f});
         circusRoom->children["cannon"][i] =
             std::make_unique<ModelInstance>(cannonAsset.get(), cannon, circusRoom.get());

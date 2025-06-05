@@ -38,7 +38,7 @@ void Server::initRigidBodies() {
         if (roomName == "swampRoom") {
             swamp = new Swamp(rooms.size(), world, *this);
             room = static_cast<Room*>(swamp);
-        } else if (roomName == "circus_room") {
+        } else if (roomName == "circusRoom") {
             circus = new Circus(rooms.size(), world, *this);
             room = static_cast<Room*>(circus);
         } else {

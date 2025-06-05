@@ -1247,15 +1247,6 @@
         "position": [
           30.0,
           3.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "cannonball_00",
-        "position": [
-          30.0,
-          3.0,
           -4.0
         ],
         "rotated": false

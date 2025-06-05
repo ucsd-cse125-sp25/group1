@@ -74,6 +74,11 @@ class Circus : public Room {
      */
     bool isRespawnCreated() const;
 
+    /**
+     * fires cannons every n seconds (n is in config) without stopping
+     */
+    void cannonLoop();
+
   private:
     /**
      * @brief Number of walls in the circus game

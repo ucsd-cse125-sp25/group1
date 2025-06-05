@@ -498,22 +498,27 @@ void Scene::renderPlayerShadowPass() {
 
     for (auto& [roomName, playersInRoom] : playersByRoom) {
         auto& shadowMaps = playerShadowMaps[roomName];
-        shadowMaps[0]->begin();
 
-        Shader& shader = shadowMaps[0]->getShader();
-        shader.setBool("isSkinned", true);
+        for (int i = 0; i < shadowMaps.size(); ++i) {
+            shadowMaps[i]->begin();
 
-        for (Player* player : playersInRoom) {
-            player->draw(shader);
+            Shader& shader = shadowMaps[i]->getShader();
+            shader.setBool("isSkinned", true);
+
+            for (Player* player : playersInRoom) {
+                player->draw(shader);
+            }
+
+            shadowMaps[i]->end();
+            playerShadowActive[roomName][i] = true;
         }
-
-        shadowMaps[0]->end();
-        playerShadowActive[roomName][0] = true;
     }
 
     for (const std::string& roomName : roomNames) {
         if (!playersByRoom.contains(roomName)) {
-            playerShadowActive[roomName][0] = false;
+            for (int i = 0; i < playerShadowMaps[roomName].size(); ++i) {
+                playerShadowActive[roomName][0] = false;
+            }
         }
     }
 }

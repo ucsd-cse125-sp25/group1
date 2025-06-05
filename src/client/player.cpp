@@ -5,7 +5,7 @@ Player::Player(int id, const glm::vec3& position, const glm::vec3& direction)
     : id(id), position(position), direction(direction) {}
 
 void Player::init() {
-    character = std::make_unique<AnimatedModel>("../src/client/characters/player_cat.fbx");
+    character = std::make_unique<AnimatedModel>("../src/client/characters/dog_run.fbx");
     animations["idle"] = std::make_unique<Animation>(character->getScene(), character.get());
     animator = std::make_unique<Animator>(animations["idle"].get());
 }

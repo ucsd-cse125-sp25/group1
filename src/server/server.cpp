@@ -101,6 +101,8 @@ void Server::initRigidBodies() {
                 object = initKey(data, *this, world, roomName, &keys);
             } else if (modelName == "cannonball_00") {
                 object = initCannonball(data, circus, &world);
+            } else if (modelName == "circus_floor_00" && !circus->isRespawnCreated()) {
+                object = initCircusRespawn(data, circus, &world);
             } else if (modelName.starts_with("zone_")) {
                 object = initZone(data, this, &objects, &world, i);
             } else if (modelName == "door") {
@@ -253,8 +255,7 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
-            circus->broadcastCannonballPositions();
-
+            circus->cannonLoop();
             startTick();
         }
     });
@@ -319,9 +320,9 @@ void Server::handleClientMessages() {
                 }
                 // TODO: remove this
                 // Temporary for testing: when the user types 'n', circus cannons fire
-                if (std::find(actions.begin(), actions.end(), "n") != actions.end()) {
-                    circus->stopMusicMessage();
-                }
+                // if (std::find(actions.begin(), actions.end(), "n") != actions.end()) {
+                //     circus->stopMusicMessage();
+                // }
                 // handle misc inputs, such as interacting with environment
                 players[clientId]->handleGeneralInput(actions, interactable);
             } else if (type == "mouse_input") {

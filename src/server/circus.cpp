@@ -7,7 +7,7 @@
 using json = nlohmann::json;
 
 Circus::Circus(int roomID, World& worldRef, Server& serverRef)
-    : Room(roomID, "Circus"), world(worldRef), server(serverRef) {
+    : Room(roomID, "Circus"), world(worldRef), server(serverRef), respawnCreated(false) {
     respawnPoint = config::CIRCUS_RESPAWN + config::CIRCUS_ROOM_POSITION;
     numWalls = 0;       // numWalls is incremented as createWall is called
     numCannonballs = 0; // numCannonballs is incremented as createCannonball is called
@@ -60,6 +60,16 @@ Cannonball* Circus::createCannonball(glm::vec3 cannonPosition) {
     return newCannonball;
 }
 
+CircusRespawn* Circus::createRespawn() {
+    respawnCreated = true;
+    CircusRespawn* respawn = new CircusRespawn(0, server);
+    return respawn;
+}
+
+bool Circus::isRespawnCreated() const {
+    return respawnCreated;
+}
+
 void Circus::stopMusicMessage() {
     json message;
     message["type"] = "pause_circus_music";
@@ -69,6 +79,15 @@ void Circus::stopMusicMessage() {
     // start a timer (3 seconds). Once it hits zero, shoot cannonballs.
     cannonTimerActive = true;
     cannonTicksRemaining = config::SECONDS_CANNON_DELAY * (1000 / config::TICK_RATE);
+}
+
+void Circus::cannonLoop() {
+    if (!cannonTimerActive && !cannonsFiring) {
+        cannonTimerActive = true;
+        cannonTicksRemaining = config::SECONDS_CANNON_DELAY * (1000 / config::TICK_RATE);
+    }
+    // If cannons are firing, broadcast positions. Otherwise, count down timer
+    broadcastCannonballPositions();
 }
 
 void Circus::fireCannons() {

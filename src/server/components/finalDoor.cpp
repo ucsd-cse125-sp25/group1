@@ -8,7 +8,12 @@ using json = nlohmann::json;
 FinalDoor::FinalDoor(int numKeys, int objectID, Lobby* lobbyRef)
     : Interactable(objectID), numKeys(numKeys), keyStates(numKeys, false), lobby(lobbyRef) {
     keyCount = 0;
+    locked = true; // Initially locked until all keys are added
+    unlockable = false; // Initially not unlockable until all keys are added
     // Initialize any member variables if needed
+    for (int i = 0; i < 4; ++i) {
+        buttonStates[i] = false; // Initialize all button states to false (not pressed)
+    }
 }
 
 // Destructor

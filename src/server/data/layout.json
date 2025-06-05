@@ -25,6 +25,42 @@
         "rotated": false
       },
       {
+        "model": "button",
+        "position": [
+          7.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
+        "model": "button",
+        "position": [
+          -7.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
+        "model": "button",
+        "position": [
+          12.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
+        "model": "button",
+        "position": [
+          -12.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
         "model": "lobby_00",
         "position": [
           0.0,
@@ -179,15 +215,6 @@
       },
       {
         "model": "lobby_17",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "lobby_18",
         "position": [
           0.0,
           0.0,
@@ -1081,6 +1108,15 @@
         "rotated": false
       },
       {
+        "model": "circus_floor_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "circus_00",
         "position": [
           0.0,
@@ -1203,15 +1239,6 @@
           30.0,
           3.0,
           4.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "cannonball_00",
-        "position": [
-          30.0,
-          3.0,
-          0.0
         ],
         "rotated": false
       },

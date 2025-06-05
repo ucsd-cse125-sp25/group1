@@ -18,6 +18,7 @@
 #include "world.hpp"
 
 class Swamp;
+class Piano;
 class Circus;
 class Lobby;
 class Piano;
@@ -187,6 +188,7 @@ class Server {
     Swamp* swamp;
     Circus* circus;
     Lobby* lobby;
+
     Piano* piano;
 
     Interactable* interactableTracked = nullptr;

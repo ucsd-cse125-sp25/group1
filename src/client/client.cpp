@@ -291,7 +291,7 @@ void Client::handleServerMessage(const std::string& message) {
 
         if (action == "door_open") {
             auto doorID = parsed["door_id"];
-            // TODO: remove rendering of door
+            scene->removeDoor(doorID);
         }
 
     } else if (type == "interactable_nearby") {
@@ -342,8 +342,12 @@ void Client::handleServerMessage(const std::string& message) {
     } else if (type == "final_door_open") {
         // This is the final door opening, so we need to update the scene
         // and show the end screen.
+        scene->removeInstanceFromRoom("lobby", "finalDoor", 0);
     } else if (type == "final_button_pressed") {
         // Could just be sfx only
+        int playerID = parsed["player_id"];
+        scene->moveChildTransform("lobby", "final_button", playerID, glm::vec3(0.0f, 0.0f, -0.02f));
+
     } else {
         std::cerr << "Unknown message type: " << type << "\n";
     }

@@ -321,7 +321,7 @@ void Client::updatePlayerStates(const json& parsed) {
     for (const auto& player : players) {
         int id = player["id"];
         connectedIds.insert(id);
-
+        
         glm::vec3 position = toVec3(player["position"]);
         glm::vec3 direction = toVec3(player["direction"]);
 
@@ -331,6 +331,12 @@ void Client::updatePlayerStates(const json& parsed) {
         if (id == clientId) {
             camera.setPosition(position + config::CAMERA_OFFSET);
         }
+        mainmenu->queuePlayer(id);
+        //if (mainmenu->queuePlayer(id))
+        //    gameState = 1;
+        if (mainmenu->ready) {
+            gameState = 1;
+        }
     }
 
     for (int i = 0; i < config::MAX_PLAYERS; ++i) {
@@ -338,6 +344,7 @@ void Client::updatePlayerStates(const json& parsed) {
             playerPositions.erase(i);
             playerDirections.erase(i);
             disconnectedIds.insert(i);
+            mainmenu->dequeuePlayer(i);
         }
     }
 }
@@ -493,6 +500,11 @@ void Client::initScene() {
     yaw = directionToYaw(direction);
 }
 
+void Client::initMainMenu(GLFWwindow* window) {
+    mainmenu = std::make_unique<Menu>(clientId);
+    mainmenu->init(window);
+}
+
 void Client::gameLoop(GLFWwindow* window) {
     while (!glfwWindowShouldClose(window)) {
         glClearColor(0.75f, 0.9f, 1.0f, 1.0f);
@@ -511,8 +523,11 @@ void Client::gameLoop(GLFWwindow* window) {
             scene->removePlayer(id);
         }
         disconnectedIds.clear();
-
-        scene->render(camera, boundingBoxMode);
+        
+        if (gameState == 0)
+            mainmenu->run();
+        else
+            scene->render(camera, boundingBoxMode);
 
         audioManager.update();
 
@@ -535,6 +550,7 @@ void Client::run() {
     initGL();
     initScene();
     scene->window = window;
+    initMainMenu(window);
     gameLoop(window);
     cleanup(window);
 }

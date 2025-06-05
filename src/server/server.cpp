@@ -17,6 +17,7 @@ Server::Server()
 
 Server::~Server() {
     delete swamp;
+    delete circus;
 }
 
 static vec3 toVec3(const json& arr) {
@@ -37,6 +38,9 @@ void Server::initRigidBodies() {
         if (roomName == "swampRoom") {
             swamp = new Swamp(rooms.size(), world, *this);
             room = static_cast<Room*>(swamp);
+        } else if (roomName == "circusRoom") {
+            circus = new Circus(rooms.size(), world, *this);
+            room = static_cast<Room*>(circus);
         } else if (roomName == "lobby") {
             lobby = new Lobby(rooms.size(), world, *this);
             room = static_cast<Room*>(lobby);
@@ -94,6 +98,8 @@ void Server::initRigidBodies() {
                 object = initSplash(data, swamp, &world);
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
+            } else if (modelName == "cannonball_00") {
+                object = initCannonball(data, circus, &world);
             } else if (modelName.starts_with("zone_")) {
                 object = initZone(data, this, &objects, &world, i);
             } else if (modelName == "door") {
@@ -243,6 +249,7 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
+            circus->broadcastCannonballPositions();
 
             startTick();
         }
@@ -305,6 +312,11 @@ void Server::handleClientMessages() {
                             continue; // skip further processing for this client
                         }
                     }
+                }
+                // TODO: remove this
+                // Temporary for testing: when the user types 'n', circus cannons fire
+                if (std::find(actions.begin(), actions.end(), "n") != actions.end()) {
+                    circus->stopMusicMessage();
                 }
                 // handle misc inputs, such as interacting with environment
                 players[clientId]->handleGeneralInput(actions, interactable);

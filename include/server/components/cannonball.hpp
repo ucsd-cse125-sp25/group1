@@ -12,6 +12,12 @@ class Cannonball : public Object {
     ~Cannonball() = default;
 
     /**
+     * @brief Shoot in a straight line.
+     *
+     */
+    void fire();
+
+    /**
      * @brief Calculate direction of player and set velocity to shoot at them.
      *
      * @param player Player to shoot at

@@ -75,6 +75,13 @@ class Scene {
      */
     void removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id);
 
+    /**
+     * @brief Removes a door from using a global ID.
+
+     * @param id Global door ID.
+     */
+    void removeDoor(int id);
+
     void addKeyToSlot(const std::string& roomName, const std::string& type, int id);
 
     void moveChildTransform(const std::string& roomName, const std::string& type, int id,
@@ -151,6 +158,14 @@ class Scene {
     int getPlayerRoomID(int clientID);
 
     /**
+     * Creates and stores a given number of fireflies with random positions, directions,
+     * speeds, and sizes inside a defined bounding area.
+     *
+     * @param count Number of fireflies to spawn.
+     */
+    void updateCannonballPositions(glm::vec3 positions[]);
+
+    /*
      * @brief Sets player character's animation state
      *
      * @param clientID client ID.
@@ -230,6 +245,8 @@ class Scene {
     std::unique_ptr<Model> frogAsset;
 
     std::unique_ptr<Model> circusRoomAsset;
+    std::unique_ptr<Model> cannonballAsset;
+    std::unique_ptr<Model> cannonAsset;
 
     std::unique_ptr<Model> pianoRoomAsset;
 

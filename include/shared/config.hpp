@@ -101,6 +101,8 @@ inline constexpr int SWAMP_NUM_FIREFLIES = 150;
 inline constexpr float SWAMP_LILYPAD_WIDTH = 1.0f;
 inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;
 
+inline constexpr glm::vec3 PIANO_RESPAWN = {0.0f, 0.0f, -27.0f};
+
 // TODO: Convert GUID to event names
 inline constexpr const char* SWAMP_AMBIENCE_TRACK = "{25c216fb-36d9-42c9-bd0f-4662b826ff2a}";
 inline constexpr const char* FOOTSTEPCARPET = "{5a18903c-2b5f-4fd0-b153-63a502130d90}";
@@ -115,7 +117,7 @@ inline constexpr const char* PIANO_AMBIENCE_TRACK = "{b77419f3-b86e-48af-bd48-94
 
 // Controlled by Client
 inline constexpr float SWAMP_AMBIENCE_VOL = 0.5f;
-inline constexpr float CARNIVAL_AMBIENCE_VOL = 0.5f;
+inline constexpr float CARNIVAL_AMBIENCE_VOL = 0.3f;
 inline constexpr float PIANO_AMBIENCE_VOL = 0.3f;
 
 inline constexpr float FOOTSTEPCARPET_VOL = 0.05f;

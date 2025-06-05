@@ -1,4 +1,4 @@
-# Blender 4.4.1 MTL File: 'hotel rooms most recent sub 30 (1) (1).blend'
+# Blender 4.4.0 MTL File: 'crunch time.blend'
 # www.blender.org
 
 newmtl MAT_furniture_wood
@@ -10,6 +10,36 @@ Ni 1.500000
 d 1.000000
 illum 2
 map_Kd TEX_furniture_wood.png
+
+newmtl MAT_key_symbol
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TEX_black.png
+
+newmtl MAT_key_symbol2
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TEX_light_brown.png
+
+newmtl MAT_piano
+Ns 2.500001
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd TEX_piano_wood.png
 
 newmtl MAT_piano
 Ns 2.500001
@@ -31,6 +61,16 @@ d 1.000000
 illum 2
 map_Kd TEX_black_piano_key.png
 
+newmtl MAT_piano_key
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd TEX_piano_key.png
+
 newmtl MAT_piano_wall
 Ns 7.576752
 Ka 1.000000 1.000000 1.000000
@@ -40,6 +80,16 @@ Ni 1.500000
 d 1.000000
 illum 2
 map_Kd TEX_black.png
+
+newmtl MAT_sheet_music
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
 
 newmtl MAT_skybox_piano_room
 Ns 250.000000

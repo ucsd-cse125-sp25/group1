@@ -9,7 +9,9 @@
 #include "components/object.hpp"
 #include "components/room.hpp"
 #include "components/water.hpp"
+#include "components/pianoRespawn.hpp"
 #include "config.hpp"
+#include "piano.hpp"
 #include "rigidBody.hpp"
 #include "server.hpp"
 #include "swamp.hpp"
@@ -104,15 +106,18 @@ RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, 
  * @param roomName The name of the room where the key is located.
  * @return Pointer to the initialized RigidBody associated with the Key.
  */
-RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef, const std::string& roomName, std::unordered_map<int, Key*>* keys);
+RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef,
+                   const std::string& roomName, std::unordered_map<int, Key*>* keys);
 
 /**
  * @brief Initializes a Splash Object.
  *
  * A Splash object is created through the Swamp, and a non-collidable RigidBody is created with it.
- * 
+ *
  * @param data Transform data including position and collider dimensions.
  * @param serverRef Reference to the Server instance for managing game state.
  * @return Pointer to the initialized RigidBody associated with the Splash.
  */
 RigidBody* initSplash(TransformData data, Swamp* swamp, World* world);
+
+RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world);

@@ -85,7 +85,7 @@ class Scene {
     void addKeyToSlot(const std::string& roomName, const std::string& type, int id);
 
     void moveChildTransform(const std::string& roomName, const std::string& type, int id,
-                               const glm::vec3& offset);
+                            const glm::vec3& offset);
 
     /**
      * @brief Renders shadow maps for static geometry.
@@ -100,6 +100,13 @@ class Scene {
      * This is called only once when the scene initializes.
      */
     void renderInteractableShadowPass();
+
+    /**
+     * @brief Renders shadow maps for players.
+     *
+     * This is called every frame.
+     */
+    void renderPlayerShadowPass();
 
     /**
      * @brief Renders shadow maps for lilypad objects in the swamp room.
@@ -210,17 +217,19 @@ class Scene {
     std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> staticShadowMaps;
     std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> interactableShadowMaps;
     std::unordered_map<std::string, std::vector<bool>> interactableShadowActive;
+    std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> playerShadowMaps;
+    std::unordered_map<std::string, std::vector<bool>> playerShadowActive;
 
     std::map<std::string, std::unique_ptr<Shader>> shaders;
     std::unique_ptr<Shader> uiShader;
 
     std::unique_ptr<Model> lobbyAsset;
-    std::unique_ptr<Model> finalDoorAsset; // Left door of the final door
-    std::unique_ptr<Model> buttonBlueAsset; // Blue button
-    std::unique_ptr<Model> buttonPinkAsset; // Pink button
+    std::unique_ptr<Model> finalDoorAsset;    // Left door of the final door
+    std::unique_ptr<Model> buttonBlueAsset;   // Blue button
+    std::unique_ptr<Model> buttonPinkAsset;   // Pink button
     std::unique_ptr<Model> buttonYellowAsset; // Yellow button
-    std::unique_ptr<Model> buttonGreenAsset; // Green button
-    std::unique_ptr<Model> backPlateAsset; // Backplate for the buttons
+    std::unique_ptr<Model> buttonGreenAsset;  // Green button
+    std::unique_ptr<Model> backPlateAsset;    // Backplate for the buttons
 
     std::unique_ptr<Model> hotelRoomStraightX; // Doors face +X and -X directions
     std::unique_ptr<Model> hotelRoomStraightZ; // Doors face +Z and -Z directions

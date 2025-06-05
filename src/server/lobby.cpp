@@ -28,7 +28,9 @@ std::string Lobby::getInitInfo() {
 FinalDoor* Lobby::createFinalDoor(int objectID) {
     int numKeys = 4;
     FinalDoor* door = new FinalDoor(numKeys, objectID, this);
-    addInteractable(std::move(door));
+    std::cout << "Creating FinalDoor with ID: " << objectID << std::endl;
+    finalDoor = door;
+    addInteractable(door);
     return door;
 }
 
@@ -36,7 +38,7 @@ FinalButton* Lobby::createFinalButton(int buttonID) {
     FinalButton* button = new FinalButton(buttonID, playerID, finalDoor);
     playerID++; // Increment playerID for the next button
     buttons.push_back(button);
-    addInteractable(std::move(button));
+    addInteractable(button);
     return button;
 }
 

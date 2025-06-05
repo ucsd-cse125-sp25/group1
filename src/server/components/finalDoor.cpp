@@ -48,6 +48,8 @@ void FinalDoor::handleInteract(Player& player) {
     // message["sfx_id"] = config::Some sound effect ID;
     message["client_id"] = player.getID();
     message["action"] = "interact";
+    message["slot_id"] = getKeyCount() - 1; // Include the current key count
+    message["room"] = "lobby"; // Include the room name
 
     std::string packet = message.dump() + "\n";
     lobby->getServer().broadcastMessage(packet);

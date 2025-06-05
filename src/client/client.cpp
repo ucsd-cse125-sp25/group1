@@ -250,8 +250,13 @@ void Client::handleServerMessage(const std::string& message) {
         scene->setInteractableShadowActive(roomName, 0, false);
     } else if (type == "final_door_interact") {
         // Need to have some sort of animation or graphics where the key is added to the door
+        auto keySlot = parsed["slot_id"];
+        auto roomName = parsed["room"];
+        scene->addKeyToSlot(roomName, "final_door_key", keySlot);
+        scene->canvas->removeKey();
 
-        // Make the key appear at the correct positions 
+        // Make the key appear at the correct positions
+        // Positions are set in the config file
     } else if (type == "final_door_open") {
         // This is the final door opening, so we need to update the scene
         // and show the end screen.

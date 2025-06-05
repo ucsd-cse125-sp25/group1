@@ -75,6 +75,8 @@ class Scene {
      */
     void removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id);
 
+    void addKeyToSlot(const std::string& roomName, const std::string& type, int id);
+
     /**
      * @brief Renders shadow maps for static geometry.
      *
@@ -167,8 +169,7 @@ class Scene {
     std::unique_ptr<Shader> uiShader;
 
     std::unique_ptr<Model> lobbyAsset;
-    std::unique_ptr<Model> finalDoorLeftAsset;  // Left door of the final door
-    std::unique_ptr<Model> finalDoorRightAsset; // Right door of the final door
+    std::unique_ptr<Model> finalDoorAsset; // Left door of the final door
 
     std::unique_ptr<Model> hotelRoomStraightX; // Doors face +X and -X directions
     std::unique_ptr<Model> hotelRoomStraightZ; // Doors face +Z and -Z directions

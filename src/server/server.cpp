@@ -93,7 +93,7 @@ void Server::initRigidBodies() {
                 object = initKey(data, *this, world, roomName, &keys);
             } else if (modelName.starts_with("zone_")) {
                 object = initZone(data, this, &objects, &world, i);
-            } else if (modelName == "door_left") {
+            } else if (modelName == "door") {
                 object = initFinalDoor(data, &objects, lobby, &world);
             } else if (modelName.starts_with("button")) {
                 object = initButton(data, &objects, lobby, &world);

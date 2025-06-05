@@ -16,16 +16,7 @@
         "rotated": false
       },
       {
-        "model": "door_left",
-        "position": [
-          0.0,
-          0.0,
-          18.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "door_right",
+        "model": "door",
         "position": [
           0.0,
           0.0,

@@ -19,7 +19,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd C:/TEX_final_door.png
+map_Kd TEX_final_door.png
 
 newmtl find
 Ns 250.000000
@@ -28,8 +28,8 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 illum 2
-map_Kd C:/find.png
-map_d C:/find.png
+map_Kd find.png
+map_d find.png
 
 newmtl keys
 Ns 250.000000
@@ -38,8 +38,8 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 illum 2
-map_Kd C:/keys.png
-map_d C:/keys.png
+map_Kd keys.png
+map_d keys.png
 
 newmtl the
 Ns 250.000000
@@ -48,5 +48,5 @@ Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 illum 2
-map_Kd C:/the.png
-map_d C:/the.png
+map_Kd the.png
+map_d the.png

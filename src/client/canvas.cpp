@@ -38,6 +38,10 @@ void Canvas::collectKey() {
     keydisplay->onCollectKey();
 }
 
+void Canvas::removeKey() {
+    keydisplay->onRemoveKey();
+}
+
 void Canvas::setInteractHidden(bool val) {
     interactdisplay->setHidden(val);
 }

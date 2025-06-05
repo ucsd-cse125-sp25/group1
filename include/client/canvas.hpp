@@ -14,6 +14,7 @@ class Canvas {
     void draw(Shader& shader);
     void updateWindow(int width, int height);
     void collectKey();
+    void removeKey();
     void setInteractHidden(bool val);
     void updateTimer(int minutes, int seconds);
     void updateCompass(glm::vec3 direction);

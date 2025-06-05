@@ -114,19 +114,19 @@ inline constexpr const char* PIANO_AMBIENCE_TRACK = "{b77419f3-b86e-48af-bd48-94
 // Audio for Set Volume
 
 // Controlled by Client
-inline constexpr float SWAMP_AMBIENCE_VOL = 0.5f;
-inline constexpr float CARNIVAL_AMBIENCE_VOL = 0.15f;
-inline constexpr float PIANO_AMBIENCE_VOL = 0.05f;
+inline constexpr float SWAMP_AMBIENCE_VOL = 0.5f;   
+inline constexpr float CARNIVAL_AMBIENCE_VOL = 0.5f;
+inline constexpr float PIANO_AMBIENCE_VOL = 0.3f;
 
 inline constexpr float FOOTSTEPCARPET_VOL = 0.05f;
-inline constexpr float FOOTSTEPWOOD_VOL = 0.015f;
+inline constexpr float FOOTSTEPWOOD_VOL = 0.05f;   
 
 inline constexpr int FOOTSTEP_COOLDOWN_RATE = 7;
 
 // Controlled by Server
-inline constexpr float SWAMP_AUDIO_FILE_VOL = 2.5f;
+inline constexpr float SWAMP_AUDIO_FILE_VOL = 1.0f; //2.5
 inline constexpr float LILYPAD_VOL = 0.2f;
-inline constexpr float UNLOCKDOOR_VOL = 0.5f;
+inline constexpr float UNLOCKDOOR_VOL = 0.4f;  //0.5
 inline constexpr float GRABKEY_VOL = 0.2f;
 inline constexpr float WATERSPLASH_VOL = 0.05f;
 } // namespace config

@@ -188,6 +188,13 @@ void Client::handleServerMessage(const std::string& message) {
 
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
         scene->renderLilypadShadowPass(id);
+    } else if (type == "cannonball_positions") {
+        const auto& cannonballs = parsed["cannonballs"];
+        for (const auto& cannonball : cannonballs) {
+            int id = cannonball["id"];
+            glm::vec3 position = toVec3(cannonball["position"]);
+            // TODO: update cannonball positions in the scene
+        }
     } else if (type == "room_id") {
         auto roomID = parsed["id"];
         auto clientId = parsed["client_id"];

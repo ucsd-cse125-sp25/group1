@@ -56,6 +56,11 @@ class Circus : public Room {
 
     void fireCannons();
 
+    /**
+     * Broadcasts cannonball positions if they are moving
+     */
+    void broadcastCannonballPositions();
+
   private:
     /**
      * @brief Number of walls in the circus game
@@ -102,4 +107,9 @@ class Circus : public Room {
      *
      */
     Server& server;
+
+    /**
+     * @brief whether or not the cannons are actively firing.
+     */
+    bool cannonsFiring;
 };

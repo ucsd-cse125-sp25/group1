@@ -237,6 +237,7 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
+            circus->broadcastCannonballPositions();
 
             startTick();
         }

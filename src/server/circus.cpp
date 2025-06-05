@@ -69,4 +69,30 @@ void Circus::fireCannons() {
     for (Cannonball* cannonball : cannonballs) {
         cannonball->fire();
     }
+    cannonsFiring = true;
+}
+
+void Circus::broadcastCannonballPositions() {
+    // Don't do anything if cannons aren't firing
+    if (!cannonsFiring) {
+        return;
+    }
+    // Cannonballs are flying
+    json message;
+    message["type"] = "cannonball_positions";
+    for (Cannonball* cannonball : cannonballs) {
+        glm::vec3 position = cannonball->getBody()->getPosition();
+        // indicate where the current cannonball is
+        json entry;
+        entry["id"] = cannonball->getID();
+        entry["position"] = {position.x, position.y, position.z};
+        message["cannonballs"].push_back(entry);
+    }
+    // potentially update cannonsFiring to false
+    cannonsFiring = false;
+    for (Cannonball* cannonball : cannonballs) {
+        if (cannonball->getBody()->getVelocity() != glm::vec3(0.0f, 0.0f, 0.0f)) {
+            cannonsFiring = true;
+        }
+    }
 }

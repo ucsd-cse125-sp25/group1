@@ -195,6 +195,9 @@ void Client::handleServerMessage(const std::string& message) {
 
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
         scene->renderLilypadShadowPass(id);
+    } else if (type == "room_id") {
+        // TODO : handle room ID assignment
+
     } else if (type == "sfx") {
         // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,
         // "action": "jump", "volume": 1.0f (optional), "stopID": "eventID" (optional)} client id
@@ -241,6 +244,8 @@ void Client::handleServerMessage(const std::string& message) {
         scene->setInteractableShadowActive(roomName, 0, false);
     } else if (type == "final_door_interact") {
         // Need to have some sort of animation or graphics where the key is added to the door
+
+        // Make the key appear at the correct positions 
     } else if (type == "final_door_open") {
         // This is the final door opening, so we need to update the scene
         // and show the end screen.

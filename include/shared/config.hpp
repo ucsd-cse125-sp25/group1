@@ -10,7 +10,7 @@ inline constexpr const char* SERVER_IP = "127.0.0.1";
 inline constexpr int SERVER_PORT = 2399;
 inline constexpr bool BYPASS = false;
 
-inline constexpr float gravity = -15.0f;
+inline constexpr float gravity = -20.0f;
 
 inline constexpr int MAX_PLAYERS = 4;
 inline constexpr int TICK_RATE = 30;
@@ -86,8 +86,9 @@ inline constexpr glm::vec3 PARKOUR_OBJECT_POSITIONS[3] = {
     {0.0f, -1.5f, 0.0f}, {2.5f, -0.5f, 0.0f}, {5.0f, 0.5f, 0.0f}};
 inline constexpr glm::vec3 PARKOUR_KEY_POSITION = {-8.0f, 6.0f, 8.0f};
 
-//Finaldoor 
-inline constexpr glm::vec3 FINALDOOR_KEY_SLOT0 = {0.0f, 1.0f, 0.0f};
+// Finaldoor
+inline constexpr glm::vec3 FINALDOOR_KEY_SLOTS[4] = {
+    {1.8f, 4.4f, 19.7f}, {0.3f, 4.3f, 19.5f}, {-1.2f, 4.4f, 19.7f}, {-2.7f, 4.4f, 19.7f}};
 inline constexpr glm::vec3 FINALDOOR_LEFT_POSITION = {0.0f, 0.0f, 20.0f};
 inline constexpr glm::vec3 FINALDOOR_RIGHT_POSITION = {0.0f, 0.0f, 20.0f};
 
@@ -102,8 +103,7 @@ inline constexpr const char* SWAMP_AUDIO_FILE = "{9b22e271-4a2c-47cd-8662-1a4f0d
 
 inline constexpr int SWAMP_NUM_FIREFLIES = 150;
 
-//Lobby related
-
+// Lobby related
 
 // TODO: Adjust once rendered
 inline constexpr float SWAMP_LILYPAD_WIDTH = 1.0f;
@@ -116,6 +116,7 @@ inline std::string FOOTSTEPWOOD = "{4834907d-09e7-460e-b9f9-4f18b067acf0}";
 inline constexpr const char* JUMPLILYPAD = "{85da62c4-60ce-4776-b1f3-2503b761aa8c}";
 inline constexpr const char* UNLOCKDOOR = "{008e7455-ae30-40ce-a197-5e85b67035b8}";
 inline constexpr const char* GRABKEY = "{f811c9cc-fec0-4714-8a32-e645ad8a502b}";
+inline constexpr const char* WATERSPLASH = "{907b8e60-bc68-4a05-b2dc-394c92c13343}";
 
 // Audio for Set Volume
 
@@ -130,4 +131,5 @@ inline constexpr float SWAMP_AUDIO_FILE_VOL = 2.5f;
 inline constexpr float LILYPAD_VOL = 0.2f;
 inline constexpr float UNLOCKDOOR_VOL = 0.5f;
 inline constexpr float GRABKEY_VOL = 0.2f;
+inline constexpr float WATERSPLASH_VOL = 0.05f;
 } // namespace config

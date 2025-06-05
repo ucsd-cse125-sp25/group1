@@ -8,7 +8,7 @@
 #include "json.hpp"
 
 using tcp = boost::asio::ip::tcp;
-using json = nlohmann::json;
+using json = nlohmann::ordered_json;
 using Clock = std::chrono::steady_clock;
 
 Server::Server()
@@ -86,10 +86,12 @@ void Server::initRigidBodies() {
                 object = initLilyPad(data, swamp, &world);
             } else if (modelName == "water_00") {
                 object = initWater(data, swamp, &world);
+            } else if (modelName == "water_01") {
+                object = initSplash(data, swamp, &world);
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
             } else if (modelName.starts_with("zone_")) {
-                object = initZone(data, &objects, &world, i);
+                object = initZone(data, this, &objects, &world, i);
             } else if (modelName == "door_left") {
                 object = initFinalDoor(data, &objects, lobby, &world);
             } else if (modelName.starts_with("button")) {
@@ -259,6 +261,7 @@ void Server::handleClientMessages() {
                 players[clientId]->handleMovementInput(actions);
 
                 int roomID = players[clientId]->getCurRoomID();
+                std::cout << "Player " << clientId << " is in room " << roomID << "\n";
                 Interactable* interactable =
                     players[clientId]->getNearestInteractable(rooms[roomID]);
 

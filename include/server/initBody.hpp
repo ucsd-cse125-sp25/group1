@@ -16,8 +16,10 @@
 #include "rigidBody.hpp"
 #include "swamp.hpp"
 #include "world.hpp"
+#include "server.hpp"
 
 class Swamp;
+class Server;
 
 struct TransformData {
     glm::vec3 roomPosition;
@@ -89,7 +91,8 @@ RigidBody* initLilyPad(TransformData data, Swamp* swamp, World* world);
  */
 RigidBody* initWater(TransformData data, Swamp* swamp, World* world);
 
-RigidBody* initZone(TransformData data, std::unordered_map<int, Object*>* objects, World* world,
+RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, Object*>* objects,
+                    World* world,
                     int roomID);
 
 /**
@@ -106,6 +109,17 @@ RigidBody* initZone(TransformData data, std::unordered_map<int, Object*>* object
  */
 RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef,
                    const std::string& roomName, std::unordered_map<int, Key*>* keys);
+
+/**
+ * @brief Initializes a Splash Object.
+ *
+ * A Splash object is created through the Swamp, and a non-collidable RigidBody is created with it.
+ * 
+ * @param data Transform data including position and collider dimensions.
+ * @param serverRef Reference to the Server instance for managing game state.
+ * @return Pointer to the initialized RigidBody associated with the Splash.
+ */
+RigidBody* initSplash(TransformData data, Swamp* swamp, World* world);
 
 /**
  * @brief Initializes a FinalButton object in the Lobby and attaches a RigidBody.

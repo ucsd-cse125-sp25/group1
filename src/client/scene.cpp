@@ -438,3 +438,18 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
     updateWindow();
     canvas->draw(*uiShader);
 }
+
+void Scene::setPlayerRoomID(int clientID, int roomID) {
+    auto it = players.find(clientID);
+    if (it != players.end()) {
+        it->second.setCurrRoomID(clientID);
+    }
+}
+
+int Scene::getPlayerRoomID(int clientID) {
+    auto it = players.find(clientID);
+    if (it != players.end()) {
+        return it->second.getCurrRoomID();
+    }
+    return -1;
+}

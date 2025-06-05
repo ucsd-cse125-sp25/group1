@@ -1,5 +1,8 @@
 #include "initBody.hpp"
 #include <iostream>
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* objects, World* world) {
     Object* object = new Object(objects->size());
@@ -16,9 +19,9 @@ RigidBody* initObject(TransformData data, std::unordered_map<int, Object*>* obje
 }
 
 RigidBody* initDoor(TransformData data, std::unordered_map<int, Door*>* doors,
-                    std::unordered_map<int, Room*>* rooms, World* world, Server& server) {
-    int keyID = -1;
-    int roomIDs[2] = {0, 4};
+                    std::unordered_map<int, Room*>* rooms, World* world, Server& server, int id1,
+                    int id2, int keyID) {
+    int roomIDs[2] = {id1, id2};
 
     Door* door;
     if (keyID != -1) {
@@ -82,16 +85,27 @@ RigidBody* initWater(TransformData data, Swamp* swamp, World* world) {
     return body;
 }
 
-RigidBody* initZone(TransformData data, std::unordered_map<int, Object*>* objects, World* world,
-                    int roomID) {
+RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, Object*>* objects,
+                    World* world, int roomID) {
 
     // Shouldn't be a referenceable object
-    Object* object = new Object(-1, [roomID](ICustomPhysics* otherObject) {
+    Object* object = new Object(-1, [server, roomID](ICustomPhysics* otherObject) {
         // If the other object is a player, change their roomID
         if (Player* player = dynamic_cast<Player*>(otherObject)) {
             if (player->getCurRoomID() != roomID) {
                 player->setCurRoomID(roomID);
-                std::cout << "Player entered zone for room ID: " << roomID << std::endl;
+
+                std::cout << "Player " << player->getID() << " entered zone for room ID: " << roomID
+                          << std::endl;
+
+                // Send Message to client to acknowledge room change
+                json message;
+                message["type"] = "room_id";
+                message["id"] = roomID;
+                message["client_id"] = player->getID();
+
+                std::string packet = message.dump() + "\n";
+                server->broadcastMessage(packet);
             }
         }
     });
@@ -116,6 +130,20 @@ RigidBody* initKey(TransformData data, Server& server, World& world, const std::
         new BoxCollider{AABB, data.relativeMinCorner, data.relativeMaxCorner}, key, &world, true);
 
     key->setBody(body);
+    return body;
+}
+
+RigidBody* initSplash(TransformData data, Swamp* swamp, World* world) {
+    Splash* splashPlane = swamp->createSplashPlane();
+
+    // TODO: add the position/relative position in the json dimensions file
+    RigidBody* body = new RigidBody(
+        vec3(0.0f), vec3(0.0f), 0.0f,
+        new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
+        new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, splashPlane,
+        world, true);
+
+    splashPlane->setBody(body);
     return body;
 }
 

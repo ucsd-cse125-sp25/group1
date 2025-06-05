@@ -28,5 +28,6 @@ void Water::customCollision(ICustomPhysics* otherObject) {
     playerBody.setForce(glm::vec3{0.0f, 0.0f, 0.0f});
     playerBody.setVelocity(glm::vec3{0.0f, 0.0f, 0.0f});
     // TODO: add offset for the individual player, so 2 players don't spawn into the same spot.
-    playerBody.setPosition(config::SWAMP_RESPAWN);
+    playerBody.setPosition(config::SWAMP_RESPAWN + config::SWAMP_ROOM_POSITION);
+    playerPtr->setJumpSfxCooldown(false);
 }

@@ -7,6 +7,15 @@
     ],
     "objects": [
       {
+        "model": "zone_lobby_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "lobby_00",
         "position": [
           0.0,
@@ -179,7 +188,7 @@
       }
     ]
   },
-  "swamp_room": {
+  "swampRoom": {
     "position": [
       -130.0,
       0.0,
@@ -194,6 +203,16 @@
           0.0
         ],
         "rotated": false
+      },
+      {
+        "model": "door_00",
+        "position": [
+          -10.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false,
+        "connects_to": 7
       },
       {
         "model": "swamp_00",
@@ -817,6 +836,15 @@
         "rotated": false
       },
       {
+          "model": "water_01",
+          "position": [
+              0.0,
+              0.0,
+              0.0
+          ],
+          "rotated": false
+      },
+      {
         "model": "water_00",
         "position": [
           0.0,
@@ -845,13 +873,32 @@
       }
     ]
   },
-  "swamp_key_room": {
+  "swampKeyRoom": {
     "position": [
       -30.0,
       0.0,
       -50.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "door_00",
+        "position": [
+          0.0,
+          0.0,
+          10.0
+        ],
+        "rotated": true,
+        "connects_to": 25
+      },
       {
         "model": "key_00",
         "position": [
@@ -953,13 +1000,42 @@
       }
     ]
   },
-  "circus_room": {
+  "circusRoom": {
     "position": [
       100.0,
       0.0,
       -50.0
     ],
     "objects": [
+      {
+        "model": "zone_circus_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "door_00",
+        "position": [
+          -40.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false,
+        "connects_to": 3
+      },
+      {
+        "model": "door_00",
+        "position": [
+          -60.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false,
+        "connects_to": 12
+      },
       {
         "model": "circus_00",
         "position": [
@@ -1052,13 +1128,32 @@
       }
     ]
   },
-  "circus_key_room": {
+  "circusKeyRoom": {
     "position": [
       150.0,
       0.0,
       -50.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "door_00",
+        "position": [
+          0.0,
+          0.0,
+          10.0
+        ],
+        "rotated": true,
+        "connects_to": 28
+      },
       {
         "model": "1x1_hotel_room_bend_neg_x_pos_z_00",
         "position": [
@@ -1151,15 +1246,476 @@
       }
     ]
   },
-  "piano_room": {
+  "pianoRoom": {
     "position": [
       150.0,
       0.0,
       50.0
     ],
-    "objects": []
+    "objects": [
+      {
+        "model": "zone_piano_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "door_00",
+        "position": [
+          0.0,
+          0.0,
+          -30.0
+        ],
+        "rotated": true,
+        "connects_to": 21
+      },
+      {
+        "model": "piano_key_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_10",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_11",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_12",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_key_13",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_01",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_02",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_03",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_04",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_05",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_06",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_07",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_08",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_09",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_10",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_11",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_12",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_13",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_14",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_15",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_16",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_17",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_18",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_19",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_20",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_21",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_22",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_23",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_24",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_25",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_26",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_27",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_28",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_29",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_30",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_31",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_32",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_room_33",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "piano_floor_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      }
+    ]
   },
-  "parkour_room": {
+  "parkourKeyRoom": {
     "position": [
       -130.0,
       0.0,
@@ -1303,7 +1859,7 @@
       }
     ]
   },
-  "hotel_room_0": {
+  "hotelRoom0": {
     "position": [
       -150.0,
       0.0,
@@ -1420,7 +1976,7 @@
       }
     ]
   },
-  "hotel_room_1": {
+  "hotelRoom1": {
     "position": [
       -150.0,
       0.0,
@@ -1428,6 +1984,15 @@
     ],
     "objects": [
       {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "1x1_hotel_room_bend_pos_x_neg_z_00",
         "position": [
           0.0,
@@ -1519,7 +2084,7 @@
       }
     ]
   },
-  "hotel_room_2": {
+  "hotelRoom2": {
     "position": [
       -130.0,
       0.0,
@@ -1527,6 +2092,15 @@
     ],
     "objects": [
       {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "1x1_hotel_room_bend_pos_x_neg_z_00",
         "position": [
           0.0,
@@ -1618,13 +2192,22 @@
       }
     ]
   },
-  "hotel_room_3": {
+  "hotelRoom3": {
     "position": [
       -30.0,
       0.0,
       10.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_T_neg_x_00",
         "position": [
@@ -1735,13 +2318,22 @@
       }
     ]
   },
-  "hotel_room_4": {
+  "hotelRoom4": {
     "position": [
       -30.0,
       0.0,
       30.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_bend_neg_x_neg_z_00",
         "position": [
@@ -1834,13 +2426,22 @@
       }
     ]
   },
-  "hotel_room_5": {
+  "hotelRoom5": {
     "position": [
       30.0,
       0.0,
       -50.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_bend_pos_x_pos_z_00",
         "position": [
@@ -1933,13 +2534,22 @@
       }
     ]
   },
-  "hotel_room_6": {
+  "hotelRoom6": {
     "position": [
       30.0,
       0.0,
       10.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_T_pos_x_00",
         "position": [
@@ -2050,13 +2660,22 @@
       }
     ]
   },
-  "hotel_room_7": {
+  "hotelRoom7": {
     "position": [
       30.0,
       0.0,
       30.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_bend_pos_x_neg_z_00",
         "position": [
@@ -2149,13 +2768,22 @@
       }
     ]
   },
-  "hotel_room_8": {
+  "hotelRoom8": {
     "position": [
       50.0,
       0.0,
       -10.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_bend_pos_x_pos_z_00",
         "position": [
@@ -2248,13 +2876,22 @@
       }
     ]
   },
-  "hotel_room_9": {
+  "hotelRoom9": {
     "position": [
       50.0,
       0.0,
       10.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_straight_z_00",
         "position": [
@@ -2347,13 +2984,22 @@
       }
     ]
   },
-  "hotel_room_10": {
+  "hotelRoom10": {
     "position": [
       50.0,
       0.0,
       30.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_bend_neg_x_neg_z_00",
         "position": [
@@ -2446,13 +3092,22 @@
       }
     ]
   },
-  "hotel_room_11": {
+  "hotelRoom11": {
     "position": [
       110.0,
       0.0,
       -10.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_bend_neg_x_pos_z_00",
         "position": [
@@ -2545,13 +3200,22 @@
       }
     ]
   },
-  "hotel_room_12": {
+  "hotelRoom12": {
     "position": [
       110.0,
       0.0,
       10.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_bend_pos_x_neg_z_00",
         "position": [
@@ -2644,13 +3308,22 @@
       }
     ]
   },
-  "hotel_room_13": {
+  "hotelRoom13": {
     "position": [
       130.0,
       0.0,
       10.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_straight_x_00",
         "position": [
@@ -2743,13 +3416,22 @@
       }
     ]
   },
-  "hotel_room_14": {
+  "hotelRoom14": {
     "position": [
       150.0,
       0.0,
       10.0
     ],
     "objects": [
+      {
+        "model": "zone_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_room_T_pos_x_00",
         "position": [
@@ -2860,7 +3542,7 @@
       }
     ]
   },
-  "hallway_0": {
+  "hallway0": {
     "position": [
       -150.0,
       0.0,
@@ -2868,6 +3550,15 @@
     ],
     "objects": [
       {
+        "model": "zone_hallway_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "1x1_hotel_hallway_z_00",
         "position": [
           0.0,
@@ -2959,7 +3650,7 @@
       }
     ]
   },
-  "hallway_1": {
+  "hallway1": {
     "position": [
       -100.0,
       0.0,
@@ -2967,6 +3658,15 @@
     ],
     "objects": [
       {
+        "model": "zone_hallway_x_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "1x1_hotel_hallway_x_00",
         "position": [
           0.0,
@@ -3058,7 +3758,7 @@
       }
     ]
   },
-  "hallway_2": {
+  "hallway2": {
     "position": [
       -60.0,
       0.0,
@@ -3066,6 +3766,15 @@
     ],
     "objects": [
       {
+        "model": "zone_hallway_x_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "1x1_hotel_hallway_x_00",
         "position": [
           0.0,
@@ -3157,7 +3866,7 @@
       }
     ]
   },
-  "hallway_3": {
+  "hallway3": {
     "position": [
       -30.0,
       0.0,
@@ -3165,6 +3874,15 @@
     ],
     "objects": [
       {
+        "model": "zone_hallway_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "1x1_hotel_hallway_z_00",
         "position": [
           0.0,
@@ -3256,7 +3974,7 @@
       }
     ]
   },
-  "hallway_4": {
+  "hallway4": {
     "position": [
       30.0,
       0.0,
@@ -3264,6 +3982,15 @@
     ],
     "objects": [
       {
+        "model": "zone_hallway_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "1x1_hotel_hallway_z_00",
         "position": [
           0.0,
@@ -3355,13 +4082,22 @@
       }
     ]
   },
-  "hallway_5": {
+  "hallway5": {
     "position": [
       80.0,
       0.0,
       -10.0
     ],
     "objects": [
+      {
+        "model": "zone_hallway_x_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_hallway_x_00",
         "position": [
@@ -3454,13 +4190,22 @@
       }
     ]
   },
-  "hallway_6": {
+  "hallway6": {
     "position": [
       150.0,
       0.0,
       -20.0
     ],
     "objects": [
+      {
+        "model": "zone_hallway_z_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
       {
         "model": "1x1_hotel_hallway_z_00",
         "position": [

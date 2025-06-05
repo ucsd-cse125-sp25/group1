@@ -168,7 +168,7 @@ AnimatedSubMesh AnimatedModel::processMesh(aiMesh* mesh) {
                          data);
             glGenerateMipmap(GL_TEXTURE_2D);
         } else {
-            std::cerr << "Error: Failed to load texture: " << texturePath << "\n";
+            std::cerr << "Error: Failed to load texture: " << textureImage.C_Str() << "\n";
         }
 
         stbi_image_free(data);

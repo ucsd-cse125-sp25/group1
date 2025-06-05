@@ -128,6 +128,23 @@ class Scene {
     GLFWwindow* window;
     std::unique_ptr<Canvas> canvas;
 
+    /**
+    * @brief Sets roomID of the given client ID
+    *
+    * @param clientID The ID of the client.
+    * @param roomID to be set
+    *
+    */
+    void setPlayerRoomID(int clientID, int roomID);
+
+    /**
+    * @brief Gets roomID of the given client ID
+    *
+    * @param clientID The ID of the client.
+    * @return int The player ID.
+    */
+    int getPlayerRoomID(int clientID);
+
   private:
     /**
      * @brief Sets up rooms and the objects they contain.

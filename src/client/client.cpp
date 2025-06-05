@@ -195,6 +195,9 @@ void Client::handleServerMessage(const std::string& message) {
 
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
         scene->renderLilypadShadowPass(id);
+    } else if (type == "room_id") {
+        // TODO : handle room ID assignment
+
     } else if (type == "sfx") {
         // JSON expected: {"type": "sfx", "sfx_id": "event:/SFX/footstep_carpet", "client_id": 0,
         // "action": "jump", "volume": 1.0f (optional), "stopID": "eventID" (optional)} client id that of the person triggering the sfx

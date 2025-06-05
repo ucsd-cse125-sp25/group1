@@ -105,9 +105,9 @@ inline constexpr float SWAMP_LILYPAD_HEIGHT = 1.0f;
 inline constexpr glm::vec3 CIRCUS_RESPAWN = {-35.0f, 1.0f, 0.0f};
 inline constexpr int NUM_CANNONBALLS = 9;
 inline constexpr glm::vec3 CANNONBALL_POSITIONS[NUM_CANNONBALLS] = {
-    {30.0f, 2.0f, 16.0f}, {30.0f, 2.0f, 12.0f},  {30.0f, 2.0f, 8.0f},
-    {30.0f, 2.0f, 4.0f},  {30.0f, 2.0f, 0.0f},   {30.0f, 2.0f, -4.0f},
-    {30.0f, 2.0f, -8.0f}, {30.0f, 2.0f, -12.0f}, {30.0f, 2.0f, -16.0f},
+    {30.0f, 3.0f, 16.0f}, {30.0f, 3.0f, 12.0f},  {30.0f, 3.0f, 8.0f},
+    {30.0f, 3.0f, 4.0f},  {30.0f, 3.0f, 0.0f},   {30.0f, 3.0f, -4.0f},
+    {30.0f, 3.0f, -8.0f}, {30.0f, 3.0f, -12.0f}, {30.0f, 3.0f, -16.0f},
 };
 
 // Sound effects

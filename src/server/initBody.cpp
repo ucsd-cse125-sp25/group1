@@ -165,8 +165,8 @@ RigidBody* initSplash(TransformData data, Swamp* swamp, World* world) {
     RigidBody* body = new RigidBody(
         vec3(0.0f), vec3(0.0f), 0.0f,
         new Transform{data.roomPosition + data.position + data.relativePosition, vec3(0.0f)},
-        new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, splashPlane,
-        world, true);
+        new BoxCollider{NONE, data.relativeMinCorner, data.relativeMaxCorner}, splashPlane, world,
+        true);
 
     splashPlane->setBody(body);
     return body;

@@ -27,6 +27,9 @@ void Cannonball::customCollision(ICustomPhysics* otherObject) {
         glm::vec3 respawnPosition = config::CIRCUS_RESPAWN + config::CIRCUS_ROOM_POSITION;
         playerBody.setPosition(respawnPosition);
     } else if (object && object->getBody()->getStatic()) {
+        if (object->getBody()->getCollider()->type == NONE) {
+            return; // don't reset when hitting zones
+        }
         // if colliding with a static object, reset the cannonball
         this->getBody()->setVelocity(glm::vec3(0, 0, 0));
         this->getBody()->setPosition(cannonPosition);

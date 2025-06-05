@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 #include <unordered_map>
+#include "circus.hpp"
+#include "components/circusRespawn.hpp"
 #include "components/door.hpp"
 #include "components/finalButton.hpp"
 #include "components/finalDoor.hpp"
@@ -9,18 +11,19 @@
 #include "components/key.hpp"
 #include "components/lilypad.hpp"
 #include "components/object.hpp"
+#include "components/pianoRespawn.hpp"
 #include "components/room.hpp"
 #include "components/water.hpp"
-#include "components/pianoRespawn.hpp"
 #include "config.hpp"
-#include "piano.hpp"
 #include "lobby.hpp"
+#include "piano.hpp"
 #include "rigidBody.hpp"
 #include "server.hpp"
 #include "swamp.hpp"
 #include "world.hpp"
 
 class Swamp;
+class Circus;
 class Server;
 
 struct TransformData {
@@ -98,6 +101,28 @@ RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, 
                     World* world, int roomID);
 
 /**
+ * @brief Initializes a cannonball entity via the Circus pointer and assigns it a RigidBody.
+ *
+ * A RigidBody is initialized with provided transform data and linked to the cannonball.
+ *
+ * @param data Transform data for positioning and bounding the cannonball.
+ * @param swamp Pointer to the owning Circus environment.
+ * @return Pointer to the initialized RigidBody.
+ */
+RigidBody* initCannonball(TransformData data, Circus* circus, World* world);
+
+/**
+ * @brief Initializes a wall entity via the Circus pointer and assigns it a RigidBody.
+ *
+ * A RigidBody is initialized with provided transform data and linked to the wall.
+ *
+ * @param data Transform data for positioning and bounding the wall.
+ * @param swamp Pointer to the owning Circus environment.
+ * @return Pointer to the initialized RigidBody.
+ */
+RigidBody* initWall(TransformData data, Circus* circus, World* world);
+
+/**
  * @brief Initializes a Key object with a unique ID and attaches a RigidBody.
  *
  * The Key is created with a reference to the Server and World, allowing it to broadcast pickup
@@ -149,3 +174,5 @@ RigidBody* initFinalDoor(TransformData data, std::unordered_map<int, Object*>* o
                          Lobby* lobby, World* world);
 
 RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world);
+
+RigidBody* initCircusRespawn(TransformData data, Circus* circus, World* world);

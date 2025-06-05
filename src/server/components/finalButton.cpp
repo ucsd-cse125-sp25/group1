@@ -61,8 +61,8 @@ bool FinalButton::pressButton() {
 
 void FinalButton::updateDoorState() {
     // Let finalDoor know that the button was pressed
+    // PlayerID corresponds with the button index
     door->updateButtonState(playerID, true);
-    std::cout << "Button state updated with ID: " << playerID << std::endl;
     if (door->canOpen()) {
         door->unlockAndOpen();
     }

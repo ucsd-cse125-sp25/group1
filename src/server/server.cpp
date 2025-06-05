@@ -17,6 +17,7 @@ Server::Server()
 
 Server::~Server() {
     delete swamp;
+    delete circus;
 }
 
 static vec3 toVec3(const json& arr) {
@@ -32,11 +33,14 @@ void Server::initRigidBodies() {
 
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
-        cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
+        // cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
         Room* room;
         if (roomName == "swampRoom") {
             swamp = new Swamp(rooms.size(), world, *this);
             room = static_cast<Room*>(swamp);
+        } else if (roomName == "circusRoom") {
+            circus = new Circus(rooms.size(), world, *this);
+            room = static_cast<Room*>(circus);
         } else if (roomName == "lobby") {
             lobby = new Lobby(rooms.size(), world, *this);
             room = static_cast<Room*>(lobby);
@@ -54,7 +58,7 @@ void Server::initRigidBodies() {
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
         const json& room = it.value();
-        cout << "Initializing room: " << roomName << endl;
+        // cout << "Initializing room: " << roomName << endl;
         vec3 roomPosition = toVec3(room["position"]);
 
         for (const auto& obj : room["objects"]) {
@@ -94,6 +98,10 @@ void Server::initRigidBodies() {
                 object = initSplash(data, swamp, &world);
             } else if (modelName == "key_00") {
                 object = initKey(data, *this, world, roomName, &keys);
+            } else if (modelName == "cannonball_00") {
+                object = initCannonball(data, circus, &world);
+            } else if (modelName == "circus_floor_00" && !circus->isRespawnCreated()) {
+                object = initCircusRespawn(data, circus, &world);
             } else if (modelName.starts_with("zone_")) {
                 object = initZone(data, this, &objects, &world, i);
             } else if (modelName == "door") {
@@ -243,7 +251,7 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
-
+            circus->cannonLoop();
             startTick();
         }
     });
@@ -306,6 +314,11 @@ void Server::handleClientMessages() {
                         }
                     }
                 }
+                // TODO: remove this
+                // Temporary for testing: when the user types 'n', circus cannons fire
+                // if (std::find(actions.begin(), actions.end(), "n") != actions.end()) {
+                //     circus->stopMusicMessage();
+                // }
                 // handle misc inputs, such as interacting with environment
                 players[clientId]->handleGeneralInput(actions, interactable);
             } else if (type == "mouse_input") {
@@ -324,26 +337,31 @@ void Server::handlePhysics() {
 }
 
 void Server::broadcastPlayerStates() {
+    json message;
+    message["type"] = "player_states";
+
+    for (const auto& [id, player] : players) {
+        vec3 position = player->getBody().getPosition();
+        vec3 direction = player->getBody().getDirection();
+        glm::vec3 velocity = player->getBody().getVelocity();
+
+        int state = (glm::vec2(velocity.x, velocity.z) == glm::vec2(0.0f)) ? 0 : 1;
+
+        // WARNING: Completely deletes all horizontal motion
+        player->getBody().setVelocity(vec3(0.0f, player->getBody().getVelocity().y, 0.0f));
+
+        json entry;
+        entry["id"] = id;
+        entry["position"] = {position.x, position.y, position.z};
+        entry["direction"] = {direction.x, direction.y, direction.z};
+        entry["state"] = state;
+
+        message["players"].push_back(entry);
+    }
+
+    std::string packet = message.dump() + "\n";
+
     for (const auto& [clientId, socket] : clients) {
-        json message;
-        message["type"] = "player_states";
-
-        for (const auto& [id, player] : players) {
-            vec3 position = player->getBody().getPosition();
-            vec3 direction = player->getBody().getDirection();
-            // WARNING: Completely deletes all horizontal motion
-            player->getBody().setVelocity(vec3(0.0f, player->getBody().getVelocity().y, 0.0f));
-
-            json entry;
-            entry["id"] = id;
-            entry["position"] = {position.x, position.y, position.z};
-            entry["direction"] = {direction.x, direction.y, direction.z};
-
-            message["players"].push_back(entry);
-        }
-
-        std::string packet = message.dump() + "\n";
-
         try {
             boost::asio::write(*socket, boost::asio::buffer(packet));
         } catch (const std::exception& e) {

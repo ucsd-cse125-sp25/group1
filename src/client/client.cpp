@@ -188,6 +188,17 @@ void Client::handleServerMessage(const std::string& message) {
 
         scene->removeInstanceFromRoom("swampRoom", "lilypad", id);
         scene->renderLilypadShadowPass(id);
+    } else if (type == "cannonball_positions") {
+        glm::vec3 positions[config::NUM_CANNONBALLS];
+        const auto& cannonballs = parsed["cannonballs"];
+        for (const auto& cannonball : cannonballs) {
+            int id = cannonball["id"];
+            glm::vec3 position = toVec3(cannonball["position"]);
+            if (id >= 0 && id < config::NUM_CANNONBALLS) {
+                positions[id] = position;
+            }
+        }
+        scene->updateCannonballPositions(positions);
     } else if (type == "room_id") {
         auto roomID = parsed["id"];
         auto clientId = parsed["client_id"];
@@ -261,13 +272,19 @@ void Client::handleServerMessage(const std::string& message) {
 
         if (action == "door_open") {
             auto doorID = parsed["door_id"];
-            // TODO: remove rendering of door
+            scene->removeDoor(doorID);
         }
 
     } else if (type == "interactable_nearby") {
         scene->canvas->setInteractHidden(false);
     } else if (type == "interactable_not_nearby") {
         scene->canvas->setInteractHidden(true);
+    } else if (type == "pause_circus_music") {
+        audioManager.stopEvent("circus_music");
+    } else if (type == "unpause_circus_music") {
+        // TODO: handle the first loading of the circus music
+        // - should hopefully be handled by Helen's code to get rooms to play their audio
+        audioManager.playEvent("circus_music");
     } else if (type == "key_pickup") {
         auto keyID = parsed["keyID"];
         auto playerID = parsed["playerID"];
@@ -306,13 +323,11 @@ void Client::handleServerMessage(const std::string& message) {
     } else if (type == "final_door_open") {
         // This is the final door opening, so we need to update the scene
         // and show the end screen.
-        std::cout << "End of the Game!" << std::endl;
-
-        scene->removeInstanceFromRoom("lobby", "final_door", 0);
+        scene->removeInstanceFromRoom("lobby", "finalDoor", 0);
     } else if (type == "final_button_pressed") {
         // Could just be sfx only
         int playerID = parsed["player_id"];
-        scene->moveChildTransform("lobby", "final_button", playerID, glm::vec3(0.0f, 0.0f, -0.02f));
+        scene->moveChildTransform("lobby", "final_button", playerID, glm::vec3(0.0f, 0.0f, -0.03f));
 
     } else {
         std::cerr << "Unknown message type: " << type << "\n";
@@ -333,6 +348,8 @@ void Client::updatePlayerStates(const json& parsed) {
 
         playerPositions[id] = position;
         playerDirections[id] = direction;
+
+        scene->setPlayerState(id, player["state"]);
 
         if (id == clientId) {
             camera.setPosition(position + config::CAMERA_OFFSET);
@@ -370,6 +387,8 @@ static std::string mapKeyToAction(int key) {
         return "jump";
     case GLFW_KEY_E:
         return "interact";
+    case GLFW_KEY_N:
+        return "n";
     default:
         return "";
     }
@@ -377,8 +396,8 @@ static std::string mapKeyToAction(int key) {
 
 void Client::handleKeyboardInput(GLFWwindow* window) {
     static const std::vector<int> keysToCheck = {
-        GLFW_KEY_W,    GLFW_KEY_UP, GLFW_KEY_S,     GLFW_KEY_DOWN,  GLFW_KEY_A,
-        GLFW_KEY_LEFT, GLFW_KEY_D,  GLFW_KEY_RIGHT, GLFW_KEY_SPACE, GLFW_KEY_E};
+        GLFW_KEY_W, GLFW_KEY_UP,    GLFW_KEY_S,     GLFW_KEY_DOWN, GLFW_KEY_A, GLFW_KEY_LEFT,
+        GLFW_KEY_D, GLFW_KEY_RIGHT, GLFW_KEY_SPACE, GLFW_KEY_E,    GLFW_KEY_N};
 
     json message;
 

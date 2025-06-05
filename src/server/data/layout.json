@@ -221,15 +221,6 @@
           0.0
         ],
         "rotated": false
-      },
-      {
-        "model": "lobby_18",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false
       }
     ]
   },
@@ -1117,6 +1108,15 @@
         "rotated": false
       },
       {
+        "model": "circus_floor_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
+      },
+      {
         "model": "circus_00",
         "position": [
           0.0,
@@ -1203,6 +1203,78 @@
           0.0,
           0.0,
           0.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          16.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          12.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          8.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          4.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          -4.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          -8.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          -12.0
+        ],
+        "rotated": false
+      },
+      {
+        "model": "cannonball_00",
+        "position": [
+          30.0,
+          3.0,
+          -16.0
         ],
         "rotated": false
       },

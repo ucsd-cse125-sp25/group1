@@ -58,6 +58,8 @@ void Scene::init() {
     frogAsset = std::make_unique<Model>("../src/client/models/froggie.obj");
 
     circusRoomAsset = std::make_unique<Model>("../src/client/models/tent.obj");
+    cannonballAsset = std::make_unique<Model>("../src/client/models/cannonball.obj");
+    cannonAsset = std::make_unique<Model>("../src/client/models/cannon.obj");
 
     pianoRoomAsset = std::make_unique<Model>("../src/client/models/piano_room.obj");
 
@@ -86,12 +88,6 @@ void Scene::initRooms() {
     glm::mat4 lobbyModel = glm::translate(I4, config::LOBBY_POSITION);
     auto lobby = std::make_unique<ModelInstance>(lobbyAsset.get(), lobbyModel, nullptr, true);
 
-    // glm::mat4 finalDoorLeftModel = glm::translate(I4, config::FINALDOOR_LEFT_POSITION);
-    // finalDoorLeftModel =
-    //     glm::rotate(finalDoorLeftModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    // glm::mat4 finalDoorRightModel = glm::translate(I4, config::FINALDOOR_RIGHT_POSITION);
-    // finalDoorRightModel =
-    //     glm::rotate(finalDoorRightModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
     glm::mat4 finalDoorModel = glm::translate(I4, config::FINALDOOR_POSITION);
     finalDoorModel = glm::rotate(finalDoorModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
@@ -126,6 +122,7 @@ void Scene::initRooms() {
         lobby->children["backPlate"][i] = std::make_unique<ModelInstance>(
             backPlateAsset.get(), backPlateModel, lobby.get(), true);
     }
+    // Need this for testing key slot positions
     // for (int i = 0; i < 4; i++) {
     //     glm::mat4 finalKeyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[i]);
     //     finalKeyModel =
@@ -166,15 +163,37 @@ void Scene::initRooms() {
     swampKeyRoom->children["key"][0] =
         std::make_unique<ModelInstance>(keyAsset.get(), swampKey, swampKeyRoom.get(), false);
 
+    glm::mat4 door1 = glm::rotate(I4, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    door1 = glm::translate(door1, glm::vec3(10.0f, 0.0f, 0.0f));
+    swampKeyRoom->children["door"][0] =
+        std::make_unique<ModelInstance>(doorAsset.get(), door1, swampKeyRoom.get(), false);
+
     // Circus room (Room ID: 3)
     glm::mat4 circusRoomModel = glm::translate(I4, config::CIRCUS_ROOM_POSITION);
     auto circusRoom =
         std::make_unique<ModelInstance>(circusRoomAsset.get(), circusRoomModel, nullptr, true);
 
+    for (int i = 0; i < config::NUM_CANNONBALLS; i++) {
+        // init cannon
+        glm::mat4 cannon = glm::translate(I4, config::CANNONBALL_POSITIONS[i]);
+        cannon = glm::translate(cannon, {5.0f, 0.0f, 0.0f});
+        circusRoom->children["cannon"][i] =
+            std::make_unique<ModelInstance>(cannonAsset.get(), cannon, circusRoom.get());
+        // init cannonball
+        glm::mat4 cannonball = glm::translate(I4, config::CANNONBALL_POSITIONS[i]);
+        circusRoom->children["cannonball"][i] = std::make_unique<ModelInstance>(
+            cannonballAsset.get(), cannonball, circusRoom.get(), false);
+    }
+
     // Circus key room (Room ID: 4)
     glm::mat4 circusKeyRoomModel = glm::translate(I4, config::CIRCUS_KEY_ROOM_POSITION);
     auto circusKeyRoom = std::make_unique<ModelInstance>(hotelRoomBendNegXPosZ.get(),
                                                          circusKeyRoomModel, nullptr, true);
+
+    glm::mat4 door3 = glm::rotate(I4, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    door3 = glm::translate(door3, glm::vec3(10.0f, 0.0f, 0.0f));
+    circusKeyRoom->children["door"][0] =
+        std::make_unique<ModelInstance>(doorAsset.get(), door3, circusKeyRoom.get(), false);
 
     // Piano room (Room ID: 5)
     glm::mat4 pianoRoomModel = glm::translate(I4, config::PIANO_ROOM_POSITION);
@@ -214,20 +233,27 @@ void Scene::initRooms() {
                                                         nullptr, true);
     }
 
-    // Hotel room 1 (Room ID: 7)
+    // Hotel room 0 (Room ID: 7)
     glm::mat4 tableModel = glm::translate(I4, config::TABLE_POSITION);
     hotelRooms[0]->children["table"][0] =
         std::make_unique<ModelInstance>(tableAsset.get(), tableModel, hotelRooms[0].get(), true);
 
-    // std::array<float, 4> degrees = {0.0f, 90.0f, 180.0f, 270.f};
+    glm::mat4 door0 = glm::rotate(I4, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    door0 = glm::translate(door0, glm::vec3(10.0f, 0.0f, 0.0f));
+    hotelRooms[0]->children["door"][0] =
+        std::make_unique<ModelInstance>(doorAsset.get(), door0, hotelRooms[0].get(), false);
 
-    // for (int i = 0; i < degrees.size(); ++i) {
-    //     glm::mat4 doorModel =
-    //         glm::rotate(I4, glm::radians(degrees[i]), glm::vec3(0.0f, 1.0f, 0.0f));
-    //     doorModel = glm::translate(doorModel, glm::vec3(10.0f, 0.0f, 0.0f));
-    //     hotelRoom->children["door"][i] =
-    //         std::make_unique<ModelInstance>(doorAsset.get(), doorModel, hotelRoom.get(), false);
-    // }
+    // Hotel room 5 (Room ID: 12)
+    glm::mat4 door2 = glm::rotate(I4, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    door2 = glm::translate(door2, glm::vec3(10.0f, 0.0f, 0.0f));
+    hotelRooms[5]->children["door"][0] =
+        std::make_unique<ModelInstance>(doorAsset.get(), door2, hotelRooms[5].get(), false);
+
+    // Hotel room 14 (Room ID: 21)
+    glm::mat4 door4 = glm::rotate(I4, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    door4 = glm::translate(door4, glm::vec3(10.0f, 0.0f, 0.0f));
+    hotelRooms[14]->children["door"][0] =
+        std::make_unique<ModelInstance>(doorAsset.get(), door4, hotelRooms[14].get(), false);
 
     // Hallways (Room IDs: 22 - 28)
     std::array<glm::mat4, 7> hallwayModels;
@@ -360,6 +386,11 @@ void Scene::initShadowMaps() {
                 light.worldPosition, config::SHADOW_MAP_RES_INTERACTABLE);
             interactableShadowMaps[name].emplace_back(std::move(interactableShadowMap));
             interactableShadowActive[name].emplace_back(false);
+
+            auto playerShadowMap =
+                std::make_unique<ShadowMap>(light.worldPosition, config::SHADOW_MAP_RES_PLAYER);
+            playerShadowMaps[name].emplace_back(std::move(playerShadowMap));
+            playerShadowActive[name].emplace_back(false);
         }
     }
 }
@@ -390,6 +421,20 @@ void Scene::removeInstanceFromRoom(const std::string& roomName, const std::strin
     modelInstances[roomName]->deleteChild(type, id);
 }
 
+void Scene::removeDoor(int id) {
+    if (id == 0) {
+        removeInstanceFromRoom("hotelRoom0", "door", 0);
+    } else if (id == 1) {
+        removeInstanceFromRoom("swampKeyRoom", "door", 0);
+    } else if (id == 2) {
+        removeInstanceFromRoom("hotelRoom5", "door", 0);
+    } else if (id == 3) {
+        removeInstanceFromRoom("circusKeyRoom", "door", 0);
+    } else if (id == 4) {
+        removeInstanceFromRoom("hotelRoom14", "door", 0);
+    }
+}
+
 void Scene::addKeyToSlot(const std::string& roomName, const std::string& type, int id) {
     glm::mat4 keyModel = glm::translate(I4, config::FINALDOOR_KEY_SLOTS[id]);
     keyModel = glm::rotate(keyModel, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -400,11 +445,11 @@ void Scene::addKeyToSlot(const std::string& roomName, const std::string& type, i
 
 void Scene::moveChildTransform(const std::string& roomName, const std::string& type, int id,
                                const glm::vec3& offset) {
-    
+
     auto& room = modelInstances[roomName];
     // if (!room || !room->children.contains(type) || !room->children[type].contains(id))
     //     return;
-   
+
     auto& child = room->children[type][id];
     // Apply translation to the existing localTransform
     child->translateLocal(offset);
@@ -427,7 +472,7 @@ void Scene::renderStaticShadowPass() {
 void Scene::renderInteractableShadowPass() {
     renderLilypadShadowPass();
 
-    // Will refactor this if more interactable things (other than a key) are added
+    // Add "circusKeyRoom", "pianoKeyRoom" later
     std::vector<std::string> keyRooms = {"swampKeyRoom", "parkourKeyRoom"};
     for (const std::string& roomName : keyRooms) {
         auto& shadowMaps = interactableShadowMaps[roomName];
@@ -439,6 +484,42 @@ void Scene::renderInteractableShadowPass() {
 
         shadowMaps[0]->end();
         interactableShadowActive[roomName][0] = true;
+    }
+}
+
+void Scene::renderPlayerShadowPass() {
+    std::unordered_map<std::string, std::vector<Player*>> playersByRoom;
+
+    for (auto& [id, player] : players) {
+        int roomID = player.getCurrRoomID();
+        std::string roomName = roomNames[roomID];
+        playersByRoom[roomName].push_back(&player);
+    }
+
+    for (auto& [roomName, playersInRoom] : playersByRoom) {
+        auto& shadowMaps = playerShadowMaps[roomName];
+
+        for (int i = 0; i < shadowMaps.size(); ++i) {
+            shadowMaps[i]->begin();
+
+            Shader& shader = shadowMaps[i]->getShader();
+            shader.setBool("isSkinned", true);
+
+            for (Player* player : playersInRoom) {
+                player->draw(shader);
+            }
+
+            shadowMaps[i]->end();
+            playerShadowActive[roomName][i] = true;
+        }
+    }
+
+    for (const std::string& roomName : roomNames) {
+        if (!playersByRoom.contains(roomName)) {
+            for (int i = 0; i < playerShadowMaps[roomName].size(); ++i) {
+                playerShadowActive[roomName][0] = false;
+            }
+        }
     }
 }
 
@@ -480,16 +561,56 @@ void Scene::renderLilypadShadowPass(int id) {
     }
 }
 
+/**
+ * Takes in an array of NUM_CANNONBALLS cannonball positions.
+ * For each position, sets the ith cannonball to the ith position.
+ */
+void Scene::updateCannonballPositions(glm::vec3 positions[]) {
+    auto it = modelInstances.find("circusRoom");
+    if (it == modelInstances.end())
+        return;
+    ModelInstance* circusRoomInstance = it->second.get();
+
+    glm::vec3 roomOffset = config::CIRCUS_ROOM_POSITION;
+    static const glm::mat4 I4{1.0f};
+
+    auto& cannonBalls = circusRoomInstance->children["cannonball"];
+    for (int i = 0; i < config::NUM_CANNONBALLS; ++i) {
+        if (i >= static_cast<int>(cannonBalls.size()) || !cannonBalls[i])
+            continue;
+        ModelInstance* ballInst = cannonBalls[i].get();
+
+        // Convert server’s “absolute” position into a room‐local offset:
+        glm::vec3 localPos = positions[i] - roomOffset;
+        glm::mat4 newLocal = glm::translate(I4, localPos);
+        ballInst->localTransform = newLocal;
+    }
+}
+
 void Scene::render(const Camera& camera, bool boundingBoxMode) {
     float currentFrame = glfwGetTime();
     float deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
+
+    renderPlayerShadowPass();
 
     shaders["character"]->use();
 
     for (auto& [id, player] : players) {
         if (id == playerID)
             continue;
+
+        int roomID = player.getCurrRoomID();
+        std::string roomName = roomNames[roomID];
+        int numLights = pointLights[roomName].size();
+
+        shaders["character"]->setInt("numLights", numLights);
+        for (int i = 0; i < numLights; ++i) {
+            shaders["character"]->setVec3("pointLights[" + std::to_string(i) + "].position",
+                                          pointLights[roomName][i].worldPosition);
+            shaders["character"]->setVec3("pointLights[" + std::to_string(i) + "].color",
+                                          pointLights[roomName][i].color);
+        }
 
         player.updateTime(deltaTime);
         player.draw(*shaders["character"]);
@@ -506,7 +627,7 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             continue;
         }
 
-        for (int i = 0; i < 4; ++i) {
+        for (int i = 0; i < 6; ++i) {
             shader->setInt("shadowDepthCubemap" + std::to_string(i),
                            config::SHADOW_TEXTURE_UNIT + i);
         }
@@ -538,6 +659,11 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             tex = i < (lights.size()) ? interactableShadowMaps[name][i]->getDepthCubemap()
                                       : getDummyCubemap();
             glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
+
+            glActiveTexture(GL_TEXTURE0 + config::SHADOW_TEXTURE_UNIT + i + 4);
+            tex = i < (lights.size()) ? playerShadowMaps[name][i]->getDepthCubemap()
+                                      : getDummyCubemap();
+            glBindTexture(GL_TEXTURE_CUBE_MAP, tex);
         }
 
         if (name.starts_with("hotelRoom") || name.ends_with("KeyRoom") ||
@@ -566,17 +692,15 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
             shader->setVec3("pointLights[" + std::to_string(i) + "].color", lights[i].color);
             shader->setBool("interactableShadowActive[" + std::to_string(i) + "]",
                             interactableShadowActive[name][i]);
+            shader->setBool("playerShadowActive[" + std::to_string(i) + "]",
+                            playerShadowActive[name][i]);
         }
 
         if (name == "lobby") {
-            // glEnable(GL_BLEND);
-            // glDepthMask(GL_FALSE);
-            // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            
 
             instance->drawRecursive(*shader, boundingBoxMode);
 
-            // glDepthMask(GL_TRUE);
-            // glDisable(GL_BLEND);
         } else {
             instance->drawRecursive(*shader, boundingBoxMode);
         }
@@ -594,16 +718,21 @@ void Scene::render(const Camera& camera, bool boundingBoxMode) {
 }
 
 void Scene::setPlayerRoomID(int clientID, int roomID) {
-    auto it = players.find(clientID);
-    if (it != players.end()) {
-        it->second.setCurrRoomID(roomID);
+    if (players.contains(clientID)) {
+        players.at(clientID).setCurrRoomID(roomID);
     }
 }
 
 int Scene::getPlayerRoomID(int clientID) {
-    auto it = players.find(clientID);
-    if (it != players.end()) {
-        return it->second.getCurrRoomID();
+    if (players.contains(clientID)) {
+        return players.at(clientID).getCurrRoomID();
     }
+
     return -1;
+}
+
+void Scene::setPlayerState(int clientID, int state) {
+    if (players.contains(clientID)) {
+        players.at(clientID).setState(state);
+    }
 }

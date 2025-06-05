@@ -113,6 +113,27 @@ inline constexpr const char* GRABKEY = "{f811c9cc-fec0-4714-8a32-e645ad8a502b}";
 inline constexpr const char* WATERSPLASH = "{907b8e60-bc68-4a05-b2dc-394c92c13343}";
 inline constexpr const char* CARNIVAL_AMBIENCE_TRACK = "{7251ffff-27b9-48ac-a1a8-da14ea95facb}";
 inline constexpr const char* PIANO_AMBIENCE_TRACK = "{b77419f3-b86e-48af-bd48-945f3bfe1069}";
+inline constexpr const char* CANNONBALL = "{bbd1e66c-d614-40e5-8dde-442db1d6442e}";
+inline constexpr const char* HOTEL_LOBBY = "{8a1c1842-ac41-470c-a060-8c5b909bc6e2}";
+inline constexpr const char* BAD_ENDING = "{00396995-e033-4760-939d-4c59492538cd}";
+
+inline constexpr std::array<const char*, 15> NOTES_SFX = {
+    "{493fcf1e-c2ed-4f98-944e-7823f802d2a7}",  // C3
+    "{7aa9c7e4-59ba-4661-b2a5-34e51a65638a}",  // D3
+    "{29e7dd89-2c8b-4f23-bce0-a6acb95c9932}",  // E3
+    "{663182e8-12cc-474b-930f-b16bc6114ef5} ", // F3
+    "{adf2cfea-4a8d-4ff7-998a-e1aba0974e47}",  // G3
+    "{a68f5274-dabe-48c1-b133-cf25104e891e}",  // A3
+    "{36c7d695-0c76-4ea2-a2a9-b6c243fe6c25}",  // B3
+    "{9d9c93a1-ef9f-4e51-aa92-64757936eff4}",  // C4
+    "{3e761269-3b71-4942-8142-1d24a4c9b988}",  // D4
+    "{28d69961-ddd2-4bcb-85e3-a6e77a7fd690}",  // E4
+    "{3af033b4-84be-4f45-9390-019cc27b9685}",  // F4
+    "{9c8cfd16-498d-49de-b271-7a3fdd03527e}",  // G4
+    "{8cdcb7c5-8f37-438b-a697-03c541bbafd8}",  // A4
+    "{2d6e76a3-f7d5-43fc-9fe2-1997556a5bad}",  // B4
+};
+
 // Audio for Set Volume
 
 // Controlled by Client

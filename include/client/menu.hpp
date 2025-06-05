@@ -17,14 +17,18 @@ class Menu {
     void run();
     void render();
     void changeCharacter(int val);
-
+    void joinQueue();
+    void queuePlayer(int id);
+    void dequeuePlayer(int id);
   public:
     GLFWwindow* window;
     unsigned int selectedCharacter = 0;
     unsigned bool availableCharacters[4] = {true, true, true, true};
   private:
     int playerId;
+    unsigned int queuedPlayers = 0;
     int hoveredButton = -1;
+    bool allPlayerStatus[4] = {false, false, false, false};
 
     glm::vec2 spriteMap[4] = {glm::vec2(0.0f, 0.0f), glm::vec2(644.0f, 0.0f),
                                glm::vec2(0.0f, 826.0f), glm::vec2(644.0f, 826.0f)};
@@ -36,14 +40,27 @@ class Menu {
                              glm::vec2(775.0f, 580.0f)};
     UITexture portraitTexture = {"../src/client/ui/lobby_frame.png", glm::vec2(1288.0f, 1652.0f),
                                  glm::vec2(644.0f, 826.0f)};
-    
-    //    std::vector<CanvasElement*> elements;
+    UITexture p1Texture = {"../src/client/ui/one_status.png", glm::vec2(644.0f, 92.0f),
+                                 glm::vec2(322.0f, 92.0f)};
+    UITexture p2Texture = {"../src/client/ui/two_status.png", glm::vec2(644.0f, 92.0f),
+                           glm::vec2(322.0f, 92.0f)};
+    UITexture p3Texture = {"../src/client/ui/three_status.png", glm::vec2(644.0f, 92.0f),
+                           glm::vec2(322.0f, 92.0f)};
+    UITexture p4Texture = {"../src/client/ui/four_status.png", glm::vec2(644.0f, 92.0f),
+                           glm::vec2(322.0f, 92.0f)};
+
+    std::vector<CanvasElement*> elements;
     CanvasImage* background;
     CanvasImage* logo;
     CanvasImage* portrait;
+    CanvasImage* p1Status;
+    CanvasImage* p2Status;
+    CanvasImage* p3Status;
+    CanvasImage* p4Status;
+    
+    std::vector<Button*> buttons;
     PlayButton* playButton;
     QuitButton* quitButton;
     LeftPortraitButton* leftButton;
     RightPortraitButton* rightButton;
-    std::vector<Button*> buttons;
 };

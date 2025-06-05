@@ -12,7 +12,7 @@ class Button {
     void draw(Shader& shader);
     bool pressed = false;
     bool hovered = false;
-
+    bool active = true;
   protected:
     UITexture texture;
     CanvasImage* sprite;

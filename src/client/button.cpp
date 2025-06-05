@@ -34,5 +34,7 @@ bool Button::update(int xPos, int yPos) {
 }
 
 void Button::draw(Shader& shader) {
+    if (!active)
+        return;
     sprite->draw(shader);
 }

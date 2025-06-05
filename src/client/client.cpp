@@ -249,7 +249,7 @@ void Client::updatePlayerStates(const json& parsed) {
     for (const auto& player : players) {
         int id = player["id"];
         connectedIds.insert(id);
-
+        mainmenu->queuePlayer(id);
         glm::vec3 position = toVec3(player["position"]);
         glm::vec3 direction = toVec3(player["direction"]);
 
@@ -266,6 +266,7 @@ void Client::updatePlayerStates(const json& parsed) {
             playerPositions.erase(i);
             playerDirections.erase(i);
             disconnectedIds.insert(i);
+            mainmenu->dequeuePlayer(i);
         }
     }
 }

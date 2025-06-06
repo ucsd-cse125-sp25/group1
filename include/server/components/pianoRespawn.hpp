@@ -2,6 +2,7 @@
 #include "components/object.hpp"
 
 class ICustomPhysics;
+class Piano;
 // class Server;
 
 class PianoRespawn : public Object {
@@ -14,7 +15,7 @@ class PianoRespawn : public Object {
      *
      * @param id ID of the splash
      */
-    PianoRespawn(int id);
+    PianoRespawn(int id, Piano * pianoRef );
 
     ~PianoRespawn() = default;
 
@@ -24,4 +25,6 @@ class PianoRespawn : public Object {
      * @param ptr to the object class that this object collided with
      */
     void customCollision(ICustomPhysics* otherObject) override;
+
+    Piano* piano;
 };

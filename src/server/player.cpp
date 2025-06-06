@@ -125,4 +125,12 @@ void Player::setJumpSfxCooldown(bool value) {
     jumpSfxCooldown = value;
 }
 
+int Player::getPianoNote() const {
+    return pianoNote;
+}
+
+void Player::setPianoNote(int note) {
+    pianoNote = note;
+}
+
 void Player::customCollision(ICustomPhysics* otherObject) {}

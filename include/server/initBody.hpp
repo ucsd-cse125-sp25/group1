@@ -176,3 +176,5 @@ RigidBody* initFinalDoor(TransformData data, std::unordered_map<int, Object*>* o
 RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world);
 
 RigidBody* initCircusRespawn(TransformData data, Circus* circus, World* world);
+
+RigidBody* initPianoKey(TransformData data, Piano* piano, World* world);

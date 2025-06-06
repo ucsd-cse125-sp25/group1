@@ -73,8 +73,8 @@ class Client {
     const char* footstepSfxId = config::FOOTSTEPCARPET;             // Set to the necessary type of footstep sfx
     float footstepVol = config::FOOTSTEPCARPET_VOL; // corresponding vol adjustment if needed.
 
-    const char* ambianceId = "";                 // Set to the necessary type of footstep sfx
-    float ambianceVol = 1.0f; // corresponding vol adjustment if needed.
+    const char* ambianceId = config::HOTEL_LOBBY;                 // Set to the necessary type of footstep sfx
+    float ambianceVol = config::HOTEL_LOBBY_VOL; // corresponding vol adjustment if needed.
 
     int gameState = 0;
 

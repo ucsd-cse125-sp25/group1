@@ -1,14 +1,17 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "player.hpp"
 #include "config.hpp"
+#include "player.hpp"
 #include "rigidBody.hpp"
+
+class Server;
+class Piano;
 
 class PianoKey : public Object {
   public:
-    PianoKey(int id, float kConstant, float dampFactor, glm::vec3 target,
-             glm::vec3 initialPosition);
+    PianoKey(int id, float kConstant, float dampFactor, glm::vec3 target, glm::vec3 initialPosition,
+             Server& serverRef, Piano* pianoRef);
 
     ~PianoKey() = default;
 
@@ -34,4 +37,6 @@ class PianoKey : public Object {
     float dampFactor;
     glm::vec3 target;
     glm::vec3 initialPosition;
+    Server& server;
+    Piano* piano;
 };

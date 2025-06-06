@@ -329,7 +329,10 @@ void Client::handleServerMessage(const std::string& message) {
         int playerID = parsed["player_id"];
         scene->moveChildTransform("lobby", "final_button", playerID, glm::vec3(0.0f, 0.0f, -0.02f));
 
-    } else {
+    } else if (type == "start_game") {
+        gameState = 1;
+    } 
+    else {
         std::cerr << "Unknown message type: " << type << "\n";
     }
     // Need to also udpate object states
@@ -342,7 +345,7 @@ void Client::updatePlayerStates(const json& parsed) {
     for (const auto& player : players) {
         int id = player["id"];
         connectedIds.insert(id);
-
+        
         glm::vec3 position = toVec3(player["position"]);
         glm::vec3 direction = toVec3(player["direction"]);
 
@@ -354,6 +357,12 @@ void Client::updatePlayerStates(const json& parsed) {
         if (id == clientId) {
             camera.setPosition(position + config::CAMERA_OFFSET);
         }
+        // mainmenu->queuePlayer(id);
+        //if (mainmenu->queuePlayer(id))
+        //    gameState = 1;
+        //if (mainmenu->ready) {
+        //    gameState = 1;
+        //}
     }
 
     for (int i = 0; i < config::MAX_PLAYERS; ++i) {
@@ -361,6 +370,7 @@ void Client::updatePlayerStates(const json& parsed) {
             playerPositions.erase(i);
             playerDirections.erase(i);
             disconnectedIds.insert(i);
+            mainmenu->dequeuePlayer(i);
         }
     }
 }
@@ -443,7 +453,6 @@ void Client::handleMouseInput() {
 
     message["type"] = "mouse_input";
     message["direction"] = {direction.x, direction.y, direction.z};
-
     sendMessageToServer(message);
 }
 
@@ -518,6 +527,11 @@ void Client::initScene() {
     yaw = directionToYaw(direction);
 }
 
+void Client::initMainMenu(GLFWwindow* window) {
+    mainmenu = std::make_unique<Menu>(clientId);
+    mainmenu->init(window);
+}
+
 void Client::gameLoop(GLFWwindow* window) {
     while (!glfwWindowShouldClose(window)) {
         glClearColor(0.75f, 0.9f, 1.0f, 1.0f);
@@ -536,8 +550,20 @@ void Client::gameLoop(GLFWwindow* window) {
             scene->removePlayer(id);
         }
         disconnectedIds.clear();
+        
+        if (gameState == 0){
+            json message;
 
-        scene->render(camera, boundingBoxMode);
+            mainmenu->run();
+            if (mainmenu->ready) {
+                message["type"] = "ready_status";
+                message["id"] = {clientId};
+                message["status"] = {true};
+                sendMessageToServer(message);
+            }
+        }
+        else
+            scene->render(camera, boundingBoxMode);
 
         audioManager.update();
 
@@ -560,6 +586,7 @@ void Client::run() {
     initGL();
     initScene();
     scene->window = window;
+    initMainMenu(window);
     gameLoop(window);
     cleanup(window);
 }

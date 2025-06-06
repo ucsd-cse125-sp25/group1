@@ -8,6 +8,8 @@
 class CanvasImage : public CanvasElement {
   public:
     CanvasImage();
+    CanvasImage(glm::vec2 position, glm::vec2 scale, glm::vec2 initialSpriteCoords,
+                UITexture uiTexture);
     ~CanvasImage();
     void draw(Shader& shader) override;
     void setHidden(bool val) override;

@@ -170,6 +170,11 @@ class Server {
     bool hasTimerStarted;
     int timeLeft;
 
+    /* ADDED FOR MENU */
+    bool readyPlayers[4] = {false, false, false, false};
+    bool gameStarted = false;
+    int queuedPlayers = 0;
+
     std::unordered_map<int, std::shared_ptr<boost::asio::ip::tcp::socket>> clients;
     std::unordered_map<int, boost::asio::streambuf> buffers;
 

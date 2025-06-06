@@ -91,7 +91,7 @@ void Server::initRigidBodies() {
                 if (roomName == "swampKeyRoom") {
                     keyID = 0;
                 } else if (roomName == "circusKeyRoom") {
-                    keyID = 1;
+                    keyID = -1;
                 }
                 object =
                     initDoor(data, &doors, &rooms, &world, *this, i, obj["connects_to"], keyID);

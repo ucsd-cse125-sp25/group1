@@ -90,7 +90,7 @@ void Server::initRigidBodies() {
             if (modelName == "door_00") {
                 int keyID = -1;
                 if (roomName == "swampKeyRoom") {
-                    keyID = 0;
+                    keyID = -1;
                 } else if (roomName == "circusKeyRoom") {
                     keyID = -1;
                 }

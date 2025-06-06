@@ -52,7 +52,7 @@ inline constexpr const char* PLAYER_CHARACTERS_RUN[4] = {
     "../src/client/characters/cat_run.fbx", "../src/client/characters/dog_run.fbx",
     "../src/client/characters/frog_run.fbx", "../src/client/characters/frog_run.fbx"};
 
-inline constexpr float PLAYER_SPEED = 10.0f;
+inline constexpr float PLAYER_SPEED = 15.0f;
 inline constexpr float PLAYER_WEIGHT = 10.0f;
 
 inline constexpr float PLAYER_WIDTH = 1.53f;

@@ -123,8 +123,8 @@ RigidBody* initZone(TransformData data, Server* server, std::unordered_map<int, 
             if (player->getCurRoomID() != roomID) {
                 player->setCurRoomID(roomID);
 
-                std::cout << "Player " << player->getID() << " entered zone for room ID: " << roomID
-                          << std::endl;
+                //std::cout << "Player " << player->getID() << " entered zone for room ID: " << roomID
+                          // << std::endl;
 
                 // Send Message to client to acknowledge room change
                 json message;

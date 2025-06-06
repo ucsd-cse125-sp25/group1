@@ -3,6 +3,7 @@
 #include <chrono>
 #include <fstream>
 #include <iostream>
+#include <string>
 #include <thread>
 #include "config.hpp"
 #include "json.hpp"
@@ -89,7 +90,7 @@ void Server::initRigidBodies() {
             if (modelName == "door_00") {
                 int keyID = -1;
                 if (roomName == "swampKeyRoom") {
-                    keyID = 0;
+                    keyID = -1;
                 } else if (roomName == "circusKeyRoom") {
                     keyID = -1;
                 }
@@ -117,6 +118,9 @@ void Server::initRigidBodies() {
                 object = initButton(data, &objects, lobby, &world);
             } else if (modelName == "piano_floor_00") {
                 object = initPianoRespawn(data, piano, &world);
+            } else if (modelName.starts_with("piano_key_")) {
+                object = initPianoKey(data, piano, &world);
+                //TODO add in wrist rest RB
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;
@@ -282,7 +286,6 @@ void Server::handleClientMessages() {
                 players[clientId]->handleMovementInput(actions);
 
                 int roomID = players[clientId]->getCurRoomID();
-                std::cout << "Player " << clientId << " is in room " << roomID << "\n";
                 Interactable* interactable =
                     players[clientId]->getNearestInteractable(rooms[roomID]);
 
@@ -430,5 +433,17 @@ void Server::run() {
         ioContext.run();
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";
+    }
+}
+
+void Server::PianoKill(glm::vec3 respawnLoc) {
+    // Kill all players in the room
+    for (auto& [id, player] : players) {
+        if (player->getCurRoomID() != piano->getID()) {
+            continue; // Only kill players in the piano room
+        }
+        player->getBody().setPosition(respawnLoc + config::PIANO_OFFSET[id]);
+        player->getBody().setVelocity(vec3(0.0f));
+        player->setPianoNote(-1); // Reset the piano note
     }
 }

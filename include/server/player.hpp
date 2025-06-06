@@ -172,6 +172,10 @@ class Player : public ICustomPhysics {
      */
     void setJumpSfxCooldown(bool value);
 
+    int getPianoNote() const;
+
+    void setPianoNote(int note);
+
   private:
     int id;
     std::string name;
@@ -179,4 +183,5 @@ class Player : public ICustomPhysics {
     RigidBody body;
     std::set<int> keyIDs; // Keys (by ID) the player has collected
     bool jumpSfxCooldown = false;
+    int pianoNote = -1; // Piano note the player is currently playing
 };

@@ -58,7 +58,7 @@ void Server::initRigidBodies() {
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
         const json& room = it.value();
-        cout << "Initializing room: " << roomName << endl;
+        // cout << "Initializing room: " << roomName << endl;
         vec3 roomPosition = toVec3(room["position"]);
 
         for (const auto& obj : room["objects"]) {

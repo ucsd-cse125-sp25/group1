@@ -1,14 +1,11 @@
-#include "components/pianoRespawn.hpp"
+#include "components/circusRespawn.hpp"
 #include <iostream>
-#include "json.hpp"
 #include "player.hpp"
 #include "server.hpp"
 
-using json = nlohmann::json;
+CircusRespawn::CircusRespawn(int id, Server& serverRef) : Object(id), server(serverRef) {}
 
-PianoRespawn::PianoRespawn(int id, Piano * pianoRef) : Object(id), piano(pianoRef) {}
-
-void PianoRespawn::customCollision(ICustomPhysics* otherObject) {
+void CircusRespawn::customCollision(ICustomPhysics* otherObject) {
     auto* playerPtr = dynamic_cast<Player*>(otherObject);
     // make sure it's a player that hit the water plane
     if (!playerPtr) {
@@ -20,11 +17,6 @@ void PianoRespawn::customCollision(ICustomPhysics* otherObject) {
     playerBody.setForce(glm::vec3{0.0f, 0.0f, 0.0f});
     playerBody.setVelocity(glm::vec3{0.0f, 0.0f, 0.0f});
     // TODO: add offset for the individual player, so 2 players don't spawn into the same spot.
-    playerBody.setPosition(config::PIANO_RESPAWN + config::PIANO_ROOM_POSITION +
-                           config::PIANO_OFFSET[playerPtr->getID()]);
+    playerBody.setPosition(config::CIRCUS_RESPAWN + config::CIRCUS_ROOM_POSITION);
     playerPtr->setJumpSfxCooldown(false);
-
-    playerPtr->setPianoNote(-1);
-
-    piano->setPlayedIndex(0);
 }

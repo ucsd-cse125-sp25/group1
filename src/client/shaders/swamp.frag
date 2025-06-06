@@ -16,11 +16,14 @@ out vec4 fragColor;
 
 uniform int numLights;
 uniform PointLight pointLights[MAX_LIGHTS];
+uniform bool playerShadowActive[MAX_LIGHTS];
 
 uniform samplerCube shadowDepthCubemap0;
 uniform samplerCube shadowDepthCubemap1;
 uniform samplerCube shadowDepthCubemap2;
 uniform samplerCube shadowDepthCubemap3;
+uniform samplerCube shadowDepthCubemap4;
+uniform samplerCube shadowDepthCubemap5;
 
 uniform float shadowFarClip;
 uniform vec3 viewPos;
@@ -58,6 +61,7 @@ float getShadowFactor(vec3 fragPosWorld, int index) {
     // PCF parameters
     float shadowStatic = 0.0;
     float shadowInteractable = 0.0;
+    float shadowPlayer = 0.0;
     float samples = 2.0;
     float offset = 0.05 * (1.0 - currentDepth / shadowFarClip);
 
@@ -71,15 +75,26 @@ float getShadowFactor(vec3 fragPosWorld, int index) {
                 vec3 sampleDir = normalize(fragToLight + vec3(x, y, z) * offset);
                 float closestDepthStatic = 0.0;
                 float closestDepthInteractable = 0.0;
+                float closestDepthPlayer = 0.0;
 
                 if (index == 0) {
                     closestDepthStatic = texture(shadowDepthCubemap0, sampleDir).r * shadowFarClip;
                     closestDepthInteractable =
                         texture(shadowDepthCubemap2, sampleDir).r * shadowFarClip;
+
+                    if (playerShadowActive[0]) {
+                        closestDepthPlayer =
+                            texture(shadowDepthCubemap4, sampleDir).r * shadowFarClip;
+                    }
                 } else if (index == 1) {
                     closestDepthStatic = texture(shadowDepthCubemap1, sampleDir).r * shadowFarClip;
                     closestDepthInteractable =
                         texture(shadowDepthCubemap3, sampleDir).r * shadowFarClip;
+
+                    if (playerShadowActive[1]) {
+                        closestDepthPlayer =
+                            texture(shadowDepthCubemap5, sampleDir).r * shadowFarClip;
+                    }
                 }
 
                 if (currentDepth - bias > closestDepthStatic) {
@@ -89,14 +104,19 @@ float getShadowFactor(vec3 fragPosWorld, int index) {
                 if (currentDepth - bias > closestDepthInteractable) {
                     shadowInteractable += 1.0;
                 }
+
+                if (playerShadowActive[index] && currentDepth - bias > closestDepthPlayer) {
+                    shadowPlayer += 1.0;
+                }
             }
         }
     }
 
     shadowStatic /= (samples * samples * samples);
     shadowInteractable /= (samples * samples * samples);
+    shadowPlayer /= (samples * samples * samples);
 
-    return 1.0 - max(shadowStatic, shadowInteractable);
+    return 1.0 - max(max(shadowStatic, shadowInteractable), shadowPlayer);
 }
 
 void main() {
@@ -141,3 +161,38 @@ void main() {
         fragColor = mix(vec4(fogColor, 1.0), fragColor, fogFactor);
     }
 }
+
+// Use this if the current version is lagging a lot
+// float getShadowFactor(vec3 fragPosWorld, int index) {
+//     vec3 fragToLight = fragPosWorld - pointLights[index].position;
+//     float currentDepth = length(fragToLight);
+
+//     float shadowStatic = 0.0;
+//     float shadowInteractable = 0.0;
+
+//     float offset = 0.05 * (1.0 - currentDepth / shadowFarClip); // optional soft bias
+//     vec3 fragDir = normalize(fragToLight);
+//     vec3 N = normalize(normal);
+//     float bias = 0.1 + 0.01 * (1.0 - dot(fragDir, N));
+
+//     float closestDepthStatic = 0.0;
+//     float closestDepthInteractable = 0.0;
+
+//     if (index == 0) {
+//         closestDepthStatic = texture(shadowDepthCubemap0, fragDir).r * shadowFarClip;
+//         closestDepthInteractable = texture(shadowDepthCubemap2, fragDir).r * shadowFarClip;
+//     } else if (index == 1) {
+//         closestDepthStatic = texture(shadowDepthCubemap1, fragDir).r * shadowFarClip;
+//         closestDepthInteractable = texture(shadowDepthCubemap3, fragDir).r * shadowFarClip;
+//     }
+
+//     if (currentDepth - bias > closestDepthStatic) {
+//         shadowStatic = 1.0;
+//     }
+
+//     if (currentDepth - bias > closestDepthInteractable) {
+//         shadowInteractable = 1.0;
+//     }
+
+//     return 1.0 - max(shadowStatic, shadowInteractable);
+// }

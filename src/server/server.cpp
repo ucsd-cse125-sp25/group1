@@ -34,7 +34,7 @@ void Server::initRigidBodies() {
 
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
-        // cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
+        cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
         Room* room;
         if (roomName == "swampRoom") {
             swamp = new Swamp(rooms.size(), world, *this);
@@ -88,7 +88,14 @@ void Server::initRigidBodies() {
                                   relativeMaxCorner};
 
             if (modelName == "door_00") {
-                object = initDoor(data, &doors, &rooms, &world, *this, i, obj["connects_to"], -1);
+                int keyID = -1;
+                if (roomName == "swampKeyRoom") {
+                    keyID = 0;
+                } else if (roomName == "circusKeyRoom") {
+                    keyID = -1;
+                }
+                object =
+                    initDoor(data, &doors, &rooms, &world, *this, i, obj["connects_to"], keyID);
             } else if (modelName == "frog_00") {
                 object = initFrog(data, &objects, swamp, &world);
             } else if (modelName == "lilypad_00") {
@@ -101,6 +108,8 @@ void Server::initRigidBodies() {
                 object = initKey(data, *this, world, roomName, &keys);
             } else if (modelName == "cannonball_00") {
                 object = initCannonball(data, circus, &world);
+            } else if (modelName == "circus_floor_00" && !circus->isRespawnCreated()) {
+                object = initCircusRespawn(data, circus, &world);
             } else if (modelName.starts_with("zone_")) {
                 object = initZone(data, this, &objects, &world, i);
             } else if (modelName == "door") {
@@ -253,8 +262,7 @@ void Server::startTick() {
             handleClientMessages();
             handlePhysics();
             broadcastPlayerStates();
-            circus->broadcastCannonballPositions();
-
+            circus->cannonLoop();
             startTick();
         }
     });
@@ -278,7 +286,7 @@ void Server::handleClientMessages() {
                 players[clientId]->handleMovementInput(actions);
 
                 int roomID = players[clientId]->getCurRoomID();
-                // std::cout << "Player " << clientId << " is in room " << roomID << "\n";
+                std::cout << "Player " << clientId << " is in room " << roomID << "\n";
                 Interactable* interactable =
                     players[clientId]->getNearestInteractable(rooms[roomID]);
 
@@ -319,9 +327,9 @@ void Server::handleClientMessages() {
                 }
                 // TODO: remove this
                 // Temporary for testing: when the user types 'n', circus cannons fire
-                if (std::find(actions.begin(), actions.end(), "n") != actions.end()) {
-                    circus->stopMusicMessage();
-                }
+                // if (std::find(actions.begin(), actions.end(), "n") != actions.end()) {
+                //     circus->stopMusicMessage();
+                // }
                 // handle misc inputs, such as interacting with environment
                 players[clientId]->handleGeneralInput(actions, interactable);
             } else if (type == "mouse_input") {

@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <unordered_map>
 #include "circus.hpp"
+#include "components/circusRespawn.hpp"
 #include "components/door.hpp"
 #include "components/finalButton.hpp"
 #include "components/finalDoor.hpp"
@@ -14,8 +15,8 @@
 #include "components/room.hpp"
 #include "components/water.hpp"
 #include "config.hpp"
-#include "piano.hpp"
 #include "lobby.hpp"
+#include "piano.hpp"
 #include "rigidBody.hpp"
 #include "server.hpp"
 #include "swamp.hpp"
@@ -147,6 +148,8 @@ RigidBody* initKey(TransformData data, Server& serverRef, World& worldRef,
  */
 RigidBody* initSplash(TransformData data, Swamp* swamp, World* world);
 
+RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world);
+
 /**
  * @brief Initializes a FinalButton object in the Lobby and attaches a RigidBody.
  *
@@ -171,5 +174,7 @@ RigidBody* initFinalDoor(TransformData data, std::unordered_map<int, Object*>* o
                          Lobby* lobby, World* world);
 
 RigidBody* initPianoRespawn(TransformData data, Piano* piano, World* world);
+
+RigidBody* initCircusRespawn(TransformData data, Circus* circus, World* world);
 
 RigidBody* initPianoKey(TransformData data, Piano* piano, World* world);

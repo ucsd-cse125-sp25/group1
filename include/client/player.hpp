@@ -196,7 +196,7 @@ class Player {
     glm::vec3 position;  // Current position of the player.
     glm::vec3 direction; // Current facing direction of the player.
 
-    int characterID; // Player character
+    int characterID;
 
     std::array<std::unique_ptr<Animator>, 2> animators;
     std::array<std::unique_ptr<Animation>, 2> animations;

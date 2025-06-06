@@ -75,7 +75,17 @@ class Scene {
      */
     void removeInstanceFromRoom(const std::string& roomName, const std::string& type, int id);
 
+    /**
+     * @brief Removes a door from using a global ID.
+
+     * @param id Global door ID.
+     */
+    void removeDoor(int id);
+
     void addKeyToSlot(const std::string& roomName, const std::string& type, int id);
+
+    void moveChildTransform(const std::string& roomName, const std::string& type, int id,
+                            const glm::vec3& offset);
 
     /**
      * @brief Renders shadow maps for static geometry.
@@ -90,6 +100,13 @@ class Scene {
      * This is called only once when the scene initializes.
      */
     void renderInteractableShadowPass();
+
+    /**
+     * @brief Renders shadow maps for players.
+     *
+     * This is called every frame.
+     */
+    void renderPlayerShadowPass();
 
     /**
      * @brief Renders shadow maps for lilypad objects in the swamp room.
@@ -147,6 +164,14 @@ class Scene {
      */
     int getPlayerRoomID(int clientID);
 
+    /**Add commentMore actions
+     * @brief Sets player character's animation state
+     *
+     * @param clientID client ID.
+     * @param state 0: idle, 1: run
+     */
+    void setPlayerState(int clientID, int state);
+
     /**
      * Creates and stores a given number of fireflies with random positions, directions,
      * speeds, and sizes inside a defined bounding area.
@@ -154,14 +179,6 @@ class Scene {
      * @param count Number of fireflies to spawn.
      */
     void updateCannonballPositions(glm::vec3 positions[]);
-
-    /*
-     * @brief Sets player character's animation state
-     *
-     * @param clientID client ID.
-     * @param state 0: idle, 1: run
-     */
-    void setPlayerState(int clientID, int state);
 
   private:
     /**
@@ -200,12 +217,19 @@ class Scene {
     std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> staticShadowMaps;
     std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> interactableShadowMaps;
     std::unordered_map<std::string, std::vector<bool>> interactableShadowActive;
+    std::unordered_map<std::string, std::vector<std::unique_ptr<ShadowMap>>> playerShadowMaps;
+    std::unordered_map<std::string, std::vector<bool>> playerShadowActive;
 
     std::map<std::string, std::unique_ptr<Shader>> shaders;
     std::unique_ptr<Shader> uiShader;
 
     std::unique_ptr<Model> lobbyAsset;
-    std::unique_ptr<Model> finalDoorAsset; // Left door of the final door
+    std::unique_ptr<Model> finalDoorAsset;    // Left door of the final door
+    std::unique_ptr<Model> buttonBlueAsset;   // Blue button
+    std::unique_ptr<Model> buttonPinkAsset;   // Pink button
+    std::unique_ptr<Model> buttonYellowAsset; // Yellow button
+    std::unique_ptr<Model> buttonGreenAsset;  // Green button
+    std::unique_ptr<Model> backPlateAsset;    // Backplate for the buttons
 
     std::unique_ptr<Model> hotelRoomStraightX; // Doors face +X and -X directions
     std::unique_ptr<Model> hotelRoomStraightZ; // Doors face +Z and -Z directions

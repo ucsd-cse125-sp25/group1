@@ -108,7 +108,11 @@ bool Client::init() {
     audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/Master.bank");
     audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/BGM.bank");
     audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/SFX.bank");
+    audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/Ambience.bank");
 
+    audioManager.loadFMODStudioEvent(config::HOTEL_LOBBY);
+    audioManager.playEvent(config::HOTEL_LOBBY);
+    audioManager.setEventVolume(config::HOTEL_LOBBY, config::HOTEL_LOBBY_VOL);
     return true;
 }
 
@@ -203,17 +207,21 @@ void Client::handleServerMessage(const std::string& message) {
         auto roomID = parsed["id"];
         auto clientId = parsed["client_id"];
 
+        int prevID = scene->getPlayerRoomID(clientId);
+
         scene->setPlayerRoomID(clientId, roomID);
 
         // Audio logic
 
         if (clientId == this->clientId) {
-            if (ambianceId && ambianceId[0] != '\0') {
+   /*         if (ambianceId && ambianceId[0] != '\0') {
                 audioManager.stopEvent(this->ambianceId);
-            }
+            }*/
 
             if (roomID == 1) {
                 // Swamp room
+                audioManager.stopEvent(this->ambianceId);
+
                 this->ambianceId = config::SWAMP_AMBIENCE_TRACK;
                 this->ambianceVol = config::SWAMP_AMBIENCE_VOL;
 
@@ -225,6 +233,8 @@ void Client::handleServerMessage(const std::string& message) {
                 audioManager.setEventVolume(this->ambianceId, this->ambianceVol);
             } else if (roomID == 3) {
                 // Carnival room
+                audioManager.stopEvent(this->ambianceId);
+
                 this->ambianceId = config::CARNIVAL_AMBIENCE_TRACK;
                 this->ambianceVol = config::CARNIVAL_AMBIENCE_VOL;
 
@@ -236,6 +246,7 @@ void Client::handleServerMessage(const std::string& message) {
                 audioManager.setEventVolume(this->ambianceId, this->ambianceVol);
             } else if (roomID == 5) {
                 // Piano room
+                audioManager.stopEvent(this->ambianceId);
 
                 this->ambianceId = config::PIANO_AMBIENCE_TRACK;
                 this->ambianceVol = config::PIANO_AMBIENCE_VOL;
@@ -245,10 +256,18 @@ void Client::handleServerMessage(const std::string& message) {
                 this->footstepSfxId = config::FOOTSTEPWOOD;
                 this->footstepVol = config::FOOTSTEPWOOD_VOL;
             } else {
-                this->ambianceId = "";
+                if (prevID == 1 || prevID == 3 || prevID == 5) {
+                    audioManager.stopEvent(this->ambianceId);
 
-                this->footstepSfxId = config::FOOTSTEPCARPET;
-                this->footstepVol = config::FOOTSTEPCARPET_VOL;
+                    this->ambianceId = config::HOTEL_LOBBY;
+                    this->ambianceVol = config::HOTEL_LOBBY_VOL;
+
+                    audioManager.loadFMODStudioEvent(this->ambianceId);
+                    audioManager.playEvent(this->ambianceId);
+
+                    this->footstepSfxId = config::FOOTSTEPCARPET;
+                    this->footstepVol = config::FOOTSTEPCARPET_VOL;
+                }
             }
         }
 
@@ -272,7 +291,7 @@ void Client::handleServerMessage(const std::string& message) {
 
         if (action == "door_open") {
             auto doorID = parsed["door_id"];
-            // TODO: remove rendering of door
+            scene->removeDoor(doorID);
         }
 
     } else if (type == "interactable_nearby") {
@@ -323,8 +342,12 @@ void Client::handleServerMessage(const std::string& message) {
     } else if (type == "final_door_open") {
         // This is the final door opening, so we need to update the scene
         // and show the end screen.
+        scene->removeInstanceFromRoom("lobby", "finalDoor", 0);
     } else if (type == "final_button_pressed") {
         // Could just be sfx only
+        int playerID = parsed["player_id"];
+        scene->moveChildTransform("lobby", "final_button", playerID, glm::vec3(0.0f, 0.0f, -0.02f));
+
     } else {
         std::cerr << "Unknown message type: " << type << "\n";
     }

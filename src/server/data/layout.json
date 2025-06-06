@@ -25,6 +25,42 @@
         "rotated": false
       },
       {
+        "model": "button",
+        "position": [
+          7.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
+        "model": "button",
+        "position": [
+          -7.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
+        "model": "button",
+        "position": [
+          12.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
+        "model": "button",
+        "position": [
+          -12.0,
+          3.5,
+          19.4
+        ],
+        "rotated": false
+      },
+      {
         "model": "lobby_00",
         "position": [
           0.0,
@@ -179,15 +215,6 @@
       },
       {
         "model": "lobby_17",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "lobby_18",
         "position": [
           0.0,
           0.0,
@@ -1045,25 +1072,7 @@
         "connects_to": 12
       },
       {
-        "model": "metal_grate",
-        "position": [
-          0.0,
-          10.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "circus_blocker",
-        "position": [
-          0.0,
-          0.0,
-          0.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "ticket_queue_00",
+        "model": "circus_floor_00",
         "position": [
           0.0,
           0.0,
@@ -1203,15 +1212,6 @@
           30.0,
           3.0,
           4.0
-        ],
-        "rotated": false
-      },
-      {
-        "model": "cannonball_00",
-        "position": [
-          30.0,
-          3.0,
-          0.0
         ],
         "rotated": false
       },
@@ -1620,6 +1620,15 @@
         ],
         "rotated": true,
         "connects_to": 28
+      },
+      {
+        "model": "key_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": false
       },
       {
         "model": "1x1_hotel_room_bend_neg_x_pos_z_00",

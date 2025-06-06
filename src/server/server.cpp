@@ -33,7 +33,7 @@ void Server::initRigidBodies() {
 
     for (auto it = layout.begin(); it != layout.end(); ++it) {
         const std::string& roomName = it.key();
-        // cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
+        cout << "Initializing room " << roomName << " with ID " << rooms.size() << endl;
         Room* room;
         if (roomName == "swampRoom") {
             swamp = new Swamp(rooms.size(), world, *this);
@@ -91,7 +91,7 @@ void Server::initRigidBodies() {
                 if (roomName == "swampKeyRoom") {
                     keyID = 0;
                 } else if (roomName == "circusKeyRoom") {
-                    keyID = 1;
+                    keyID = -1;
                 }
                 object =
                     initDoor(data, &doors, &rooms, &world, *this, i, obj["connects_to"], keyID);
@@ -282,7 +282,7 @@ void Server::handleClientMessages() {
                 players[clientId]->handleMovementInput(actions);
 
                 int roomID = players[clientId]->getCurRoomID();
-                // std::cout << "Player " << clientId << " is in room " << roomID << "\n";
+                std::cout << "Player " << clientId << " is in room " << roomID << "\n";
                 Interactable* interactable =
                     players[clientId]->getNearestInteractable(rooms[roomID]);
 

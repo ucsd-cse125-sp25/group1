@@ -44,11 +44,11 @@ inline constexpr glm::vec3 PLAYER_SPAWNS[4] = {
 
 inline constexpr const char* PLAYER_CHARACTERS_IDLE[4] = {
     "../src/client/characters/cat_idle.fbx", "../src/client/characters/dog_idle.fbx",
-    "../src/client/characters/bunny_idle.fbx", "../src/client/characters/frog_idle.fbx"};
+    "../src/client/characters/frog_idle.fbx", "../src/client/characters/frog_idle.fbx"};
 
 inline constexpr const char* PLAYER_CHARACTERS_RUN[4] = {
     "../src/client/characters/cat_run.fbx", "../src/client/characters/dog_run.fbx",
-    "../src/client/characters/bunny_run.fbx", "../src/client/characters/frog_run.fbx"};
+    "../src/client/characters/frog_run.fbx", "../src/client/characters/frog_run.fbx"};
 
 inline constexpr float PLAYER_SPEED = 10.0f;
 inline constexpr float PLAYER_WEIGHT = 10.0f;

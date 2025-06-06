@@ -3,7 +3,7 @@
 #include <string>
 
 Player::Player(int id, const glm::vec3& position, const glm::vec3& direction)
-    : id(id), position(position), direction(direction) {}
+    : id(id), position(position), direction(direction), characterID(id) {}
 
 void Player::init() {
     std::string path;
@@ -17,14 +17,17 @@ void Player::init() {
     } else {
         path = "../src/client/characters/frog_idle.fbx";
     }
+    characters[0] = std::make_unique<AnimatedModel>(config::PLAYER_CHARACTERS_IDLE[characterID]);
+    animations[0] = std::make_unique<Animation>(characters[0]->getScene(), characters[0].get());
+    animators[0] = std::make_unique<Animator>(animations[0].get());
 
-    character = std::make_unique<AnimatedModel>(path);
-    animations["idle"] = std::make_unique<Animation>(character->getScene(), character.get());
-    animator = std::make_unique<Animator>(animations["idle"].get());
+    characters[1] = std::make_unique<AnimatedModel>(config::PLAYER_CHARACTERS_RUN[characterID]);
+    animations[1] = std::make_unique<Animation>(characters[1]->getScene(), characters[1].get());
+    animators[1] = std::make_unique<Animator>(animations[1].get());
 }
 
 void Player::draw(Shader& shader) {
-    const auto& boneMatrices = animator->getBoneMatrices();
+    const auto& boneMatrices = animators[state]->getBoneMatrices();
 
     for (int i = 0; i < boneMatrices.size(); ++i) {
         shader.setMat4("boneMatrices[" + std::to_string(i) + "]", boneMatrices[i]);
@@ -45,5 +48,5 @@ void Player::draw(Shader& shader) {
 
     shader.setMat4("model", playerModel);
 
-    character->draw(shader);
+    characters[state]->draw(shader);
 }

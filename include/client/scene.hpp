@@ -164,6 +164,14 @@ class Scene {
      */
     int getPlayerRoomID(int clientID);
 
+    /**Add commentMore actions
+     * @brief Sets player character's animation state
+     *
+     * @param clientID client ID.
+     * @param state 0: idle, 1: run
+     */
+    void setPlayerState(int clientID, int state);
+
     /**
      * Creates and stores a given number of fireflies with random positions, directions,
      * speeds, and sizes inside a defined bounding area.
@@ -171,14 +179,6 @@ class Scene {
      * @param count Number of fireflies to spawn.
      */
     void updateCannonballPositions(glm::vec3 positions[]);
-
-    /*
-     * @brief Sets player character's animation state
-     *
-     * @param clientID client ID.
-     * @param state 0: idle, 1: run
-     */
-    void setPlayerState(int clientID, int state);
 
   private:
     /**

@@ -348,7 +348,7 @@ void Server::handleClientMessages() {
                 if (queuedPlayers == 4 && !gameStarted) {
                     json message;
                     message["type"] = "start_game";
-                    message["id"] = std::to_string(parse["id"][0]);
+                    //message["id"] = std::to_string(parse["id"][0]);
                     std::string packet = message.dump() + "\n";
                     broadcastMessage(packet);
                     gameStarted = true;

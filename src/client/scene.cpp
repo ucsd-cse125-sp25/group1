@@ -197,6 +197,10 @@ void Scene::initRooms() {
     glm::mat4 pianoRoomModel = glm::translate(I4, config::PIANO_ROOM_POSITION);
     auto pianoRoom =
         std::make_unique<ModelInstance>(pianoRoomAsset.get(), pianoRoomModel, nullptr, true);
+    glm::mat4 pianoKey = glm::translate(I4, config::PIANO_ROOM_POSITION);
+    pianoKey = glm::translate(door3, config::PIANO_KEY_POSITION);
+    pianoRoom->children["key"][0] =
+        std::make_unique<ModelInstance>(keyAsset.get(), pianoKey, pianoRoom.get(), false);
 
     // Parkour room (Room ID: 6)
     glm::mat4 parkourKeyRoomModel = glm::translate(I4, config::PARKOUR_ROOM_POSITION);

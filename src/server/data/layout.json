@@ -1739,6 +1739,15 @@
         "rotated": false
       },
       {
+        "model": "key_00",
+        "position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotated": true
+      },
+      {
         "model": "door_00",
         "position": [
           0.0,

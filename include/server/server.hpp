@@ -67,6 +67,9 @@ class Server {
      */
     void broadcastMessage(std::string packet);
 
+    // Kill the all players in piano room for wrong note. and respawn them
+    void PianoKill(glm::vec3 respawnLoc);
+
   private:
     /**
      * @brief Initializes static rigid bodies based on the layout defined in a JSON file.
@@ -169,6 +172,11 @@ class Server {
 
     bool hasTimerStarted;
     int timeLeft;
+
+    /* ADDED FOR MENU */
+    bool readyPlayers[4] = {false, false, false, false};
+    bool gameStarted = false;
+    int queuedPlayers = 0;
 
     std::unordered_map<int, std::shared_ptr<boost::asio::ip::tcp::socket>> clients;
     std::unordered_map<int, boost::asio::streambuf> buffers;

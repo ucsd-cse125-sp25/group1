@@ -15,6 +15,7 @@
 #include "cube.hpp"
 #include "json.hpp"
 #include "scene.hpp"
+#include "menu.hpp"
 #include "shader.hpp"
 #include "swamp.hpp"
 
@@ -72,8 +73,10 @@ class Client {
     const char* footstepSfxId = config::FOOTSTEPCARPET;             // Set to the necessary type of footstep sfx
     float footstepVol = config::FOOTSTEPCARPET_VOL; // corresponding vol adjustment if needed.
 
-    const char* ambianceId = "";                 // Set to the necessary type of footstep sfx
-    float ambianceVol = 1.0f; // corresponding vol adjustment if needed.
+    const char* ambianceId = config::HOTEL_LOBBY;                 // Set to the necessary type of footstep sfx
+    float ambianceVol = config::HOTEL_LOBBY_VOL; // corresponding vol adjustment if needed.
+
+    int gameState = 0;
 
   private:
     /**
@@ -164,6 +167,8 @@ class Client {
      */
     void initScene();
 
+    void initMainMenu(GLFWwindow* window);
+
     /**
      * @brief Main game loop for updates and rendering.
      */
@@ -187,6 +192,7 @@ class Client {
     std::unordered_set<int> disconnectedIds;
 
     std::unique_ptr<Scene> scene;
+    std::unique_ptr<Menu> mainmenu;
 
     /**
      * @brief Reference to instance for client-side swamp minigame

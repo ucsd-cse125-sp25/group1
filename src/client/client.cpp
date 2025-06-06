@@ -108,7 +108,11 @@ bool Client::init() {
     audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/Master.bank");
     audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/BGM.bank");
     audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/SFX.bank");
+    audioManager.loadFMODStudioBank("../src/client/audioBanks/OutofTune/Build/Desktop/Ambience.bank");
 
+    audioManager.loadFMODStudioEvent(config::HOTEL_LOBBY);
+    audioManager.playEvent(config::HOTEL_LOBBY);
+    audioManager.setEventVolume(config::HOTEL_LOBBY, config::HOTEL_LOBBY_VOL);
     return true;
 }
 
@@ -203,17 +207,21 @@ void Client::handleServerMessage(const std::string& message) {
         auto roomID = parsed["id"];
         auto clientId = parsed["client_id"];
 
+        int prevID = scene->getPlayerRoomID(clientId);
+
         scene->setPlayerRoomID(clientId, roomID);
 
         // Audio logic
 
         if (clientId == this->clientId) {
-            if (ambianceId && ambianceId[0] != '\0') {
+   /*         if (ambianceId && ambianceId[0] != '\0') {
                 audioManager.stopEvent(this->ambianceId);
-            }
+            }*/
 
             if (roomID == 1) {
                 // Swamp room
+                audioManager.stopEvent(this->ambianceId);
+
                 this->ambianceId = config::SWAMP_AMBIENCE_TRACK;
                 this->ambianceVol = config::SWAMP_AMBIENCE_VOL;
 
@@ -225,6 +233,8 @@ void Client::handleServerMessage(const std::string& message) {
                 audioManager.setEventVolume(this->ambianceId, this->ambianceVol);
             } else if (roomID == 3) {
                 // Carnival room
+                audioManager.stopEvent(this->ambianceId);
+
                 this->ambianceId = config::CARNIVAL_AMBIENCE_TRACK;
                 this->ambianceVol = config::CARNIVAL_AMBIENCE_VOL;
 
@@ -236,6 +246,7 @@ void Client::handleServerMessage(const std::string& message) {
                 audioManager.setEventVolume(this->ambianceId, this->ambianceVol);
             } else if (roomID == 5) {
                 // Piano room
+                audioManager.stopEvent(this->ambianceId);
 
                 this->ambianceId = config::PIANO_AMBIENCE_TRACK;
                 this->ambianceVol = config::PIANO_AMBIENCE_VOL;
@@ -245,10 +256,18 @@ void Client::handleServerMessage(const std::string& message) {
                 this->footstepSfxId = config::FOOTSTEPWOOD;
                 this->footstepVol = config::FOOTSTEPWOOD_VOL;
             } else {
-                this->ambianceId = "";
+                if (prevID == 1 || prevID == 3 || prevID == 5) {
+                    audioManager.stopEvent(this->ambianceId);
 
-                this->footstepSfxId = config::FOOTSTEPCARPET;
-                this->footstepVol = config::FOOTSTEPCARPET_VOL;
+                    this->ambianceId = config::HOTEL_LOBBY;
+                    this->ambianceVol = config::HOTEL_LOBBY_VOL;
+
+                    audioManager.loadFMODStudioEvent(this->ambianceId);
+                    audioManager.playEvent(this->ambianceId);
+
+                    this->footstepSfxId = config::FOOTSTEPCARPET;
+                    this->footstepVol = config::FOOTSTEPCARPET_VOL;
+                }
             }
         }
 
@@ -329,7 +348,10 @@ void Client::handleServerMessage(const std::string& message) {
         int playerID = parsed["player_id"];
         scene->moveChildTransform("lobby", "final_button", playerID, glm::vec3(0.0f, 0.0f, -0.02f));
 
-    } else {
+    } else if (type == "start_game") {
+        gameState = 1;
+    } 
+    else {
         std::cerr << "Unknown message type: " << type << "\n";
     }
     // Need to also udpate object states
@@ -342,7 +364,7 @@ void Client::updatePlayerStates(const json& parsed) {
     for (const auto& player : players) {
         int id = player["id"];
         connectedIds.insert(id);
-
+        
         glm::vec3 position = toVec3(player["position"]);
         glm::vec3 direction = toVec3(player["direction"]);
 
@@ -354,6 +376,12 @@ void Client::updatePlayerStates(const json& parsed) {
         if (id == clientId) {
             camera.setPosition(position + config::CAMERA_OFFSET);
         }
+        // mainmenu->queuePlayer(id);
+        //if (mainmenu->queuePlayer(id))
+        //    gameState = 1;
+        //if (mainmenu->ready) {
+        //    gameState = 1;
+        //}
     }
 
     for (int i = 0; i < config::MAX_PLAYERS; ++i) {
@@ -361,6 +389,7 @@ void Client::updatePlayerStates(const json& parsed) {
             playerPositions.erase(i);
             playerDirections.erase(i);
             disconnectedIds.insert(i);
+            mainmenu->dequeuePlayer(i);
         }
     }
 }
@@ -443,7 +472,6 @@ void Client::handleMouseInput() {
 
     message["type"] = "mouse_input";
     message["direction"] = {direction.x, direction.y, direction.z};
-
     sendMessageToServer(message);
 }
 
@@ -518,6 +546,11 @@ void Client::initScene() {
     yaw = directionToYaw(direction);
 }
 
+void Client::initMainMenu(GLFWwindow* window) {
+    mainmenu = std::make_unique<Menu>(clientId);
+    mainmenu->init(window);
+}
+
 void Client::gameLoop(GLFWwindow* window) {
     while (!glfwWindowShouldClose(window)) {
         glClearColor(0.75f, 0.9f, 1.0f, 1.0f);
@@ -536,8 +569,20 @@ void Client::gameLoop(GLFWwindow* window) {
             scene->removePlayer(id);
         }
         disconnectedIds.clear();
+        
+        if (gameState == 0){
+            json message;
 
-        scene->render(camera, boundingBoxMode);
+            mainmenu->run();
+            if (mainmenu->ready) {
+                message["type"] = "ready_status";
+                message["id"] = {clientId};
+                message["status"] = {true};
+                sendMessageToServer(message);
+            }
+        }
+        else
+            scene->render(camera, boundingBoxMode);
 
         audioManager.update();
 
@@ -560,6 +605,7 @@ void Client::run() {
     initGL();
     initScene();
     scene->window = window;
+    initMainMenu(window);
     gameLoop(window);
     cleanup(window);
 }

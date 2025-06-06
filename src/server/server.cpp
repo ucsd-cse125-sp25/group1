@@ -3,6 +3,7 @@
 #include <chrono>
 #include <fstream>
 #include <iostream>
+#include <string>
 #include <thread>
 #include "config.hpp"
 #include "json.hpp"
@@ -117,6 +118,9 @@ void Server::initRigidBodies() {
                 object = initButton(data, &objects, lobby, &world);
             } else if (modelName == "piano_floor_00") {
                 object = initPianoRespawn(data, piano, &world);
+            } else if (modelName.starts_with("piano_key_")) {
+                object = initPianoKey(data, piano, &world);
+                //TODO add in wrist rest RB
             } else {
                 if (modelName == "bypass_00" && !config::BYPASS)
                     continue;
@@ -216,6 +220,12 @@ void Server::handleClientDisconnect(int clientId) {
         players.erase(clientId);
 
         std::cout << "Client #" << clientId << " disconnected.\n";
+
+        if (readyPlayers[clientId]) {
+            readyPlayers[clientId] = false;
+            queuedPlayers--;
+            std::cout << queuedPlayers << std::endl;
+        }
     }
 
     if (hasTimerStarted && clients.size() == 0) {
@@ -282,7 +292,6 @@ void Server::handleClientMessages() {
                 players[clientId]->handleMovementInput(actions);
 
                 int roomID = players[clientId]->getCurRoomID();
-                std::cout << "Player " << clientId << " is in room " << roomID << "\n";
                 Interactable* interactable =
                     players[clientId]->getNearestInteractable(rooms[roomID]);
 
@@ -331,6 +340,22 @@ void Server::handleClientMessages() {
             } else if (type == "mouse_input") {
                 glm::vec3 direction = toGlmVec3(parsed["direction"]);
                 players[clientId]->handleMouseInput(direction);
+            } else if (type == "ready_status") { /* ADDED FOR MENU */
+
+                if (!readyPlayers[parsed["id"][0]]) {
+                    readyPlayers[parsed["id"][0]] = true;
+                    std::cout << parsed["id"][0] << ": " << parsed["status"][0] << " - "<< queuedPlayers << std::endl;
+                    queuedPlayers++;
+                }
+
+                if (queuedPlayers == 4 && !gameStarted) {
+                    json message;
+                    message["type"] = "start_game";
+                    //message["id"] = std::to_string(parse["id"][0]);
+                    std::string packet = message.dump() + "\n";
+                    broadcastMessage(packet);
+                    gameStarted = true;
+                }
             }
         }
 
@@ -430,5 +455,17 @@ void Server::run() {
         ioContext.run();
     } catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << "\n";
+    }
+}
+
+void Server::PianoKill(glm::vec3 respawnLoc) {
+    // Kill all players in the room
+    for (auto& [id, player] : players) {
+        if (player->getCurRoomID() != piano->getID()) {
+            continue; // Only kill players in the piano room
+        }
+        player->getBody().setPosition(respawnLoc + config::PIANO_OFFSET[id]);
+        player->getBody().setVelocity(vec3(0.0f));
+        player->setPianoNote(-1); // Reset the piano note
     }
 }

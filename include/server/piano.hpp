@@ -6,6 +6,7 @@
 #include <vector>
 #include "collider.hpp"
 #include "components/object.hpp"
+#include "components/pianoKey.hpp"
 #include "components/pianoRespawn.hpp"
 #include "components/room.hpp"
 #include "rigidBody.hpp"
@@ -42,6 +43,13 @@ class Piano : public Room {
     Server& getServer();
 
     // std::array<bool, 14> pressedNotes = {false};
+    PianoKey* createPianoKey();
+
+    int getPlayedIndex();
+
+    void setPlayedIndex(int index);
+
+    int getSolutionNote(int index);
 
   private:
     /**
@@ -50,7 +58,7 @@ class Piano : public Room {
      * A vector, where each element is 0 or 1 representing, the correct lilpad for that step [index]
      * 0: right lilypad, 1: left lilypad
      */
-    // std::array<const char*, 14> solution;
+    std::array<int, 14> solution;
 
     PianoRespawn* respawn = nullptr;
     /**
@@ -60,4 +68,10 @@ class Piano : public Room {
     World& world;
 
     Server& server;
+
+    int numKeys = 0; // Number of piano keys created
+
+    std::vector<PianoKey*> keys; // List of piano keys in the room
+
+    int playedIndex = 0;
 };

@@ -23,9 +23,6 @@ bool FinalButton::isPressed() const {
 void FinalButton::handleInteract(Player& player) {
     // Define behavior here
     if (player.getID() != playerID) {
-        // If the player ID does not match, do not allow interaction
-        std::cout << "Player " << player.getID() << " tried to press button " << playerID
-                  << ", but it is not their button." << std::endl;
         return;
     }
     if (!pressButton())

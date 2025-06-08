@@ -55,7 +55,6 @@ void FinalDoor::handleInteract(Player& player) {
     message["client_id"] = player.getID();
     message["action"] = "interact";
     int slotID = keyCount - 1;
-    std::cout << "slotID " << slotID << std::endl;
     message["slot_id"] = slotID; // Include the current key count
     message["room"] = "lobby"; // Include the room name
 

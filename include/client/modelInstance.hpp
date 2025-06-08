@@ -75,7 +75,7 @@ struct ModelInstance {
 
                     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                     child->drawRecursive(shader, boundingBoxMode, staticOnly);
-                    glEnable(GL_BLEND);
+                    glDisable(GL_BLEND);
 
                 } else {
                     child->drawRecursive(shader, boundingBoxMode, staticOnly);

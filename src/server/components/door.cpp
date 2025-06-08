@@ -57,8 +57,6 @@ void Door::openDoor(int playerId) {
 
     std::string sfxPacket = sfx.dump() + "\n";
     server.broadcastMessage(sfxPacket);
-
-    std::cout << "open door called on " << this->getID() << std::endl;
 }
 
 void Door::unlockDoor() {

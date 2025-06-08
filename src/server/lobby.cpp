@@ -28,7 +28,6 @@ std::string Lobby::getInitInfo() {
 FinalDoor* Lobby::createFinalDoor(int objectID) {
     int numKeys = 2;
     FinalDoor* door = new FinalDoor(numKeys, objectID, this);
-    // std::cout << "Creating FinalDoor with ID: " << objectID << std::endl;
     finalDoor = door;
     addInteractable(door);
     return door;
